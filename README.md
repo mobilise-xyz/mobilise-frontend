@@ -5,6 +5,7 @@ Imperial College London Second Year Webapps Project.
 
 To start the development server, run:
 
-```
+```bash
+yarn install
 yarn start
 ```
