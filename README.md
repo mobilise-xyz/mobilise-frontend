@@ -2,17 +2,17 @@
 
 # Hunnybee
 
-This repository contains the frontend for Hunneybee.
+This repository contains the frontend for Mobilise.
 
 ## Overview
 
-**Hunnybee** is a volunteer and rota management software.
+**Mobilise** is a volunteer and rota management software.
 
 // TODO
 
 ## Contributing
 
-This application is written in [TypeScript](https://www.typescriptlang.org/) and [React](https://reactjs.org/).
+This application is written in JavaScript and [React](https://reactjs.org/).
 
 ### Pre-requisites
 - [npm](https://www.npmjs.com/)
@@ -20,7 +20,6 @@ This application is written in [TypeScript](https://www.typescriptlang.org/) and
 
 ### Recommended
 - [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) 
-- [VSCode](https://code.visualstudio.com/) with [TSLint](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin)
 
 To start the development server, run:
 
