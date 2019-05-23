@@ -5,9 +5,7 @@ This repository contains the frontend for Mobilise.
 
 ## Overview
 
-**Mobilise** is a volunteer and rota management software.
-
-// TODO
+**Mobilise** is smart volunteer management.
 
 ## Contributing
 
