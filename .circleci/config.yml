@@ -57,9 +57,10 @@ jobs:
           command: yarn build
       - run:
           name: Install awscli
-          command: sudo apt-get update \
-                  && sudo apt-get install python3-pip python3-dev -y \
-                  && sudo pip3 install awscli 
+          command: |
+            sudo apt-get update
+            sudo apt-get install python3-pip python3-dev -y
+            sudo pip3 install awscli 
       - run:
           name: Deploy to S3
           command: aws s3 sync build/ s3://city-harvest.mobilise.xyz --delete
