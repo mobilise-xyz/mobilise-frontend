@@ -18,6 +18,7 @@ export default class HomePage extends React.Component {
     render() {
         return (
             <div>
+                { process.env.REACT_APP_API_URL }
                 { this.state.data }
             </div>
         );
