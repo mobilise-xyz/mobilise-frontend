@@ -3,15 +3,22 @@ import axios from 'axios';
 
 export default class HomePage extends React.Component {
 
-    componentDidMount() {
-        const response = axios.get('/users');
-        console.log(response);
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: "",
+        }
+    }
+
+    async componentDidMount() {
+        const response = await axios.get('/users');
+        this.setState( { data: response.data } );
     }
 
     render() {
         return (
             <div>
-                Smart volunteer management!
+                { this.state.data }
             </div>
         );
     }
