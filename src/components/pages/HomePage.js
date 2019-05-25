@@ -1,26 +1,8 @@
 import React from 'react';
-import axios from 'axios';
+import Layout from '../Layout';
 
 export default class HomePage extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: "",
-        }
-    }
-
-    async componentDidMount() {
-        const response = await axios.get('/users');
-        this.setState( { data: response.data } );
-    }
-
-    render() {
-        return (
-            <div>
-                { process.env.REACT_APP_API_URL }
-                { this.state.data }
-            </div>
-        );
-    }
+  render() {
+    return <Layout>Shifts go here.</Layout>;
+  }
 }
