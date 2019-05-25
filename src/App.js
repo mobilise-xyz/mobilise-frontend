@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route } from 'react-router';
 import ShiftsPage from './components/pages/HomePage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
-import Container from 'react-bootstrap/Container';
 import './App.css';
 
 const App = () => (
