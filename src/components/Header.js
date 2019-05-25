@@ -1,6 +1,6 @@
 import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { LinkContainer, NavLink } from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCog } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
