@@ -1,13 +1,14 @@
 import React from 'react';
-import { Route } from 'react-router';
-import HomePage from './components/pages/HomePage';
-import Container from 'react-bootstrap/Container';
+import { Switch, Route } from 'react-router';
+import ShiftsPage from './components/pages/HomePage';
+import MyShiftsPage from './components/pages/MyShiftsPage';
 import './App.css';
 
 const App = () => (
-  <Container>
-      <Route path="/" exact component={ HomePage }/>
-  </Container>
+  <Switch>
+    <Route path="/" exact component={ShiftsPage} />
+    <Route path="/shifts" exact component={MyShiftsPage} />
+  </Switch>
 );
 
 export default App;
