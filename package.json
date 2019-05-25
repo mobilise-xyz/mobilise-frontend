@@ -50,14 +50,17 @@
     "prettier": "^1.17.1",
     "pretty-quick": "^1.11.0"
   },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "pretty-quick --staged",
+      "eslint src/ --fix",
+      "git add"
+    ]
+  },
   "husky": {
     "hooks": {
-      "pre-commit":   "*.{js,jsx}": [
-                      "pretty-quick --staged",
-                      "eslint src/ --fix",
-                      "git add"
-      ]
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test"
     }
   }
-
 }
