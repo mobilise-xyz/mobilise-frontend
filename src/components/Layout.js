@@ -1,15 +1,14 @@
 import React from 'react';
-import Header from './Header';
 import { Container } from 'react-bootstrap';
+import Header from './Header';
 
 // This class defines the layout for each page i.e. Header at the top, content in the middle.
-export default class Layout extends React.Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        <Container>{this.props.children}</Container>
-      </div>
-    );
-  }
-}
+const Layout = ({ children }) => (
+  <div>
+    <Header />
+    {/* Use pt-5 utility class to create some space between the header and content. */}
+    <Container className="pt-5">{children}</Container>
+  </div>
+);
+
+export default Layout;
