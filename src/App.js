@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-import ShiftsPage from './components/pages/HomePage';
+import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
 import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
