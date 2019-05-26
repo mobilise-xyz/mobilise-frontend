@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCog } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
-import logo from './logo.png';
+import logo from '../../assets/images/logo.png';
 
 const Header = () => (
   <Navbar bg="light" expand="lg">
