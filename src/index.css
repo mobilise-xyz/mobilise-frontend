@@ -11,14 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.corner-triangle {
-  position: absolute;
-  bottom: 0%;
-  right: 0%;
-  height: 40%;
-  width: 60%;
-  background: green;
-  -webkit-clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-  clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-}
