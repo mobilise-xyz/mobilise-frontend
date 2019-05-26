@@ -14,17 +14,15 @@ class ShiftCards extends React.Component {
     const { show } = this.state;
 
     return (
-      <Card title={title}>
+      <Card title={title} style={{ width: '100%' }}>
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           {children}
         </Card.Body>
         <button
           type="button"
-          href="#"
           onClick={this.toggleModal}
           className="stretched-link shift-card-btn"
-          // style={{ display: 'contents' }}
         >
           <span className="sr-only">Card infomation button</span>
         </button>
