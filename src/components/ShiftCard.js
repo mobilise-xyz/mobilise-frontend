@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Modal } from 'react-bootstrap';
+import './ShiftCard.css';
 
 class ShiftCards extends React.Component {
   state = {
@@ -22,8 +23,8 @@ class ShiftCards extends React.Component {
           type="button"
           href="#"
           onClick={this.toggleModal}
-          className="stretched-link"
-          style={{ display: 'contents' }}
+          className="stretched-link shift-card-btn"
+          // style={{ display: 'contents' }}
         >
           <span className="sr-only">Card infomation button</span>
         </button>
