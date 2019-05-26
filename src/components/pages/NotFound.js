@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
-import logo from '../logo.png';
-import Layout from '../Layout';
+import logo from '../../assets/images/logo.png';
+import Layout from '../Layout/Layout';
 
 const NotFound = () => (
   <Layout>

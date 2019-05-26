@@ -4,7 +4,6 @@ import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
 import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
-import './App.css';
 
 const App = () => (
   <Switch>

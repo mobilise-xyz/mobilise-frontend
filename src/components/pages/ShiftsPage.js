@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { ListGroup } from 'react-bootstrap';
-import Layout from '../Layout';
-import ShiftCard from '../ShiftCard';
+import Layout from '../Layout/Layout';
+import ShiftCard from '../ShiftCard/ShiftCard';
 
 class ShiftsPage extends React.Component {
   state = {
