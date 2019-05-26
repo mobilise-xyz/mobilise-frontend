@@ -8,6 +8,8 @@ class ShiftsPage extends React.Component {
   state = {
     shifts: [
       {
+        id: -1,
+        title: 'Loading...',
         body: (
           <div style={{ textAlign: 'center' }}>
             <Spinner animation="border" role="status">
@@ -17,7 +19,7 @@ class ShiftsPage extends React.Component {
         )
       }
     ],
-    recommendedShifts: [{ title: 'test', body: 'Test' }]
+    recommendedShifts: [{ title: 'test', body: 'Test', id: 444 }]
   };
 
   // TODO Handle exception properly.
@@ -28,12 +30,6 @@ class ShiftsPage extends React.Component {
       .get('https://jsonplaceholder.typicode.com/posts')
       .then(r => this.setState({ shifts: r.data }))
       .catch(() => console.log('Something went wrong!'));
-
-    // Get recommended shifts
-    // await axios
-    //   .get('https://jsonplaceholder.typicode.com/posts')
-    //   .then(r => this.setState({ recommendedShifts: r.data.array.slice(1) }))
-    //   .catch(() => console.log('Something went wrong!'));
   }
 
   render() {
@@ -45,7 +41,7 @@ class ShiftsPage extends React.Component {
           heading={<DateHeading weekday="Recommended" />}
           shifts={recommendedShifts}
           // TODO what is this color
-          cardStyle={{ 'background-color': 'green' }}
+          cardStyle={{ backgroundColor: 'green' }}
         />
         {/* TODO divider between each day */}
         <hr />

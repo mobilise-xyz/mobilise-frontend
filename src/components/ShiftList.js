@@ -6,7 +6,7 @@ const ShiftList = ({ heading, shifts = [''], cardStyle }) => (
   <ListGroup>
     {heading}
     {shifts.map(c => (
-      <ListGroup.Item style={cardStyle} key={c.id} className="border-0">
+      <ListGroup.Item key={c.id} style={cardStyle} className="border-0">
         <ShiftCard title={c.title}>{c.body}</ShiftCard>
       </ListGroup.Item>
     ))}
