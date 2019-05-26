@@ -42,9 +42,16 @@ const Header = () => (
         title={<FontAwesomeIcon icon={faCog} />}
         className="mr-sm-2"
       >
-        <NavDropdown.Item href="#/action-1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#/action-2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#/action-3">Something else</NavDropdown.Item>
+        <LinkContainer to="profile">
+          <NavDropdown.Item>Profile</NavDropdown.Item>
+        </LinkContainer>
+        <LinkContainer to="settings">
+          <NavDropdown.Item>Settings</NavDropdown.Item>
+        </LinkContainer>
+        <NavDropdown.Divider />
+        <LinkContainer to="feedback">
+          <NavDropdown.Item>Give Feedback</NavDropdown.Item>
+        </LinkContainer>
       </NavDropdown>
     </Navbar.Collapse>
   </Navbar>
