@@ -14,7 +14,7 @@ const ShiftCards = ({ title, children }) => {
         className="stretched-link"
         style={{ display: 'contents' }}
       >
-        <span className="sr-only">lol</span>
+        <span className="sr-only">Card infomation button</span>
       </button>
     </Card>
   );
