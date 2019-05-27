@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
+import PrivateRoute from './components/PrivateRoute';
 import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
 import NewShiftPage1 from './components/pages/new-shift-pages/NewShiftPage1';
@@ -9,11 +10,11 @@ import SettingsPage from './components/pages/SettingsPage';
 
 const App = () => (
   <Switch>
-    <Route path="/" exact component={ShiftsPage} />
-    <Route path="/shifts" exact component={MyShiftsPage} />
-    <Route path="/new-shift" exact component={NewShiftPage1} />
+    <PrivateRoute path="/" exact component={ShiftsPage} />
+    <PrivateRoute path="/shifts" exact component={MyShiftsPage} />
+    <PrivateRoute path="/new-shift" exact component={NewShiftPage1} />
     <Route path="/login" exact component={LoginPage} />
-    <Route path="/settings" exact component={SettingsPage} />
+    <PrivateRoute path="/settings" exact component={SettingsPage} />
     <Route component={NotFound} />
   </Switch>
 );

@@ -58,7 +58,7 @@ const Header = () => (
           <NavDropdown.Item>Give Feedback</NavDropdown.Item>
         </LinkContainer>
         <NavDropdown.Divider />
-        <LinkContainer to="signout">
+        <LinkContainer to="login">
           <NavDropdown.Item>Sign out</NavDropdown.Item>
         </LinkContainer>
       </NavDropdown>
