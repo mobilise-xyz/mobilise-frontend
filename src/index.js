@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-material-design/dist/css/bootstrap-material-design.min.css';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';

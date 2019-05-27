@@ -19,12 +19,12 @@ export default class NewShiftPage1 extends React.Component {
           </Form.Group>
           <Form.Group controlId="eventTypeForm">
             <Form.Label>Event Type</Form.Label>
-            <Typeahead
+            <Typeahead // TODO make async
               id="Event type"
               placeholder="Choose an event type, or create a new one"
               allowNew
               onChange={selected => console.log(selected)}
-              options={['Fundraiser', 'Pickup']}
+              options={['Fundraiser', 'Pickup']} // TODO
             />
           </Form.Group>
         </Form>

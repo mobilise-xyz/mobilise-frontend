@@ -8,9 +8,9 @@ const WizardLayout = ({ heading, children }) => (
     <Card>
       <Card.Body>{children}</Card.Body>
     </Card>
-    <Container className="col-md-4 m-*-auto pt-1">
+    <Container className="col-md-2 m-*-auto pt-1">
       <Button variant="secondary">Back</Button>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" form="new-shift-form">
         Next
       </Button>
     </Container>
