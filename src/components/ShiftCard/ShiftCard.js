@@ -14,7 +14,7 @@ class ShiftCards extends React.Component {
     const { show } = this.state;
 
     return (
-      <Card title={title} style={{ width: '100%' }}>
+      <Card title={title} style={{ width: '100%' }} className="col-md-auto">
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           {children}
