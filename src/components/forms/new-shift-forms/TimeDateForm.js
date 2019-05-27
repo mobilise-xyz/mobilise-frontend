@@ -1,5 +1,9 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Container, Row, Col } from 'react-bootstrap';
+import { DateInput, TimePicker } from '@blueprintjs/datetime';
+import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import '@blueprintjs/core/lib/css/blueprint.css';
 
 export default class TimeDateForm extends React.Component {
   submit = () => console.log('Time and Date inputted'); // TODO create submit function
@@ -12,16 +16,34 @@ export default class TimeDateForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.submit}>
-        <Form.Group controlId="date">
-          <Form.Label>Date</Form.Label>
-          {/* TODO: Find a decent date picker */}
-        </Form.Group>
-        <Form.Group controlId="start">
-          <Form.Label>start</Form.Label>
-
-          {/* TODO: Find a decent Time picker */}
-          <Form.Label>end</Form.Label>
-        </Form.Group>
+        <Container>
+          <Row className="justify-content-md-left">
+            <Form.Group controlId="date">
+              <Form.Label>Date</Form.Label>
+              <Container>
+                <DateInput reverseMonthAndYearMenus rightElement />
+              </Container>
+            </Form.Group>
+          </Row>
+          <Row className="justify-content-md-left">
+            <Col md="auto">
+              <Form.Group controlId="start-time">
+                <Form.Label>Start</Form.Label>
+                <Container>
+                  <TimePicker />
+                </Container>
+              </Form.Group>
+            </Col>
+            <Col md="auto">
+              <Form.Group controlId="end-time">
+                <Form.Label>End</Form.Label>
+                <Container>
+                  <TimePicker />
+                </Container>
+              </Form.Group>
+            </Col>
+          </Row>
+        </Container>
       </Form>
     );
   }
