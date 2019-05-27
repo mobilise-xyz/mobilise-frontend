@@ -6,24 +6,25 @@ const logout = () => {
   localStorage.removeItem('user');
 };
 
-const handleResponse = response => {
-  return response.text().then(text => {
-    console.log(text);
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        logout();
-        // location.reload(true);
-      }
+// const handleResponse = response => {
+//   console.log(response);
+//   return response.then(data => {
+//     console.log('yeet');
+//     console.log(data);
+//     if (!response.ok) {
+//       if (response.status === 401) {
+//         // auto logout if 401 response returned from api
+//         logout();
+//         // location.reload(true);
+//       }
 
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
-    }
+//       // const error = (data && data.message) || response.statusText;
+//       // return Promise.reject(error);
+//     }
 
-    return data;
-  });
-};
+//     return data;
+//   });
+// };
 
 const login = (email, password) => {
   console.log(`POST ${email} ${password}`);
@@ -32,12 +33,16 @@ const login = (email, password) => {
       email,
       password
     })
-    .then(handleResponse)
-    .then(user => {
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.setItem('user', JSON.stringify(user));
-
-      return user;
+    .then(response => response.data)
+    .then(data => {
+      // Store user details and JWT token in localStorage to keep user logged in between page refreshes.
+      localStorage.setItem('user', data.token);
+      console.log(localStorage.getItem('user'));
+      return data;
+    })
+    .catch(err => {
+      console.log(err);
+      logout();
     });
 };
 
