@@ -13,17 +13,17 @@ const WizardLayout = ({ heading, children }) => (
       interval={null}
     >
       {children.map(c => (
-        <Carousel.Item>
+        <Carousel.Item key={c.key}>
           <Card style={{ padding: '2rem' }}>
             <Card.Body>
-              <Card.Title>{c.props.description}</Card.Title>
+              <Card.Title>{c.props.title}</Card.Title>
               {c}
             </Card.Body>
           </Card>
         </Carousel.Item>
       ))}
     </Carousel>
-    <Container className="col-md-2 m-*-auto pt-1">
+    <Container className="justify-content-md-center">
       <Row>
         <Button variant="secondary">Back</Button>
         <Button variant="primary">Next</Button>

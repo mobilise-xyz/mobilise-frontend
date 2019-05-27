@@ -7,7 +7,7 @@ export default class TitleForm extends React.Component {
 
   render() {
     return (
-      <Form id="new-shift-form" onSubmit={this.submit}>
+      <Form id="new-shift-form-part-1" onSubmit={this.submit}>
         <Form.Group controlId="titleForm">
           <Form.Label>Shift Title</Form.Label>
           <Typeahead // TODO make async
@@ -18,14 +18,9 @@ export default class TitleForm extends React.Component {
             options={['Cake Sale', 'Food Managing']} // TODO
           />
         </Form.Group>
-        <Form.Group controlId="locationForm">
-          <Form.Label>Location</Form.Label>
-          <Form.Control
-            required
-            type="location"
-            placeholder="e.g. Imperial College London"
-          />
-          {/* TODO: use google maps API somehow */}
+        <Form.Group controlId="descriptionForm">
+          <Form.Label>Description</Form.Label>
+          <Form.Control as="textarea" rows="3" />
         </Form.Group>
       </Form>
     );

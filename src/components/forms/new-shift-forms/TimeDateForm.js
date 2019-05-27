@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Container, Row, Col } from 'react-bootstrap';
+import { Form, Container, Col, Row } from 'react-bootstrap';
 import { DateInput, TimePicker } from '@blueprintjs/datetime';
 import '@blueprintjs/datetime/lib/css/blueprint-datetime.css';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -15,35 +15,29 @@ export default class TimeDateForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.submit}>
-        <Container>
-          <Row className="justify-content-md-left">
-            <Form.Group controlId="date">
-              <Form.Label>Date</Form.Label>
+      <Form id="new-shift-form-part-2" onSubmit={this.submit}>
+        <Form.Group controlId="date" className="justify-content-md-left">
+          <Form.Label>Date</Form.Label>
+          <Container>
+            <DateInput />
+          </Container>
+        </Form.Group>
+        <Form.Group controlId="time" className="justify-content-md-left">
+          <Row>
+            <Col md="auto">
+              <Form.Label>Start</Form.Label>
               <Container>
-                <DateInput reverseMonthAndYearMenus rightElement />
+                <TimePicker />
               </Container>
-            </Form.Group>
-          </Row>
-          <Row className="justify-content-md-left">
-            <Col md="auto">
-              <Form.Group controlId="start-time">
-                <Form.Label>Start</Form.Label>
-                <Container>
-                  <TimePicker />
-                </Container>
-              </Form.Group>
             </Col>
             <Col md="auto">
-              <Form.Group controlId="end-time">
-                <Form.Label>End</Form.Label>
-                <Container>
-                  <TimePicker />
-                </Container>
-              </Form.Group>
+              <Form.Label>End</Form.Label>
+              <Container>
+                <TimePicker />
+              </Container>
             </Col>
           </Row>
-        </Container>
+        </Form.Group>
       </Form>
     );
   }
