@@ -1,16 +1,18 @@
 import userConstants from '../_constants/user.constants';
 import userService from '../_services/user.service';
 
-function login(username, password) {
-  function request(user) {
+import history from '../_helpers/history';
+
+const login = (username, password) => {
+  const request = user => {
     return { type: userConstants.LOGIN_REQUEST, user };
-  }
-  function success(user) {
+  };
+  const success = user => {
     return { type: userConstants.LOGIN_SUCCESS, user };
-  }
-  function failure(error) {
+  };
+  const failure = error => {
     return { type: userConstants.LOGIN_FAILURE, error };
-  }
+  };
 
   return dispatch => {
     dispatch(request({ username }));
@@ -18,7 +20,7 @@ function login(username, password) {
     userService.login(username, password).then(
       user => {
         dispatch(success(user));
-        // history.push('/');
+        history.push('/');
       },
       error => {
         dispatch(failure(error));
@@ -26,7 +28,7 @@ function login(username, password) {
       }
     );
   };
-}
+};
 
 function logout() {
   userService.logout();

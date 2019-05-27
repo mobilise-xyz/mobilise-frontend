@@ -1,14 +1,16 @@
+// For IE support.
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-material-design/dist/css/bootstrap-material-design.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import history from './_helpers/history';
 import store from './_helpers/store';
 import './index.css';
 import App from './App';
@@ -18,11 +20,11 @@ import * as serviceWorker from './serviceWorker';
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Provider store={store}>
+  <Provider store={store}>
+    <Router history={history}>
       <App />
-    </Provider>
-  </BrowserRouter>,
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 

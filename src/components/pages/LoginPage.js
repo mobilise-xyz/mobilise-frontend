@@ -8,8 +8,10 @@ class UnconnectedLoginPage extends React.Component {
   constructor(props) {
     super(props);
 
-    // reset login status
-    // this.props.dispatch(userActions.logout());
+    const { dispatch } = this.props;
+
+    // Logs the user out
+    dispatch(userActions.logout());
 
     this.state = {
       email: '',
