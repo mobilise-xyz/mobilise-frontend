@@ -1,0 +1,8 @@
+.shift-card-btn {
+  background: transparent;
+  border: none !important;
+}
+
+.shift-card-btn:focus {
+  outline: none;
+}
