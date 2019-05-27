@@ -9,7 +9,9 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "bootstrap-material-design": "^4.1.2",
+    "core-js": "^3.1.2",
     "react": "^16.8.6",
+    "react-app-polyfill": "^1.0.1",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-bootstrap-typeahead": "^4.0.0-alpha.10",
     "react-dom": "^16.8.6",
@@ -36,7 +38,8 @@
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 safari version",
+      "ie 11"
     ]
   },
   "devDependencies": {
