@@ -17,7 +17,6 @@ class Header extends React.Component {
   componentDidMount() {
     // Retrieve name from uid
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    console.log(`UID: ${uid}`);
 
     const config = {
       headers: authHeader(),
@@ -32,9 +31,6 @@ class Header extends React.Component {
         this.setState({ firstName: response.data.firstName, nameSuccess: true })
       )
       .catch(err => console.log(err));
-
-    const { firstName } = this.state;
-    console.log(firstName);
   }
 
   render() {

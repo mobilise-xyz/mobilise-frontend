@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Spinner } from 'react-bootstrap';
 import Layout from '../Layout/Layout';
 import ShiftList from '../ShiftList';
+import authHeader from '../../_helpers/auth-header';
 
 class ShiftsPage extends React.Component {
   state = {
@@ -10,7 +11,7 @@ class ShiftsPage extends React.Component {
       {
         id: -1,
         title: 'Loading...',
-        body: (
+        description: (
           <div style={{ textAlign: 'center' }}>
             <Spinner animation="border" role="status">
               <span className="sr-only">Loading...</span>
@@ -19,15 +20,19 @@ class ShiftsPage extends React.Component {
         )
       }
     ],
-    recommendedShifts: [{ title: 'test', body: 'Test', id: 444 }]
+    recommendedShifts: [{ title: 'test', description: 'Test', id: 444 }] // FIXME
   };
 
   // TODO Handle exception properly.
   // TODO Set correct API endpoint.
   async componentDidMount() {
     // Get all shifts
+    const config = {
+      headers: authHeader()
+    };
+
     await axios
-      .get('https://jsonplaceholder.typicode.com/posts')
+      .get('/shifts', config)
       .then(r => this.setState({ shifts: r.data }))
       .catch(() => console.log('Something went wrong!'));
   }

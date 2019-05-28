@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, Modal } from 'react-bootstrap';
 import './ShiftCard.css';
 
+// shiftData consists of title, description, date, start, stop, postcode(?)
+
 class ShiftCards extends React.Component {
   state = {
     show: false
@@ -10,14 +12,14 @@ class ShiftCards extends React.Component {
   toggleModal = () => this.setState(state => ({ show: !state.show }));
 
   render() {
-    const { title, children } = this.props;
+    const { shiftData } = this.props;
     const { show } = this.state;
 
     return (
-      <Card title={title} style={{ width: '100%', margin: 'auto' }}>
+      <Card title={shiftData.title} style={{ width: '100%', margin: 'auto' }}>
         <Card.Body>
-          <Card.Title>{title}</Card.Title>
-          {children}
+          <Card.Title>{shiftData.title}</Card.Title>
+          {shiftData.description}
         </Card.Body>
         <button
           type="button"
@@ -28,8 +30,7 @@ class ShiftCards extends React.Component {
         </button>
 
         <ShiftModal
-          title={title}
-          body={children}
+          shiftData={shiftData}
           show={show}
           onHide={this.toggleModal}
         />
@@ -38,13 +39,13 @@ class ShiftCards extends React.Component {
   }
 }
 
-const ShiftModal = ({ title, body, onHide, show }) => (
+const ShiftModal = ({ shiftData, onHide, show }) => (
   <Modal show={show} onHide={onHide}>
     <Modal.Header>
-      <Modal.Title>{title}</Modal.Title>
+      <Modal.Title>{shiftData.title}</Modal.Title>
     </Modal.Header>
 
-    <Modal.Body>{body}</Modal.Body>
+    <Modal.Body>{shiftData.description}</Modal.Body>
   </Modal>
 );
 
