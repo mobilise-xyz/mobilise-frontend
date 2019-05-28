@@ -33,16 +33,28 @@ class NewShiftPage extends React.Component {
   }
 
   _renderToken = (option, props, index) => (
-    <Token key={index} onRemove={props.onRemove}>
+    <Token key={index} style={{}} onRemove={props.onRemove}>
       <Row>
-        {/* TODO Cleanup. Perhaps use a new CSS file. */}
-        <Col style={{ margin: 'auto', padding: '1rem' }}>
+        <Col
+          md="auto"
+          style={{
+            padding: '0 0.2rem 0 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
           {option.label ? option.label : option}
         </Col>
-        <Col style={{ padding: 0, marginRight: '1rem' }}>
+        <Col
+          style={{
+            padding: '0 1rem 0 0.2rem',
+            width: '3.2rem'
+          }}
+        >
           <Form.Control
             type="number"
-            style={{ width: '2rem', margin: 'auto' }}
+            style={{ height: '1.4rem', textAlign: 'center' }}
           />
         </Col>
       </Row>
@@ -195,7 +207,7 @@ class NewShiftPage extends React.Component {
           {/* Roles */}
           <Form.Group controlId="rolesForm">
             <Form.Label>Roles</Form.Label>
-            <Typeahead // TODO make async
+            <Typeahead // TODO make async & SORT OUT CSS so letters like g dont get cut off.
               renderToken={this._renderToken}
               id="roles"
               placeholder="Add available roles for shift"
