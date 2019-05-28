@@ -8,14 +8,18 @@ const logout = () => {
 
 const login = (email, password) => {
   return axios
-    .post('/users/login', {
+    .post('/auth/login', {
       email,
       password
     })
     .then(response => response.data)
     .then(data => {
       // Store user details and JWT token in localStorage to keep user logged in between page refreshes.
-      localStorage.setItem('user', data.token);
+      console.log(localStorage.getItem('user'));
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ uid: data.uid, token: data.token })
+      );
       return data;
     })
     .catch(err => {

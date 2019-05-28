@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
-import userActions from '../../actions/user.actions';
+import userActions from '../../_actions/user.actions';
 import CardLayout from '../CardLayout';
 
 class UnconnectedLoginPage extends React.Component {

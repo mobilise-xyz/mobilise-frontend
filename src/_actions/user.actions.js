@@ -24,16 +24,15 @@ const login = (username, password) => {
       },
       error => {
         dispatch(failure(error));
-        // dispatch(alertActions.error(error));
       }
     );
   };
 };
 
-function logout() {
+const logout = () => {
   userService.logout();
   return { type: userConstants.LOGOUT };
-}
+};
 
 const userActions = {
   login,
