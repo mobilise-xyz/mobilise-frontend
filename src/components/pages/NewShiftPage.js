@@ -5,6 +5,7 @@ import axios from 'axios';
 import CardLayout from '../CardLayout';
 import history from '../../_helpers/history';
 import authHeader from '../../_helpers/auth-header';
+import LocationInput from '../LocationInput/LocationInput';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -42,7 +43,7 @@ class NewShiftPage extends React.Component {
   }
 
   _renderToken = (option, props, index) => (
-    <Token key={index} style={{}} onRemove={props.onRemove}>
+    <Token key={index} onRemove={props.onRemove}>
       <Row>
         <Col
           md="auto"
@@ -206,18 +207,7 @@ class NewShiftPage extends React.Component {
             </Form.Group>
           </Form.Row>
           {/* Location */}
-          <Form.Group>
-            <Form.Label>Location</Form.Label>
-            <Form.Control
-              id="location"
-              name="location"
-              type="location"
-              required
-              placeholder="e.g. Imperial College London"
-              onChange={this.handleDataChange}
-            />
-            {/* TODO: use google maps API & asyncTypeAhead */}
-          </Form.Group>
+          <LocationInput handleChange={this.handleDataChange} />
           {/* Roles */}
           <Form.Group controlId="rolesForm">
             <Form.Label>Roles</Form.Label>
