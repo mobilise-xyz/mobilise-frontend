@@ -1,25 +1,32 @@
 import React from 'react';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { Typeahead, Token } from 'react-bootstrap-typeahead';
+import axios from 'axios';
 import CardLayout from '../CardLayout';
+import history from '../../_helpers/history';
+import authHeader from '../../_helpers/auth-header';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 const placeholderRoles = ['Driver', "Driver's mate"];
 
 class NewShiftPage extends React.Component {
-  state = {
-    data: {
-      title: '',
-      description: '',
-      date: '',
-      startTime: '',
-      endTime: '',
-      location: '',
-      roles: []
-    },
-    shiftTitleOptions: placeholderShiftTitles,
-    roleOptions: placeholderRoles
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: {
+        title: '',
+        description: '',
+        date: '',
+        startTime: '',
+        endTime: '',
+        location: '',
+        roles: []
+      },
+      shiftTitleOptions: placeholderShiftTitles,
+      roleOptions: placeholderRoles
+    };
+  }
 
   async componentDidMount() {
     // Get role and shift options.
@@ -58,7 +65,25 @@ class NewShiftPage extends React.Component {
     // Submit this
     e.preventDefault();
 
-    console.log(this.state);
+    // TODO validation
+
+    // TODO Get roles
+    const { data } = this.state;
+
+    const config = { headers: authHeader() };
+
+    const postData = {
+      title: data.title,
+      description: data.description,
+      date: data.date,
+      start: data.startTime,
+      stop: data.endTime,
+      postcode: data.location
+    };
+
+    console.log(postData);
+
+    axios.post('/shifts', postData, config).then(history.push('/'));
   };
 
   handleRolesChange = s => {
@@ -121,9 +146,14 @@ class NewShiftPage extends React.Component {
           </Form.Group>
           <Form.Row>
             {/* Date */}
-            <Form.Group as={Col} controlId="date">
+            <Form.Group as={Col}>
               <Form.Label>Date</Form.Label>
-              <Form.Control type="date" />
+              <Form.Control
+                id="date"
+                name="date"
+                onChange={this.handleDataChange}
+                type="date"
+              />
             </Form.Group>
             {/* Time */}
             <Form.Group as={Col}>
