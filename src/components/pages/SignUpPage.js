@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Card, Button } from 'react-bootstrap';
-import Layout from '../Layout/Layout';
+import { Form, Button } from 'react-bootstrap';
+import CardLayout from '../CardLayout';
 
 const placeholderForms = [
   <Form.Group>
@@ -39,20 +39,16 @@ export default class SignUpPage extends React.Component {
   render() {
     const { forms } = this.state;
     return (
-      <Layout>
-        <Card>
-          <Card.Body>
-            <Form>
-              {forms}
-              <div className="text-center" style={{ margin: 'auto' }}>
-                <Button variant="primary" type="submit">
-                  Sign me up!
-                </Button>
-              </div>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Layout>
+      <CardLayout navOff title="Sign up">
+        <Form>
+          {forms}
+          <div className="text-center" style={{ margin: 'auto' }}>
+            <Button variant="primary" type="submit">
+              Sign me up!
+            </Button>
+          </div>
+        </Form>
+      </CardLayout>
     );
   }
 }

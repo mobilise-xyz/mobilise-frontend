@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import userActions from '../../actions/user.actions';
-import Layout from '../Layout';
+import CardLayout from '../CardLayout';
 
 class UnconnectedLoginPage extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class UnconnectedLoginPage extends React.Component {
     const { email, password } = this.state;
 
     return (
-      <Layout>
+      <CardLayout navOff title="Login">
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
@@ -67,7 +67,7 @@ class UnconnectedLoginPage extends React.Component {
             Submit
           </Button>
         </Form>
-      </Layout>
+      </CardLayout>
     );
   }
 }

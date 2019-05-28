@@ -4,9 +4,9 @@ import Header from '../Header';
 import './Layout.css';
 
 // This class defines the layout for each page i.e. Header at the top, content in the middle.
-const Layout = ({ children }) => (
+const Layout = ({ navOff, children }) => (
   <div>
-    <Header />
+    {navOff ? null : <Header />}
     {/* Use pt-5 utility class to create some space between the header and content. */}
     <Container className="pt-5">{children}</Container>
   </div>
