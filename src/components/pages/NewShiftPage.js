@@ -20,13 +20,26 @@ class NewShiftPage extends React.Component {
   };
 
   _renderToken = (option, props, index) => (
-    <Token key={index} onRemove={props.onRemove}>
+    <Token key={index} style={{}} onRemove={props.onRemove}>
       <Row>
-        <Col style={{ margin: 'auto', padding: '1rem' }}>{`${option}`}</Col>
-        <Col style={{ padding: 0, marginRight: '1rem' }}>
+        <Col
+          md="auto"
+          style={{
+            padding: '0 0.2rem 0 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >{`${option}`}</Col>
+        <Col
+          style={{
+            padding: '0 1rem 0 0.2rem',
+            width: '3.2rem'
+          }}
+        >
           <Form.Control
             type="number"
-            style={{ width: '2rem', margin: 'auto' }}
+            style={{ height: '1.4rem', textAlign: 'center' }}
           />
         </Col>
       </Row>
