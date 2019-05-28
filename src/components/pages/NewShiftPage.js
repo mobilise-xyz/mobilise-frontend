@@ -12,6 +12,8 @@ class NewShiftPage extends React.Component {
       title: '',
       description: '',
       date: '',
+      startTime: '',
+      endTime: '',
       location: '',
       roles: []
     },
@@ -19,10 +21,17 @@ class NewShiftPage extends React.Component {
     roleOptions: placeholderRoles
   };
 
+  async componentDidMount() {
+    // Get role and shift options.
+  }
+
   _renderToken = (option, props, index) => (
     <Token key={index} onRemove={props.onRemove}>
       <Row>
-        <Col style={{ margin: 'auto', padding: '1rem' }}>{`${option}`}</Col>
+        {/* TODO Cleanup. Perhaps use a new CSS file. */}
+        <Col style={{ margin: 'auto', padding: '1rem' }}>
+          {option.label ? option.label : option}
+        </Col>
         <Col style={{ padding: 0, marginRight: '1rem' }}>
           <Form.Control
             type="number"
@@ -33,26 +42,50 @@ class NewShiftPage extends React.Component {
     </Token>
   );
 
-  handleChange = e => {
+  handleDataChange = e => {
+    console.log(this.state);
     const { name, value } = e.target;
-    this.setState({ data: { [name]: value } });
+
+    this.setState(prevState => ({
+      data: {
+        ...prevState.data,
+        [name]: value
+      }
+    }));
   };
 
   handleSubmit = e => {
     // Submit this
     e.preventDefault();
+
+    console.log(this.state);
   };
 
   handleRolesChange = s => {
-    const { data } = this.state;
-    const roles = data.roles.slice();
-    roles.push(s);
-    this.setState({ data: { roles } });
-    console.log(roles);
+    const newElementObject = s[s.length - 1];
+    const newElement = newElementObject.label
+      ? newElementObject.label
+      : newElementObject;
+
+    this.setState(prevState => ({
+      data: {
+        ...prevState.data,
+        roles: prevState.data.roles.concat(newElement)
+      }
+    }));
+  };
+
+  handleShiftTitleChange = s => {
+    this.setState(prevState => ({
+      data: {
+        ...prevState.data,
+        title: s[0]
+      }
+    }));
   };
 
   render() {
-    const { data, shiftTitleOptions: shiftTitles, roleOptions } = this.state;
+    const { data, shiftTitleOptions, roleOptions } = this.state;
     const { title, description } = data;
 
     return (
@@ -64,12 +97,13 @@ class NewShiftPage extends React.Component {
             <Form.Label>Shift Title</Form.Label>
             <Typeahead // TODO make async
               id="title"
+              name="shiftTitle"
               newSelectionPrefix="Add new title: "
               placeholder="Choose an event title, or create a new one"
               value={title}
               allowNew
-              onChange={s => this.setState({ data: { title: s } })}
-              options={shiftTitles} // TODO
+              onChange={this.handleShiftTitleChange}
+              options={shiftTitleOptions} // TODO
             />
           </Form.Group>
           {/* Description */}
@@ -82,7 +116,7 @@ class NewShiftPage extends React.Component {
               placeholder="Enter shift description"
               rows="3"
               value={description}
-              onChange={this.handleChange}
+              onChange={this.handleDataChange}
             />
           </Form.Group>
           <Form.Row>
@@ -92,15 +126,25 @@ class NewShiftPage extends React.Component {
               <Form.Control type="date" />
             </Form.Group>
             {/* Time */}
-            <Form.Group as={Col} controlId="time">
+            <Form.Group as={Col}>
               <Row>
                 <Col>
                   <Form.Label>Start</Form.Label>
-                  <Form.Control type="time" />
+                  <Form.Control
+                    id="start-time"
+                    name="startTime"
+                    type="time"
+                    onChange={this.handleDataChange}
+                  />
                 </Col>
                 <Col>
                   <Form.Label>End</Form.Label>
-                  <Form.Control type="time" />
+                  <Form.Control
+                    id="end-time"
+                    name="endTime"
+                    type="time"
+                    onChange={this.handleDataChange}
+                  />
                 </Col>
               </Row>
             </Form.Group>
@@ -110,10 +154,11 @@ class NewShiftPage extends React.Component {
             <Form.Label>Location</Form.Label>
             <Form.Control
               id="location"
+              name="location"
               type="location"
               required
               placeholder="e.g. Imperial College London"
-              onChange={this.handleChange}
+              onChange={this.handleDataChange}
             />
             {/* TODO: use google maps API & asyncTypeAhead */}
           </Form.Group>
