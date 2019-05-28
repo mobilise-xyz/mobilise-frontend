@@ -7,7 +7,6 @@ import history from '../../_helpers/history';
 import authHeader from '../../_helpers/auth-header';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
-const placeholderRoles = ['Driver', "Driver's mate"];
 
 class NewShiftPage extends React.Component {
   constructor(props) {
@@ -23,13 +22,23 @@ class NewShiftPage extends React.Component {
         location: '',
         roles: []
       },
-      shiftTitleOptions: placeholderShiftTitles,
-      roleOptions: placeholderRoles
+      shiftTitleOptions: placeholderShiftTitles, // FIXME
+      roleOptions: []
     };
   }
 
   async componentDidMount() {
     // Get role and shift options.
+    const config = {
+      headers: authHeader()
+    };
+
+    axios
+      .get('/roles', config)
+      .then(response => this.setState({ roleOptions: response.data }))
+      .catch(err => console.log(err, 'There was a problem.'));
+
+    console.log(this.state);
   }
 
   _renderToken = (option, props, index) => (
@@ -79,8 +88,9 @@ class NewShiftPage extends React.Component {
 
     // TODO validation
 
-    // TODO Get roles
     const { data } = this.state;
+
+    // Map roles to role ids
 
     const config = { headers: authHeader() };
 
@@ -212,7 +222,7 @@ class NewShiftPage extends React.Component {
               id="roles"
               placeholder="Add available roles for shift"
               newSelectionPrefix="Add new role:  "
-              options={roleOptions}
+              options={roleOptions.map(r => r.name)}
               allowNew
               multiple
               onChange={this.handleRolesChange}
