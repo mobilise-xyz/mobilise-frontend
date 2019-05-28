@@ -71,7 +71,6 @@ class NewShiftPage extends React.Component {
   );
 
   handleDataChange = e => {
-    console.log(this.state);
     const { name, value } = e.target;
 
     this.setState(prevState => ({
@@ -88,9 +87,15 @@ class NewShiftPage extends React.Component {
 
     // TODO validation
 
-    const { data } = this.state;
+    const { data, roleOptions } = this.state;
 
     // Map roles to role ids
+    // const roleIds = data.roles.map(r => roleOptions[r]);
+
+    // Map roles to role IDs.
+    const roleIds = data.roles.map(
+      roleName => roleOptions.find(item => item.name === roleName).id
+    );
 
     const config = { headers: authHeader() };
 
@@ -100,10 +105,9 @@ class NewShiftPage extends React.Component {
       date: data.date,
       start: data.startTime,
       stop: data.endTime,
-      postcode: data.location
+      postcode: data.location,
+      roles: roleIds
     };
-
-    console.log(postData);
 
     axios.post('/shifts', postData, config).then(history.push('/'));
   };
