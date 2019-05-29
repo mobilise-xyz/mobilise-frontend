@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-material-design/dist/css/bootstrap-material-design.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import history from './_helpers/history';
