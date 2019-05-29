@@ -3,18 +3,16 @@ import { Modal, Form, Button } from 'react-bootstrap';
 
 class NewRoleModal extends React.Component {
   state = {
-    description: ''
+    roleInvolves: ''
+  };
+
+  handleInvolvesChange = e => {
+    this.setState({ roleInvolves: e.currentTarget.value });
   };
 
   render() {
-    const {
-      roleName,
-      show,
-      handleRoleSubmit,
-      handleRoleCancel,
-      handleDescriptionChange
-    } = this.props;
-    const { description } = this.state;
+    const { roleName, show, handleRoleSubmit, handleRoleCancel } = this.props;
+    const { roleInvolves } = this.state;
 
     return (
       // TODO center modal
@@ -28,10 +26,10 @@ class NewRoleModal extends React.Component {
             <Form.Group>
               <Form.Label>Description</Form.Label>
               <Form.Control
-                id="description"
-                name="description"
-                value={description}
-                onChange={handleDescriptionChange}
+                id="roleInvolves"
+                name="roleInvolves"
+                value={roleInvolves}
+                onChange={this.handleInvolvesChange}
                 placeholder="What does this role involve?"
                 type="text"
               />

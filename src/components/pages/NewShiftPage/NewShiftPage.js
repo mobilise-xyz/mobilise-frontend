@@ -46,7 +46,11 @@ class NewShiftPage extends React.Component {
 
     axios
       .get('/roles', config)
-      .then(response => this.setState({ roleOptions: response.data }))
+      .then(({ data }) =>
+        this.setState({
+          roleOptions: data.map(r => ({ name: r.name, involves: r.involves }))
+        })
+      )
       .catch(err => console.log(err, 'There was a problem.'));
   }
 
@@ -134,6 +138,7 @@ class NewShiftPage extends React.Component {
     };
 
     axios.post('/shifts', postData, config).then(history.push('/'));
+    console.dir(this.state);
   };
 
   toggleRolesModal = () =>
@@ -149,12 +154,13 @@ class NewShiftPage extends React.Component {
     // If we have a new role, we need to open a modal.
     if (s.length !== 0) {
       // The newest addition should always be at the end of the array.
-      const newRole = s[s.length - 1];
+      let newRole = s[s.length - 1];
 
       if (newRole.customOption) {
+        newRole = newRole.label;
         // Open modal to add a new role.
         this.setState(prevState => ({
-          newRoleModal: { roleName: newRole.label.trim(), show: prevState.show }
+          newRoleModal: { roleName: newRole.trim(), show: prevState.show }
         }));
         this.toggleRolesModal();
       }
@@ -218,24 +224,21 @@ class NewShiftPage extends React.Component {
             name: respData.name,
             involves: respData.involves
           });
-
+          console.log(newOptions);
           return {
-            newOptions
+            roleOptions: newOptions
           };
         })
       )
-      .catch(console.log('OH NO'));
+      .catch(err => console.log(err));
 
     // 3. Close modal
     this.toggleRolesModal();
-  };
 
-  handleDescriptionChange = e => {
+    // 4. Reset state
     this.setState(prevState => ({
-      newRoleModal: {
-        ...prevState.data,
-        description: e.target.value
-      }
+      ...prevState,
+      newRoleModal: {}
     }));
   };
 
@@ -269,7 +272,7 @@ class NewShiftPage extends React.Component {
   render() {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
     const { title, description } = data;
-    const { roleName, show } = newRoleModal;
+    const { roleName, roleInvolves, show } = newRoleModal;
 
     return (
       <CardLayout title="New Shift">
@@ -315,10 +318,12 @@ class NewShiftPage extends React.Component {
         </Form>
         <NewRoleModal
           roleName={roleName}
+          roleInvolves={roleInvolves}
           show={show}
           onHide={this.toggleRolesModal}
           handleRoleSubmit={this.handleRoleSubmit}
           handleRoleCancel={this.handleRoleCancel}
+          handleInvolvesChange={this.handleInvolvesChange}
         />
       </CardLayout>
     );
