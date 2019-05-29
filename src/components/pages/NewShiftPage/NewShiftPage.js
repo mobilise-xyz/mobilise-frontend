@@ -10,6 +10,7 @@ import TitleForm from '../../forms/TitleForm';
 import DescriptionForm from '../../forms/DescriptionForm';
 import DateTimeForm from '../../forms/DateTimeForm';
 import './NewShiftPage.css';
+import LocationInput from '../../LocationInput/LocationInput';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -288,18 +289,7 @@ class NewShiftPage extends React.Component {
           {/* Date and Time */}
           <DateTimeForm handleChange={this.handleDataChange} />
           {/* Location */}
-          <Form.Group>
-            <Form.Label>Location</Form.Label>
-            <Form.Control
-              id="location"
-              name="location"
-              type="location"
-              required
-              placeholder="e.g. Imperial College London"
-              onChange={this.handleDataChange}
-            />
-            {/* TODO: use google maps API & asyncTypeAhead */}
-          </Form.Group>
+          <LocationInput handleChange={this.handleDataChange} />
           {/* Roles */}
           <Form.Group controlId="rolesForm">
             <Form.Label>Roles</Form.Label>
