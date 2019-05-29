@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { Spinner } from 'react-bootstrap';
-import Layout from '../Layout/Layout';
-import ShiftList from '../ShiftList';
-import authHeader from '../../_helpers/auth-header';
+import Layout from '../../Layout/Layout';
+import ShiftList from '../../ShiftList';
+import authHeader from '../../../_helpers/auth-header';
 
 class ShiftsPage extends React.Component {
   state = {

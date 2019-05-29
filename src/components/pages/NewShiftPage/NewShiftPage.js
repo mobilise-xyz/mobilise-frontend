@@ -9,8 +9,8 @@ import authHeader from '../../../_helpers/auth-header';
 import TitleForm from '../../forms/TitleForm';
 import DescriptionForm from '../../forms/DescriptionForm';
 import DateTimeForm from '../../forms/DateTimeForm';
-import './NewShiftPage.css';
 import LocationInput from '../../LocationInput/LocationInput';
+import './NewShiftPage.css';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import PrivateRoute from './components/PrivateRoute';
-import ShiftsPage from './components/pages/ShiftsPage';
+import ShiftsPage from './components/pages/ShiftsPage/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
 import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
 import LoginPage from './components/pages/LoginPage';
