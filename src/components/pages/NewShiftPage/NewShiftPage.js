@@ -308,8 +308,8 @@ class NewShiftPage extends React.Component {
           </Form.Group>
           {/* Button boi */}
           <div className="text-center" style={{ margin: 'auto' }}>
-            <Button variant="primary" type="submit">
-              Submit
+            <Button variant="outline-primary" type="submit" block>
+              Confirm Shift
             </Button>
           </div>
         </Form>
