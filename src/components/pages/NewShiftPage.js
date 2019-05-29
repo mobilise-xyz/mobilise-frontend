@@ -50,7 +50,7 @@ class NewShiftPage extends React.Component {
 
   _renderToken = (option, props, index) => (
     <Token key={index} onRemove={props.onRemove}>
-      <Row onMouseDown={console.log}>
+      <Row>
         <Col
           md="auto"
           style={{
@@ -65,11 +65,11 @@ class NewShiftPage extends React.Component {
         <Col
           style={{
             padding: '0 1rem 0 0.2rem',
-            width: '3.2rem'
+            width: '3.5rem'
           }}
         >
           <Form.Control
-            data-index={index}
+            name={option}
             type="number"
             min="1"
             onChange={this.handleRoleNumber}
@@ -82,7 +82,23 @@ class NewShiftPage extends React.Component {
   );
 
   handleRoleNumber = e => {
-    console.log(e.currentTarget.props);
+    const { name, value } = e.target;
+
+    // Get the role corresponding to this
+    console.log(`${name} : ${value}`);
+
+    const { data } = this.state;
+    const { roles } = data;
+
+    console.log(roles);
+
+    const roleToUpdate = roles.find(r => r.name === name);
+    if (roleToUpdate) {
+      roleToUpdate.number = value;
+    }
+
+    // Find the role name in roles, and then set the corresponding role
+    // number.
   };
 
   handleDataChange = e => {
@@ -111,7 +127,7 @@ class NewShiftPage extends React.Component {
     // Map roles to role IDs.
 
     // If it as existing role, it needs to be mapped to the ID of one of the roleOptions.
-    const roles = data.roles.map(role => ({
+    const roles = data.roleNames.map(role => ({
       roleId: roleOptions.find(item => item.name === role.name).id,
       number: role.number
     }));
@@ -145,6 +161,7 @@ class NewShiftPage extends React.Component {
     if (s.length !== 0) {
       // The newest addition should always be at the end of the array.
       const newRole = s[s.length - 1];
+
       if (newRole.customOption) {
         // Open modal to add a new role.
         this.setState(prevState => ({
@@ -153,12 +170,46 @@ class NewShiftPage extends React.Component {
         this.toggleRolesModal();
       }
     }
-    this.setState(prevState => ({
-      data: {
-        ...prevState.data,
-        roles: s
+
+    // When a new role is added, its initial number is 0.
+    // Map existing roles with their numbers. If a role has been deleted, it is not in this list.
+    this.setState(prevState => {
+      const { data: prevData } = prevState;
+      const { roles: prevRoles } = prevData;
+
+      // Map the roles that already exist
+      const newRoles = [];
+      if (prevRoles.length !== 0) {
+        // newRoles = s.map(name => prevRoles.find(p => p.name === name));
+        s.forEach(name => {
+          const toBeAdded = prevRoles.find(p => p.name === name);
+          if (toBeAdded) {
+            newRoles.push(toBeAdded);
+          }
+        });
       }
-    }));
+
+      console.log('newroles', newRoles);
+      console.log('s', s);
+      console.log('prevroles', prevRoles);
+
+      if (prevRoles.length < s.length) {
+        // Then a new role has been added.
+        // Add the new role.
+        newRoles.push({
+          name: s[s.length - 1],
+          number: 0
+        });
+      }
+
+      console.log(newRoles);
+      return {
+        data: {
+          ...prevState.data,
+          roles: newRoles
+        }
+      };
+    });
   };
 
   handleRoleSubmit = () => {
