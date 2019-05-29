@@ -1,7 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { Typeahead, Token } from 'react-bootstrap-typeahead';
-import axios from 'axios';
+import NewRoleModal from './NewRoleModal';
 import CardLayout from '../CardLayout';
 import history from '../../_helpers/history';
 import authHeader from '../../_helpers/auth-header';
@@ -23,7 +24,12 @@ class NewShiftPage extends React.Component {
         roles: []
       },
       shiftTitleOptions: placeholderShiftTitles, // FIXME
-      roleOptions: []
+      roleOptions: [],
+      newRoleModal: {
+        roleName: '',
+        roleInvolves: '',
+        show: false
+      }
     };
   }
 
@@ -37,13 +43,11 @@ class NewShiftPage extends React.Component {
       .get('/roles', config)
       .then(response => this.setState({ roleOptions: response.data }))
       .catch(err => console.log(err, 'There was a problem.'));
-
-    console.log(this.state);
   }
 
   _renderToken = (option, props, index) => (
-    <Token key={index} style={{}} onRemove={props.onRemove}>
-      <Row>
+    <Token key={index} onRemove={props.onRemove}>
+      <Row onMouseDown={console.log}>
         <Col
           md="auto"
           style={{
@@ -53,7 +57,7 @@ class NewShiftPage extends React.Component {
             justifyContent: 'center'
           }}
         >
-          {option.label ? option.label : option}
+          {option.customOption ? option.label : option}
         </Col>
         <Col
           style={{
@@ -62,13 +66,21 @@ class NewShiftPage extends React.Component {
           }}
         >
           <Form.Control
+            data-index={index}
             type="number"
+            min="1"
+            onChange={this.handleRoleNumber}
             style={{ height: '1.4rem', textAlign: 'center' }}
           />
         </Col>
+        {/* Update role with index=index with number. */}
       </Row>
     </Token>
   );
+
+  handleRoleNumber = e => {
+    console.log(e.currentTarget.props);
+  };
 
   handleDataChange = e => {
     const { name, value } = e.target;
@@ -88,14 +100,18 @@ class NewShiftPage extends React.Component {
     // TODO validation
 
     const { data, roleOptions } = this.state;
+    console.log(data);
 
     // Map roles to role ids
     // const roleIds = data.roles.map(r => roleOptions[r]);
 
     // Map roles to role IDs.
-    const roleIds = data.roles.map(
-      roleName => roleOptions.find(item => item.name === roleName).id
-    );
+
+    // If it as existing role, it needs to be mapped to the ID of one of the roleOptions.
+    const roles = data.roles.map(role => ({
+      roleId: roleOptions.find(item => item.name === role.name).id,
+      number: role.number
+    }));
 
     const config = { headers: authHeader() };
 
@@ -106,38 +122,117 @@ class NewShiftPage extends React.Component {
       start: data.startTime,
       stop: data.endTime,
       postcode: data.location,
-      roles: roleIds
+      rolesRequired: roles
     };
 
     axios.post('/shifts', postData, config).then(history.push('/'));
   };
 
+  toggleRolesModal = () =>
+    this.setState(({ newRoleModal }) => ({
+      newRoleModal: {
+        roleName: newRoleModal.roleName,
+        show: !newRoleModal.show
+      }
+    }));
+
   handleRolesChange = s => {
-    const newElementObject = s[s.length - 1];
-    const newElement = newElementObject.label
+    // s is the array of roles currently in the box.
+    // If we have a new role, we need to open a modal.
+    if (s.length !== 0) {
+      // The newest addition should always be at the end of the array.
+      const newRole = s[s.length - 1];
+      if (newRole.customOption) {
+        // Open modal to add a new role.
+        this.setState(prevState => ({
+          newRoleModal: { roleName: newRole.label.trim(), show: prevState.show }
+        }));
+        this.toggleRolesModal();
+      }
+    }
+
+    this.setState(prevState => ({
+      data: {
+        ...prevState.data,
+        roles: s
+      }
+    }));
+  };
+
+  handleRoleSubmit = () => {
+    const config = {
+      headers: authHeader()
+    };
+
+    const { newRoleModal } = this.state;
+    const { roleName, roleInvolves } = newRoleModal;
+
+    const data = {
+      name: roleName,
+      involves: roleInvolves
+    };
+    // 1. Create new role with post request
+    axios
+      .post('/roles', data, config)
+      .then(({ data: respData }) =>
+        // 2. Add to role options
+        this.setState(prevState => {
+          const newOptions = prevState.roleOptions.push({
+            name: respData.name,
+            involves: respData.involves
+          });
+
+          return {
+            newOptions
+          };
+        })
+      )
+      .catch(console.log('OH NO'));
+
+    // 3. Close modal
+    this.toggleRolesModal();
+  };
+
+  handleDescriptionChange = e => {
+    this.setState(prevState => ({
+      newRoleModal: {
+        ...prevState.data,
+        description: e.target.value
+      }
+    }));
+  };
+
+  handleRoleCancel = () => {
+    // 1. Close modal
+    this.toggleRolesModal();
+    // 2. Remove new role
+
+    this.setState(prevState => ({
+      data: {
+        ...prevState.data,
+        roles: prevState.data.roles.pop()
+      }
+    }));
+  };
+
+  handleShiftTitleChange = s => {
+    const newElementObject = s[0];
+    const newElement = newElementObject.customOption
       ? newElementObject.label
       : newElementObject;
 
     this.setState(prevState => ({
       data: {
         ...prevState.data,
-        roles: prevState.data.roles.concat(newElement)
-      }
-    }));
-  };
-
-  handleShiftTitleChange = s => {
-    this.setState(prevState => ({
-      data: {
-        ...prevState.data,
-        title: s[0]
+        title: newElement
       }
     }));
   };
 
   render() {
-    const { data, shiftTitleOptions, roleOptions } = this.state;
+    const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
     const { title, description } = data;
+    const { roleName, show } = newRoleModal;
 
     return (
       <CardLayout title="New Shift">
@@ -230,6 +325,8 @@ class NewShiftPage extends React.Component {
               allowNew
               multiple
               onChange={this.handleRolesChange}
+              selectHintOnEnter
+              onActiveItemChange={s => console.log(s)}
             />
           </Form.Group>
           {/* Button boi */}
@@ -239,8 +336,16 @@ class NewShiftPage extends React.Component {
             </Button>
           </div>
         </Form>
+        <NewRoleModal
+          roleName={roleName}
+          show={show}
+          onHide={this.toggleRolesModal}
+          handleRoleSubmit={this.handleRoleSubmit}
+          handleRoleCancel={this.handleRoleCancel}
+        />
       </CardLayout>
     );
   }
 }
+
 export default NewShiftPage;
