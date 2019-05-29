@@ -6,6 +6,9 @@ import NewRoleModal from './NewRoleModal';
 import CardLayout from '../CardLayout';
 import history from '../../_helpers/history';
 import authHeader from '../../_helpers/auth-header';
+import TitleForm from '../forms/TitleForm';
+import DescriptionForm from '../forms/DescriptionForm';
+import DateTimeForm from '../forms/DateTimeForm';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -150,7 +153,6 @@ class NewShiftPage extends React.Component {
         this.toggleRolesModal();
       }
     }
-
     this.setState(prevState => ({
       data: {
         ...prevState.data,
@@ -239,67 +241,18 @@ class NewShiftPage extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           {/* Title */}
           {/* TODO handle validation */}
-          <Form.Group controlId="titleForm">
-            <Form.Label>Shift Title</Form.Label>
-            <Typeahead // TODO make async
-              id="title"
-              name="shiftTitle"
-              newSelectionPrefix="Add new title: "
-              placeholder="Choose an event title, or create a new one"
-              value={title}
-              allowNew
-              onChange={this.handleShiftTitleChange}
-              options={shiftTitleOptions} // TODO
-            />
-          </Form.Group>
+          <TitleForm
+            title={title}
+            shiftTitleOptions={shiftTitleOptions}
+            handleChange={this.handleShiftTitleChange}
+          />
           {/* Description */}
-          <Form.Group>
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              id="description"
-              name="description"
-              as="textarea"
-              placeholder="Enter shift description"
-              rows="3"
-              value={description}
-              onChange={this.handleDataChange}
-            />
-          </Form.Group>
-          <Form.Row>
-            {/* Date */}
-            <Form.Group as={Col}>
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                id="date"
-                name="date"
-                onChange={this.handleDataChange}
-                type="date"
-              />
-            </Form.Group>
-            {/* Time */}
-            <Form.Group as={Col}>
-              <Row>
-                <Col>
-                  <Form.Label>Start</Form.Label>
-                  <Form.Control
-                    id="start-time"
-                    name="startTime"
-                    type="time"
-                    onChange={this.handleDataChange}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>End</Form.Label>
-                  <Form.Control
-                    id="end-time"
-                    name="endTime"
-                    type="time"
-                    onChange={this.handleDataChange}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-          </Form.Row>
+          <DescriptionForm
+            description={description}
+            handleChange={this.handleDataChange}
+          />
+          {/* Date and Time */}
+          <DateTimeForm handleChange={this.handleDataChange} />
           {/* Location */}
           <Form.Group>
             <Form.Label>Location</Form.Label>
