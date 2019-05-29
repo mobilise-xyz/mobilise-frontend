@@ -220,11 +220,11 @@ class NewShiftPage extends React.Component {
       .then(({ data: respData }) =>
         // 2. Add to role options
         this.setState(prevState => {
-          const newOptions = prevState.roleOptions.push({
+          const newOptions = prevState.roleOptions.slice();
+          newOptions.push({
             name: respData.name,
             involves: respData.involves
           });
-          console.log(newOptions);
           return {
             roleOptions: newOptions
           };
@@ -271,6 +271,7 @@ class NewShiftPage extends React.Component {
 
   render() {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
+    console.log('roleOptions', roleOptions);
     const { title, description } = data;
     const { roleName, roleInvolves, show } = newRoleModal;
 
