@@ -9,6 +9,7 @@ import authHeader from '../../_helpers/auth-header';
 import TitleForm from '../forms/TitleForm';
 import DescriptionForm from '../forms/DescriptionForm';
 import DateTimeForm from '../forms/DateTimeForm';
+import './NewShiftPage.css';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -82,23 +83,17 @@ class NewShiftPage extends React.Component {
   );
 
   handleRoleNumber = e => {
+    // Find the role name in roles, and then set the corresponding role
+    // number.
     const { name, value } = e.target;
-
-    // Get the role corresponding to this
-    console.log(`${name} : ${value}`);
 
     const { data } = this.state;
     const { roles } = data;
-
-    console.log(roles);
 
     const roleToUpdate = roles.find(r => r.name === name);
     if (roleToUpdate) {
       roleToUpdate.number = value;
     }
-
-    // Find the role name in roles, and then set the corresponding role
-    // number.
   };
 
   handleDataChange = e => {
@@ -118,19 +113,12 @@ class NewShiftPage extends React.Component {
 
     // TODO validation
 
-    const { data, roleOptions } = this.state;
-    console.log(data);
+    const { data, roles } = this.state;
 
     // Map roles to role ids
     // const roleIds = data.roles.map(r => roleOptions[r]);
 
     // Map roles to role IDs.
-
-    // If it as existing role, it needs to be mapped to the ID of one of the roleOptions.
-    const roles = data.roleNames.map(role => ({
-      roleId: roleOptions.find(item => item.name === role.name).id,
-      number: role.number
-    }));
 
     const config = { headers: authHeader() };
 
@@ -189,10 +177,6 @@ class NewShiftPage extends React.Component {
         });
       }
 
-      console.log('newroles', newRoles);
-      console.log('s', s);
-      console.log('prevroles', prevRoles);
-
       if (prevRoles.length < s.length) {
         // Then a new role has been added.
         // Add the new role.
@@ -202,7 +186,6 @@ class NewShiftPage extends React.Component {
         });
       }
 
-      console.log(newRoles);
       return {
         data: {
           ...prevState.data,
