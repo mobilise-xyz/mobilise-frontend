@@ -5,6 +5,7 @@ import axios from 'axios';
 import CardLayout from '../CardLayout';
 import history from '../../_helpers/history';
 import authHeader from '../../_helpers/auth-header';
+import TitleForm from '../forms/TitleForm';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -144,19 +145,11 @@ class NewShiftPage extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           {/* Title */}
           {/* TODO handle validation */}
-          <Form.Group controlId="titleForm">
-            <Form.Label>Shift Title</Form.Label>
-            <Typeahead // TODO make async
-              id="title"
-              name="shiftTitle"
-              newSelectionPrefix="Add new title: "
-              placeholder="Choose an event title, or create a new one"
-              value={title}
-              allowNew
-              onChange={this.handleShiftTitleChange}
-              options={shiftTitleOptions} // TODO
-            />
-          </Form.Group>
+          <TitleForm
+            title={title}
+            shiftTitleOptions={shiftTitleOptions}
+            handleChange={this.handleShiftTitleChange}
+          />
           {/* Description */}
           <Form.Group>
             <Form.Label>Description</Form.Label>
