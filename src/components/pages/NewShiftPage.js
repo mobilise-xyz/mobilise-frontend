@@ -6,6 +6,7 @@ import CardLayout from '../CardLayout';
 import history from '../../_helpers/history';
 import authHeader from '../../_helpers/auth-header';
 import TitleForm from '../forms/TitleForm';
+import DescriptionForm from '../forms/DescriptionForm';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -151,18 +152,10 @@ class NewShiftPage extends React.Component {
             handleChange={this.handleShiftTitleChange}
           />
           {/* Description */}
-          <Form.Group>
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              id="description"
-              name="description"
-              as="textarea"
-              placeholder="Enter shift description"
-              rows="3"
-              value={description}
-              onChange={this.handleDataChange}
-            />
-          </Form.Group>
+          <DescriptionForm
+            description={description}
+            handleChange={this.handleDataChange}
+          />
           <Form.Row>
             {/* Date */}
             <Form.Group as={Col}>
