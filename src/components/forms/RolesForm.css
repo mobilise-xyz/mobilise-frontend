@@ -1,0 +1,16 @@
+.role-name {
+  padding: 0 0.2rem 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.role-num-col {
+  padding: 0 1rem 0 0.2rem;
+  width: 3.2rem;
+}
+
+.role-num-form {
+  height: 1.4rem;
+  text-align: center;
+}
