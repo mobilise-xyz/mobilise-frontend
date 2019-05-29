@@ -247,12 +247,17 @@ class NewShiftPage extends React.Component {
     this.toggleRolesModal();
     // 2. Remove new role
 
-    this.setState(prevState => ({
-      data: {
-        ...prevState.data,
-        roles: prevState.data.roles.pop()
-      }
-    }));
+    this.setState(({ data: prevData }) => {
+      const prevRoles = prevData.roles.slice();
+      prevRoles.pop();
+      console.log(prevRoles);
+      return {
+        data: {
+          ...prevData,
+          roles: prevRoles
+        }
+      };
+    });
   };
 
   handleShiftTitleChange = s => {
@@ -271,8 +276,7 @@ class NewShiftPage extends React.Component {
 
   render() {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
-    console.log('roleOptions', roleOptions);
-    const { title, description } = data;
+    const { title, description, roles } = data;
     const { roleName, roleInvolves, show } = newRoleModal;
 
     return (
@@ -306,6 +310,7 @@ class NewShiftPage extends React.Component {
               allowNew
               multiple
               onChange={this.handleRolesChange}
+              selected={roles.map(r => r.name)}
               selectHintOnEnter
               onActiveItemChange={s => console.log(s)}
             />
