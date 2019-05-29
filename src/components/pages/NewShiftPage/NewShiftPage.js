@@ -9,8 +9,8 @@ import authHeader from '../../../_helpers/auth-header';
 import TitleForm from '../../forms/TitleForm';
 import DescriptionForm from '../../forms/DescriptionForm';
 import DateTimeForm from '../../forms/DateTimeForm';
-import './NewShiftPage.css';
 import LocationInput from '../../LocationInput/LocationInput';
+import './NewShiftPage.css';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -317,8 +317,8 @@ class NewShiftPage extends React.Component {
           </Form.Group>
           {/* Button boi */}
           <div className="text-center" style={{ margin: 'auto' }}>
-            <Button variant="primary" type="submit">
-              Submit
+            <Button variant="outline-primary" type="submit" block>
+              Confirm Shift
             </Button>
           </div>
         </Form>

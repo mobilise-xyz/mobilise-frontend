@@ -1,9 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Spinner } from 'react-bootstrap';
-import Layout from '../Layout/Layout';
-import ShiftList from '../ShiftList';
-import authHeader from '../../_helpers/auth-header';
+import { Spinner, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { LinkContainer } from 'react-router-bootstrap';
+import Layout from '../../Layout/Layout';
+import ShiftList from '../../ShiftList';
+import authHeader from '../../../_helpers/auth-header';
 
 class ShiftsPage extends React.Component {
   state = {
@@ -43,6 +46,15 @@ class ShiftsPage extends React.Component {
 
     return (
       <Layout>
+        <LinkContainer
+          exact
+          to="new-shift"
+          style={{ position: 'sticky', left: '80%' }}
+        >
+          <Button variant="outline-primary">
+            {<FontAwesomeIcon icon={faPlus} />} Add Shift
+          </Button>
+        </LinkContainer>
         <ShiftList
           heading={<DateHeading weekday="Recommended" />}
           shifts={recommendedShifts}
