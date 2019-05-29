@@ -7,6 +7,7 @@ import history from '../../_helpers/history';
 import authHeader from '../../_helpers/auth-header';
 import TitleForm from '../forms/TitleForm';
 import DescriptionForm from '../forms/DescriptionForm';
+import DateTimeForm from '../forms/DateTimeForm';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -156,41 +157,8 @@ class NewShiftPage extends React.Component {
             description={description}
             handleChange={this.handleDataChange}
           />
-          <Form.Row>
-            {/* Date */}
-            <Form.Group as={Col}>
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                id="date"
-                name="date"
-                onChange={this.handleDataChange}
-                type="date"
-              />
-            </Form.Group>
-            {/* Time */}
-            <Form.Group as={Col}>
-              <Row>
-                <Col>
-                  <Form.Label>Start</Form.Label>
-                  <Form.Control
-                    id="start-time"
-                    name="startTime"
-                    type="time"
-                    onChange={this.handleDataChange}
-                  />
-                </Col>
-                <Col>
-                  <Form.Label>End</Form.Label>
-                  <Form.Control
-                    id="end-time"
-                    name="endTime"
-                    type="time"
-                    onChange={this.handleDataChange}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-          </Form.Row>
+          {/* Date and Time */}
+          <DateTimeForm handleChange={this.handleDataChange} />
           {/* Location */}
           <Form.Group>
             <Form.Label>Location</Form.Label>
