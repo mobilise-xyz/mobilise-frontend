@@ -34,11 +34,12 @@ class ShiftsPage extends React.Component {
     await axios
       .get('/shifts', config)
       .then(r => this.setState({ shifts: r.data }))
-      .catch(() => console.log('Something went wrong!'));
+      .catch(err => console.log(err)); // TODO go to error page
   }
 
   render() {
     const { shifts, recommendedShifts } = this.state;
+    console.log(shifts);
 
     return (
       <Layout>

@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router';
 import PrivateRoute from './components/PrivateRoute';
 import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
-import NewShiftPage from './components/pages/NewShiftPage';
+import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
 import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
 import SettingsPage from './components/pages/SettingsPage';
