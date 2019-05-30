@@ -5,7 +5,7 @@ import './RolesForm.css';
 
 class RolesForm extends React.Component {
   _renderToken = (option, props, index) => (
-    <Token key={index} style={{}} onRemove={props.onRemove}>
+    <Token key={index} onRemove={props.onRemove}>
       <Row>
         <Col md="auto" className="role-name">
           {option.label ? option.label : option}
