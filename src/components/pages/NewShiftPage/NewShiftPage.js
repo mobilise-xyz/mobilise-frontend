@@ -13,7 +13,6 @@ import TitleForm from '../../forms/TitleForm';
 import DescriptionForm from '../../forms/DescriptionForm';
 import DateTimeForm from '../../forms/DateTimeForm';
 import LocationInput from '../../LocationInput/LocationInput';
-import './NewShiftPage.css';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -78,7 +77,7 @@ class NewShiftPage extends React.Component {
           }}
         >
           <Form.Control
-            name={option}
+            name={option.customOption ? option.label : option}
             type="number"
             min="1"
             onChange={this.handleRoleNumber}
@@ -99,6 +98,8 @@ class NewShiftPage extends React.Component {
     const { roles } = data;
 
     const roleToUpdate = roles.find(r => r.name === name);
+    console.log(name);
+    console.log(roleToUpdate);
     if (roleToUpdate) {
       roleToUpdate.number = value;
     }
@@ -154,18 +155,18 @@ class NewShiftPage extends React.Component {
   handleRolesChange = s => {
     // s is the array of roles currently in the box.
     // If we have a new role, we need to open a modal.
-    if (s.length !== 0) {
-      // The newest addition should always be at the end of the array.
-      let newRole = s[s.length - 1];
+    // The newest addition should always be at the end of the array.
 
-      if (newRole.customOption) {
-        newRole = newRole.label;
-        // Open modal to add a new role.
-        this.setState(prevState => ({
-          newRoleModal: { roleName: newRole.trim(), show: prevState.show }
-        }));
-        this.toggleRolesModal();
-      }
+    let newRole = s.length === 0 ? '' : s[s.length - 1];
+
+    if (newRole.customOption) {
+      newRole = newRole.label;
+      console.log(newRole);
+      // Open modal to add a new role.
+      this.setState(prevState => ({
+        newRoleModal: { roleName: newRole.trim(), show: prevState.show }
+      }));
+      this.toggleRolesModal();
     }
 
     // When a new role is added, its initial number is 0.
@@ -190,7 +191,7 @@ class NewShiftPage extends React.Component {
         // Then a new role has been added.
         // Add the new role.
         newRoles.push({
-          name: s[s.length - 1],
+          name: newRole,
           number: 0
         });
       }
@@ -237,11 +238,13 @@ class NewShiftPage extends React.Component {
     // 3. Close modal
     this.toggleRolesModal();
 
-    // 4. Reset state
+    // 4. Reset state of role modal
     this.setState(prevState => ({
       ...prevState,
       newRoleModal: {}
     }));
+
+    console.log(this.state);
   };
 
   handleRoleCancel = () => {
@@ -263,15 +266,18 @@ class NewShiftPage extends React.Component {
   };
 
   handleShiftTitleChange = s => {
-    const newElementObject = s[0];
-    const newElement = newElementObject.customOption
-      ? newElementObject.label
-      : newElementObject;
+    let newTitle = '';
+    if (s.length !== 0) {
+      const newElementObject = s[0];
+      newTitle = newElementObject.customOption
+        ? newElementObject.label
+        : newElementObject;
+    }
 
     this.setState(prevState => ({
       data: {
         ...prevState.data,
-        title: newElement
+        title: newTitle
       }
     }));
   };
