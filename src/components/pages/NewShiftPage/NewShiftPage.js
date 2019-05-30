@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { Typeahead, Token } from 'react-bootstrap-typeahead';
+import { LinkContainer } from 'react-router-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import NewRoleModal from '../NewRoleModal';
 import CardLayout from '../../CardLayout';
 import history from '../../../_helpers/history';
@@ -271,8 +274,16 @@ class NewShiftPage extends React.Component {
     const { title, description } = data;
     const { roleName, show } = newRoleModal;
 
+    const backBtn = (
+      <LinkContainer exact to="/" style={{ position: 'sticky', left: '80%' }}>
+        <Button variant="outline-secondary">
+          {<FontAwesomeIcon icon={faAngleLeft} />} Back
+        </Button>
+      </LinkContainer>
+    );
+
     return (
-      <CardLayout title="New Shift">
+      <CardLayout title="New Shift" backBtn={backBtn}>
         <Form onSubmit={this.handleSubmit}>
           {/* Title */}
           {/* TODO handle validation */}
