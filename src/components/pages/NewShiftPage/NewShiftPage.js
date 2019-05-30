@@ -264,15 +264,18 @@ class NewShiftPage extends React.Component {
   };
 
   handleShiftTitleChange = s => {
-    const newElementObject = s[0];
-    const newElement = newElementObject.customOption
-      ? newElementObject.label
-      : newElementObject;
+    let newTitle = '';
+    if (s.length !== 0) {
+      const newElementObject = s[0];
+      newTitle = newElementObject.customOption
+        ? newElementObject.label
+        : newElementObject;
+    }
 
     this.setState(prevState => ({
       data: {
         ...prevState.data,
-        title: newElement
+        title: newTitle
       }
     }));
   };

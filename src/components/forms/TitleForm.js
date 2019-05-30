@@ -10,9 +10,9 @@ const TitleForm = props => {
       <Typeahead // TODO make async
         id="title"
         name="shiftTitle"
+        value={title}
         newSelectionPrefix="Add new title: "
         placeholder="Choose an event title, or create a new one"
-        value={title}
         allowNew
         onChange={handleChange}
         options={shiftTitleOptions} // TODO
