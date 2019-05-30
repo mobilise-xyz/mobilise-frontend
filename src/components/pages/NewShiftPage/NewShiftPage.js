@@ -78,7 +78,7 @@ class NewShiftPage extends React.Component {
           }}
         >
           <Form.Control
-            name={option}
+            name={option.customOption ? option.label : option}
             type="number"
             min="1"
             onChange={this.handleRoleNumber}
@@ -99,6 +99,8 @@ class NewShiftPage extends React.Component {
     const { roles } = data;
 
     const roleToUpdate = roles.find(r => r.name === name);
+    console.log(name);
+    console.log(roleToUpdate);
     if (roleToUpdate) {
       roleToUpdate.number = value;
     }
