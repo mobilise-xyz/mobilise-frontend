@@ -312,25 +312,27 @@ class NewShiftPage extends React.Component {
           {/* Title */}
           {/* TODO handle validation */}
           <TitleForm
+            id="title"
             title={title}
             shiftTitleOptions={shiftTitleOptions}
             handleChange={this.handleShiftTitleChange}
           />
           {/* Description */}
           <DescriptionForm
+            id="description"
             description={description}
             handleChange={this.handleDataChange}
           />
           {/* Date and Time */}
-          <DateTimeForm handleChange={this.handleDataChange} />
+          <DateTimeForm id="datetime" handleChange={this.handleDataChange} />
           {/* Location */}
-          <LocationInput handleChange={this.handleDataChange} />
+          <LocationInput id="location" handleChange={this.handleDataChange} />
           {/* Roles */}
           <Form.Group controlId="rolesForm">
             <Form.Label>Roles</Form.Label>
             <Typeahead // TODO make async & SORT OUT CSS so letters like g dont get cut off.
-              renderToken={this._renderToken}
               id="roles"
+              renderToken={this._renderToken}
               placeholder="Add available roles for shift"
               newSelectionPrefix="Add new role:  "
               options={roleOptions.map(r => r.name)}
@@ -344,7 +346,12 @@ class NewShiftPage extends React.Component {
           </Form.Group>
           {/* Button boi */}
           <div className="text-center" style={{ margin: 'auto' }}>
-            <Button variant="outline-primary" type="submit" block>
+            <Button
+              id="submitbutton"
+              variant="outline-primary"
+              type="submit"
+              block
+            >
               Confirm Shift
             </Button>
           </div>

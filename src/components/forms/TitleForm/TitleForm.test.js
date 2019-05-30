@@ -20,7 +20,6 @@ describe('Title Form Component', () => {
   });
 
   it('should contain a typeahead', () => {
-    console.log(wrapper.debug());
     expect(wrapper.find('TypeaheadComponent')).toHaveLength(1);
   });
 });
