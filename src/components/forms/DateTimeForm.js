@@ -13,6 +13,7 @@ const DateTimeForm = props => {
           name="date"
           onChange={handleChange}
           type="date"
+          required
         />
       </Form.Group>
       {/* Time */}

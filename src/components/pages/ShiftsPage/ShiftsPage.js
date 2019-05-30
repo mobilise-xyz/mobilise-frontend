@@ -23,7 +23,13 @@ class ShiftsPage extends React.Component {
         )
       }
     ],
-    recommendedShifts: [{ title: 'test', description: 'Test', id: 444 }] // FIXME
+    recommendedShifts: [
+      {
+        title: 'Chelsea Flower Show',
+        description: 'Raising awareness for food shortage.',
+        id: 444
+      }
+    ] // FIXME
   };
 
   // TODO Handle exception properly.
