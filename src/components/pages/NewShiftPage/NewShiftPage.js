@@ -56,38 +56,41 @@ class NewShiftPage extends React.Component {
       .catch(err => console.log(err, 'There was a problem.'));
   }
 
-  _renderToken = (option, props, index) => (
-    <Token key={index} onRemove={props.onRemove}>
-      <Row>
-        <Col
-          md="auto"
-          style={{
-            padding: '0 0.2rem 0 1rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          {option.customOption ? option.label : option}
-        </Col>
-        <Col
-          style={{
-            padding: '0 1rem 0 0.2rem',
-            width: '3.5rem'
-          }}
-        >
-          <Form.Control
-            name={option.customOption ? option.label : option}
-            type="number"
-            min="1"
-            onChange={this.handleRoleNumber}
-            style={{ height: '1.4rem', textAlign: 'center' }}
-          />
-        </Col>
-        {/* Update role with index=index with number. */}
-      </Row>
-    </Token>
-  );
+  _renderToken = (option, props, index) => {
+    const roleName = option.customOption ? option.label : option;
+    return (
+      <Token key={index} onRemove={props.onRemove}>
+        <Row>
+          <Col
+            md="auto"
+            style={{
+              padding: '0 0.2rem 0 1rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            {roleName}
+          </Col>
+          <Col
+            style={{
+              padding: '0 1rem 0 0.2rem',
+              width: '3.5rem'
+            }}
+          >
+            <Form.Control
+              name={roleName}
+              type="number"
+              min={1}
+              onChange={this.handleRoleNumber}
+              style={{ height: '1.4rem', textAlign: 'center' }}
+            />
+          </Col>
+          {/* Update role with index=index with number. */}
+        </Row>
+      </Token>
+    );
+  };
 
   handleRoleNumber = e => {
     // Find the role name in roles, and then set the corresponding role
@@ -97,12 +100,14 @@ class NewShiftPage extends React.Component {
     const { data } = this.state;
     const { roles } = data;
 
-    const roleToUpdate = roles.find(r => r.name === name);
-    console.log(name);
-    console.log(roleToUpdate);
+    const roleToUpdate = roles.find(r => r.roleName === name);
+
     if (roleToUpdate) {
-      roleToUpdate.number = value;
+      roleToUpdate.number = parseInt(value, 10);
     }
+    console.log('name', name);
+    console.log('value', value);
+    console.log('roleToUpdate', roleToUpdate);
   };
 
   handleDataChange = e => {
