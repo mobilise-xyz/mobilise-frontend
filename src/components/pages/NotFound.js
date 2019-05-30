@@ -11,7 +11,7 @@ const NotFound = () => (
       </Col>
     </Row>
     <Row className="pt-5">
-      <Col style={{ 'text-align': 'center' }}>
+      <Col style={{ textAlign: 'center' }}>
         This is not the page you are looking for.
       </Col>
     </Row>
