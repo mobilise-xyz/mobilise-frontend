@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card, Modal } from 'react-bootstrap';
+import { Card, Modal, Container } from 'react-bootstrap';
 import './ShiftCard.css';
+import RoleBadge from './RoleBadge';
 
 // shiftData consists of title, description, date, start, stop, postcode(?)
 
-class ShiftCards extends React.Component {
+class ShiftCard extends React.Component {
   state = {
     show: false
   };
@@ -14,7 +15,7 @@ class ShiftCards extends React.Component {
   render() {
     const { shiftData } = this.props;
     const { show } = this.state;
-
+    console.log(shiftData);
     return (
       <Card title={shiftData.title} style={{ width: '100%', margin: 'auto' }}>
         <Card.Body>
@@ -45,8 +46,15 @@ const ShiftModal = ({ shiftData, onHide, show }) => (
       <Modal.Title>{shiftData.title}</Modal.Title>
     </Modal.Header>
 
-    <Modal.Body>{shiftData.description}</Modal.Body>
+    <Modal.Body>
+      <p>{shiftData.description}</p>
+      <Container>
+        {shiftData.roles.map(r => (
+          <RoleBadge name={r.name} number={r.number} />
+        ))}
+      </Container>
+    </Modal.Body>
   </Modal>
 );
 
-export default ShiftCards;
+export default ShiftCard;

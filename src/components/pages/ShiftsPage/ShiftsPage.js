@@ -20,20 +20,21 @@ class ShiftsPage extends React.Component {
               <span className="sr-only">Loading...</span>
             </Spinner>
           </div>
-        )
+        ),
+        roles: [{ name: 'test', number: 2, involves: 'hi' }]
       }
     ],
     recommendedShifts: [
       {
         title: 'Chelsea Flower Show',
         description: 'Raising awareness for food shortage.',
+        roles: [],
         id: 444
       }
     ] // FIXME
   };
 
   // TODO Handle exception properly.
-  // TODO Set correct API endpoint.
   async componentDidMount() {
     // Get all shifts
     const config = {
@@ -42,7 +43,10 @@ class ShiftsPage extends React.Component {
 
     await axios
       .get('/shifts', config)
-      .then(r => this.setState({ shifts: r.data }))
+      .then(r => {
+        console.log(r);
+        this.setState({ shifts: r.data });
+      })
       .catch(err => console.log(err)); // TODO go to error page
   }
 

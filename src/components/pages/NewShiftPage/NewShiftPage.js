@@ -121,7 +121,7 @@ class NewShiftPage extends React.Component {
 
     // TODO validation
 
-    const { data, roles } = this.state;
+    const { data } = this.state;
 
     // Map roles to role ids
     // const roleIds = data.roles.map(r => roleOptions[r]);
@@ -137,11 +137,10 @@ class NewShiftPage extends React.Component {
       start: data.startTime,
       stop: data.endTime,
       postcode: data.location,
-      rolesRequired: roles
+      rolesRequired: data.roles
     };
-
     axios.post('/shifts', postData, config).then(history.push('/'));
-    console.dir(this.state);
+    // TODO success toast here.
   };
 
   toggleRolesModal = () =>
