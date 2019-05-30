@@ -120,6 +120,8 @@ class NewShiftPage extends React.Component {
     // Submit this
     e.preventDefault();
 
+    console.log('State on submit', this.state);
+
     // TODO validation
 
     const { data } = this.state;
@@ -140,8 +142,12 @@ class NewShiftPage extends React.Component {
       postcode: data.location,
       rolesRequired: data.roles
     };
-    axios.post('/shifts', postData, config).then(history.push('/'));
+    axios.post('/shifts', postData, config).then(resp => {
+      console.log('resp', resp);
+      history.push('/');
+    });
     // TODO success toast here.
+    console.log('postData', postData);
   };
 
   toggleRolesModal = () =>
@@ -180,7 +186,7 @@ class NewShiftPage extends React.Component {
       if (prevRoles.length !== 0) {
         // newRoles = s.map(name => prevRoles.find(p => p.name === name));
         s.forEach(name => {
-          const toBeAdded = prevRoles.find(p => p.name === name);
+          const toBeAdded = prevRoles.find(p => p.roleName === name);
           if (toBeAdded) {
             newRoles.push(toBeAdded);
           }
@@ -191,7 +197,7 @@ class NewShiftPage extends React.Component {
         // Then a new role has been added.
         // Add the new role.
         newRoles.push({
-          name: newRole,
+          roleName: newRole,
           number: 0
         });
       }
@@ -255,7 +261,7 @@ class NewShiftPage extends React.Component {
     this.setState(({ data: prevData }) => {
       const prevRoles = prevData.roles.slice();
       prevRoles.pop();
-      console.log(prevRoles);
+      console.log('prevRoles', prevRoles);
       return {
         data: {
           ...prevData,
