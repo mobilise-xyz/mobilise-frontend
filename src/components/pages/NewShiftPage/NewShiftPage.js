@@ -13,7 +13,6 @@ import TitleForm from '../../forms/TitleForm';
 import DescriptionForm from '../../forms/DescriptionForm';
 import DateTimeForm from '../../forms/DateTimeForm';
 import LocationInput from '../../LocationInput/LocationInput';
-import './NewShiftPage.css';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
