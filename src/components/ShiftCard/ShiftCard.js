@@ -15,7 +15,6 @@ class ShiftCard extends React.Component {
   render() {
     const { shiftData } = this.props;
     const { show } = this.state;
-    console.log(shiftData);
     return (
       <Card title={shiftData.title} style={{ width: '100%', margin: 'auto' }}>
         <Card.Body>
@@ -49,9 +48,16 @@ const ShiftModal = ({ shiftData, onHide, show }) => (
     <Modal.Body>
       <p>{shiftData.description}</p>
       <Container>
-        {shiftData.roles.map(r => (
-          <RoleBadge name={r.name} number={r.number} />
-        ))}
+        {shiftData.roles.map(r => {
+          console.log('role', r);
+          return (
+            <RoleBadge
+              key={shiftData.id}
+              name={r.name}
+              number={r.ShiftRole.numberRequired}
+            />
+          );
+        })}
       </Container>
     </Modal.Body>
   </Modal>

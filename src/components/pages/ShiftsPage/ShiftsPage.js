@@ -21,7 +21,14 @@ class ShiftsPage extends React.Component {
             </Spinner>
           </div>
         ),
-        roles: [{ name: 'test', number: 2, involves: 'hi' }]
+        roles: [
+          {
+            name: 'test',
+            number: 2,
+            involves: 'hi',
+            ShiftRole: { numberRequired: 0 }
+          }
+        ]
       }
     ],
     recommendedShifts: [
