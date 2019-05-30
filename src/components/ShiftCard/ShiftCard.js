@@ -49,48 +49,69 @@ const ShiftModal = ({ shiftData, onHide, show }) => (
     <Modal.Body>
       {/* Top row */}
       <Row>
-        <Col md={4} />
+        <Col md={4}>
+          <h6>Location</h6>
+          <p>{shiftData.address}</p>
+        </Col>
         <Col md={4}>
           <h6>Description</h6>
           <p>{shiftData.description}</p>
-          <h6>Date</h6>
         </Col>
         <Col md={4}>
           <h6>Sign on!</h6>
-          {shiftData.roles.map(r => {
-            return (
-              <RoleBadge
-                key={shiftData.id + r.name}
-                name={r.name}
-                number={r.ShiftRole.numberRequired}
-              />
-            );
-          })}
+          <Row>
+            {shiftData.roles.map(r => {
+              return (
+                <RoleBadge
+                  key={shiftData.id + r.name}
+                  name={r.name}
+                  number={r.ShiftRole.numberRequired}
+                />
+              );
+            })}
+          </Row>
         </Col>
       </Row>
       {/* Middle row */}
       <Row>
-        <Col md={4}>{shiftData.address}</Col>
-        <Col md={8}>
+        <Col md={4} />
+        <Col md={4}>
+          <h6>Date</h6>
+
           <p>
             {moment(shiftData.date)
               .local()
               .format('dddd, MMMM Do YYYY')}
           </p>
-          <h6>Start time</h6>
-          <p>
-            {moment(shiftData.start, 'H:m:ss')
-              .local()
-              .format('h:mm a')}
-          </p>
-          <h6>End time</h6>
-          <p>
-            {moment(shiftData.stop, 'H:m:ss')
-              .local()
-              .format('h:mm a')}
-          </p>
         </Col>
         <Col md={4} />
+      </Row>
+      {/* Bottom row */}
+      <Row>
+        <Col md={4} />
+        <Col md={4}>
+          <Row>
+            <Col md="auto">
+              <h6>Start time</h6>
+              <p>
+                {moment(shiftData.start, 'H:m:ss')
+                  .local()
+                  .format('h:mm a')}
+              </p>
+            </Col>
+            <Col md="auto">
+              <h6>End time</h6>
+              <p>
+                {moment(shiftData.stop, 'H:m:ss')
+                  .local()
+                  .format('h:mm a')}
+              </p>
+            </Col>
+          </Row>
+        </Col>
+        <Col md={4}>
+          <h6>Managed by</h6>
+        </Col>
       </Row>
     </Modal.Body>
   </Modal>
