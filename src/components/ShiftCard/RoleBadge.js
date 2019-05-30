@@ -6,7 +6,7 @@ const RoleBadge = ({ name, number, handleBook, booked }) => {
   const value = isBooked ? parseInt(number, 10) + 1 : parseInt(number, 10);
   return (
     <OverlayTrigger
-      trigger="click"
+      trigger="focus"
       placement="right"
       overlay={
         <Popover>
