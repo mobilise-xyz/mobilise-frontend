@@ -15,7 +15,7 @@ class ShiftsPage extends React.Component {
         id: -1,
         title: 'Loading...',
         description: (
-          <div style={{ textAlign: 'center' }}>
+          <div className="shift-spinner">
             <Spinner animation="border" role="status">
               <span className="sr-only">Loading...</span>
             </Spinner>
@@ -62,11 +62,7 @@ class ShiftsPage extends React.Component {
 
     return (
       <Layout>
-        <LinkContainer
-          exact
-          to="new-shift"
-          style={{ position: 'sticky', left: '80%' }}
-        >
+        <LinkContainer exact to="new-shift" className="add-shift-link">
           <Button variant="outline-primary">
             {<FontAwesomeIcon icon={faPlus} />} Add Shift
           </Button>
