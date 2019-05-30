@@ -23,9 +23,8 @@ class ShiftsPage extends React.Component {
         ),
         roles: [
           {
-            name: 'test',
-            number: 2,
-            involves: 'hi',
+            name: 'Loading...',
+            involves: '',
             ShiftRole: { numberRequired: 0 }
           }
         ]
