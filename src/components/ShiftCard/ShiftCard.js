@@ -1,9 +1,10 @@
 import React from 'react';
-import { Card, Modal, Container } from 'react-bootstrap';
+import { Card, Modal, Row, Col } from 'react-bootstrap';
+import moment from 'moment';
 import './ShiftCard.css';
 import RoleBadge from './RoleBadge';
 
-// shiftData consists of title, description, date, start, stop, postcode(?)
+// shiftData consists of title, description, date, start, stop, address
 
 class ShiftCard extends React.Component {
   state = {
@@ -40,25 +41,57 @@ class ShiftCard extends React.Component {
 }
 
 const ShiftModal = ({ shiftData, onHide, show }) => (
-  <Modal show={show} onHide={onHide}>
+  <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
     <Modal.Header>
       <Modal.Title>{shiftData.title}</Modal.Title>
     </Modal.Header>
 
     <Modal.Body>
-      <p>{shiftData.description}</p>
-      <Container>
-        {shiftData.roles.map(r => {
-          console.log('role', r);
-          return (
-            <RoleBadge
-              key={shiftData.id}
-              name={r.name}
-              number={r.ShiftRole.numberRequired}
-            />
-          );
-        })}
-      </Container>
+      {/* Top row */}
+      <Row>
+        <Col md={4} />
+        <Col md={4}>
+          <h6>Description</h6>
+          <p>{shiftData.description}</p>
+          <h6>Date</h6>
+        </Col>
+        <Col md={4}>
+          <h6>Sign on!</h6>
+          {shiftData.roles.map(r => {
+            return (
+              <RoleBadge
+                key={shiftData.id + r.name}
+                name={r.name}
+                number={r.ShiftRole.numberRequired}
+              />
+            );
+          })}
+        </Col>
+      </Row>
+      {/* Middle row */}
+      <Row>
+        <Col md={4}>{shiftData.address}</Col>
+        <Col md={8}>
+          <p>
+            {moment(shiftData.date)
+              .local()
+              .format('dddd, MMMM Do YYYY')}
+          </p>
+          <h6>Start time</h6>
+          <p>
+            {moment(shiftData.start, 'H:m:ss')
+              .local()
+              .format('h:mm a')}
+          </p>
+          <h6>End time</h6>
+          <p>
+            {moment(shiftData.stop, 'H:m:ss')
+              .local()
+              .format('h:mm a')}
+          </p>
+        </Col>
+        <Col md={4} />
+      </Row>
     </Modal.Body>
   </Modal>
 );

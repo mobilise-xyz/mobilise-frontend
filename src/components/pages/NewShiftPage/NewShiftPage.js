@@ -144,7 +144,7 @@ class NewShiftPage extends React.Component {
       date: data.date,
       start: data.startTime,
       stop: data.endTime,
-      postcode: data.location,
+      address: data.location,
       rolesRequired: data.roles
     };
     axios.post('/shifts', postData, config).then(resp => {

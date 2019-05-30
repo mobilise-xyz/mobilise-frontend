@@ -6,3 +6,8 @@
 .shift-card-btn:focus {
   outline: none;
 }
+
+.modal-80w {
+  width: 80%;
+  max-width: none !important;
+}
