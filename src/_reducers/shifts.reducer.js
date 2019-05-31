@@ -37,6 +37,7 @@ const initialState = {
 
 const shifts = (state = initialState, action) => {
   switch (action.type) {
+    // GET
     case shiftsConstants.GETFORUSER_REQUEST || shiftsConstants.GETALL_REQUEST:
       return {
         shifts: state.shifts,

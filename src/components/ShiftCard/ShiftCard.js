@@ -1,18 +1,40 @@
 import React from 'react';
-import { Card, Modal, Row, Col, Button, ButtonToolbar } from 'react-bootstrap';
+import {
+  Card,
+  Modal,
+  Row,
+  Col,
+  Button,
+  ButtonToolbar,
+  Collapse
+} from 'react-bootstrap';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import './ShiftCard.css';
 import RoleBadge from './RoleBadge';
+import shiftActions from '../../_actions/shift.actions';
 
 // shiftData consists of title, description, date, start, stop, address
 
 class ShiftCard extends React.Component {
   state = {
     showModal: false,
-    booked: ''
+    booked: '',
+    deleted: false
   };
 
   toggleModal = () => this.setState(state => ({ showModal: !state.showModal }));
+
+  handleDelete = () => {
+    // Hide the modal
+    this.toggleModal();
+
+    // Perform deletion
+    const { shiftData, dispatch } = this.props;
+    const shiftId = shiftData.id;
+    dispatch(shiftActions.deleteWithId(shiftId));
+    this.setState({ deleted: true });
+  };
 
   handleBook = e => {
     const { name, value } = e.target;
@@ -45,35 +67,53 @@ class ShiftCard extends React.Component {
       showModal,
       booked,
       showBookedOverlay,
-      showUnbookedOverlay
+      showUnbookedOverlay,
+      deleted
     } = this.state;
-    return (
-      <Card title={shiftData.title} style={{ width: '100%', margin: 'auto' }}>
-        <Card.Body>
-          <Card.Title>{shiftData.title}</Card.Title>
-          {shiftData.description}
-        </Card.Body>
-        <button
-          type="button"
-          onClick={this.toggleModal}
-          className="stretched-link shift-card-btn"
-        >
-          <span className="sr-only">Card infomation button</span>
-        </button>
 
-        <ShiftModal
-          shiftData={shiftData}
-          show={showModal}
-          onHide={this.toggleModal}
-          handleBook={this.handleBook}
-          booked={booked}
-          showBookedOverlay={showBookedOverlay}
-          showUnbookedOverlay={showUnbookedOverlay}
-        />
-      </Card>
+    return (
+      <Collapse in={!deleted}>
+        <Card
+          title={shiftData.title}
+          bg={deleted ? 'danger' : 'light'}
+          style={{ width: '100%', margin: 'auto' }}
+        >
+          <Card.Body>
+            <Card.Title>{shiftData.title}</Card.Title>
+            {shiftData.description}
+          </Card.Body>
+          <button
+            type="button"
+            onClick={this.toggleModal}
+            className="stretched-link shift-card-btn"
+          >
+            <span className="sr-only">Card infomation button</span>
+          </button>
+
+          <ShiftModal
+            shiftData={shiftData}
+            show={showModal}
+            onHide={this.toggleModal}
+            handleBook={this.handleBook}
+            booked={booked}
+            showBookedOverlay={showBookedOverlay}
+            showUnbookedOverlay={showUnbookedOverlay}
+            handleDelete={this.handleDelete}
+          />
+        </Card>
+      </Collapse>
     );
   }
 }
+
+function mapStateToProps(state) {
+  const { shift } = state;
+  return {
+    shift
+  };
+}
+
+export default connect(mapStateToProps)(ShiftCard);
 
 const ShiftModal = ({
   shiftData,
@@ -82,7 +122,8 @@ const ShiftModal = ({
   handleBook,
   booked,
   showBookedOverlay,
-  showUnbookedOverlay
+  showUnbookedOverlay,
+  handleDelete
 }) => (
   <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
     <Modal.Header>
@@ -168,7 +209,7 @@ const ShiftModal = ({
         padding: '1rem'
       }}
     >
-      <Button className="mr-2" variant="outline-danger">
+      <Button className="mr-2" variant="outline-danger" onClick={handleDelete}>
         Delete
       </Button>
       <ButtonToolbar role="toolbar">
@@ -182,5 +223,3 @@ const ShiftModal = ({
     </Modal.Footer>
   </Modal>
 );
-
-export default ShiftCard;
