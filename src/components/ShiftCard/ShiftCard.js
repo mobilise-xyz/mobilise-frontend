@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Modal, Row, Col } from 'react-bootstrap';
+import { Card, Modal, Row, Col, Button, ButtonToolbar } from 'react-bootstrap';
 import moment from 'moment';
 import './ShiftCard.css';
 import RoleBadge from './RoleBadge';
@@ -160,6 +160,26 @@ const ShiftModal = ({
         </Col>
       </Row>
     </Modal.Body>
+
+    <Modal.Footer
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: '1rem'
+      }}
+    >
+      <Button className="mr-2" variant="outline-danger">
+        Delete
+      </Button>
+      <ButtonToolbar role="toolbar">
+        <Button className="mr-2" variant="outline-secondary" onClick={onHide}>
+          Cancel
+        </Button>
+        <Button variant="outline-primary" type="submit">
+          Save changes
+        </Button>
+      </ButtonToolbar>
+    </Modal.Footer>
   </Modal>
 );
 
