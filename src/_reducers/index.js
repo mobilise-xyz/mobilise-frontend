@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import authentication from './authentication.reducer';
-import users from './users.reducer';
+import shifts from './shifts.reducer';
 
 const rootReducer = combineReducers({
   authentication,
-  users
+  shifts
 });
 
 export default rootReducer;
