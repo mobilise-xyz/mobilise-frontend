@@ -7,6 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Layout from '../../Layout/Layout';
 import ShiftList from '../../ShiftList';
 import authHeader from '../../../_helpers/auth-header';
+import './ShiftsPage.css';
 
 class ShiftsPage extends React.Component {
   state = {
