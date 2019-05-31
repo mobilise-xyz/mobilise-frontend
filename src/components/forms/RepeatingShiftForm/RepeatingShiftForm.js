@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form,
+  Container,
   ButtonToolbar,
   ToggleButtonGroup,
   ToggleButton
@@ -16,24 +16,28 @@ const options = [
   'Custom'
 ];
 
-const RepeatingShiftForm = () => {
+const RepeatingShiftForm = props => {
+  const { handleChange } = props;
   return (
-    <Form.Check type="radio">
-      <Form.Label>Repeat</Form.Label>
+    <Container>
       <ButtonToolbar
-        className="mb-3"
+        className="justify-content-md-center"
+        name="repeat"
         aria-label="Button Toolbar for selecting shift repetition"
       >
         <ToggleButtonGroup
           className="mr-2"
+          name="repeat-options"
           type="radio"
-          name="options"
           defaultValue={1}
+          onChange={handleChange}
         >
           {options.map(op => (
             <ToggleButton
+              id="repeat"
               variant="primary"
               type="radio"
+              key={options.indexOf(op) + 1}
               value={options.indexOf(op) + 1}
             >
               {op}
@@ -41,7 +45,7 @@ const RepeatingShiftForm = () => {
           ))}
         </ToggleButtonGroup>
       </ButtonToolbar>
-    </Form.Check>
+    </Container>
   );
 };
 
