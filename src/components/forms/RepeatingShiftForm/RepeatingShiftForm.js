@@ -20,11 +20,13 @@ const options = [
 const RepeatingShiftForm = props => {
   const { repeat, handleChange, handleRepeatUntil } = props;
   let repeatUntil;
-  if (repeat !== 'Never') {
-    console.log(repeat);
+  console.log(repeat);
+  if (repeat === undefined || repeat === 'Never') {
     // TODO: don't hardcode this.
+    repeatUntil = null;
+  } else {
     repeatUntil = (
-      <Container>
+      <Form.Group>
         <Form.Label>Repeat Until</Form.Label>
         <Form.Control
           id="repeat-until-date"
@@ -33,10 +35,8 @@ const RepeatingShiftForm = props => {
           type="date"
           required
         />
-      </Container>
+      </Form.Group>
     );
-  } else {
-    repeatUntil = null;
   }
   return (
     <Container>
