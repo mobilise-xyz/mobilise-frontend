@@ -21,7 +21,7 @@ class ShiftCard extends React.Component {
 
     // TODO book and unbook requests.
     if (name === booked) {
-      const newValue = parseInt(value, 10) - 1;
+      const newValue = parseInt(value, 10) + 1;
       // Already booked, unbook and fire unbook toast.
       this.setState({
         booked: ''
@@ -29,7 +29,7 @@ class ShiftCard extends React.Component {
       // Book
       console.log('Post', newValue);
     } else {
-      const newValue = parseInt(value, 10) + 1;
+      const newValue = parseInt(value, 10) - 1;
       // Not already booked, book and fire book toast.
       this.setState({
         booked: name

@@ -3,7 +3,7 @@ import { Button, Badge, Popover, OverlayTrigger } from 'react-bootstrap';
 
 const RoleBadge = ({ name, number, handleBook, booked }) => {
   const isBooked = booked === name;
-  const value = isBooked ? parseInt(number, 10) + 1 : parseInt(number, 10);
+  const value = isBooked ? parseInt(number, 10) - 1 : parseInt(number, 10);
   return (
     <OverlayTrigger
       trigger="focus"
