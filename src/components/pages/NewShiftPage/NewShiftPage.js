@@ -272,7 +272,13 @@ class NewShiftPage extends React.Component {
   };
 
   render() {
-    const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
+    const {
+      data,
+      shiftTitleOptions,
+      repeat,
+      roleOptions,
+      newRoleModal
+    } = this.state;
     const { title, description, roles } = data;
     const { roleName, roleInvolves, show } = newRoleModal;
 
@@ -305,7 +311,11 @@ class NewShiftPage extends React.Component {
           <DateTimeForm id="datetime" handleChange={this.handleDataChange} />
           {/* Repeating Shifts */}
           <Form.Label>Repeat</Form.Label>
-          <RepeatingShiftForm handleChange={this.handleRepeatSelect} />
+          <RepeatingShiftForm
+            repeat={repeat}
+            handleChange={this.handleRepeatSelect}
+            handleRepeatUntil={this.handleDataChange}
+          />
           {/* Location */}
           <LocationInput id="location" handleChange={this.handleDataChange} />
           {/* Roles */}
