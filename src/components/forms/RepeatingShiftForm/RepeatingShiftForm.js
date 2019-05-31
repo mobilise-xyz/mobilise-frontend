@@ -1,6 +1,9 @@
 import React from 'react';
 import {
+<<<<<<< HEAD
   Container,
+=======
+>>>>>>> Implement Repeating shift form.
   Form,
   ButtonToolbar,
   ToggleButtonGroup,
@@ -17,6 +20,7 @@ const options = [
   'Custom'
 ];
 
+<<<<<<< HEAD
 const RepeatingShiftForm = props => {
   const { repeat, handleChange, handleRepeatUntil } = props;
   let repeatUntil;
@@ -66,6 +70,36 @@ const RepeatingShiftForm = props => {
       </ButtonToolbar>
       {repeatUntil}
     </Container>
+=======
+const RepeatingShiftForm = () => {
+  return (
+    <Form.Group>
+      <Form.Label>Repeat</Form.Label>
+      <Form.Check type="radio">
+        <ButtonToolbar
+          className="mb-3"
+          aria-label="Button Toolbar for selecting shift repetition"
+        >
+          <ToggleButtonGroup
+            className="mr-2"
+            type="radio"
+            name="options"
+            defaultValue={1}
+          >
+            {options.map(op => (
+              <ToggleButton
+                variant="primary"
+                type="radio"
+                value={options.indexOf(op) + 1}
+              >
+                {op}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </ButtonToolbar>
+      </Form.Check>
+    </Form.Group>
+>>>>>>> Implement Repeating shift form.
   );
 };
 
