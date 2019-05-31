@@ -20,7 +20,6 @@ const options = [
 const RepeatingShiftForm = props => {
   const { repeat, handleChange, handleRepeatUntil } = props;
   let repeatUntil;
-  console.log(repeat);
   if (repeat === undefined || repeat === 'Never') {
     // TODO: don't hardcode this.
     repeatUntil = null;
