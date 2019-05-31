@@ -13,6 +13,7 @@ import DescriptionForm from '../../forms/DescriptionForm';
 import DateTimeForm from '../../forms/DateTimeForm';
 import LocationInput from '../../LocationInput/LocationInput';
 import RolesForm from '../../forms/RolesForm';
+import RepeatingShiftForm from '../../forms/RepeatingShiftForm/RepeatingShiftForm';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -303,6 +304,8 @@ class NewShiftPage extends React.Component {
           />
           {/* Date and Time */}
           <DateTimeForm id="datetime" handleChange={this.handleDataChange} />
+          {/* Repeating Shifts */}
+          <RepeatingShiftForm />
           {/* Location */}
           <LocationInput id="location" handleChange={this.handleDataChange} />
           {/* Roles */}
