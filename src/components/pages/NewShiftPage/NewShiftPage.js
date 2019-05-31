@@ -262,6 +262,13 @@ class NewShiftPage extends React.Component {
     });
   };
 
+  toggleRepeatsModal = () =>
+    this.setState(({ customRepeatModal }) => ({
+      customRepeatModal: {
+        show: !customRepeatModal.show
+      }
+    }));
+
   handleShiftTitleChange = s => {
     let newTitle = '';
     if (s.length !== 0) {
