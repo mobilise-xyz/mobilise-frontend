@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-import NewRoleModal from '../NewRoleModal';
+import NewRoleModal from './modals/NewRoleModal';
 import CardLayout from '../../CardLayout';
 import history from '../../../_helpers/history';
 import authHeader from '../../../_helpers/auth-header';
