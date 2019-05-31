@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Form, Row, Col } from 'react-bootstrap';
-import { Typeahead, Token } from 'react-bootstrap-typeahead';
+import { Button, Form } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +12,7 @@ import TitleForm from '../../forms/TitleForm';
 import DescriptionForm from '../../forms/DescriptionForm';
 import DateTimeForm from '../../forms/DateTimeForm';
 import LocationInput from '../../LocationInput/LocationInput';
+import RolesForm from '../../forms/RolesForm';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -55,60 +55,6 @@ class NewShiftPage extends React.Component {
       )
       .catch(err => console.log(err, 'There was a problem.'));
   }
-
-  _renderToken = (option, props, index) => {
-    const roleName = option.customOption ? option.label : option;
-    return (
-      <Token key={index} onRemove={props.onRemove}>
-        <Row>
-          <Col
-            md="auto"
-            style={{
-              padding: '0 0.2rem 0 1rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            {roleName}
-          </Col>
-          <Col
-            style={{
-              padding: '0 1rem 0 0.2rem',
-              width: '3.5rem'
-            }}
-          >
-            <Form.Control
-              name={roleName}
-              type="number"
-              min={1}
-              onChange={this.handleRoleNumber}
-              style={{ height: '1.4rem', textAlign: 'center' }}
-            />
-          </Col>
-          {/* Update role with index=index with number. */}
-        </Row>
-      </Token>
-    );
-  };
-
-  handleRoleNumber = e => {
-    // Find the role name in roles, and then set the corresponding role
-    // number.
-    const { name, value } = e.target;
-
-    const { data } = this.state;
-    const { roles } = data;
-
-    const roleToUpdate = roles.find(r => r.roleName === name);
-
-    if (roleToUpdate) {
-      roleToUpdate.number = parseInt(value, 10);
-    }
-    console.log('name', name);
-    console.log('value', value);
-    console.log('roleToUpdate', roleToUpdate);
-  };
 
   handleDataChange = e => {
     const { name, value } = e.target;
@@ -214,6 +160,24 @@ class NewShiftPage extends React.Component {
         }
       };
     });
+  };
+
+  handleRoleNumber = e => {
+    // Find the role name in roles, and then set the corresponding role
+    // number.
+    const { name, value } = e.target;
+
+    const { data } = this.state;
+    const { roles } = data;
+
+    const roleToUpdate = roles.find(r => r.roleName === name);
+
+    if (roleToUpdate) {
+      roleToUpdate.number = parseInt(value, 10);
+    }
+    console.log('name', name);
+    console.log('value', value);
+    console.log('roleToUpdate', roleToUpdate);
   };
 
   handleRoleSubmit = () => {
@@ -328,22 +292,12 @@ class NewShiftPage extends React.Component {
           {/* Location */}
           <LocationInput id="location" handleChange={this.handleDataChange} />
           {/* Roles */}
-          <Form.Group controlId="rolesForm">
-            <Form.Label>Roles</Form.Label>
-            <Typeahead // TODO make async & SORT OUT CSS so letters like g dont get cut off.
-              id="roles"
-              renderToken={this._renderToken}
-              placeholder="Add available roles for shift"
-              newSelectionPrefix="Add new role:  "
-              options={roleOptions.map(r => r.name)}
-              allowNew
-              multiple
-              onChange={this.handleRolesChange}
-              selected={roles.map(r => r.name)}
-              selectHintOnEnter
-              onActiveItemChange={s => console.log(s)}
-            />
-          </Form.Group>
+          <RolesForm
+            roles={roles}
+            roleOptions={roleOptions}
+            handleChange={this.handleRolesChange}
+            handleRoleNumber={this.handleRoleNumber}
+          />
           {/* Button boi */}
           <div className="text-center" style={{ margin: 'auto' }}>
             <Button

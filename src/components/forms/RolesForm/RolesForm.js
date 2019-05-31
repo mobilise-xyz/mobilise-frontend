@@ -18,12 +18,14 @@ class RolesForm extends React.Component {
   );
 
   render() {
-    const { roleOptions, handleChange } = this.props;
+    const { roles, roleOptions, handleChange } = this.props;
     return (
       <Form.Group controlId="rolesForm">
         <Form.Label>Roles</Form.Label>
-        <Typeahead // TODO make async & SORT OUT CSS so letters like g doesn't get cut off.
-          renderToken={this._renderToken}
+        <Typeahead // TODO make async & SORT OUT CSS so letters like g dont get cut off.
+          renderToken={(option, props, index) =>
+            this._renderToken(option, props, index)
+          }
           id="roles"
           placeholder="Add available roles for shift"
           newSelectionPrefix="Add new role:  "
@@ -31,6 +33,9 @@ class RolesForm extends React.Component {
           allowNew
           multiple
           onChange={handleChange}
+          selected={roles.map(r => r.name)}
+          selectHintOnEnter
+          onActiveItemChange={s => console.log(s)}
         />
       </Form.Group>
     );
