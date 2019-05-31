@@ -28,7 +28,7 @@ class NewShiftPage extends React.Component {
         date: '',
         startTime: '',
         endTime: '',
-        repeat: 1,
+        repeat: 'Never',
         location: '',
         roles: []
       },
@@ -69,9 +69,9 @@ class NewShiftPage extends React.Component {
     }));
   };
 
-  handleRepeatSelect = n => {
+  handleRepeatSelect = freq => {
     this.setState({
-      repeat: n
+      repeat: freq
     });
   };
 
