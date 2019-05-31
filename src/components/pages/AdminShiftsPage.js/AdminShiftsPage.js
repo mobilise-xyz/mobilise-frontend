@@ -18,7 +18,6 @@ class AdminShiftsPage extends React.Component {
 
   render() {
     const { shifts } = this.props;
-    console.log(shifts);
 
     return (
       <Layout>
