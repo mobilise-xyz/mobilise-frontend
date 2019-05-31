@@ -29,10 +29,7 @@ class NewShiftPage extends React.Component {
         startTime: '',
         endTime: '',
         repeat: 'Never',
-<<<<<<< HEAD
         repeatUntil: '',
-=======
->>>>>>> Post repeat string to endpoint instead of number.
         location: '',
         roles: []
       },

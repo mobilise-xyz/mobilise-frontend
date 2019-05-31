@@ -20,25 +20,11 @@ const options = [
 const RepeatingShiftForm = props => {
   const { repeat, handleChange, handleRepeatUntil } = props;
   let repeatUntil;
-<<<<<<< HEAD
-<<<<<<< HEAD
   if (repeat === undefined || repeat === 'Never') {
-    // TODO: don't hardcode this.
     repeatUntil = null;
   } else {
     repeatUntil = (
       <Form.Group>
-=======
-  if (repeat !== 1) {
-    // TODO: don't hardcode this.
-=======
-  if (repeat !== 'Never') {
->>>>>>> Post repeat string to endpoint instead of number.
-    console.log(repeat);
-    // TODO: don't hardcode this.
-    repeatUntil = (
-      <Container>
->>>>>>> Add repeat until calendar element.
         <Form.Label>Repeat Until</Form.Label>
         <Form.Control
           id="repeat-until-date"
@@ -47,15 +33,8 @@ const RepeatingShiftForm = props => {
           type="date"
           required
         />
-<<<<<<< HEAD
       </Form.Group>
     );
-=======
-      </Container>
-    );
-  } else {
-    repeatUntil = null;
->>>>>>> Add repeat until calendar element.
   }
   return (
     <Container>
