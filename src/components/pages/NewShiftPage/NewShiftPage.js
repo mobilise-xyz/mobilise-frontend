@@ -135,9 +135,12 @@ class NewShiftPage extends React.Component {
       // Map the roles that already exist
       const newRoles = [];
       if (prevRoles.length !== 0) {
+        console.log('prev', prevRoles);
         // newRoles = s.map(name => prevRoles.find(p => p.name === name));
         s.forEach(name => {
-          const toBeAdded = prevRoles.find(p => p.roleName === name);
+          const toBeAdded = prevRoles.find(
+            p => p.roleName === (name.customOption ? name.label : name)
+          );
           if (toBeAdded) {
             newRoles.push(toBeAdded);
           }
@@ -152,6 +155,8 @@ class NewShiftPage extends React.Component {
           number: 0
         });
       }
+      console.log('s', s);
+      console.log('newroles', newRoles);
 
       return {
         data: {
