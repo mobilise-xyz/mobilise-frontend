@@ -28,6 +28,7 @@ class NewShiftPage extends React.Component {
         date: '',
         startTime: '',
         endTime: '',
+        repeat: 1,
         location: '',
         roles: []
       },
@@ -68,6 +69,12 @@ class NewShiftPage extends React.Component {
     }));
   };
 
+  handleRepeatSelect = n => {
+    this.setState({
+      repeat: n
+    });
+  };
+
   handleSubmit = e => {
     // Submit this
     e.preventDefault();
@@ -91,6 +98,7 @@ class NewShiftPage extends React.Component {
       date: data.date,
       start: data.startTime,
       stop: data.endTime,
+      repeat: data.repeat,
       address: data.location,
       rolesRequired: data.roles
     };
@@ -305,7 +313,8 @@ class NewShiftPage extends React.Component {
           {/* Date and Time */}
           <DateTimeForm id="datetime" handleChange={this.handleDataChange} />
           {/* Repeating Shifts */}
-          <RepeatingShiftForm />
+          <Form.Label>Repeat</Form.Label>
+          <RepeatingShiftForm handleChange={this.handleRepeatSelect} />
           {/* Location */}
           <LocationInput id="location" handleChange={this.handleDataChange} />
           {/* Roles */}
