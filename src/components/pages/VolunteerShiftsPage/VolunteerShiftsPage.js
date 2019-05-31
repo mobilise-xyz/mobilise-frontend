@@ -6,15 +6,15 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import Layout from '../../Layout/Layout';
 import ShiftList from '../../ShiftList';
-import './ShiftsPage.css';
+import './VolunteerShiftsPage.css';
 import shiftsActions from '../../../_actions/shifts.actions';
 
-class ShiftsPage extends React.Component {
+class VolunteerShiftsPage extends React.Component {
   // TODO Handle exception properly.
   componentDidMount() {
     const { dispatch } = this.props;
-
-    dispatch(shiftsActions.getAll());
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(shiftsActions.getForUser(uid));
   }
 
   render() {
@@ -52,7 +52,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ShiftsPage);
+export default connect(mapStateToProps)(VolunteerShiftsPage);
 
 const DateHeading = ({ weekday, date }) => (
   <>
