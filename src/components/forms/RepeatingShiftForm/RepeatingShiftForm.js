@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Container,
+  Form,
   ButtonToolbar,
   ToggleButtonGroup,
   ToggleButton
@@ -17,7 +18,26 @@ const options = [
 ];
 
 const RepeatingShiftForm = props => {
-  const { handleChange } = props;
+  const { repeat, handleChange, handleRepeatUntil } = props;
+  let repeatUntil;
+  if (repeat !== 1) {
+    // TODO: don't hardcode this.
+    console.log(repeat);
+    repeatUntil = (
+      <Container>
+        <Form.Label>Repeat Until</Form.Label>
+        <Form.Control
+          id="repeat-until-date"
+          name="repeat-until-date"
+          onChange={handleRepeatUntil}
+          type="date"
+          required
+        />
+      </Container>
+    );
+  } else {
+    repeatUntil = null;
+  }
   return (
     <Container>
       <ButtonToolbar
@@ -45,6 +65,7 @@ const RepeatingShiftForm = props => {
           ))}
         </ToggleButtonGroup>
       </ButtonToolbar>
+      {repeatUntil}
     </Container>
   );
 };
