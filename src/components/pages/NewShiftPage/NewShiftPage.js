@@ -29,6 +29,7 @@ class NewShiftPage extends React.Component {
         startTime: '',
         endTime: '',
         repeat: 'Never',
+        repeatUntil: '',
         location: '',
         roles: []
       },
@@ -99,6 +100,7 @@ class NewShiftPage extends React.Component {
       start: data.startTime,
       stop: data.endTime,
       repeat: data.repeat,
+      repeatUntil: data.repeatUntil,
       address: data.location,
       rolesRequired: data.roles
     };
