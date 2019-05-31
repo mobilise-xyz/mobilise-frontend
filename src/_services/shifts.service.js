@@ -15,17 +15,12 @@ const getAll = () => {
   const config = {
     headers: authHeader()
   };
-  console.log('GET ALL SERVICE');
-
   return axios
     .get('/shifts', config)
-    .then(r => {
-      console.log(r);
-      return {
-        all: r.data,
-        recommended: placeholderRecommendedShifts
-      };
-    })
+    .then(r => ({
+      all: r.data,
+      recommended: placeholderRecommendedShifts
+    }))
     .catch(err => console.log(err)); // TODO go to error page
 };
 

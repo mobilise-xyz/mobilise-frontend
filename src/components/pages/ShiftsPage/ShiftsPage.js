@@ -12,15 +12,13 @@ import shiftsActions from '../../../_actions/shifts.actions';
 class ShiftsPage extends React.Component {
   // TODO Handle exception properly.
   componentDidMount() {
-    const { dispatch, shifts } = this.props;
+    const { dispatch } = this.props;
 
     dispatch(shiftsActions.getAll());
-    console.log('COMPONENT DID MOUNT', shifts);
   }
 
   render() {
     const { shifts } = this.props;
-    console.log('RENDER', shifts);
 
     return (
       <Layout>
@@ -49,7 +47,6 @@ class ShiftsPage extends React.Component {
 
 const mapStateToProps = state => {
   const { shifts } = state;
-  console.log('MAP STATE TO PROPS', shifts);
   return {
     shifts
   };
