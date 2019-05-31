@@ -6,7 +6,7 @@ import Layout from '../Layout/Layout';
 const NotFound = () => (
   <Layout>
     <Row>
-      <Col style={{ 'text-align': 'center' }}>
+      <Col style={{ textAlign: 'center' }}>
         <Image src={logo} alt="Mobilise logo" fluid />
       </Col>
     </Row>

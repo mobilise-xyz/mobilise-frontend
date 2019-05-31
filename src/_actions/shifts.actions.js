@@ -18,8 +18,33 @@ const getAll = () => {
   };
 };
 
+// Gets shifts + recommended shifts for the specified user.
+const getForUser = uid => {
+  const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
+  const success = shifts => ({
+    type: shiftsConstants.GETFORUSER_SUCCESS,
+    shifts
+  });
+  const failure = error => ({
+    type: shiftsConstants.GETFORUSER_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    shiftsService.getForUser(uid).then(
+      shifts => dispatch(success(shifts)),
+      error => {
+        dispatch(failure(error));
+      }
+    );
+  };
+};
+
 const shiftsActions = {
-  getAll
+  getAll,
+  getForUser
 };
 
 export default shiftsActions;

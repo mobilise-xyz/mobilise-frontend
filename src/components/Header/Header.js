@@ -11,12 +11,13 @@ import authHeader from '../../_helpers/auth-header';
 class Header extends React.Component {
   state = {
     nameSuccess: false, // Indicates if the name GET has been successful
-    firstName: ''
+    firstName: '',
+    adminMessage: ''
   };
 
   componentDidMount() {
     // Retrieve name from uid
-    const { uid } = JSON.parse(localStorage.getItem('user'));
+    const { uid, isAdmin } = JSON.parse(localStorage.getItem('user'));
 
     const config = {
       headers: authHeader(),
@@ -28,13 +29,24 @@ class Header extends React.Component {
     axios
       .get(`/users/${uid}`, config)
       .then(response =>
-        this.setState({ firstName: response.data.firstName, nameSuccess: true })
+        this.setState({
+          firstName: response.data.firstName,
+          nameSuccess: true,
+          adminMessage: isAdmin ? '(Admin)' : '(Volunteer)'
+        })
       )
       .catch(err => console.log(err));
   }
 
   render() {
-    const { nameSuccess, firstName } = this.state;
+    const { nameSuccess, firstName, adminMessage } = this.state;
+
+    let nameMessage = null;
+
+    if (nameSuccess) {
+      nameMessage = `Logged in as ${firstName} ${adminMessage}`;
+    }
+
     return (
       <Navbar bg="light" expand="lg">
         <LinkContainer to="/">
@@ -57,10 +69,7 @@ class Header extends React.Component {
               <Nav.Link>My Shifts</Nav.Link>
             </LinkContainer>
           </Nav>
-
-          <Navbar.Text className="mr-sm-2">
-            {nameSuccess ? `Logged in as ${firstName}` : null}
-          </Navbar.Text>
+          <Navbar.Text className="mr-sm-2">{nameMessage}</Navbar.Text>
           {/* Notifications dropdown */}
           <NavDropdown
             alignRight

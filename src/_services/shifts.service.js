@@ -18,6 +18,23 @@ const getAll = () => {
   return axios
     .get('/shifts', config)
     .then(r => ({
+      all: r.data
+    }))
+    .catch(err => console.log(err)); // TODO go to error page
+};
+
+const getForUser = uid => {
+  // Get all shifts
+  const config = {
+    headers: authHeader()
+  };
+
+  console.log(`Getting shifts for user ${uid}`);
+
+  // TODO link with backend. Currently same as getAll.
+  return axios
+    .get(`/shifts/`, config)
+    .then(r => ({
       all: r.data,
       recommended: placeholderRecommendedShifts
     }))
@@ -25,7 +42,8 @@ const getAll = () => {
 };
 
 const shiftsService = {
-  getAll
+  getAll,
+  getForUser
 };
 
 export default shiftsService;

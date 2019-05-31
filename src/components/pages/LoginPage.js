@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import userActions from '../../_actions/user.actions';
 import CardLayout from '../CardLayout';
 
-class UnconnectedLoginPage extends React.Component {
+class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -79,5 +79,4 @@ function mapStateToProps(state) {
   };
 }
 
-const LoginPage = connect(mapStateToProps)(UnconnectedLoginPage);
-export default LoginPage;
+export default connect(mapStateToProps)(LoginPage);

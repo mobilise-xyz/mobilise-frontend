@@ -6,14 +6,13 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import Layout from '../../Layout/Layout';
 import ShiftList from '../../ShiftList';
-import './ShiftsPage.css';
 import shiftsActions from '../../../_actions/shifts.actions';
+import './AdminShiftsPage.css';
 
-class ShiftsPage extends React.Component {
+class AdminShiftsPage extends React.Component {
   // TODO Handle exception properly.
   componentDidMount() {
     const { dispatch } = this.props;
-
     dispatch(shiftsActions.getAll());
   }
 
@@ -27,14 +26,6 @@ class ShiftsPage extends React.Component {
             {<FontAwesomeIcon icon={faPlus} />} Add Shift
           </Button>
         </LinkContainer>
-        <ShiftList
-          heading={<DateHeading weekday="Recommended" />}
-          shifts={shifts.shifts.recommended}
-          // TODO what is this color
-          cardStyle={{ backgroundColor: 'green' }}
-        />
-        {/* TODO divider between each day */}
-        <hr />
         {/* TODO remove hardcoding */}
         <ShiftList
           heading={<DateHeading weekday="Today" date="17th March" />}
@@ -52,7 +43,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ShiftsPage);
+export default connect(mapStateToProps)(AdminShiftsPage);
 
 const DateHeading = ({ weekday, date }) => (
   <>

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 import PrivateRoute from './components/PrivateRoute';
-import ShiftsPage from './components/pages/ShiftsPage/ShiftsPage';
+import VolunteerShiftsPage from './components/pages/VolunteerShiftsPage/VolunteerShiftsPage';
+import AdminShiftsPage from './components/pages/AdminShiftsPage.js/index';
 import MyShiftsPage from './components/pages/MyShiftsPage';
 import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
 import LoginPage from './components/pages/LoginPage';
@@ -9,15 +10,22 @@ import NotFound from './components/pages/NotFound';
 import SettingsPage from './components/pages/SettingsPage';
 import SignUpPage from './components/pages/SignUpPage';
 
+const { isAdmin } = JSON.parse(localStorage.getItem('user'));
+
 const App = () => (
   <Switch>
-    <PrivateRoute path="/" exact component={ShiftsPage} />
+    <PrivateRoute
+      path="/"
+      exact
+      component={isAdmin ? AdminShiftsPage : VolunteerShiftsPage}
+    />
     <PrivateRoute path="/shifts" exact component={MyShiftsPage} />
     <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
     <PrivateRoute path="/settings" exact component={SettingsPage} />
     <Route path="/login" exact component={LoginPage} />
     <Route path="/signup" exact component={SignUpPage} />
-    <Route component={NotFound} />
+    <Route path="/404" exact component={NotFound} />
+    <Redirect from="*" to="/404" />
   </Switch>
 );
 
