@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { Modal, Row, Col, Button, ButtonToolbar } from 'react-bootstrap';
 import RoleBadge from './RoleBadge';
-import './ShiftCard.css';
+import '../ShiftCard.css';
 
 const ShiftCardModal = ({
   shiftData,
@@ -12,7 +12,8 @@ const ShiftCardModal = ({
   booked,
   showBookedOverlay,
   showUnbookedOverlay,
-  handleDelete
+  handleDelete,
+  isAdmin
 }) => (
   <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
     <Modal.Header>
@@ -98,19 +99,40 @@ const ShiftCardModal = ({
         padding: '1rem'
       }}
     >
-      <Button className="mr-2" variant="outline-danger" onClick={handleDelete}>
-        Delete
-      </Button>
-      <ButtonToolbar role="toolbar">
-        <Button className="mr-2" variant="outline-secondary" onClick={onHide}>
-          Cancel
-        </Button>
-        <Button variant="outline-primary" type="submit">
-          Save changes
-        </Button>
-      </ButtonToolbar>
+      {isAdmin ? (
+        <AdminFooter handleDelete={handleDelete} onHide={onHide} />
+      ) : (
+        <VolunteerFooter onHide={onHide} />
+      )}
     </Modal.Footer>
   </Modal>
+);
+
+const AdminFooter = ({ handleDelete, onHide }) => (
+  <>
+    <Button className="mr-2" variant="outline-danger" onClick={handleDelete}>
+      Delete
+    </Button>
+    <ButtonToolbar role="toolbar">
+      <Button className="mr-2" variant="outline-secondary" onClick={onHide}>
+        Cancel
+      </Button>
+      <Button variant="outline-primary" type="submit">
+        Save changes
+      </Button>
+    </ButtonToolbar>
+  </>
+);
+
+const VolunteerFooter = ({ onHide }) => (
+  <>
+    <Button className="mr-2" variant="outline-secondary" onClick={onHide}>
+      Close
+    </Button>
+    <Button className="mr-2" variant="outline-primary">
+      Book
+    </Button>
+  </>
 );
 
 export default ShiftCardModal;

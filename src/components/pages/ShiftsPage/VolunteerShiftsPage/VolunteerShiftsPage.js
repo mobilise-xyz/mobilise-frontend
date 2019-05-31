@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Layout from '../../Layout/Layout';
-import ShiftList from '../../ShiftList';
+import Layout from '../../../Layout/Layout';
+import ShiftList from '../../../ShiftList';
 import './VolunteerShiftsPage.css';
-import shiftsActions from '../../../_actions/shifts.actions';
+import shiftsActions from '../../../../_actions/shifts.actions';
 
 class VolunteerShiftsPage extends React.Component {
   // TODO Handle exception properly.

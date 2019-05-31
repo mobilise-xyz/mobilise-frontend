@@ -3,7 +3,7 @@ import { Card, Collapse } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
 import shiftActions from '../../_actions/shift.actions';
-import ShiftCardModal from './ShiftCardModal';
+import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
 
 // shiftData consists of title, description, date, start, stop, address
 
@@ -53,7 +53,7 @@ class ShiftCard extends React.Component {
   };
 
   render() {
-    const { shiftData } = this.props;
+    const { shiftData, isAdmin } = this.props;
     const {
       showModal,
       booked,
@@ -82,6 +82,7 @@ class ShiftCard extends React.Component {
           </button>
 
           <ShiftCardModal
+            isAdmin={isAdmin}
             shiftData={shiftData}
             show={showModal}
             onHide={this.toggleModal}

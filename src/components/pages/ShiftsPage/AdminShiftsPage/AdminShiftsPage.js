@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import Layout from '../../Layout/Layout';
-import ShiftList from '../../ShiftList';
-import shiftsActions from '../../../_actions/shifts.actions';
+import Layout from '../../../Layout/Layout';
+import ShiftList from '../../../ShiftList';
+import shiftsActions from '../../../../_actions/shifts.actions';
 import './AdminShiftsPage.css';
 
 class AdminShiftsPage extends React.Component {
@@ -18,7 +18,6 @@ class AdminShiftsPage extends React.Component {
 
   render() {
     const { shifts } = this.props;
-
     return (
       <Layout>
         <LinkContainer exact to="new-shift" className="add-shift-link">
@@ -28,6 +27,7 @@ class AdminShiftsPage extends React.Component {
         </LinkContainer>
         {/* TODO remove hardcoding */}
         <ShiftList
+          isAdmin
           heading={<DateHeading weekday="Today" date="17th March" />}
           shifts={shifts.shifts.all}
         />
