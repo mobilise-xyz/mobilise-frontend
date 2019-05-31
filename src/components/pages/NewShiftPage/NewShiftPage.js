@@ -39,6 +39,12 @@ class NewShiftPage extends React.Component {
         roleName: '',
         roleInvolves: '',
         show: false
+      },
+      customRepeatModal: {
+        frequency: '',
+        timeFrame: '',
+        repeatDays: '',
+        show: false
       }
     };
   }
