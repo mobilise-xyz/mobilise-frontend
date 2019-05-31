@@ -20,9 +20,9 @@ const options = [
 const RepeatingShiftForm = props => {
   const { repeat, handleChange, handleRepeatUntil } = props;
   let repeatUntil;
-  if (repeat !== 1) {
-    // TODO: don't hardcode this.
+  if (repeat !== 'Never') {
     console.log(repeat);
+    // TODO: don't hardcode this.
     repeatUntil = (
       <Container>
         <Form.Label>Repeat Until</Form.Label>
@@ -49,7 +49,7 @@ const RepeatingShiftForm = props => {
           className="mr-2"
           name="repeat-options"
           type="radio"
-          defaultValue={1}
+          defaultValue="Never"
           onChange={handleChange}
         >
           {options.map(op => (
@@ -58,7 +58,7 @@ const RepeatingShiftForm = props => {
               variant="primary"
               type="radio"
               key={options.indexOf(op) + 1}
-              value={options.indexOf(op) + 1}
+              value={op}
             >
               {op}
             </ToggleButton>
