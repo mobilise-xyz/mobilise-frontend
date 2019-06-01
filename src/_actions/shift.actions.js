@@ -24,26 +24,34 @@ const deleteWithId = shiftId => {
   };
 };
 
-const openModal = () => {
-  const open = () => ({ type: shiftConstants.OPEN_MODAL });
-
-  return dispatch => {
-    dispatch(open());
+const bookWithIdAndRole = (shiftId, roleName) => {
+  const request = user => {
+    return { type: shiftConstants.BOOK_REQUEST, user };
   };
-};
+  const success = () => {
+    return { type: shiftConstants.BOOK_SUCCESS };
+  };
+  const failure = error => {
+    return { type: shiftConstants.BOOK_FAILURE, error };
+  };
 
-const closeModal = () => {
-  const close = () => ({ type: shiftConstants.CLOSE_MODAL });
+  console.log('book id with role action', shiftId, roleName);
 
   return dispatch => {
-    dispatch(close());
+    dispatch(request());
+
+    shiftService.bookWithIdAndRole(shiftId, roleName).then(
+      () => dispatch(success()),
+      error => {
+        dispatch(failure(error));
+      }
+    );
   };
 };
 
 const shiftActions = {
-  openModal,
-  closeModal,
-  deleteWithId
+  deleteWithId,
+  bookWithIdAndRole
 };
 
 export default shiftActions;
