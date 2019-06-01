@@ -79,14 +79,16 @@ class ShiftCard extends React.Component {
                 <h6>Available roles</h6>
                 <Row>
                   {shiftData.roles.map(r => {
-                    return (
+                    // Only show roles that are available to book
+                    // i.e. numberRequired > 0
+                    return r.ShiftRole.numberRequired > 0 ? (
                       <RoleBadge
                         key={shiftData.id + r.name}
                         name={r.name}
                         number={r.ShiftRole.numberRequired}
                         booked={booked}
                       />
-                    );
+                    ) : null;
                   })}
                 </Row>
               </Col>
