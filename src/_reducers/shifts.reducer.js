@@ -1,5 +1,3 @@
-import React from 'react';
-import { Spinner } from 'react-bootstrap';
 import shiftsConstants from '../_constants/shifts.constants';
 // state: {shifts: {all, recommended}}
 const initialState = {
@@ -8,13 +6,7 @@ const initialState = {
       {
         id: -1,
         title: 'Loading...',
-        description: (
-          <div className="shift-spinner">
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          </div>
-        ),
+        description: null,
         roles: [
           {
             name: 'Loading...',

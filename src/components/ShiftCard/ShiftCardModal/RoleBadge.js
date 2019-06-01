@@ -6,11 +6,14 @@ const RoleBadge = ({ name, number, handleBook, booked }) => {
   const value = isBooked ? parseInt(number, 10) - 1 : parseInt(number, 10);
   return (
     <Button
-      variant={isBooked ? 'success' : 'primary'}
+      variant={isBooked ? 'success btn-raised' : 'primary btn-raised'}
       type="button"
       style={{
         textTransform: 'none',
-        fontSize: '1rem'
+        fontSize: '1rem',
+        padding: '0.3rem',
+        marginLeft: '0.3125rem',
+        backgroundColor: 'info'
       }}
       name={name}
       value={value}

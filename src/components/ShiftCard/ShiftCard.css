@@ -11,3 +11,7 @@
   width: 80%;
   max-width: none !important;
 }
+
+.list-group-item :first-child {
+  margin-right: 0;
+}

@@ -1,9 +1,11 @@
 import React from 'react';
-import { Card, Collapse } from 'react-bootstrap';
+import { Card, Collapse, Row, Col } from 'react-bootstrap';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
 import shiftActions from '../../_actions/shift.actions';
 import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
+import RoleBadge from './ShiftCardModal/RoleBadge';
 
 // shiftData consists of title, description, date, start, stop, address
 
@@ -22,7 +24,7 @@ class ShiftCard extends React.Component {
 
     // Perform deletion
     const { shiftData, dispatch } = this.props;
-    const shiftId = shiftData.id;
+    const shiftId = shiftData.listid;
     dispatch(shiftActions.deleteWithId(shiftId));
     this.setState({ deleted: true });
   };
@@ -55,7 +57,6 @@ class ShiftCard extends React.Component {
   render() {
     const { shiftData, isAdmin } = this.props;
     const { showModal, booked, deleted } = this.state;
-
     return (
       <Collapse in={!deleted}>
         <Card
@@ -64,8 +65,65 @@ class ShiftCard extends React.Component {
           style={{ width: '100%', margin: 'auto' }}
         >
           <Card.Body>
-            <Card.Title>{shiftData.title}</Card.Title>
-            {shiftData.description}
+            <Row />
+            <Row>
+              <Col>
+                <h6>Location</h6>
+                <p>{shiftData.address}</p>
+              </Col>
+              <Col>
+                <h6>Description</h6>
+                <p>{shiftData.description}</p>
+              </Col>
+              <Col>
+                <h6>Available roles</h6>
+                <Row>
+                  {shiftData.roles.map(r => {
+                    return (
+                      <RoleBadge
+                        key={shiftData.id + r.name}
+                        name={r.name}
+                        number={r.ShiftRole.numberRequired}
+                        booked={booked}
+                      />
+                    );
+                  })}
+                </Row>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h6>Date</h6>
+                <p>
+                  {moment(shiftData.date)
+                    .local()
+                    .format('dddd, MMMM Do YYYY')}
+                </p>
+              </Col>
+              <Col>
+                <Row noGutters>
+                  <Col>
+                    <h6>Start time</h6>
+                    <p>
+                      {moment(shiftData.start, 'H:m:ss')
+                        .local()
+                        .format('h:mm a')}
+                    </p>
+                  </Col>
+                  <Col>
+                    <h6>End time</h6>
+                    <p>
+                      {moment(shiftData.stop, 'H:m:ss')
+                        .local()
+                        .format('h:mm a')}
+                    </p>
+                  </Col>
+                </Row>
+              </Col>
+              <Col>
+                <h6>Managed by</h6>
+              </Col>
+            </Row>
           </Card.Body>
           <button
             type="button"
