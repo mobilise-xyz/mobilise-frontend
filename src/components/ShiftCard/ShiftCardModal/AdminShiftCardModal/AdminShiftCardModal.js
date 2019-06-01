@@ -7,7 +7,7 @@ const AdminShiftCardModal = ({
   shiftData,
   onHide,
   show,
-  handleBook,
+  handleSelect,
   selected,
   handleDelete
 }) => (
@@ -26,7 +26,7 @@ const AdminShiftCardModal = ({
             name={r.role.name}
             number={r.numberRequired}
             selected={selected}
-            handleBook={handleBook}
+            handleSelect={handleSelect}
           />
         ) : null;
       })}

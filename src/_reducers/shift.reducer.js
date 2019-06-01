@@ -16,7 +16,6 @@ const shift = (state = {}, action) => {
         deleteSuccess: false,
         error: action.error
       };
-
     case shiftConstants.BOOK_REQUEST:
       return {
         loading: true

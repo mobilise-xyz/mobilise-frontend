@@ -2,14 +2,15 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import RoleBadge from '../RoleBadge';
 import '../../ShiftCard.css';
-import shiftService from '../../../../_services/shift.service';
 
 const VolunteerShiftCardModal = ({
   shiftData,
   onHide,
   show,
+  handleSelect,
+  selected,
   handleBook,
-  selected
+  booked
 }) => (
   <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
     <Modal.Header>
@@ -27,7 +28,7 @@ const VolunteerShiftCardModal = ({
             name={r.role.name}
             number={r.numberRequired}
             selected={selected}
-            handleBook={handleBook}
+            handleSelect={handleSelect}
           />
         ) : null;
       })}
@@ -46,9 +47,8 @@ const VolunteerShiftCardModal = ({
       <Button
         variant="outline-primary"
         type="submit"
-        onClick={() =>
-          shiftService.bookWithIdAndRole(shiftData.id, selected) && onHide()
-        }
+        disabled={booked}
+        onClick={handleBook}
       >
         Book
       </Button>

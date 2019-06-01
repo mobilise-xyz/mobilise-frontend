@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Badge } from 'react-bootstrap';
 
-const RoleBadge = ({ name, number, handleBook, selected }) => {
+const RoleBadge = ({ name, number, handleSelect, selected }) => {
   const isSelected = selected === name;
   const value = isSelected ? parseInt(number, 10) - 1 : parseInt(number, 10);
   return (
@@ -17,7 +17,7 @@ const RoleBadge = ({ name, number, handleBook, selected }) => {
       }}
       name={name}
       value={value}
-      onClick={handleBook}
+      onClick={handleSelect}
     >
       {name}
       <Badge variant="light" style={{ marginLeft: '0.3rem' }}>

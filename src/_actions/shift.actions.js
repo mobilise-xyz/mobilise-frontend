@@ -35,6 +35,8 @@ const bookWithIdAndRole = (shiftId, roleName) => {
     return { type: shiftConstants.BOOK_FAILURE, error };
   };
 
+  console.log('book id with role action', shiftId, roleName);
+
   return dispatch => {
     dispatch(request());
 

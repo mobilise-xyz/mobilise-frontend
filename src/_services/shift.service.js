@@ -21,11 +21,12 @@ const bookWithIdAndRole = (shiftId, roleName) => {
     roleName
   };
 
-  console.log('Booking shift with ID', shiftId);
+  console.log('Booking shift with ID', shiftId, 'and rolename', roleName);
 
-  return axios
-    .post(`shifts/${shiftId}/book`, data, config)
-    .then(utils.handleResponse);
+  return axios.post(`shifts/${shiftId}/book`, config, data).then(resp => {
+    console.log('handling resp', resp);
+    utils.handleResponse(resp);
+  });
 };
 
 const shiftService = {
