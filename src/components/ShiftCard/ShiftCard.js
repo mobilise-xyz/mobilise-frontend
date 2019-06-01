@@ -38,7 +38,7 @@ class ShiftCard extends React.Component {
   };
 
   handleSelect = e => {
-    const { name, value } = e.target;
+    const { name } = e.target;
 
     const { selected, booked } = this.state;
 
@@ -48,21 +48,17 @@ class ShiftCard extends React.Component {
 
     // TODO book and unbook requests.
     if (name === selected) {
-      const newValue = parseInt(value, 10) + 1;
       // Already booked, unbook and fire unbook toast.
       this.setState({
         selected: ''
       });
       // Book
-      console.log('Post', newValue);
     } else {
-      const newValue = parseInt(value, 10) - 1;
       // Not already booked, book and fire book toast.
       this.setState({
         selected: name
       });
       // Unbook
-      console.log('Post', newValue);
     }
   };
 
@@ -105,7 +101,6 @@ class ShiftCard extends React.Component {
                       <RoleBadge
                         key={shiftData.id + r.role.name}
                         name={r.role.name}
-                        number={r.numberRequired}
                         selected={selected}
                       />
                     ) : null;

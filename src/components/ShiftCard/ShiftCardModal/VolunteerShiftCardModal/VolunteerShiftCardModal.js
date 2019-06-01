@@ -26,7 +26,6 @@ const VolunteerShiftCardModal = ({
           <RoleBadge
             key={shiftData.id + r.role.name}
             name={r.role.name}
-            number={r.numberRequired}
             selected={selected}
             handleSelect={handleSelect}
           />
