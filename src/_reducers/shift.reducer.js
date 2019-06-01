@@ -8,7 +8,6 @@ const shift = (state = {}, action) => {
         loading: true
       };
     case shiftConstants.DELETE_SUCCESS:
-      console.log('DELETE SUCCESS');
       return {
         deleteSuccess: true
       };

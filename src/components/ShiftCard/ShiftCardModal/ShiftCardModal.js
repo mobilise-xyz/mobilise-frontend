@@ -10,8 +10,6 @@ const ShiftCardModal = ({
   show,
   handleBook,
   booked,
-  showBookedOverlay,
-  showUnbookedOverlay,
   handleDelete,
   isAdmin
 }) => (
@@ -42,8 +40,6 @@ const ShiftCardModal = ({
                   number={r.ShiftRole.numberRequired}
                   handleBook={handleBook}
                   booked={booked}
-                  showBookedOverlay={showBookedOverlay}
-                  showUnbookedOverlay={showUnbookedOverlay}
                 />
               );
             })}

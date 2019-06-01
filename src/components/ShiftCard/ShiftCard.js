@@ -54,13 +54,7 @@ class ShiftCard extends React.Component {
 
   render() {
     const { shiftData, isAdmin } = this.props;
-    const {
-      showModal,
-      booked,
-      showBookedOverlay,
-      showUnbookedOverlay,
-      deleted
-    } = this.state;
+    const { showModal, booked, deleted } = this.state;
 
     return (
       <Collapse in={!deleted}>
@@ -88,8 +82,6 @@ class ShiftCard extends React.Component {
             onHide={this.toggleModal}
             handleBook={this.handleBook}
             booked={booked}
-            showBookedOverlay={showBookedOverlay}
-            showUnbookedOverlay={showUnbookedOverlay}
             handleDelete={this.handleDelete}
           />
         </Card>
