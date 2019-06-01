@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button, Badge } from 'react-bootstrap';
 
-const RoleBadge = ({ name, number, handleBook, booked }) => {
-  const isBooked = booked === name;
-  const value = isBooked ? parseInt(number, 10) - 1 : parseInt(number, 10);
+const RoleBadge = ({ name, number, handleBook, selected }) => {
+  const isSelected = selected === name;
+  const value = isSelected ? parseInt(number, 10) - 1 : parseInt(number, 10);
   return (
     <Button
-      variant={isBooked ? 'success btn-raised' : 'primary btn-raised'}
+      variant={isSelected ? 'success btn-raised' : 'primary btn-raised'}
       type="button"
       style={{
         textTransform: 'none',

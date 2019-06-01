@@ -24,7 +24,7 @@ const bookWithIdAndRole = (shiftId, roleName) => {
   console.log('Booking shift with ID', shiftId);
 
   return axios
-    .post(`shifts/${shiftId}/book`, config, data)
+    .post(`shifts/${shiftId}/book`, data, config)
     .then(utils.handleResponse);
 };
 

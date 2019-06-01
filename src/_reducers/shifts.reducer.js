@@ -1,29 +1,23 @@
 import shiftsConstants from '../_constants/shifts.constants';
 // state: {shifts: {all, recommended}}
+const placeholderShift = {
+  id: -1,
+  title: 'Loading...',
+  description: null,
+  requirements: [
+    {
+      numberRequired: 0,
+      role: {
+        name: 'Loading...'
+      }
+    }
+  ]
+};
+
 const initialState = {
   shifts: {
-    all: [
-      {
-        id: -1,
-        title: 'Loading...',
-        description: null,
-        roles: [
-          {
-            name: 'Loading...',
-            involves: '',
-            ShiftRole: { numberRequired: 0 }
-          }
-        ]
-      }
-    ],
-    recommended: [
-      {
-        title: 'Chelsea Flower Show',
-        description: 'Raising awareness for food shortage.',
-        roles: [],
-        id: 444
-      }
-    ] // FIXME
+    all: [placeholderShift],
+    recommended: [placeholderShift] // FIXME
   }
 };
 

@@ -12,11 +12,16 @@ import RoleBadge from './ShiftCardModal/RoleBadge';
 class ShiftCard extends React.Component {
   state = {
     showModal: false,
-    booked: '',
+    selected: '',
     deleted: false
   };
 
-  toggleModal = () => this.setState(state => ({ showModal: !state.showModal }));
+  toggleModal = (cancelled = true) => {
+    this.setState(state => ({ showModal: !state.showModal }));
+    if (!cancelled) {
+      this.setState({ selected: '' });
+    }
+  };
 
   handleDelete = () => {
     // Hide the modal
@@ -32,14 +37,14 @@ class ShiftCard extends React.Component {
   handleBook = e => {
     const { name, value } = e.target;
 
-    const { booked } = this.state;
+    const { selected } = this.state;
 
     // TODO book and unbook requests.
-    if (name === booked) {
+    if (name === selected) {
       const newValue = parseInt(value, 10) + 1;
       // Already booked, unbook and fire unbook toast.
       this.setState({
-        booked: ''
+        selected: ''
       });
       // Book
       console.log('Post', newValue);
@@ -47,7 +52,7 @@ class ShiftCard extends React.Component {
       const newValue = parseInt(value, 10) - 1;
       // Not already booked, book and fire book toast.
       this.setState({
-        booked: name
+        selected: name
       });
       // Unbook
       console.log('Post', newValue);
@@ -56,7 +61,7 @@ class ShiftCard extends React.Component {
 
   render() {
     const { shiftData, isAdmin } = this.props;
-    const { showModal, booked, deleted } = this.state;
+    const { showModal, selected, deleted } = this.state;
     return (
       <Collapse in={!deleted}>
         <Card
@@ -78,15 +83,15 @@ class ShiftCard extends React.Component {
               <Col>
                 <h6>Available roles</h6>
                 <Row>
-                  {shiftData.roles.map(r => {
+                  {shiftData.requirements.map(r => {
                     // Only show roles that are available to book
                     // i.e. numberRequired > 0
-                    return r.ShiftRole.numberRequired > 0 ? (
+                    return r.numberRequired > 0 ? (
                       <RoleBadge
-                        key={shiftData.id + r.name}
-                        name={r.name}
-                        number={r.ShiftRole.numberRequired}
-                        booked={booked}
+                        key={shiftData.id + r.role.name}
+                        name={r.role.name}
+                        number={r.numberRequired}
+                        selected={selected}
                       />
                     ) : null;
                   })}
@@ -141,7 +146,7 @@ class ShiftCard extends React.Component {
             show={showModal}
             onHide={this.toggleModal}
             handleBook={this.handleBook}
-            booked={booked}
+            selected={selected}
             handleDelete={this.handleDelete}
           />
         </Card>

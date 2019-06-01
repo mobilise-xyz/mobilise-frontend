@@ -1,14 +1,20 @@
 import axios from 'axios';
 import authHeader from '../_helpers/auth-header';
+import utils from './utils.service';
 
-const placeholderRecommendedShifts = [
-  {
-    title: 'Chelsea Flower Show',
-    description: 'Raising awareness for food shortage.',
-    roles: [],
-    id: 444
-  }
-]; // FIXME
+const placeholderShift = {
+  id: -1,
+  title: 'Loading...',
+  description: null,
+  requirements: [
+    {
+      numberRequired: 0,
+      role: {
+        name: 'Loading...'
+      }
+    }
+  ]
+};
 
 const getAll = () => {
   // Get all shifts
@@ -36,9 +42,9 @@ const getForUser = uid => {
     .get(`/shifts/`, config)
     .then(r => ({
       all: r.data,
-      recommended: placeholderRecommendedShifts
+      recommended: [placeholderShift]
     }))
-    .catch(err => console.log(err)); // TODO go to error page
+    .catch(utils.handleResponse); // TODO go to error page
 };
 
 const shiftsService = {

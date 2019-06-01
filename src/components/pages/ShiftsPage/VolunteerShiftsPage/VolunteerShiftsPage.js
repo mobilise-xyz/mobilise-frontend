@@ -15,7 +15,6 @@ class VolunteerShiftsPage extends React.Component {
 
   render() {
     const { shifts } = this.props;
-
     return (
       <Layout>
         <ShiftList
