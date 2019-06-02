@@ -1,10 +1,10 @@
 import React from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import availabilityConstants from '../../_constants/availability.constants';
-import Layout from '../Layout/Layout';
 import '../ShiftCard/ShiftCard.css';
 import availabilityActions from '../../_actions/availability.actions';
+import CardLayout from '../CardLayout';
 
 const times = ['Morning', 'Afternoon', 'Evening'];
 
@@ -19,9 +19,9 @@ const days = [
 ];
 
 const availabilityColours = {
-  AVAILABILITY_AVAILABLE: 'green',
-  AVAILABILITY_MAYBE: 'yellow',
-  AVAILABILITY_UNAVAILABLE: 'gray'
+  AVAILABILITY_AVAILABLE: 'YellowGreen',
+  AVAILABILITY_MAYBE: 'Yellow',
+  AVAILABILITY_UNAVAILABLE: 'LightGray'
 };
 
 const DayCard = ({ timeIndex, dayIndex, availability, handleClick }) => (
@@ -89,7 +89,34 @@ class AvailabilityPage extends React.Component {
 
   render() {
     const { availability } = this.props;
-    return <Layout>{this.generateGrid(availability)}</Layout>;
+    return (
+      <CardLayout title="Availability">
+        <Row>
+          <Col md={9}>
+            <p>
+              Please select the times you will be available each week. This is
+              not a commitment to a shift, but it will influence recommendations
+              for shifts.
+            </p>
+          </Col>
+          <Col>
+            <Row noGutters>
+              <Col>Grey</Col>
+              <Col>Unavailable</Col>
+            </Row>
+            <Row noGutters>
+              <Col>Yellow</Col>
+              <Col>Maybe available</Col>
+            </Row>
+            <Row noGutters>
+              <Col>Green</Col>
+              <Col>Available</Col>
+            </Row>
+          </Col>
+        </Row>
+        <Container>{this.generateGrid(availability)}</Container>
+      </CardLayout>
+    );
   }
 }
 
