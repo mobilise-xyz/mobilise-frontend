@@ -32,7 +32,7 @@ class ShiftCard extends React.Component {
     // Perform deletion
     const { shiftData } = this.props;
     const { dispatch } = this.props;
-    const shiftId = shiftData.listid;
+    const shiftId = shiftData.id;
     dispatch(shiftActions.deleteWithId(shiftId));
     this.setState({ deleted: true });
   };
