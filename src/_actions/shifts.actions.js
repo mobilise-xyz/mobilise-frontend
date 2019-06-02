@@ -38,6 +38,7 @@ const getForUser = uid => {
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(failure(error));
+        dispatch(alertActions.error('Error getting shifts.'));
       }
     );
   };
@@ -61,13 +62,13 @@ const deleteWithId = shiftId => {
       () => dispatch(success(shiftId)),
       error => {
         dispatch(failure(shiftId, error));
-        dispatch(alertActions.error(error));
+        dispatch(alertActions.error('Error deleting a shift'));
       }
     );
   };
 };
 
-const bookWithIdAndRole = (shiftId, roleName) => {
+const book = (shiftId, roleName, repeatedType, until) => {
   const request = id => {
     return { type: shiftsConstants.BOOK_REQUEST, id };
   };
@@ -78,12 +79,18 @@ const bookWithIdAndRole = (shiftId, roleName) => {
     return { type: shiftsConstants.BOOK_FAILURE, id, error };
   };
 
-  console.log('book id with role action', shiftId, roleName);
+  console.log(
+    'book id with role action',
+    shiftId,
+    roleName,
+    repeatedType,
+    until
+  );
 
   return dispatch => {
     dispatch(request(shiftId));
 
-    shiftsService.bookWithIdAndRole(shiftId, roleName).then(
+    shiftsService.book(shiftId, roleName, repeatedType, until).then(
       () => {
         dispatch(success(shiftId));
         dispatch(alertActions.success('Booked successfully!'));
@@ -102,7 +109,7 @@ const bookWithIdAndRole = (shiftId, roleName) => {
 const shiftsActions = {
   getAll,
   getForUser,
-  bookWithIdAndRole,
+  book,
   deleteWithId
 };
 

@@ -18,6 +18,7 @@ class AdminShiftsPage extends React.Component {
 
   render() {
     const { shifts } = this.props;
+    console.log('SHIFTS ADMIN', shifts);
     return (
       <Layout>
         <LinkContainer exact to="new-shift" className="add-shift-link">

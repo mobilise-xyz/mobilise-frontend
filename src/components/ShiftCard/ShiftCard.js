@@ -60,13 +60,6 @@ class ShiftCard extends React.Component {
     }
   };
 
-  handleBook = () => {
-    console.log('Handle book.');
-    const { shiftData, dispatch } = this.props;
-    const { selected } = this.state;
-    dispatch(shiftsActions.bookWithIdAndRole(shiftData.id, selected));
-  };
-
   render() {
     const { shiftData, isAdmin } = this.props;
     const { showModal, selected } = this.state;
@@ -157,7 +150,6 @@ class ShiftCard extends React.Component {
             handleSelect={this.handleSelect}
             selected={selected}
             handleDelete={this.handleDelete}
-            handleBook={this.handleBook}
           />
         </Card>
       </Collapse>
