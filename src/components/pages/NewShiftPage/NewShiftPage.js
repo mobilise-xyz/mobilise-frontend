@@ -110,6 +110,7 @@ class NewShiftPage extends React.Component {
     }));
 
   handleRolesChange = s => {
+    console.log('HANDLE ROLES CHANGE');
     // s is the array of roles currently in the box.
     // If we have a new role, we need to open a modal.
     // The newest addition should always be at the end of the array.
@@ -175,14 +176,23 @@ class NewShiftPage extends React.Component {
     const { data } = this.state;
     const { roles } = data;
 
-    const roleToUpdate = roles.find(r => r.roleName === name);
+    const rolesCopy = roles.slice();
+    const roleToUpdate = rolesCopy.find(r => r.roleName === name);
 
     if (roleToUpdate) {
       roleToUpdate.number = parseInt(value, 10);
     }
+
     console.log('name', name);
     console.log('value', value);
-    console.log('roleToUpdate', roleToUpdate);
+    // console.log('roleToUpdate', roleToUpdate);
+    console.log('UPDATED ROLES', roles);
+
+    this.setState({
+      data: {
+        roles: rolesCopy
+      }
+    });
   };
 
   handleRoleSubmit = () => {
