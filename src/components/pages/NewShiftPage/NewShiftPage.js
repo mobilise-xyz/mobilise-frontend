@@ -58,7 +58,7 @@ class NewShiftPage extends React.Component {
 
   handleDataChange = e => {
     const { name, value } = e.target;
-
+    console.log('UPDATE', name, 'TO', value);
     this.setState(prevState => ({
       data: {
         ...prevState.data,
@@ -158,7 +158,7 @@ class NewShiftPage extends React.Component {
       }
       console.log('s', s);
       console.log('newroles', newRoles);
-
+      console.log('PREVSTATE DATA', prevState.data);
       return {
         data: {
           ...prevState.data,
@@ -188,11 +188,12 @@ class NewShiftPage extends React.Component {
     // console.log('roleToUpdate', roleToUpdate);
     console.log('UPDATED ROLES', roles);
 
-    this.setState({
+    this.setState(prevState => ({
       data: {
+        ...prevState.data,
         roles: rolesCopy
       }
-    });
+    }));
   };
 
   handleRoleSubmit = () => {
@@ -276,7 +277,7 @@ class NewShiftPage extends React.Component {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
     const { title, description, roles } = data;
     const { roleName, roleInvolves, show } = newRoleModal;
-
+    console.log('STATE', this.state);
     const backBtn = (
       <LinkContainer exact to="/" style={{ position: 'sticky', left: '80%' }}>
         <Button variant="outline-secondary">

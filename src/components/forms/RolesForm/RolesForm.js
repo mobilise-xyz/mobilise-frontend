@@ -8,7 +8,14 @@ class RolesForm extends React.Component {
     if (roles.length === 0) {
       return null;
     }
+    console.log('OPTION', option);
     const roleName = option.customOption ? option.label : option;
+    const roleToChange = roles.find(r => r.roleName === roleName);
+    if (!roleToChange) {
+      return null;
+    }
+    console.log('RENDER TOKEN ROLES', roles);
+    console.log('ROLE TO CHANGE', roleToChange);
     console.log('RENDER TOKEN ROLENAME', roleName);
     console.log('RENDER TOKEN ROLES', roles);
     return (
@@ -24,7 +31,7 @@ class RolesForm extends React.Component {
               className="role-num-form"
               min={1}
               onChange={handleRoleNumber}
-              value={roles.find(r => r.roleName === roleName).number}
+              value={roleToChange.number}
             />
           </Col>
         </Row>
@@ -34,7 +41,7 @@ class RolesForm extends React.Component {
 
   render() {
     const { roles, roleOptions, handleChange, handleRoleNumber } = this.props;
-    console.log('HANDLE CHANGE', handleChange);
+    console.log('=== ROLES FORM HANDLE CHANGE ===', handleChange);
     console.log('ROLES FORM ROLES', roles);
     return (
       <Form.Group controlId="rolesForm">
