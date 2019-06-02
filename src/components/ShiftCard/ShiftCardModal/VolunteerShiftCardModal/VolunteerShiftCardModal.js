@@ -92,7 +92,7 @@ const VolunteerShiftCardModal = ({
       <Button
         variant="outline-primary"
         type="submit"
-        disabled={shiftData.bookSuccess === false}
+        disabled={shiftData.bookSuccess === true}
         onClick={handleBook}
       >
         Book
