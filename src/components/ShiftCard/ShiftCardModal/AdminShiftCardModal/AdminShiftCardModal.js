@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, Button, ButtonToolbar } from 'react-bootstrap';
-import RoleBadge from '../RoleBadge';
+import { Modal, Button, ButtonToolbar, Form, Col } from 'react-bootstrap';
 import '../../ShiftCard.css';
+import RoleBadge from '../RoleBadge';
 
 const AdminShiftCardModal = ({
   shiftData,
@@ -17,19 +17,28 @@ const AdminShiftCardModal = ({
     </Modal.Header>
 
     <Modal.Body>
-      {shiftData.requirements.map(r => {
-        // Only show roles that are available to book
-        // i.e. numberRequired > 0
-        return r.numberRequired > 0 ? (
-          <RoleBadge
-            key={shiftData.id + r.role.name}
-            name={r.role.name}
-            number={r.numberRequired}
-            selected={selected}
-            handleSelect={handleSelect}
-          />
-        ) : null;
-      })}
+      <h6>Roles on this shift</h6>
+      <Form>
+        {shiftData.requirements.map(r => (
+          <Form.Row>
+            <Col>
+              <Form.Label as={Col}>
+                <RoleBadge
+                  key={shiftData.id + r.role.name}
+                  name={r.role.name}
+                  number={r.numberRequired}
+                  selected={selected}
+                  handleSelect={handleSelect}
+                  clickable={false}
+                />
+              </Form.Label>
+            </Col>
+            <Col>
+              <Form.Control as={Col} type="number" inline />
+            </Col>
+          </Form.Row>
+        ))}
+      </Form>
     </Modal.Body>
 
     <Modal.Footer
