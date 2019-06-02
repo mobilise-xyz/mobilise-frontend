@@ -14,6 +14,7 @@ const DescriptionForm = props => {
         rows="3"
         value={description}
         onChange={handleChange}
+        required
       />
     </Form.Group>
   );
