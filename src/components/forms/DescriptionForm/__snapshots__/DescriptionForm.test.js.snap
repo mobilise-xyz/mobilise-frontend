@@ -14,6 +14,7 @@ exports[`Description Form Component renders the form correctly 1`] = `
     id="description"
     name="description"
     placeholder="Enter shift description"
+    required={true}
     rows="3"
   />
 </div>

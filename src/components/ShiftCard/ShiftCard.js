@@ -3,7 +3,7 @@ import { Card, Collapse, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
-import shiftActions from '../../_actions/shift.actions';
+import shiftsActions from '../../_actions/shifts.actions';
 import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
 import RoleBadge from './ShiftCardModal/RoleBadge';
 
@@ -13,7 +13,6 @@ class ShiftCard extends React.Component {
   state = {
     showModal: false,
     selected: '',
-    deleted: false,
     booked: false
   };
 
@@ -33,8 +32,7 @@ class ShiftCard extends React.Component {
     const { shiftData } = this.props;
     const { dispatch } = this.props;
     const shiftId = shiftData.id;
-    dispatch(shiftActions.deleteWithId(shiftId));
-    this.setState({ deleted: true });
+    dispatch(shiftsActions.deleteWithId(shiftId));
   };
 
   handleSelect = e => {
@@ -48,13 +46,13 @@ class ShiftCard extends React.Component {
 
     // TODO book and unbook requests.
     if (name === selected) {
-      // Already booked, unbook and fire unbook toast.
+      // Already selected, select.
       this.setState({
         selected: ''
       });
       // Book
     } else {
-      // Not already booked, book and fire book toast.
+      // Not already selected, select.
       this.setState({
         selected: name
       });
@@ -62,17 +60,11 @@ class ShiftCard extends React.Component {
     }
   };
 
-  handleBook = () => {
-    console.log('Handle book');
-    const { shiftData, dispatch } = this.props;
-    const { selected } = this.state;
-    dispatch(shiftActions.bookWithIdAndRole(shiftData.id, selected));
-    this.setState({ booked: true });
-  };
-
   render() {
     const { shiftData, isAdmin } = this.props;
-    const { showModal, selected, deleted, booked } = this.state;
+    const { showModal, selected } = this.state;
+    console.log('PROPS', this.props);
+    const deleted = shiftData.deleteSuccess === true;
     return (
       <Collapse in={!deleted}>
         <Card
@@ -146,11 +138,10 @@ class ShiftCard extends React.Component {
             type="button"
             onClick={this.toggleModal}
             className="stretched-link shift-card-btn"
-            disabled={booked}
+            disabled={shiftData.bookSuccess === true}
           >
             <span className="sr-only">Card infomation button</span>
           </button>
-
           <ShiftCardModal
             isAdmin={isAdmin}
             shiftData={shiftData}
@@ -159,8 +150,6 @@ class ShiftCard extends React.Component {
             handleSelect={this.handleSelect}
             selected={selected}
             handleDelete={this.handleDelete}
-            handleBook={this.handleBook}
-            booked={booked}
           />
         </Card>
       </Collapse>
