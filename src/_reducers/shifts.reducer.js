@@ -1,4 +1,8 @@
 import shiftsConstants from '../_constants/shifts.constants';
+
+const getAllShifts = shifts => shifts.all;
+const getRecommendedShifts = shifts => shifts.recommended;
+
 // state: {shifts: {all, recommended}}
 const placeholderShift = {
   id: -1,
@@ -37,6 +41,81 @@ const shifts = (state = initialState, action) => {
       return {
         error: action.error
       };
+    case shiftsConstants.BOOK_REQUEST: {
+      console.log(state);
+      console.log(action);
+
+      // Search for the shift that requested to be booked.
+      const allShifts = getAllShifts(state.shifts).map(shift =>
+        shift.id === action.id ? { ...shift, loading: true } : shift
+      );
+      const recommendedShifts = getRecommendedShifts(state.shifts).map(shift =>
+        shift.id === action.id ? { ...shift, loading: true } : shift
+      );
+
+      return {
+        shifts: {
+          all: allShifts,
+          recommended: recommendedShifts
+        }
+      };
+    }
+    case shiftsConstants.BOOK_SUCCESS: {
+      console.log(state);
+      console.log(action);
+
+      // Search for the shift that requested to be booked.
+      const allShifts = getAllShifts(state.shifts).map(shift =>
+        shift.id === action.id
+          ? { ...shift, bookSuccess: true, loading: false }
+          : shift
+      );
+      const recommendedShifts = getRecommendedShifts(state.shifts).map(shift =>
+        shift.id === action.id
+          ? { ...shift, bookSuccess: true, loading: false }
+          : shift
+      );
+
+      return {
+        shifts: {
+          all: allShifts,
+          recommended: recommendedShifts
+        }
+      };
+    }
+    case shiftsConstants.BOOK_FAILURE: {
+      console.log(state);
+      console.log(action);
+
+      // Search for the shift that requested to be booked.
+      const allShifts = getAllShifts(state.shifts).map(shift =>
+        shift.id === action.id
+          ? {
+              ...shift,
+              bookSuccess: false,
+              loading: false,
+              error: action.error
+            }
+          : shift
+      );
+      const recommendedShifts = getRecommendedShifts(state.shifts).map(shift =>
+        shift.id === action.id
+          ? {
+              ...shift,
+              bookSuccess: false,
+              loading: false,
+              error: action.error
+            }
+          : shift
+      );
+
+      return {
+        shifts: {
+          all: allShifts,
+          recommended: recommendedShifts
+        }
+      };
+    }
     default:
       return state;
   }

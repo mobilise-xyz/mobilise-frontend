@@ -42,9 +42,59 @@ const getForUser = uid => {
   };
 };
 
+const deleteWithId = shiftId => {
+  const request = id => {
+    return { type: shiftsConstants.DELETE_REQUEST, id };
+  };
+  const success = id => {
+    return { type: shiftsConstants.DELETE_SUCCESS, id };
+  };
+  const failure = (id, error) => {
+    return { type: shiftsConstants.DELETE_FAILURE, id, error };
+  };
+
+  return dispatch => {
+    dispatch(request(shiftId));
+
+    shiftsService.deleteWithId(shiftId).then(
+      () => dispatch(success(shiftId)),
+      error => {
+        dispatch(failure(shiftId, error));
+      }
+    );
+  };
+};
+
+const bookWithIdAndRole = (shiftId, roleName) => {
+  const request = id => {
+    return { type: shiftsConstants.BOOK_REQUEST, id };
+  };
+  const success = id => {
+    return { type: shiftsConstants.BOOK_SUCCESS, id };
+  };
+  const failure = (id, error) => {
+    return { type: shiftsConstants.BOOK_FAILURE, id, error };
+  };
+
+  console.log('book id with role action', shiftId, roleName);
+
+  return dispatch => {
+    dispatch(request(shiftId));
+
+    shiftsService.bookWithIdAndRole(shiftId, roleName).then(
+      () => dispatch(success(shiftId)),
+      error => {
+        dispatch(failure(shiftId, error));
+      }
+    );
+  };
+};
+
 const shiftsActions = {
   getAll,
-  getForUser
+  getForUser,
+  bookWithIdAndRole,
+  deleteWithId
 };
 
 export default shiftsActions;
