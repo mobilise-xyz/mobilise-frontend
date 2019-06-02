@@ -63,7 +63,6 @@ class ShiftCard extends React.Component {
   render() {
     const { shiftData, isAdmin } = this.props;
     const { showModal, selected } = this.state;
-    console.log('PROPS', this.props);
     const deleted = shiftData.deleteSuccess === true;
     return (
       <Collapse in={!deleted}>

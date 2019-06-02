@@ -118,6 +118,7 @@ class Header extends React.Component {
           onClose={() => dispatch(alertActions.clear())}
           className="text-center"
           variant={alert.type}
+          show={alert.message !== undefined}
         >
           {alert.message}
         </Alert>
