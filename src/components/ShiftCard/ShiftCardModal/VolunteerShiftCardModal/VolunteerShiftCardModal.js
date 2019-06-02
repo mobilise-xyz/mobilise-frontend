@@ -112,6 +112,9 @@ class VolunteerShiftCardModal extends React.Component {
                     disabled={!shiftRepeats}
                     value={until}
                     onChange={this.handleChange}
+                    max={
+                      shiftData.repeated ? shiftData.repeated.untilDate : null
+                    }
                   />
                 </Form.Group>
               </Form>
