@@ -2,6 +2,7 @@ import userConstants from '../_constants/user.constants';
 import userService from '../_services/user.service';
 
 import history from '../_helpers/history';
+import alertActions from './alert.actions';
 
 const login = (username, password) => {
   const request = user => {
@@ -24,6 +25,7 @@ const login = (username, password) => {
       },
       error => {
         dispatch(failure(error));
+        dispatch(alertActions.error('Login failed!'));
       }
     );
   };
