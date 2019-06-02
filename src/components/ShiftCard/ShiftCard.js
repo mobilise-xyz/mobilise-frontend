@@ -69,7 +69,7 @@ class ShiftCard extends React.Component {
         <Card
           title={shiftData.title}
           bg={deleted ? 'danger' : 'light'}
-          style={{ width: '100%', margin: 'auto' }}
+          style={{ width: '100%', margin: 'auto', zIndex: 0 }}
         >
           <Card.Body>
             <Row />
