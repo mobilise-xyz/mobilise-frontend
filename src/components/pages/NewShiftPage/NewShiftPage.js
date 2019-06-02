@@ -136,7 +136,6 @@ class NewShiftPage extends React.Component {
       // Map the roles that already exist
       const newRoles = [];
       if (prevRoles.length !== 0) {
-        console.log('prev', prevRoles);
         // newRoles = s.map(name => prevRoles.find(p => p.name === name));
         s.forEach(name => {
           const toBeAdded = prevRoles.find(
@@ -156,9 +155,6 @@ class NewShiftPage extends React.Component {
           number: 0
         });
       }
-      console.log('s', s);
-      console.log('newroles', newRoles);
-      console.log('PREVSTATE DATA', prevState.data);
       return {
         data: {
           ...prevState.data,
@@ -196,6 +192,9 @@ class NewShiftPage extends React.Component {
     }));
   };
 
+  getRandomColour = () =>
+    `# ${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`;
+
   handleRoleSubmit = () => {
     const config = {
       headers: authHeader()
@@ -206,7 +205,8 @@ class NewShiftPage extends React.Component {
 
     const data = {
       name: roleName,
-      involves: roleInvolves
+      involves: roleInvolves,
+      colour: this.getRandomColour()
     };
     // 1. Create new role with post request
     axios
@@ -234,8 +234,6 @@ class NewShiftPage extends React.Component {
       ...prevState,
       newRoleModal: {}
     }));
-
-    console.log(this.state);
   };
 
   handleRoleCancel = () => {
