@@ -13,7 +13,6 @@ class ShiftCard extends React.Component {
   state = {
     showModal: false,
     selected: '',
-    deleted: false,
     booked: false
   };
 
@@ -34,7 +33,6 @@ class ShiftCard extends React.Component {
     const { dispatch } = this.props;
     const shiftId = shiftData.id;
     dispatch(shiftsActions.deleteWithId(shiftId));
-    this.setState({ deleted: true });
   };
 
   handleSelect = e => {
@@ -71,8 +69,9 @@ class ShiftCard extends React.Component {
 
   render() {
     const { shiftData, isAdmin } = this.props;
-    const { showModal, selected, deleted } = this.state;
+    const { showModal, selected } = this.state;
     console.log('PROPS', this.props);
+    const deleted = shiftData.deleteSuccess === true;
     return (
       <Collapse in={!deleted}>
         <Card
@@ -150,7 +149,6 @@ class ShiftCard extends React.Component {
           >
             <span className="sr-only">Card infomation button</span>
           </button>
-
           <ShiftCardModal
             isAdmin={isAdmin}
             shiftData={shiftData}

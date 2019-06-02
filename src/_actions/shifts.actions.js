@@ -1,5 +1,6 @@
 import shiftsConstants from '../_constants/shifts.constants';
 import shiftsService from '../_services/shifts.service';
+import alertActions from './alert.actions';
 
 const getAll = () => {
   const request = () => ({ type: shiftsConstants.GETALL_REQUEST });
@@ -60,6 +61,7 @@ const deleteWithId = shiftId => {
       () => dispatch(success(shiftId)),
       error => {
         dispatch(failure(shiftId, error));
+        dispatch(alertActions.error(error));
       }
     );
   };
@@ -82,9 +84,16 @@ const bookWithIdAndRole = (shiftId, roleName) => {
     dispatch(request(shiftId));
 
     shiftsService.bookWithIdAndRole(shiftId, roleName).then(
-      () => dispatch(success(shiftId)),
+      () => {
+        dispatch(success(shiftId));
+        dispatch(alertActions.success('Booked successfully!'));
+      },
       error => {
+        console.log('ERROR', error);
         dispatch(failure(shiftId, error));
+        dispatch(
+          alertActions.error('Something went wrong with booking this shift!')
+        );
       }
     );
   };
