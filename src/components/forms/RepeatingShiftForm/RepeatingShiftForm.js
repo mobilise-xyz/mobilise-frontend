@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  Form,
-  ButtonToolbar,
-  ToggleButtonGroup,
-  ToggleButton
-} from 'react-bootstrap';
+import { Container, Form, Dropdown, DropdownButton } from 'react-bootstrap';
 
 const options = [
   'Never',
@@ -18,7 +12,8 @@ const options = [
 ];
 
 const RepeatingShiftForm = props => {
-  const { repeat, handleChange, handleRepeatUntil } = props;
+  console.log();
+  const { repeat, handleRepeatUntil } = props;
   let repeatUntil;
   if (repeat === undefined || repeat === 'Never') {
     repeatUntil = null;
@@ -38,31 +33,21 @@ const RepeatingShiftForm = props => {
   }
   return (
     <Container>
-      <ButtonToolbar
-        className="justify-content-md-center"
-        name="repeat"
-        aria-label="Button Toolbar for selecting shift repetition"
+      <DropdownButton
+        id="repeat-dropdown"
+        title="Select repeat frequency"
+        variant="outline-primary"
       >
-        <ToggleButtonGroup
-          className="mr-2"
-          name="repeat-options"
-          type="radio"
-          defaultValue="Never"
-          onChange={handleChange}
-        >
-          {options.map(op => (
-            <ToggleButton
-              id="repeat"
-              variant="primary"
-              type="radio"
-              key={options.indexOf(op) + 1}
-              value={op}
-            >
-              {op}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
-      </ButtonToolbar>
+        {options.map(op => (
+          <Dropdown.Item
+            id="repeat"
+            eventKey={options.indexOf(op) + 1}
+            as="button"
+          >
+            {op}
+          </Dropdown.Item>
+        ))}
+      </DropdownButton>
       {repeatUntil}
     </Container>
   );
