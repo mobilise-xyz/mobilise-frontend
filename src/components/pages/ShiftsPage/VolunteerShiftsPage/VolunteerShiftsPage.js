@@ -10,7 +10,7 @@ class VolunteerShiftsPage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(shiftsActions.getForUser(uid));
+    dispatch(shiftsActions.getForUser(uid, false));
   }
 
   render() {

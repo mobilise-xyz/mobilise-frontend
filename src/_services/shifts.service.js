@@ -35,17 +35,20 @@ const getAll = () => {
     .catch(utils.handleResponse);
 };
 
-const getForUser = uid => {
+const getForUser = (uid, booked = false) => {
   // Get all shifts
   const config = {
-    headers: authHeader()
+    headers: authHeader(),
+    params: {
+      booked
+    }
   };
 
   console.log(`Getting shifts for user ${uid}`);
 
   // TODO link with backend. Currently same as getAll.
   return axios
-    .get(`/shifts/`, config)
+    .get(`/volunteers/${uid}/shifts`, config)
     .then(r => ({
       all: r.data,
       recommended: [placeholderShift]

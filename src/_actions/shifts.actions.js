@@ -20,7 +20,7 @@ const getAll = () => {
 };
 
 // Gets shifts + recommended shifts for the specified user.
-const getForUser = uid => {
+const getForUser = (uid, booked = false) => {
   const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
   const success = shifts => ({
     type: shiftsConstants.GETFORUSER_SUCCESS,
@@ -34,7 +34,7 @@ const getForUser = uid => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getForUser(uid).then(
+    shiftsService.getForUser(uid, booked).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(failure(error));
