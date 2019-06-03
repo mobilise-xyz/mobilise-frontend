@@ -11,9 +11,7 @@ const options = [
   'Annually'
 ];
 
-const RepeatingShiftForm = props => {
-  console.log();
-  const { repeat, handleChange } = props;
+const RepeatingShiftForm = ({ repeat, handleChange }) => {
   let repeatUntil;
   if (repeat === undefined || repeat === 'Never') {
     repeatUntil = null;
