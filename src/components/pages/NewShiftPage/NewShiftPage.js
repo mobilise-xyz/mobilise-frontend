@@ -39,6 +39,12 @@ class NewShiftPage extends React.Component {
         roleName: '',
         roleInvolves: '',
         show: false
+      },
+      customRepeatModal: {
+        frequency: '',
+        timeFrame: '',
+        repeatDays: '',
+        show: false
       }
     };
   }
@@ -267,6 +273,13 @@ class NewShiftPage extends React.Component {
       };
     });
   };
+
+  toggleRepeatsModal = () =>
+    this.setState(({ customRepeatModal }) => ({
+      customRepeatModal: {
+        show: !customRepeatModal.show
+      }
+    }));
 
   handleShiftTitleChange = s => {
     let newTitle = '';
