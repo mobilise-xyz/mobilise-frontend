@@ -39,12 +39,6 @@ class NewShiftPage extends React.Component {
         roleName: '',
         roleInvolves: '',
         show: false
-      },
-      customRepeatModal: {
-        frequency: '',
-        timeFrame: '',
-        repeatDays: '',
-        show: false
       }
     };
   }
@@ -77,9 +71,12 @@ class NewShiftPage extends React.Component {
   };
 
   handleRepeatSelect = freq => {
-    this.setState({
-      repeat: freq
-    });
+    this.setState(prevState => ({
+      data: {
+        ...prevState.data,
+        repeat: freq
+      }
+    }));
   };
 
   handleSubmit = e => {
@@ -105,8 +102,8 @@ class NewShiftPage extends React.Component {
       date: data.date,
       start: data.startTime,
       stop: data.endTime,
-      repeat: data.repeat,
-      repeatUntil: data.repeatUntil,
+      repeatedType: data.repeat,
+      untilDate: data.repeatUntil,
       address: data.location,
       rolesRequired: data.roles
     };
@@ -271,13 +268,6 @@ class NewShiftPage extends React.Component {
     });
   };
 
-  toggleRepeatsModal = () =>
-    this.setState(({ customRepeatModal }) => ({
-      customRepeatModal: {
-        show: !customRepeatModal.show
-      }
-    }));
-
   handleShiftTitleChange = s => {
     let newTitle = '';
     if (s.length !== 0) {
@@ -296,16 +286,10 @@ class NewShiftPage extends React.Component {
   };
 
   render() {
-    const {
-      data,
-      shiftTitleOptions,
-      repeat,
-      roleOptions,
-      newRoleModal
-    } = this.state;
-    const { title, description, roles } = data;
-    const { roleName, roleInvolves, show } = newRoleModal;
-    console.log('STATE', this.state);
+    const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
+    const { title, description, repeat, roles } = data;
+    const { roleName, roleInvolves, show: showRoleModal } = newRoleModal;
+
     const backBtn = (
       <LinkContainer exact to="/" style={{ position: 'sticky', left: '80%' }}>
         <Button variant="outline-secondary">
@@ -364,7 +348,7 @@ class NewShiftPage extends React.Component {
         <NewRoleModal
           roleName={roleName}
           roleInvolves={roleInvolves}
-          show={show}
+          show={showRoleModal}
           onHide={this.toggleRolesModal}
           handleRoleSubmit={this.handleRoleSubmit}
           handleRoleCancel={this.handleRoleCancel}

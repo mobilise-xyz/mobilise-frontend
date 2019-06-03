@@ -11,10 +11,10 @@ const options = [
   'Never',
   'Daily',
   'Week Days',
+  'Weekends',
   'Weekly',
   'Monthly',
-  'Annually',
-  'Custom'
+  'Annually'
 ];
 
 const RepeatingShiftForm = props => {
@@ -27,8 +27,8 @@ const RepeatingShiftForm = props => {
       <Form.Group>
         <Form.Label>Repeat Until</Form.Label>
         <Form.Control
-          id="repeat-until-date"
-          name="repeat-until-date"
+          id="repeatUntil"
+          name="repeatUntil"
           onChange={handleRepeatUntil}
           type="date"
           required
