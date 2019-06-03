@@ -61,7 +61,7 @@ const deleteWithId = shiftId => {
     shiftsService.deleteWithId(shiftId).then(
       () => {
         dispatch(success(shiftId));
-        dispatch(alertActions.error('Successfully deleted a shift'));
+        dispatch(alertActions.success('Successfully deleted a shift'));
       },
       error => {
         dispatch(failure(shiftId, error));
