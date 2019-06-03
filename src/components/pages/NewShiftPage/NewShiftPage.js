@@ -179,11 +179,6 @@ class NewShiftPage extends React.Component {
       roleToUpdate.number = parseInt(value, 10);
     }
 
-    console.log('name', name);
-    console.log('value', value);
-    // console.log('roleToUpdate', roleToUpdate);
-    console.log('UPDATED ROLES', roles);
-
     this.setState(prevState => ({
       data: {
         ...prevState.data,
@@ -193,7 +188,7 @@ class NewShiftPage extends React.Component {
   };
 
   getRandomColour = () =>
-    `# ${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`;
+    `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`;
 
   handleRoleSubmit = () => {
     const config = {

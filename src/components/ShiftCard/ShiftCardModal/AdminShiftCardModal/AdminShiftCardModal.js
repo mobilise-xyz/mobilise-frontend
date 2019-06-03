@@ -27,6 +27,7 @@ const AdminShiftCardModal = ({
                   key={shiftData.id + r.role.name}
                   name={r.role.name}
                   number={r.numberRequired}
+                  colour={r.role.colour}
                   selected={selected}
                   handleSelect={handleSelect}
                   clickable={false}

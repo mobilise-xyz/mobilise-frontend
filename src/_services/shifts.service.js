@@ -26,7 +26,7 @@ const getAll = () => {
     .then(r => ({
       all: r.data
     }))
-    .catch(err => console.log(err)); // TODO go to error page
+    .catch(utils.handleResponse);
 };
 
 const getForUser = uid => {

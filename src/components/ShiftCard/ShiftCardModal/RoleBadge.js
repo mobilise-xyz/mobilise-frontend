@@ -6,9 +6,11 @@ const RoleBadge = ({
   number,
   handleSelect,
   selected,
-  clickable = true
+  clickable = true,
+  colour = 'info'
 }) => {
   const isSelected = selected === name;
+  console.log('COLOUR', colour);
   return (
     <Button
       variant={isSelected ? 'success btn-raised' : 'primary btn-raised'}
@@ -18,7 +20,7 @@ const RoleBadge = ({
         fontSize: '1rem',
         padding: '0.3rem',
         marginLeft: '0.3125rem',
-        backgroundColor: 'info'
+        backgroundColor: colour
       }}
       name={name}
       onClick={clickable ? handleSelect : null}
