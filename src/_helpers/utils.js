@@ -1,4 +1,4 @@
-import userService from './user.service';
+import userService from '../_services/user.service';
 
 const handleResponse = resp => {
   console.log('handling response', resp);

@@ -8,6 +8,7 @@ import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
 import SettingsPage from './components/pages/SettingsPage';
 import SignUpPage from './components/pages/SignUpPage';
+import AvailabilityPage from './components/pages/AvailabilityPage';
 
 const App = () => (
   <Switch>
@@ -15,6 +16,7 @@ const App = () => (
     <PrivateRoute path="/shifts" exact component={MyShiftsPage} />
     <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
     <PrivateRoute path="/settings" exact component={SettingsPage} />
+    <PrivateRoute path="/availability" exact component={AvailabilityPage} />
     <Route path="/login" exact component={LoginPage} />
     <Route path="/signup" exact component={SignUpPage} />
     <Route path="/404" exact component={NotFound} />
