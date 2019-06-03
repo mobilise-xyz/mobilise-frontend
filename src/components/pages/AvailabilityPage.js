@@ -39,7 +39,6 @@ const DayCard = ({ timeIndex, dayIndex, availability, handleClick }) => (
 
 class AvailabilityPage extends React.Component {
   handleClick = (timeIndex, dayIndex, availability) => {
-    console.log('CLICK AT', timeIndex, dayIndex, availability);
     const { dispatch } = this.props;
     switch (availability) {
       case availabilityConstants.AVAILABLE:
@@ -58,19 +57,21 @@ class AvailabilityPage extends React.Component {
 
   generateGrid = availability => {
     const grid = [
-      <Row>
+      <Row key="grid-days-header">
         <Col />
         {days.map((day, dayIndex) => (
-          <Col>{days[dayIndex]}</Col>
+          <Col key={`grid-${days[dayIndex].toLowerCase()}-header`}>
+            {days[dayIndex]}
+          </Col>
         ))}
       </Row>
     ];
     grid.push(
       availability.map((time, timeIndex) => (
-        <Row className="pt-4">
+        <Row key={`grid-${times[timeIndex].toLowerCase()}`} className="pt-4">
           <Col>{times[timeIndex]}</Col>
           {time.map((day, dayIndex) => (
-            <Col id={`grid-${days[dayIndex].toLowerCase()}`}>
+            <Col key={`grid-${days[dayIndex].toLowerCase()}`}>
               <DayCard
                 key={`${times[timeIndex]}-${days[dayIndex]}`}
                 timeIndex={timeIndex}
