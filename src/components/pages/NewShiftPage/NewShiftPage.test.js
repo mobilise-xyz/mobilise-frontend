@@ -1,6 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import axios from 'axios';
+
 import NewShiftPage from './NewShiftPage';
+
+jest.mock('axios');
 
 let wrapper;
 
@@ -18,7 +22,6 @@ describe('<NewShiftPage />', () => {
   });
 
   it('has a title form', () => {
-    console.log(wrapper.debug());
     expect(wrapper.find('#title')).toHaveLength(1);
   });
 
@@ -30,11 +33,40 @@ describe('<NewShiftPage />', () => {
     expect(wrapper.find('#location')).toHaveLength(1);
   });
 
+  it('has a repeat form', () => {
+    expect(wrapper.find('#repeat')).toHaveLength(1);
+  });
+
   it('has a submit button', () => {
     expect(wrapper.find('#submitbutton')).toHaveLength(1);
   });
 
   it('has a new role modal', () => {
     expect(wrapper.find('NewRoleModal')).toHaveLength(1);
+  });
+
+  it('posts correct data on submit', () => {
+    const form = wrapper.find('Form');
+    const postSpy = jest.spyOn(axios, 'post');
+
+    const expectedData = {
+      title: '',
+      description: '',
+      date: '',
+      start: '',
+      stop: '',
+      repeatedType: 'Never',
+      untilDate: '',
+      address: '',
+      rolesRequired: []
+    };
+
+    form.simulate('submit', { preventDefault: () => {} });
+    expect(postSpy).toHaveBeenCalledTimes(1);
+    expect(postSpy).toHaveBeenCalledWith(
+      '/shifts',
+      expectedData,
+      expect.any(Object)
+    );
   });
 });

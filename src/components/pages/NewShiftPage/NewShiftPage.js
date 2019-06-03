@@ -318,6 +318,7 @@ class NewShiftPage extends React.Component {
           <DateTimeForm id="datetime" handleChange={this.handleDataChange} />
           {/* Repeating Shifts */}
           <RepeatingShiftForm
+            id="repeat"
             repeat={repeat}
             handleChange={this.handleDataChange}
           />
