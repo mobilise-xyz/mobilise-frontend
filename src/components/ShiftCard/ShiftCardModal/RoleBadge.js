@@ -1,7 +1,13 @@
 import React from 'react';
 import { Button, Badge } from 'react-bootstrap';
 
-const RoleBadge = ({ name, number, handleSelect, selected }) => {
+const RoleBadge = ({
+  name,
+  number,
+  handleSelect,
+  selected,
+  clickable = true
+}) => {
   const isSelected = selected === name;
   return (
     <Button
@@ -15,7 +21,7 @@ const RoleBadge = ({ name, number, handleSelect, selected }) => {
         backgroundColor: 'info'
       }}
       name={name}
-      onClick={handleSelect}
+      onClick={clickable ? handleSelect : null}
     >
       {name}
       {number ? (

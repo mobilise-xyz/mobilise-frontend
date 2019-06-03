@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authHeader from '../_helpers/auth-header';
-import utils from './utils.service';
+import utils from '../_helpers/utils';
 
 const placeholderShift = {
   id: -1,

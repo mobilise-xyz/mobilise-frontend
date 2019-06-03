@@ -4,7 +4,7 @@ import shiftsConstants from '../_constants/shifts.constants';
 // returns the appropriate state.
 const applyToShifts = (shifts, action, f) => ({
   all: shifts.all.map(f),
-  recommended: shifts.recommended.map(f)
+  recommended: shifts.recommended ? shifts.recommended.map(f) : undefined
 });
 
 // state: {shifts: {all, recommended}}

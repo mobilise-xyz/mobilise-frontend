@@ -1,6 +1,7 @@
 .shift-card-btn {
   background: transparent;
   border: none !important;
+  padding: 0;
 }
 
 .shift-card-btn:focus {
