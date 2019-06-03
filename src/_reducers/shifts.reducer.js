@@ -12,6 +12,12 @@ const placeholderShift = {
   id: -1,
   title: 'Loading...',
   description: null,
+  creator: {
+    user: {
+      firstName: '',
+      lastName: ''
+    }
+  },
   requirements: [
     {
       numberRequired: 0,

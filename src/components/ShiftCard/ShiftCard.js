@@ -3,6 +3,7 @@ import { Card, Collapse, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
+import ErrorBoundary from '../ErrorBoundary';
 import shiftsActions from '../../_actions/shifts.actions';
 import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
 import RoleBadge from './ShiftCardModal/RoleBadge';
@@ -64,95 +65,101 @@ class ShiftCard extends React.Component {
     const { shiftData, isAdmin } = this.props;
     const { showModal, selected } = this.state;
     const deleted = shiftData.deleteSuccess === true;
+
     return (
-      <Collapse in={!deleted}>
-        <Card
-          title={shiftData.title}
-          bg={deleted ? 'danger' : 'light'}
-          style={{ width: '100%', margin: 'auto', zIndex: 0 }}
-        >
-          <Card.Body>
-            <Row />
-            <Row>
-              <Col>
-                <h6>Location</h6>
-                <p>{shiftData.address}</p>
-              </Col>
-              <Col>
-                <h6>Description</h6>
-                <p>{shiftData.description}</p>
-              </Col>
-              <Col>
-                <h6>Available roles</h6>
-                <Row>
-                  {shiftData.requirements.map(r => {
-                    // Only show roles that are available to book
-                    // i.e. numberRequired > 0
-                    return r.numberRequired > 0 ? (
-                      <RoleBadge
-                        key={shiftData.id + r.role.name}
-                        name={r.role.name}
-                        colour={r.role.colour}
-                        selected={selected}
-                      />
-                    ) : null;
-                  })}
-                </Row>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h6>Date</h6>
-                <p>
-                  {moment(shiftData.date)
-                    .local()
-                    .format('dddd, MMMM Do YYYY')}
-                </p>
-              </Col>
-              <Col>
-                <Row noGutters>
-                  <Col>
-                    <h6>Start time</h6>
-                    <p>
-                      {moment(shiftData.start, 'H:m:ss')
-                        .local()
-                        .format('h:mm a')}
-                    </p>
-                  </Col>
-                  <Col>
-                    <h6>End time</h6>
-                    <p>
-                      {moment(shiftData.stop, 'H:m:ss')
-                        .local()
-                        .format('h:mm a')}
-                    </p>
-                  </Col>
-                </Row>
-              </Col>
-              <Col>
-                <h6>Managed by</h6>
-              </Col>
-            </Row>
-          </Card.Body>
-          <button
-            type="button"
-            onClick={this.toggleModal}
-            className="stretched-link shift-card-btn"
-            disabled={shiftData.bookSuccess === true}
+      <ErrorBoundary>
+        <Collapse in={!deleted}>
+          <Card
+            title={shiftData.title}
+            bg={deleted ? 'danger' : 'light'}
+            style={{ width: '100%', margin: 'auto', zIndex: 0 }}
           >
-            <span className="sr-only">Card infomation button</span>
-          </button>
-          <ShiftCardModal
-            isAdmin={isAdmin}
-            shiftData={shiftData}
-            show={showModal}
-            onHide={this.toggleModal}
-            handleSelect={this.handleSelect}
-            selected={selected}
-            handleDelete={this.handleDelete}
-          />
-        </Card>
-      </Collapse>
+            <Card.Body>
+              <Row />
+              <Row>
+                <Col>
+                  <h6>Location</h6>
+                  <p>{shiftData.address}</p>
+                </Col>
+                <Col>
+                  <h6>Description</h6>
+                  <p>{shiftData.description}</p>
+                </Col>
+                <Col>
+                  <h6>Available roles</h6>
+                  <Row>
+                    {shiftData.requirements.map(r => {
+                      // Only show roles that are available to book
+                      // i.e. numberRequired > 0
+                      return r.numberRequired > 0 ? (
+                        <RoleBadge
+                          key={shiftData.id + r.role.name}
+                          name={r.role.name}
+                          colour={r.role.colour}
+                          selected={selected}
+                        />
+                      ) : null;
+                    })}
+                  </Row>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <h6>Date</h6>
+                  <p>
+                    {moment(shiftData.date)
+                      .local()
+                      .format('dddd, MMMM Do YYYY')}
+                  </p>
+                </Col>
+                <Col>
+                  <Row noGutters>
+                    <Col>
+                      <h6>Start time</h6>
+                      <p>
+                        {moment(shiftData.start, 'H:m:ss')
+                          .local()
+                          .format('h:mm a')}
+                      </p>
+                    </Col>
+                    <Col>
+                      <h6>End time</h6>
+                      <p>
+                        {moment(shiftData.stop, 'H:m:ss')
+                          .local()
+                          .format('h:mm a')}
+                      </p>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <h6>Managed by</h6>
+                  <p>{`${shiftData.creator.user.firstName} ${
+                    shiftData.creator.user.lastName
+                  }`}</p>
+                </Col>
+              </Row>
+            </Card.Body>
+            <button
+              type="button"
+              onClick={this.toggleModal}
+              className="stretched-link shift-card-btn"
+              disabled={shiftData.bookSuccess === true}
+            >
+              <span className="sr-only">Card infomation button</span>
+            </button>
+            <ShiftCardModal
+              isAdmin={isAdmin}
+              shiftData={shiftData}
+              show={showModal}
+              onHide={this.toggleModal}
+              handleSelect={this.handleSelect}
+              selected={selected}
+              handleDelete={this.handleDelete}
+            />
+          </Card>
+        </Collapse>
+      </ErrorBoundary>
     );
   }
 }
