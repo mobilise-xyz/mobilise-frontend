@@ -20,7 +20,7 @@ const AdminShiftCardModal = ({
       <h6>Roles on this shift</h6>
       <Form>
         {shiftData.requirements.map(r => (
-          <Form.Row>
+          <Form.Row key={`${r.role.name}-roles-form-row`}>
             <Col>
               <Form.Label as={Col}>
                 <RoleBadge
@@ -35,7 +35,7 @@ const AdminShiftCardModal = ({
               </Form.Label>
             </Col>
             <Col>
-              <Form.Control as={Col} type="number" inline />
+              <Form.Control as={Col} type="number" />
             </Col>
           </Form.Row>
         ))}

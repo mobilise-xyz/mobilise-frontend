@@ -10,7 +10,6 @@ const RoleBadge = ({
   colour = 'info'
 }) => {
   const isSelected = selected === name;
-  console.log('COLOUR', colour);
   return (
     <Button
       variant={isSelected ? 'success btn-raised' : 'primary btn-raised'}
