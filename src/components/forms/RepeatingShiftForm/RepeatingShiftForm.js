@@ -11,9 +11,7 @@ const options = [
   'Annually'
 ];
 
-const RepeatingShiftForm = props => {
-  console.log();
-  const { repeat, handleChange } = props;
+const RepeatingShiftForm = ({ repeat, handleChange }) => {
   let repeatUntil;
   if (repeat === undefined || repeat === 'Never') {
     repeatUntil = null;
@@ -43,7 +41,9 @@ const RepeatingShiftForm = props => {
           onChange={handleChange}
         >
           {options.map(op => (
-            <option>{op}</option>
+            <option key={op} s>
+              {op}
+            </option>
           ))}
         </Form.Control>
       </Form.Group>

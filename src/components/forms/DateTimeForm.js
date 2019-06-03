@@ -2,8 +2,7 @@ import React from 'react';
 import { Form, Col, Row } from 'react-bootstrap';
 import moment from 'moment';
 
-const DateTimeForm = props => {
-  const { handleChange } = props;
+const DateTimeForm = ({ handleChange }) => {
   return (
     <Form.Row>
       {/* Date */}
