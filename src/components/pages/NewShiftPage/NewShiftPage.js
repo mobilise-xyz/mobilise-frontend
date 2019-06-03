@@ -76,15 +76,6 @@ class NewShiftPage extends React.Component {
     }));
   };
 
-  handleRepeatSelect = freq => {
-    this.setState(prevState => ({
-      data: {
-        ...prevState.data,
-        repeat: freq
-      }
-    }));
-  };
-
   handleSubmit = e => {
     // Submit this
     e.preventDefault();
@@ -331,11 +322,9 @@ class NewShiftPage extends React.Component {
           {/* Date and Time */}
           <DateTimeForm id="datetime" handleChange={this.handleDataChange} />
           {/* Repeating Shifts */}
-          <Form.Label>Repeat</Form.Label>
           <RepeatingShiftForm
             repeat={repeat}
-            handleChange={this.handleRepeatSelect}
-            handleRepeatUntil={this.handleDataChange}
+            handleChange={this.handleDataChange}
           />
           {/* Location */}
           <LocationInput id="location" handleChange={this.handleDataChange} />

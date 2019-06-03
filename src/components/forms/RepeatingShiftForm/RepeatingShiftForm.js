@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Form, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 const options = [
   'Never',
@@ -13,7 +13,7 @@ const options = [
 
 const RepeatingShiftForm = props => {
   console.log();
-  const { repeat, handleRepeatUntil } = props;
+  const { repeat, handleChange } = props;
   let repeatUntil;
   if (repeat === undefined || repeat === 'Never') {
     repeatUntil = null;
@@ -22,9 +22,9 @@ const RepeatingShiftForm = props => {
       <Form.Group>
         <Form.Label>Repeat Until</Form.Label>
         <Form.Control
-          id="repeatUntil"
+          id="repeat-until-date"
           name="repeatUntil"
-          onChange={handleRepeatUntil}
+          onChange={handleChange}
           type="date"
           required
         />
@@ -32,24 +32,23 @@ const RepeatingShiftForm = props => {
     );
   }
   return (
-    <Container>
-      <DropdownButton
-        id="repeat-dropdown"
-        title="Select repeat frequency"
-        variant="outline-primary"
-      >
-        {options.map(op => (
-          <Dropdown.Item
-            id="repeat"
-            eventKey={options.indexOf(op) + 1}
-            as="button"
-          >
-            {op}
-          </Dropdown.Item>
-        ))}
-      </DropdownButton>
+    <Form.Group>
+      <Form.Group>
+        <Form.Label>Repeat</Form.Label>
+        <Form.Control
+          id="repeat-dropdown"
+          name="repeat"
+          as="select"
+          value={repeat}
+          onChange={handleChange}
+        >
+          {options.map(op => (
+            <option>{op}</option>
+          ))}
+        </Form.Control>
+      </Form.Group>
       {repeatUntil}
-    </Container>
+    </Form.Group>
   );
 };
 
