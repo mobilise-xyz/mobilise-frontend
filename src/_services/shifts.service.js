@@ -62,7 +62,7 @@ const deleteWithId = shiftId => {
   return axios.delete(`/shifts/${shiftId}`, config).then(utils.handleResponse);
 };
 
-const book = (shiftId, roleName, repeatedType, until) => {
+const book = (shiftId, roleName, repeatedType, untilDate) => {
   const config = {
     headers: authHeader()
   };
@@ -70,7 +70,7 @@ const book = (shiftId, roleName, repeatedType, until) => {
   const data = {
     roleName,
     repeatedType,
-    until
+    untilDate
   };
 
   console.log('Booking shift with ID', shiftId, 'and rolename', roleName);

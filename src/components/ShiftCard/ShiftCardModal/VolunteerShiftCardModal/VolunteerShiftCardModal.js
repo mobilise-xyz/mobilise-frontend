@@ -16,18 +16,24 @@ class VolunteerShiftCardModal extends React.Component {
     // If daily => daily, weekly, month
     // If weekly => weekly, monthly
     // If monthly => monthly
-    const options = ['daily', 'weekly', 'monthly'];
-
+    const options = ['Daily', 'Weekly', 'Monthly'];
+    let selectedOptions = [];
     switch (repeatedType) {
-      case 'daily':
-        return options.slice();
-      case 'weekly':
-        return options.slice(1);
-      case 'monthly':
-        return options.slice(2);
+      case 'Daily':
+        selectedOptions = options.slice();
+        break;
+      case 'Weekly':
+        selectedOptions = options.slice(1);
+        break;
+      case 'Monthly':
+        selectedOptions = options.slice(2);
+        break;
       default:
-        return [];
+        console.log('Unknown repeated type:', repeatedType);
+        selectedOptions = [];
     }
+    selectedOptions.unshift('None');
+    return selectedOptions;
   };
 
   handleChange = e => {
@@ -78,6 +84,17 @@ class VolunteerShiftCardModal extends React.Component {
               })}
             </Col>
           </Row>
+          {shiftData.repeated ? (
+            <p>
+              This shift repeats until&nbsp;
+              <strong>
+                {moment(shiftData.repeated.untilDate, 'YYYY-MM-DD')
+                  .local()
+                  .format('dddd, MMMM Do YYYY')}
+              </strong>
+              .
+            </p>
+          ) : null}
           <Row>
             <Col>
               <h6>Book repeating?</h6>
