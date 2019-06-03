@@ -70,7 +70,7 @@ class VolunteerShiftCardModal extends React.Component {
                   <RoleBadge
                     key={shiftData.id + r.role.name}
                     name={r.role.name}
-                    colour={r.role.color}
+                    colour={r.role.colour}
                     selected={selected}
                     handleSelect={handleSelect}
                   />
