@@ -1,16 +1,17 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 
+const options = [
+  'Never',
+  'Daily',
+  'Week Days',
+  'Weekends',
+  'Weekly',
+  'Monthly',
+  'Annually'
+];
+
 const RepeatingShiftForm = ({ repeat, handleChange }) => {
-  const options = [
-    'Never',
-    'Daily',
-    'Week Days',
-    'Weekends',
-    'Weekly',
-    'Monthly',
-    'Annually'
-  ];
   let repeatUntil;
   if (repeat === undefined || repeat === 'Never') {
     repeatUntil = null;
