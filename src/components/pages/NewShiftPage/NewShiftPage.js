@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-import NewRoleModal from '../NewRoleModal';
+import NewRoleModal from './modals/NewRoleModal';
 import CardLayout from '../../CardLayout';
 import history from '../../../_helpers/history';
 import authHeader from '../../../_helpers/auth-header';
@@ -13,6 +13,7 @@ import DescriptionForm from '../../forms/DescriptionForm';
 import DateTimeForm from '../../forms/DateTimeForm';
 import LocationInput from '../../LocationInput/LocationInput';
 import RolesForm from '../../forms/RolesForm';
+import RepeatingShiftForm from '../../forms/RepeatingShiftForm/RepeatingShiftForm';
 
 const placeholderShiftTitles = ['Fundraiser', 'Regular'];
 
@@ -27,6 +28,8 @@ class NewShiftPage extends React.Component {
         date: '',
         startTime: '',
         endTime: '',
+        repeat: 'Never',
+        repeatUntil: '',
         location: '',
         roles: []
       },
@@ -35,6 +38,12 @@ class NewShiftPage extends React.Component {
       newRoleModal: {
         roleName: '',
         roleInvolves: '',
+        show: false
+      },
+      customRepeatModal: {
+        frequency: '',
+        timeFrame: '',
+        repeatDays: '',
         show: false
       }
     };
@@ -90,6 +99,8 @@ class NewShiftPage extends React.Component {
       date: data.date,
       start: data.startTime,
       stop: data.endTime,
+      repeatedType: data.repeat,
+      untilDate: data.repeatUntil,
       address: data.location,
       rolesRequired: data.roles
     };
@@ -254,6 +265,13 @@ class NewShiftPage extends React.Component {
     });
   };
 
+  toggleRepeatsModal = () =>
+    this.setState(({ customRepeatModal }) => ({
+      customRepeatModal: {
+        show: !customRepeatModal.show
+      }
+    }));
+
   handleShiftTitleChange = s => {
     let newTitle = '';
     if (s.length !== 0) {
@@ -273,9 +291,9 @@ class NewShiftPage extends React.Component {
 
   render() {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
-    const { title, description, roles } = data;
-    const { roleName, roleInvolves, show } = newRoleModal;
-    console.log('STATE', this.state);
+    const { title, description, repeat, roles } = data;
+    const { roleName, roleInvolves, show: showRoleModal } = newRoleModal;
+
     const backBtn = (
       <LinkContainer exact to="/" style={{ position: 'sticky', left: '80%' }}>
         <Button variant="outline-secondary">
@@ -303,6 +321,11 @@ class NewShiftPage extends React.Component {
           />
           {/* Date and Time */}
           <DateTimeForm id="datetime" handleChange={this.handleDataChange} />
+          {/* Repeating Shifts */}
+          <RepeatingShiftForm
+            repeat={repeat}
+            handleChange={this.handleDataChange}
+          />
           {/* Location */}
           <LocationInput id="location" handleChange={this.handleDataChange} />
           {/* Roles */}
@@ -327,7 +350,7 @@ class NewShiftPage extends React.Component {
         <NewRoleModal
           roleName={roleName}
           roleInvolves={roleInvolves}
-          show={show}
+          show={showRoleModal}
           onHide={this.toggleRolesModal}
           handleRoleSubmit={this.handleRoleSubmit}
           handleRoleCancel={this.handleRoleCancel}
