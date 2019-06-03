@@ -58,7 +58,7 @@ class NewShiftPage extends React.Component {
 
   handleDataChange = e => {
     const { name, value } = e.target;
-
+    console.log('UPDATE', name, 'TO', value);
     this.setState(prevState => ({
       data: {
         ...prevState.data,
@@ -110,6 +110,7 @@ class NewShiftPage extends React.Component {
     }));
 
   handleRolesChange = s => {
+    console.log('HANDLE ROLES CHANGE');
     // s is the array of roles currently in the box.
     // If we have a new role, we need to open a modal.
     // The newest addition should always be at the end of the array.
@@ -135,7 +136,6 @@ class NewShiftPage extends React.Component {
       // Map the roles that already exist
       const newRoles = [];
       if (prevRoles.length !== 0) {
-        console.log('prev', prevRoles);
         // newRoles = s.map(name => prevRoles.find(p => p.name === name));
         s.forEach(name => {
           const toBeAdded = prevRoles.find(
@@ -155,9 +155,6 @@ class NewShiftPage extends React.Component {
           number: 0
         });
       }
-      console.log('s', s);
-      console.log('newroles', newRoles);
-
       return {
         data: {
           ...prevState.data,
@@ -175,15 +172,28 @@ class NewShiftPage extends React.Component {
     const { data } = this.state;
     const { roles } = data;
 
-    const roleToUpdate = roles.find(r => r.roleName === name);
+    const rolesCopy = roles.slice();
+    const roleToUpdate = rolesCopy.find(r => r.roleName === name);
 
     if (roleToUpdate) {
       roleToUpdate.number = parseInt(value, 10);
     }
+
     console.log('name', name);
     console.log('value', value);
-    console.log('roleToUpdate', roleToUpdate);
+    // console.log('roleToUpdate', roleToUpdate);
+    console.log('UPDATED ROLES', roles);
+
+    this.setState(prevState => ({
+      data: {
+        ...prevState.data,
+        roles: rolesCopy
+      }
+    }));
   };
+
+  getRandomColour = () =>
+    `# ${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`;
 
   handleRoleSubmit = () => {
     const config = {
@@ -195,7 +205,8 @@ class NewShiftPage extends React.Component {
 
     const data = {
       name: roleName,
-      involves: roleInvolves
+      involves: roleInvolves,
+      colour: this.getRandomColour()
     };
     // 1. Create new role with post request
     axios
@@ -223,8 +234,6 @@ class NewShiftPage extends React.Component {
       ...prevState,
       newRoleModal: {}
     }));
-
-    console.log(this.state);
   };
 
   handleRoleCancel = () => {
@@ -266,7 +275,7 @@ class NewShiftPage extends React.Component {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
     const { title, description, roles } = data;
     const { roleName, roleInvolves, show } = newRoleModal;
-
+    console.log('STATE', this.state);
     const backBtn = (
       <LinkContainer exact to="/" style={{ position: 'sticky', left: '80%' }}>
         <Button variant="outline-secondary">

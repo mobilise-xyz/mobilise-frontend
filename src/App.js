@@ -1,7 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 import PrivateRoute from './components/PrivateRoute';
-import ShiftsPage from './components/pages/ShiftsPage/ShiftsPage';
+import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
 import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
 import LoginPage from './components/pages/LoginPage';
@@ -17,7 +17,8 @@ const App = () => (
     <PrivateRoute path="/settings" exact component={SettingsPage} />
     <Route path="/login" exact component={LoginPage} />
     <Route path="/signup" exact component={SignUpPage} />
-    <Route component={NotFound} />
+    <Route path="/404" exact component={NotFound} />
+    <Redirect from="*" to="/404" />
   </Switch>
 );
 
