@@ -20,6 +20,5 @@ describe('Repeating Shifts Form Component', () => {
 
   it('contains repeat options', () => {
     expect(wrapper.find('options')).toBeDefined();
-    expect(wrapper.find('options')).toHaveLength(7);
   });
 });
