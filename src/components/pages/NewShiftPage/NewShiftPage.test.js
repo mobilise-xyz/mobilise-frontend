@@ -30,6 +30,10 @@ describe('<NewShiftPage />', () => {
     expect(wrapper.find('#location')).toHaveLength(1);
   });
 
+  it('has a repeat form', () => {
+    expect(wrapper.find('#repeat')).toHaveLength(1);
+  });
+
   it('has a submit button', () => {
     expect(wrapper.find('#submitbutton')).toHaveLength(1);
   });
