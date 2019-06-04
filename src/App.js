@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router';
 import history from './_helpers/history';
@@ -15,39 +15,41 @@ import alertActions from './_actions/alert.actions';
 import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedShiftsHelpPage';
 import FeedBackPage from './components/pages/HelpPages/FeedbackPage';
 
-export class App extends Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
     const { dispatch } = this.props;
-   
+
     // Clear alerts on location change.
     history.listen(() => {
       dispatch(alertActions.clear());
-    }); 
+    });
   }
 
-const App = () => (
-  <Switch>
-    <PrivateRoute path="/" exact component={ShiftsPage} />
-    <PrivateRoute path="/shifts" exact component={MyShiftsPage} />
-    <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
-    <PrivateRoute path="/settings" exact component={SettingsPage} />
-    <PrivateRoute path="/availability" exact component={AvailabilityPage} />
+  render() {
+    return (
+      <Switch>
+        <PrivateRoute path="/" exact component={ShiftsPage} />
+        <PrivateRoute path="/shifts" exact component={MyShiftsPage} />
+        <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
+        <PrivateRoute path="/settings" exact component={SettingsPage} />
+        <PrivateRoute path="/availability" exact component={AvailabilityPage} />
 
-    <PrivateRoute
-      path="/help/recommended"
-      exact
-      component={RecommendedShiftHelpPage}
-    />
-    <PrivateRoute path="/help/feedback" exact component={FeedBackPage} />
+        <PrivateRoute
+          path="/help/recommended"
+          exact
+          component={RecommendedShiftHelpPage}
+        />
+        <PrivateRoute path="/help/feedback" exact component={FeedBackPage} />
 
-    <Route path="/login" exact component={LoginPage} />
-    <Route path="/signup" exact component={SignUpPage} />
-    <Route path="/404" exact component={NotFound} />
-    <Redirect from="*" to="/404" />
-  </Switch>
-);
-
+        <Route path="/login" exact component={LoginPage} />
+        <Route path="/signup" exact component={SignUpPage} />
+        <Route path="/404" exact component={NotFound} />
+        <Redirect from="*" to="/404" />
+      </Switch>
+    );
+  }
+}
 
 const mapStateToProps = state => {
   const { alert } = state;

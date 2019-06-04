@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import RoleBadge from '../RoleBadge';
 import '../../ShiftCard.css';
-import shiftsActions from '../../../../_actions/shifts.actions';
 
 const getRepeatOptions = repeatedType => {
   switch (repeatedType) {
@@ -108,18 +107,15 @@ class VolunteerShiftCardModal extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleBook = () => {
-    const { repeatedType, until } = this.state;
-    const { shiftData, selected, dispatch } = this.props;
-
-    if (selected === null) {
-      console.log('THIS SHOULD BE AN ERROR'); // TODO
-    }
-    dispatch(shiftsActions.book(shiftData.id, selected, repeatedType, until));
-  };
-
   render() {
-    const { shiftData, onHide, show, handleSelect, selected } = this.props;
+    const {
+      shiftData,
+      onHide,
+      show,
+      handleSelect,
+      handleBook,
+      selected
+    } = this.props;
     const { repeatedType, until } = this.state;
     const shiftRepeats = shiftData.repeatedId !== null;
 
@@ -186,7 +182,7 @@ class VolunteerShiftCardModal extends React.Component {
             variant="outline-primary"
             type="submit"
             disabled={shiftData.bookSuccess === true || selected === ''}
-            onClick={this.handleBook}
+            onClick={() => handleBook(repeatedType, until)}
           >
             Book
           </Button>

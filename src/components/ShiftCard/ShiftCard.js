@@ -61,17 +61,30 @@ class ShiftCard extends React.Component {
     }
   };
 
+  handleBook = (repeatedType, until) => {
+    this.toggleModal();
+
+    const { shiftData, dispatch } = this.props;
+    const { selected } = this.state;
+
+    if (selected === null) {
+      console.log('THIS SHOULD BE AN ERROR'); // TODO
+    }
+    dispatch(shiftsActions.book(shiftData.id, selected, repeatedType, until));
+  };
+
   render() {
     const { shiftData, clickable, isAdmin } = this.props;
     const { showModal, selected } = this.state;
-    const deleted = shiftData.deleteSuccess === true;
+    const expanded =
+      shiftData.deleteSuccess === true || shiftData.bookSuccess === true;
 
     return (
       <ErrorBoundary>
-        <Collapse in={!deleted}>
+        <Collapse in={!expanded}>
           <Card
             title={shiftData.title}
-            bg={deleted ? 'danger' : 'light'}
+            bg={expanded ? 'danger' : 'light'}
             style={{ width: '100%', margin: 'auto', zIndex: 0 }}
           >
             <Card.Body>
@@ -159,6 +172,7 @@ class ShiftCard extends React.Component {
               handleSelect={this.handleSelect}
               selected={selected}
               handleDelete={this.handleDelete}
+              handleBook={this.handleBook}
             />
           </Card>
         </Collapse>

@@ -10,6 +10,7 @@ const ShiftCardModal = ({
   handleSelect,
   selected,
   handleDelete,
+  handleBook,
   booked,
   isAdmin
 }) => {
@@ -19,6 +20,7 @@ const ShiftCardModal = ({
     show,
     selected,
     handleSelect,
+    handleBook,
     handleDelete,
     booked
   };
