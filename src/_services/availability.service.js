@@ -1,6 +1,7 @@
 import axios from 'axios';
 import utils from '../_helpers/utils';
 import authHeader from '../_helpers/auth-header';
+import alertActions from '../_actions/alert.actions';
 
 const transposeArray = array =>
   array[0].map((col, i) => array.map(row => row[i]));
@@ -25,11 +26,9 @@ const get = uid => {
   return axios
     .get(`/volunteers/${uid}/availability`, config)
     .then(utils.handleResponse)
-    .then(availability =>
-      transposeArray(availability).map(i =>
-        i.map(j => integerToAvailability[j])
-      )
-    );
+    .then(availability => transposeArray(availability))
+    .then(arr => arr.map(i => i.map(j => integerToAvailability[j])))
+    .catch(alertActions.error('Could not get availability.'));
 };
 
 const update = (uid, availability) => {
@@ -47,12 +46,14 @@ const update = (uid, availability) => {
     availability: newAvailability
   };
 
-  return axios.put(`/volunteers/${uid}/availability`, data, config);
+  return axios
+    .put(`/volunteers/${uid}/availability`, data, config)
+    .catch(alertActions.error('Could not update availability.'));
 };
 
-const availbilityService = {
+const availabilityService = {
   get,
   update
 };
 
-export default availbilityService;
+export default availabilityService;

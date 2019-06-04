@@ -1,7 +1,7 @@
 import userService from '../_services/user.service';
 
 const handleResponse = resp => {
-  console.log('handling response', resp);
+  console.log('Handling response', resp);
   if (resp.status !== 200) {
     if (resp.status === 401) {
       // Logout automatically if a 401 is received.
