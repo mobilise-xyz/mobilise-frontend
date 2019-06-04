@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import RoleBadge from '../RoleBadge';
@@ -130,7 +130,11 @@ class VolunteerShiftCardModal extends React.Component {
     ) : null;
 
     return (
-      <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
+      <Modal
+        show={show}
+        onHide={() => onHide(false)}
+        dialogClassName="modal-80w"
+      >
         <Modal.Header>
           <Modal.Title>{shiftData.title}</Modal.Title>
         </Modal.Header>
@@ -178,7 +182,7 @@ class VolunteerShiftCardModal extends React.Component {
           <Button
             variant="outline-primary"
             type="submit"
-            disabled={shiftData.bookSuccess === true}
+            disabled={shiftData.bookSuccess === true || selected === ''}
             onClick={this.handleBook}
           >
             Book

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Badge } from 'react-bootstrap';
+import { Badge, Button } from 'react-bootstrap';
 
 const RoleBadge = ({
   name,
@@ -10,16 +10,16 @@ const RoleBadge = ({
   colour = 'info'
 }) => {
   const isSelected = selected === name;
+  const buttonColour = isSelected ? 'green' : colour;
   return (
     <Button
-      variant={isSelected ? 'success btn-raised' : 'primary btn-raised'}
       type="button"
       style={{
         textTransform: 'none',
         fontSize: '1rem',
         padding: '0.3rem',
         marginLeft: '0.3125rem',
-        backgroundColor: colour
+        backgroundColor: buttonColour
       }}
       name={name}
       onClick={clickable ? handleSelect : null}
