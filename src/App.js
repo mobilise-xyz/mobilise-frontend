@@ -13,7 +13,7 @@ import SignUpPage from './components/pages/SignUpPage';
 import AvailabilityPage from './components/pages/AvailabilityPage';
 import alertActions from './_actions/alert.actions';
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
     const { dispatch } = this.props;
