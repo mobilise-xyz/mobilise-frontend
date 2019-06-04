@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
@@ -6,7 +7,6 @@ import './VolunteerShiftsPage.css';
 import shiftsActions from '../../../../_actions/shifts.actions';
 
 class VolunteerShiftsPage extends React.Component {
-  // TODO Handle exception properly.
   componentDidMount() {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
@@ -19,6 +19,7 @@ class VolunteerShiftsPage extends React.Component {
       <Layout>
         <ShiftList
           heading="Recommended"
+          subheading={<Link to="/help/recommended">what&amp;apos;s this?</Link>}
           shifts={shifts.shifts.recommended}
           cardClass="bg-primary"
         />

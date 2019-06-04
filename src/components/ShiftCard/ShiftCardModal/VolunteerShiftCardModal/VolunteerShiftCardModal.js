@@ -10,7 +10,7 @@ const getRepeatOptions = repeatedType => {
   // If daily => daily, weekly, month
   // If weekly => weekly, monthly
   // If monthly => monthly
-  const options = ['Daily', 'Weekly', 'Monthly'];
+  const options = ['Daily', 'Weekly', 'Monthly']; // If weekends => weekends/weekly, weekdays => weekdays/weekly, annually => annually,
   let selectedOptions = [];
   switch (repeatedType) {
     case 'Daily':
