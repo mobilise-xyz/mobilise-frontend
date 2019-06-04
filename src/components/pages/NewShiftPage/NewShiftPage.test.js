@@ -45,6 +45,21 @@ describe('<NewShiftPage />', () => {
     expect(wrapper.find('NewRoleModal')).toHaveLength(1);
   });
 
+  // TODO: find a way to test get request on mount of component
+  // it('gets roles on #componentDidMount', async done => {
+  //   wrapper
+  //     .instance()
+  //     .componentDidMount()
+  //     .then(() => {
+  //       expect(axios.get).toHaveBeenCalled();
+  //       expect(axios.get).toHaveBeenCalledWith('/roles', expect.any(Object));
+  //       done();
+  //     });
+  //   expect(wrapper.state()).toHaveProperty('roleOptions', [
+  //     { name: 'role', involves: 'something' }
+  //   ]);
+  // });
+
   it('posts correct data on submit', () => {
     const form = wrapper.find('Form');
     const postSpy = jest.spyOn(axios, 'post');
@@ -61,7 +76,9 @@ describe('<NewShiftPage />', () => {
       rolesRequired: []
     };
 
-    form.simulate('submit', { preventDefault: () => {} });
+    form.simulate('submit', {
+      preventDefault: () => {}
+    });
     expect(postSpy).toHaveBeenCalledTimes(1);
     expect(postSpy).toHaveBeenCalledWith(
       '/shifts',

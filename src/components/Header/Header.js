@@ -7,6 +7,8 @@ import { faBell, faCog } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
 import logo from '../../assets/images/logo.png';
 import authHeader from '../../_helpers/auth-header';
+import VolunteerHeader from './VolunteerHeaderNav';
+import AdminHeader from './AdminHeader';
 
 class Header extends React.Component {
   state = {
@@ -39,6 +41,7 @@ class Header extends React.Component {
   }
 
   render() {
+    const { isAdmin } = JSON.parse(localStorage.getItem('user'));
     const { nameSuccess, firstName, adminMessage } = this.state;
     let nameMessage = null;
 
@@ -61,12 +64,7 @@ class Header extends React.Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <LinkContainer exact to="/" activeStyle={{ color: 'green' }}>
-              <Nav.Link>Shifts</Nav.Link>
-            </LinkContainer>
-            <LinkContainer exact to="/shifts" activeStyle={{ color: 'green' }}>
-              <Nav.Link>My Shifts</Nav.Link>
-            </LinkContainer>
+            {isAdmin ? <AdminHeader /> : <VolunteerHeader />}
           </Nav>
           <Navbar.Text className="mr-sm-2">{nameMessage}</Navbar.Text>
           {/* Notifications dropdown */}
