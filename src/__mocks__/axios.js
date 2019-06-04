@@ -1,6 +1,7 @@
 const mockNoop = () => new Promise(() => {});
 
 export default {
+  get: mockNoop,
   post: jest.fn(() =>
     Promise.resolve({
       postData: {

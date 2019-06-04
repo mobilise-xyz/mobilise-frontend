@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router';
+import history from './_helpers/history';
 import PrivateRoute from './components/PrivateRoute';
 import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
@@ -9,8 +11,20 @@ import NotFound from './components/pages/NotFound';
 import SettingsPage from './components/pages/SettingsPage';
 import SignUpPage from './components/pages/SignUpPage';
 import AvailabilityPage from './components/pages/AvailabilityPage';
+import alertActions from './_actions/alert.actions';
 import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedShiftsHelpPage';
 import FeedBackPage from './components/pages/HelpPages/FeedbackPage';
+
+export class App extends Component {
+  constructor(props) {
+    super(props);
+    const { dispatch } = this.props;
+   
+    // Clear alerts on location change.
+    history.listen(() => {
+      dispatch(alertActions.clear());
+    }); 
+  }
 
 const App = () => (
   <Switch>
@@ -34,4 +48,12 @@ const App = () => (
   </Switch>
 );
 
-export default App;
+
+const mapStateToProps = state => {
+  const { alert } = state;
+  return {
+    alert
+  };
+};
+
+export default connect(mapStateToProps)(App);

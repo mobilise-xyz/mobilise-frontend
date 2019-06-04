@@ -12,7 +12,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import history from './_helpers/history';
 import store from './_helpers/store';
 import './index.css';
-import App from './App';
+import ConnectedApp from './App';
 import * as serviceWorker from './serviceWorker';
 
 // Axios configuration
@@ -21,7 +21,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <App />
+      <ConnectedApp />
     </Router>
   </Provider>,
   document.getElementById('root')

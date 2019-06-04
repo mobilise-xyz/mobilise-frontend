@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import App from './App';
+import { App } from './App';
 import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
 import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
