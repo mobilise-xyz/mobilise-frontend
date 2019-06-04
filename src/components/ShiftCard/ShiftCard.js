@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Collapse, Row, Col } from 'react-bootstrap';
+import { Card, Col, Collapse, Row } from 'react-bootstrap';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
@@ -111,6 +111,9 @@ class ShiftCard extends React.Component {
                       .local()
                       .format('dddd, MMMM Do YYYY')}
                   </p>
+                  {shiftData.repeatedId ? (
+                    <p className="text-muted">Repeating</p>
+                  ) : null}
                 </Col>
                 <Col>
                   <Row noGutters>
@@ -146,7 +149,7 @@ class ShiftCard extends React.Component {
               className="stretched-link shift-card-btn"
               disabled={shiftData.bookSuccess === true}
             >
-              <span className="sr-only">Card infomation button</span>
+              <span className="sr-only">Card information button</span>
             </button>
             <ShiftCardModal
               isAdmin={isAdmin}

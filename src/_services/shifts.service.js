@@ -1,6 +1,7 @@
 import axios from 'axios';
 import authHeader from '../_helpers/auth-header';
 import utils from '../_helpers/utils';
+import alertActions from '../_actions/alert.actions';
 
 const placeholderShift = {
   id: -1,
@@ -32,7 +33,7 @@ const getAll = () => {
     .then(r => ({
       all: r.data
     }))
-    .catch(utils.handleResponse);
+    .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
 
 const getForUser = (uid, booked = false) => {
@@ -53,7 +54,7 @@ const getForUser = (uid, booked = false) => {
       all: r.data,
       recommended: [placeholderShift]
     }))
-    .catch(utils.handleResponse); // TODO go to error page
+    .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
 
 const deleteWithId = shiftId => {

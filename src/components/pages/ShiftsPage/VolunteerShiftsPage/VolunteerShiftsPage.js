@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
@@ -6,7 +7,6 @@ import './VolunteerShiftsPage.css';
 import shiftsActions from '../../../../_actions/shifts.actions';
 
 class VolunteerShiftsPage extends React.Component {
-  // TODO Handle exception properly.
   componentDidMount() {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
@@ -18,16 +18,17 @@ class VolunteerShiftsPage extends React.Component {
     return (
       <Layout>
         <ShiftList
-          heading={<DateHeading weekday="Recommended" />}
+          heading="Recommended"
+          subheading={<Link to="/help/recommended">what&#39;s this?</Link>}
           shifts={shifts.shifts.recommended}
-          // TODO what is this color
-          cardStyle={{ backgroundColor: 'green' }}
+          cardClass="bg-primary"
         />
         {/* TODO divider between each day */}
         <hr />
         {/* TODO remove hardcoding */}
         <ShiftList
-          heading={<DateHeading weekday="Today" date="17th March" />}
+          heading="Today"
+          subheading="17th March"
           shifts={shifts.shifts.all}
         />
       </Layout>
@@ -43,10 +44,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(VolunteerShiftsPage);
-
-const DateHeading = ({ weekday, date }) => (
-  <>
-    <h3>{weekday}</h3>
-    <p>{date}</p>
-  </>
-);
