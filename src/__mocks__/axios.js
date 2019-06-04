@@ -1,9 +1,7 @@
 const mockNoop = () => new Promise(() => {});
 
-const exampleRoleOptions = [{ name: 'role', involves: 'something' }];
-
 export default {
-  get: jest.fn(() => Promise.resolve(exampleRoleOptions)),
+  get: mockNoop,
   post: jest.fn(() =>
     Promise.resolve({
       postData: {
