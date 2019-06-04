@@ -1,15 +1,32 @@
 import availabilityConstants from '../_constants/availability.constants';
+import availabilityService from '../_services/availability.service';
+import alertActions from './alert.actions';
 
-const get = uid => ({
-  type: availabilityConstants.GET,
-  uid
-});
+const get = uid => {
+  const getSuccess = availability => ({
+    type: availabilityConstants.GET,
+    availability
+  });
 
-const update = (uid, availability) => ({
-  type: availabilityConstants.UPDATE,
-  uid,
-  availability
-});
+  return dispatch => {
+    availabilityService
+      .get(uid)
+      .then(availability => dispatch(getSuccess(availability)));
+  };
+};
+
+const update = (uid, availability) => {
+  const updateSuccess = () => ({
+    type: availabilityConstants.UPDATE
+  });
+
+  return dispatch => {
+    availabilityService.update(uid, availability).then(() => {
+      dispatch(alertActions.success('Availability successfully updated.'));
+      return dispatch(updateSuccess());
+    });
+  };
+};
 
 const available = (time, day) => ({
   type: availabilityConstants.AVAILABLE,

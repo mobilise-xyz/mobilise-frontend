@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 const options = [
   'Never',
   'Daily',
-  'Week Days',
+  'Weekdays',
   'Weekends',
   'Weekly',
   'Monthly',
@@ -41,9 +41,7 @@ const RepeatingShiftForm = ({ repeat, handleChange }) => {
           onChange={handleChange}
         >
           {options.map(op => (
-            <option key={op} s>
-              {op}
-            </option>
+            <option key={op}>{op}</option>
           ))}
         </Form.Control>
       </Form.Group>

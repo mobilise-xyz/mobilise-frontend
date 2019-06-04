@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card, Row, Col, Container, Button, Table } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import availabilityConstants from '../../_constants/availability.constants';
 import '../ShiftCard/ShiftCard.css';
 import availabilityActions from '../../_actions/availability.actions';
 import CardLayout from '../CardLayout';
+import history from '../../_helpers/history';
 
 const times = ['Morning', 'Afternoon', 'Evening'];
 
@@ -51,9 +52,11 @@ class AvailabilityPage extends React.Component {
     this.state = {
       uid
     };
+  }
 
+  componentDidMount() {
     const { dispatch } = this.props;
-
+    const { uid } = this.state;
     dispatch(availabilityActions.get(uid));
   }
 
@@ -79,6 +82,7 @@ class AvailabilityPage extends React.Component {
   };
 
   generateGrid = availability => {
+    console.log('GENERATING AVAILABILITY', availability);
     const grid = [
       <thead key="grid-days-header">
         <tr key="grid-days-header-row">
@@ -124,10 +128,12 @@ class AvailabilityPage extends React.Component {
     const { availability, dispatch } = this.props;
     console.log(availability);
     dispatch(availabilityActions.update(uid, availability));
+    history.push('/');
   };
 
   render() {
     const { availability } = this.props;
+    console.log(availability);
     return (
       <CardLayout title="Availability">
         <Row>

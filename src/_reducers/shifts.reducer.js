@@ -38,16 +38,19 @@ const initialState = {
 const shifts = (state = initialState, action) => {
   switch (action.type) {
     // GET
-    case shiftsConstants.GETFORUSER_REQUEST || shiftsConstants.GETALL_REQUEST:
+    case shiftsConstants.GETALL_REQUEST:
+    case shiftsConstants.GETFORUSER_REQUEST:
       return {
         shifts: state.shifts,
         loading: true
       };
-    case shiftsConstants.GETFORUSER_SUCCESS || shiftsConstants.GETALL_SUCCESS:
+    case shiftsConstants.GETALL_SUCCESS:
+    case shiftsConstants.GETFORUSER_SUCCESS:
       return {
         shifts: action.shifts
       };
-    case shiftsConstants.GETFORUSER_FAILURE || shiftsConstants.GETALL_FAILURE:
+    case shiftsConstants.GETALL_FAILURE:
+    case shiftsConstants.GETFORUSER_FAILURE:
       return {
         error: action.error
       };
@@ -68,7 +71,7 @@ const shifts = (state = initialState, action) => {
         shift.id === action.id
           ? {
               ...shift,
-              deleteSccess: false,
+              deleteSuccess: false,
               loading: false,
               error: action.error
             }
