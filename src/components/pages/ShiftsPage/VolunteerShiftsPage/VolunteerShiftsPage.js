@@ -19,7 +19,7 @@ class VolunteerShiftsPage extends React.Component {
       <Layout>
         <ShiftList
           heading="Recommended"
-          subheading={<Link to="/help/recommended">what&amp;apos;s this?</Link>}
+          subheading={<Link to="/help/recommended">what&#39;s this?</Link>}
           shifts={shifts.shifts.recommended}
           cardClass="bg-primary"
         />
