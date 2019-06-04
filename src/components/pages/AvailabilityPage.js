@@ -43,6 +43,20 @@ const DayCard = ({
 );
 
 class AvailabilityPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+
+    this.state = {
+      uid
+    };
+
+    const { dispatch } = this.props;
+
+    dispatch(availabilityActions.get(uid));
+  }
+
   handleClick = (timeIndex, dayIndex, availabilityConstant) => {
     const { dispatch } = this.props;
     switch (availabilityConstant) {
@@ -106,7 +120,7 @@ class AvailabilityPage extends React.Component {
   };
 
   handleSubmit = () => {
-    const { uid } = JSON.parse(localStorage.getItem('user'));
+    const { uid } = this.state;
     const { availability, dispatch } = this.props;
     console.log(availability);
     dispatch(availabilityActions.update(uid, availability));
