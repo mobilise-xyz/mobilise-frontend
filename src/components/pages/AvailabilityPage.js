@@ -68,10 +68,10 @@ class AvailabilityPage extends React.Component {
     const grid = [
       <thead key="grid-days-header">
         <tr key="grid-days-header-row">
-          <th style={{ width: '14.3%' }} />
+          <th style={{ width: '12.5%' }} />
           {days.map((day, dayIndex) => (
             <th
-              style={{ width: '14.3%' }}
+              style={{ width: '12.5%' }}
               key={`grid-${days[dayIndex].toLowerCase()}-header`}
             >
               {days[dayIndex]}
@@ -106,8 +106,9 @@ class AvailabilityPage extends React.Component {
   };
 
   handleSubmit = () => {
-    const { uid } = JSON.parse(localStorage.get('user'));
+    const { uid } = JSON.parse(localStorage.getItem('user'));
     const { availability, dispatch } = this.props;
+    console.log(availability);
     dispatch(availabilityActions.update(uid, availability));
   };
 

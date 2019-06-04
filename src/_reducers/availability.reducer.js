@@ -1,5 +1,6 @@
 import availabilityConstants from '../_constants/availability.constants';
 import availbilityService from '../_services/availability.service';
+import history from '../_helpers/history';
 
 const generateInitialGrid = () => {
   const grid = [];
@@ -26,10 +27,11 @@ const availability = (state = generateInitialGrid(), action) => {
       );
     }
     case availabilityConstants.UPDATE: {
-      return availbilityService.UPDATE(action.uid, action.availability);
+      history.push('/');
+      return availbilityService.update(action.uid, action.availability);
     }
     case availabilityConstants.GET: {
-      return availbilityService.GET(action.uid);
+      return availbilityService.get(action.uid);
     }
     default: {
       return state;

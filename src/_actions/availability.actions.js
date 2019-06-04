@@ -5,9 +5,10 @@ const get = uid => ({
   uid
 });
 
-const update = uid => ({
+const update = (uid, availability) => ({
   type: availabilityConstants.UPDATE,
-  uid
+  uid,
+  availability
 });
 
 const available = (time, day) => ({

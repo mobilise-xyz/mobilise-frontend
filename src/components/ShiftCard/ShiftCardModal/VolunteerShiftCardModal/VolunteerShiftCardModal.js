@@ -115,7 +115,11 @@ class VolunteerShiftCardModal extends React.Component {
                   >
                     {shiftData.repeated
                       ? this.getRepeatOptions(shiftData.repeated.type).map(
-                          option => <option>{option}</option>
+                          option => (
+                            <option key={`${shiftData.id}-option-${option}`}>
+                              {option}
+                            </option>
+                          )
                         )
                       : null}
                   </Form.Control>
