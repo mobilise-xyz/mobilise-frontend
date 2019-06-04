@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/sonjoonho/mobilise-frontend.svg?style=svg&circle-token=097ab8189c6835ed15a8fdeda074db0ef2f8cf5f)](https://circleci.com/gh/sonjoonho/mobilise-frontend)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsonjoonho%2Fmobilise-frontend.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsonjoonho%2Fmobilise-frontend?ref=badge_shield)
 # Mobilise
 
 This repository contains the frontend for Mobilise.
@@ -35,3 +36,7 @@ Any changes made should appear automatically.
 - Tigeriam Cross
 
 Students of Imperial College London.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsonjoonho%2Fmobilise-frontend.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsonjoonho%2Fmobilise-frontend?ref=badge_large)
