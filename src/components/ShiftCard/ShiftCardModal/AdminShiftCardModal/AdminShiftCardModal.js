@@ -1,5 +1,15 @@
 import React from 'react';
-import { Modal, Button, ButtonToolbar, Form, Col } from 'react-bootstrap';
+import {
+  Modal,
+  Button,
+  ButtonToolbar,
+  Form,
+  Col,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
 import RoleBadge from '../RoleBadge';
 
@@ -14,6 +24,16 @@ const AdminShiftCardModal = ({
   <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
     <Modal.Header>
       <Modal.Title>{shiftData.title}</Modal.Title>
+      <OverlayTrigger
+        placement="left"
+        overlay={
+          <Tooltip id="edit-shift-info-tooltip">
+            Edit additional shift information
+          </Tooltip>
+        }
+      >
+        <Button variant="info">{<FontAwesomeIcon icon={faEdit} />}</Button>
+      </OverlayTrigger>
     </Modal.Header>
 
     <Modal.Body>
@@ -35,7 +55,10 @@ const AdminShiftCardModal = ({
               </Form.Label>
             </Col>
             <Col>
-              <Form.Control as={Col} type="number" />
+              <Form.Label>
+                Edit Required Number for Role: {r.role.name}
+              </Form.Label>
+              <Form.Control type="number" />
             </Col>
           </Form.Row>
         ))}
@@ -50,7 +73,7 @@ const AdminShiftCardModal = ({
       }}
     >
       <Button className="mr-2" variant="outline-danger" onClick={handleDelete}>
-        Delete
+        Delete {<FontAwesomeIcon icon={faTrash} />}
       </Button>
       <ButtonToolbar role="toolbar">
         <Button className="mr-2" variant="outline-secondary" onClick={onHide}>
