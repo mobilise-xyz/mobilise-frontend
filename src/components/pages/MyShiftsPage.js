@@ -1,6 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Layout from '../Layout/Layout';
+import ShiftList from '../ShiftList';
+import shiftsActions from '../../_actions/shifts.actions';
 
-const MyShiftsPage = () => <Layout>My shifts go here.</Layout>;
+class MyShiftsPage extends React.Component {
+  componentDidMount = () => {
+    const { dispatch } = this.props;
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(shiftsActions.getForUser(uid, true));
+  };
 
-export default MyShiftsPage;
+  render() {
+    const { shifts } = this.props;
+    return (
+      <Layout>
+        <ShiftList heading="My Upcoming Shifts" shifts={shifts.shifts.all} />
+      </Layout>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  const { shifts } = state;
+  return {
+    shifts
+  };
+};
+
+export default connect(mapStateToProps)(MyShiftsPage);

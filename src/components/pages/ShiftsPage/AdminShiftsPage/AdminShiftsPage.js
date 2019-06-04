@@ -28,7 +28,8 @@ class AdminShiftsPage extends React.Component {
         {/* TODO remove hardcoding */}
         <ShiftList
           isAdmin
-          heading={<DateHeading weekday="Today" date="17th March" />}
+          heading="Today"
+          subheading="17th March"
           shifts={shifts.shifts.all}
         />
       </Layout>
@@ -44,10 +45,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(AdminShiftsPage);
-
-const DateHeading = ({ weekday, date }) => (
-  <>
-    <h3>{weekday}</h3>
-    <p>{date}</p>
-  </>
-);

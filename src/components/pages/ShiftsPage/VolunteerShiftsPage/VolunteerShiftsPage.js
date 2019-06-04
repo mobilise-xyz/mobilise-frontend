@@ -18,7 +18,7 @@ class VolunteerShiftsPage extends React.Component {
     return (
       <Layout>
         <ShiftList
-          heading={<DateHeading weekday="Recommended" />}
+          heading="Recommended"
           shifts={shifts.shifts.recommended}
           cardClass="bg-primary"
         />
@@ -26,7 +26,8 @@ class VolunteerShiftsPage extends React.Component {
         <hr />
         {/* TODO remove hardcoding */}
         <ShiftList
-          heading={<DateHeading weekday="Today" date="17th March" />}
+          heading="Today"
+          subheading="17th March"
           shifts={shifts.shifts.all}
         />
       </Layout>
@@ -42,10 +43,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(VolunteerShiftsPage);
-
-const DateHeading = ({ weekday, date }) => (
-  <>
-    <h3>{weekday}</h3>
-    <p>{date}</p>
-  </>
-);

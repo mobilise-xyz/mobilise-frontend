@@ -19,7 +19,8 @@ const RoleBadge = ({
         fontSize: '1rem',
         padding: '0.3rem',
         marginLeft: '0.3125rem',
-        backgroundColor: buttonColour
+        backgroundColor: buttonColour,
+        color: 'white'
       }}
       name={name}
       onClick={clickable ? handleSelect : null}
