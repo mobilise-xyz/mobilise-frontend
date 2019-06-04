@@ -62,7 +62,7 @@ class ShiftCard extends React.Component {
   };
 
   render() {
-    const { shiftData, isAdmin } = this.props;
+    const { shiftData, clickable, isAdmin } = this.props;
     const { showModal, selected } = this.state;
     const deleted = shiftData.deleteSuccess === true;
 
@@ -147,7 +147,7 @@ class ShiftCard extends React.Component {
               type="button"
               onClick={this.toggleModal}
               className="stretched-link shift-card-btn"
-              disabled={shiftData.bookSuccess === true}
+              disabled={shiftData.bookSuccess === true || clickable === false}
             >
               <span className="sr-only">Card information button</span>
             </button>

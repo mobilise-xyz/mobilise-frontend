@@ -15,7 +15,11 @@ class MyShiftsPage extends React.Component {
     const { shifts } = this.props;
     return (
       <Layout>
-        <ShiftList heading="My Upcoming Shifts" shifts={shifts.shifts.all} />
+        <ShiftList
+          clickableCards={false}
+          heading="My Upcoming Shifts"
+          shifts={shifts.shifts.all}
+        />
       </Layout>
     );
   }

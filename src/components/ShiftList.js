@@ -7,13 +7,14 @@ const ShiftList = ({
   subheading,
   shifts,
   cardClass,
-  isAdmin = false
+  isAdmin = false,
+  clickableCards = true
 }) => (
   <ListGroup>
     <DateHeading weekday={heading} date={subheading} />
     {shifts.map(c => (
       <ListGroup.Item key={c.id} className={`border-0 ${cardClass}`}>
-        <ShiftCard isAdmin={isAdmin} shiftData={c} />
+        <ShiftCard clickable={clickableCards} isAdmin={isAdmin} shiftData={c} />
       </ListGroup.Item>
     ))}
   </ListGroup>
