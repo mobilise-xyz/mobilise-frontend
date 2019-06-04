@@ -67,7 +67,6 @@ class NewShiftPage extends React.Component {
 
   handleDataChange = e => {
     const { name, value } = e.target;
-    console.log('UPDATE', name, 'TO', value);
     this.setState(prevState => ({
       data: {
         ...prevState.data,
@@ -79,8 +78,6 @@ class NewShiftPage extends React.Component {
   handleSubmit = e => {
     // Submit this
     e.preventDefault();
-
-    console.log('State on submit', this.state);
 
     // TODO validation
 
@@ -104,12 +101,10 @@ class NewShiftPage extends React.Component {
       address: data.location,
       rolesRequired: data.roles
     };
-    axios.post('/shifts', postData, config).then(resp => {
-      console.log('resp', resp);
+    axios.post('/shifts', postData, config).then(() => {
       history.push('/');
     });
     // TODO success toast here.
-    console.log('postData', postData);
   };
 
   toggleRolesModal = () =>
@@ -121,7 +116,6 @@ class NewShiftPage extends React.Component {
     }));
 
   handleRolesChange = s => {
-    console.log('HANDLE ROLES CHANGE');
     // s is the array of roles currently in the box.
     // If we have a new role, we need to open a modal.
     // The newest addition should always be at the end of the array.
@@ -130,7 +124,6 @@ class NewShiftPage extends React.Component {
 
     if (newRole.customOption) {
       newRole = newRole.label;
-      console.log(newRole);
       // Open modal to add a new role.
       this.setState(prevState => ({
         newRoleModal: { roleName: newRole.trim(), show: prevState.show }
@@ -250,7 +243,6 @@ class NewShiftPage extends React.Component {
     this.setState(({ data: prevData }) => {
       const prevRoles = prevData.roles.slice();
       prevRoles.pop();
-      console.log('prevRoles', prevRoles);
       return {
         data: {
           ...prevData,
