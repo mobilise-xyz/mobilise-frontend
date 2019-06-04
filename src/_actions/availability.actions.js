@@ -1,5 +1,15 @@
 import availabilityConstants from '../_constants/availability.constants';
 
+const get = uid => ({
+  type: availabilityConstants.GET,
+  uid
+});
+
+const update = uid => ({
+  type: availabilityConstants.UPDATE,
+  uid
+});
+
 const available = (time, day) => ({
   type: availabilityConstants.AVAILABLE,
   time,
@@ -21,7 +31,9 @@ const unavailable = (time, day) => ({
 const availabilityActions = {
   available,
   maybe,
-  unavailable
+  unavailable,
+  get,
+  update
 };
 
 export default availabilityActions;

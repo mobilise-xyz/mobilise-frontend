@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Row, Col, Container } from 'react-bootstrap';
+import { Card, Row, Col, Container, Button, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import availabilityConstants from '../../_constants/availability.constants';
 import '../ShiftCard/ShiftCard.css';
@@ -24,13 +24,18 @@ const availabilityColours = {
   AVAILABILITY_UNAVAILABLE: 'LightGray'
 };
 
-const DayCard = ({ timeIndex, dayIndex, availability, handleClick }) => (
-  <Card style={{ backgroundColor: availabilityColours[availability] }}>
+const DayCard = ({
+  timeIndex,
+  dayIndex,
+  availabilityConstant,
+  handleClick
+}) => (
+  <Card style={{ backgroundColor: availabilityColours[availabilityConstant] }}>
     <Card.Body />
     <button
       type="button"
       className="stretched-link shift-card-btn"
-      onClick={() => handleClick(timeIndex, dayIndex, availability)}
+      onClick={() => handleClick(timeIndex, dayIndex, availabilityConstant)}
     >
       <span className="sr-only">Availability button</span>
     </button>
@@ -38,54 +43,72 @@ const DayCard = ({ timeIndex, dayIndex, availability, handleClick }) => (
 );
 
 class AvailabilityPage extends React.Component {
-  handleClick = (timeIndex, dayIndex, availability) => {
+  handleClick = (timeIndex, dayIndex, availabilityConstant) => {
     const { dispatch } = this.props;
-    switch (availability) {
-      case availabilityConstants.AVAILABLE:
+    switch (availabilityConstant) {
+      case availabilityConstants.AVAILABLE: {
         dispatch(availabilityActions.maybe(timeIndex, dayIndex));
         break;
-      case availabilityConstants.MAYBE:
+      }
+      case availabilityConstants.MAYBE: {
         dispatch(availabilityActions.unavailable(timeIndex, dayIndex));
         break;
-      case availabilityConstants.UNAVAILABLE:
+      }
+      case availabilityConstants.UNAVAILABLE: {
         dispatch(availabilityActions.available(timeIndex, dayIndex));
         break;
-      default:
+      }
+      default: {
         dispatch(availabilityActions.unavailable(timeIndex, dayIndex));
+      }
     }
   };
 
   generateGrid = availability => {
     const grid = [
-      <Row key="grid-days-header">
-        <Col />
-        {days.map((day, dayIndex) => (
-          <Col key={`grid-${days[dayIndex].toLowerCase()}-header`}>
-            {days[dayIndex]}
-          </Col>
-        ))}
-      </Row>
-    ];
-    grid.push(
-      availability.map((time, timeIndex) => (
-        <Row key={`grid-${times[timeIndex].toLowerCase()}`} className="pt-4">
-          <Col>{times[timeIndex]}</Col>
-          {time.map((day, dayIndex) => (
-            <Col key={`grid-${days[dayIndex].toLowerCase()}`}>
-              <DayCard
-                key={`${times[timeIndex]}-${days[dayIndex]}`}
-                timeIndex={timeIndex}
-                dayIndex={dayIndex}
-                availability={day}
-                handleClick={this.handleClick}
-              />
-            </Col>
+      <thead key="grid-days-header">
+        <tr key="grid-days-header-row">
+          <th style={{ width: '14.3%' }} />
+          {days.map((day, dayIndex) => (
+            <th
+              style={{ width: '14.3%' }}
+              key={`grid-${days[dayIndex].toLowerCase()}-header`}
+            >
+              {days[dayIndex]}
+            </th>
           ))}
-        </Row>
-      ))
+        </tr>
+      </thead>
+    ];
+
+    grid.push(
+      <tbody key="grid-days-body  ">
+        {availability.map((time, timeIndex) => (
+          <tr key={`grid-${times[timeIndex].toLowerCase()}`} className="pt-4">
+            <td>{times[timeIndex]}</td>
+            {time.map((day, dayIndex) => (
+              <td key={`grid-${days[dayIndex].toLowerCase()}`}>
+                <DayCard
+                  key={`${times[timeIndex]}-${days[dayIndex]}`}
+                  timeIndex={timeIndex}
+                  dayIndex={dayIndex}
+                  availabilityConstant={day}
+                  handleClick={this.handleClick}
+                />
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
     );
 
-    return grid;
+    return <Table>{grid}</Table>;
+  };
+
+  handleSubmit = () => {
+    const { uid } = JSON.parse(localStorage.get('user'));
+    const { availability, dispatch } = this.props;
+    dispatch(availabilityActions.update(uid, availability));
   };
 
   render() {
@@ -115,7 +138,18 @@ class AvailabilityPage extends React.Component {
             </Row>
           </Col>
         </Row>
-        <Container>{this.generateGrid(availability)}</Container>
+        <Container className="table-responsive">
+          {this.generateGrid(availability)}
+        </Container>
+        <Container className="pt-5 text-center">
+          <Button
+            variant="outline-primary"
+            type="submit"
+            onClick={this.handleSubmit}
+          >
+            Save changes
+          </Button>
+        </Container>
       </CardLayout>
     );
   }
