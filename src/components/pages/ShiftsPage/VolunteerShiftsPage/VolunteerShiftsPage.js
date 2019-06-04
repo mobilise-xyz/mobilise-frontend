@@ -20,8 +20,7 @@ class VolunteerShiftsPage extends React.Component {
         <ShiftList
           heading={<DateHeading weekday="Recommended" />}
           shifts={shifts.shifts.recommended}
-          // TODO what is this color
-          cardStyle={{ backgroundColor: 'green' }}
+          cardClass="bg-primary"
         />
         {/* TODO divider between each day */}
         <hr />
