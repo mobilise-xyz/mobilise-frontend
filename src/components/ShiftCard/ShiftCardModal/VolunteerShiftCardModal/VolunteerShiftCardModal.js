@@ -7,29 +7,32 @@ import '../../ShiftCard.css';
 import shiftsActions from '../../../../_actions/shifts.actions';
 
 const getRepeatOptions = repeatedType => {
-  // If daily => daily, weekly, month
-  // If weekly => weekly, monthly
-  // If monthly => monthly
-  const options = ['Daily', 'Weekly', 'Monthly']; // If weekends => weekends/weekly, weekdays => weekdays/weekly, annually => annually,
-  let selectedOptions = [];
   switch (repeatedType) {
     case 'Daily':
-      selectedOptions = options.slice();
-      break;
+      return [
+        'Never',
+        'Daily',
+        'Weekends',
+        'Weekdays',
+        'Weekly',
+        'Monthly',
+        'Annually'
+      ];
     case 'Weekly':
-      selectedOptions = options.slice(1);
-      break;
+      return ['Never', 'Weekly'];
     case 'Monthly':
-      selectedOptions = options.slice(2);
-      break;
+      return ['Never', 'Monthly', 'Annually'];
+    case 'Weekends':
+      return ['Never', 'Weekends', 'Weekly'];
+    case 'Weekdays':
+      return ['Never', 'Weekdays', 'Weekly'];
     default:
       console.log('Unknown repeated type:', repeatedType);
-      selectedOptions = [];
+      return [];
   }
-  selectedOptions.unshift('Never');
-  return selectedOptions;
 };
 
+// This component is for users to book repeating shifts. It is only shown if the shift is repeating.
 const RepeatBookingForm = ({
   shiftData,
   repeatedType,
