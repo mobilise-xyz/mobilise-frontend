@@ -55,7 +55,7 @@ class NewShiftPage extends React.Component {
       headers: authHeader()
     };
 
-    axios
+    await axios
       .get('/roles', config)
       .then(({ data }) =>
         this.setState({
