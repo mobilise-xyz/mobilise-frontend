@@ -6,34 +6,98 @@ import RoleBadge from '../RoleBadge';
 import '../../ShiftCard.css';
 import shiftsActions from '../../../../_actions/shifts.actions';
 
+const getRepeatOptions = repeatedType => {
+  // If daily => daily, weekly, month
+  // If weekly => weekly, monthly
+  // If monthly => monthly
+  const options = ['Daily', 'Weekly', 'Monthly'];
+  let selectedOptions = [];
+  switch (repeatedType) {
+    case 'Daily':
+      selectedOptions = options.slice();
+      break;
+    case 'Weekly':
+      selectedOptions = options.slice(1);
+      break;
+    case 'Monthly':
+      selectedOptions = options.slice(2);
+      break;
+    default:
+      console.log('Unknown repeated type:', repeatedType);
+      selectedOptions = [];
+  }
+  selectedOptions.unshift('Never');
+  return selectedOptions;
+};
+
+const RepeatBookingForm = ({
+  shiftData,
+  repeatedType,
+  until,
+  handleChange
+}) => (
+  <>
+    <Row>
+      {shiftData.repeated ? (
+        <p>
+          This shift repeats until&nbsp;
+          <strong>
+            {moment(shiftData.repeated.untilDate, 'YYYY-MM-DD')
+              .local()
+              .format('dddd, MMMM Do YYYY')}
+          </strong>
+          .
+        </p>
+      ) : null}
+    </Row>
+    <Row>
+      <Col>
+        <h6>Book repeating?</h6>
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Form id="bookingform">
+          <Form.Group>
+            <Form.Label>Repeat frequency</Form.Label>
+            {/* Only enable this form if repeatedId is not null. */}
+            <Form.Control
+              as="select"
+              name="repeatedType"
+              value={repeatedType}
+              onChange={handleChange}
+            >
+              {shiftData.repeated
+                ? getRepeatOptions(shiftData.repeated.type).map(option => (
+                    <option key={`${shiftData.id}-option-${option}`}>
+                      {option}
+                    </option>
+                  ))
+                : null}
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Until</Form.Label>
+            {/* The user should not be able to select before today's date, and not after the end start of the repeating shift. */}
+            <Form.Control
+              type="date"
+              name="until"
+              min={moment().format('YYYY-MM-DD')}
+              value={until}
+              onChange={handleChange}
+              max={shiftData.repeated ? shiftData.repeated.untilDate : null}
+            />
+          </Form.Group>
+        </Form>
+      </Col>
+    </Row>
+  </>
+);
+
 class VolunteerShiftCardModal extends React.Component {
   state = {
     repeatedType: '',
     until: ''
-  };
-
-  getRepeatOptions = repeatedType => {
-    // If daily => daily, weekly, month
-    // If weekly => weekly, monthly
-    // If monthly => monthly
-    const options = ['Daily', 'Weekly', 'Monthly'];
-    let selectedOptions = [];
-    switch (repeatedType) {
-      case 'Daily':
-        selectedOptions = options.slice();
-        break;
-      case 'Weekly':
-        selectedOptions = options.slice(1);
-        break;
-      case 'Monthly':
-        selectedOptions = options.slice(2);
-        break;
-      default:
-        console.log('Unknown repeated type:', repeatedType);
-        selectedOptions = [];
-    }
-    selectedOptions.unshift('None');
-    return selectedOptions;
   };
 
   handleChange = e => {
@@ -55,6 +119,16 @@ class VolunteerShiftCardModal extends React.Component {
     const { shiftData, onHide, show, handleSelect, selected } = this.props;
     const { repeatedType, until } = this.state;
     const shiftRepeats = shiftData.repeatedId !== null;
+
+    const repeatForm = shiftRepeats ? (
+      <RepeatBookingForm
+        shiftData={shiftData}
+        repeatedType={repeatedType}
+        until={until}
+        handleChange={this.handleChange}
+      />
+    ) : null;
+
     return (
       <Modal show={show} onHide={onHide} dialogClassName="modal-80w">
         <Modal.Header>
@@ -84,64 +158,7 @@ class VolunteerShiftCardModal extends React.Component {
               })}
             </Col>
           </Row>
-          {shiftData.repeated ? (
-            <p>
-              This shift repeats until&nbsp;
-              <strong>
-                {moment(shiftData.repeated.untilDate, 'YYYY-MM-DD')
-                  .local()
-                  .format('dddd, MMMM Do YYYY')}
-              </strong>
-              .
-            </p>
-          ) : null}
-          <Row>
-            <Col>
-              <h6>Book repeating?</h6>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form id="bookingform">
-                <Form.Group>
-                  <Form.Label>Repeat frequency</Form.Label>
-                  {/* Only enable this form if repeatedId is not null. */}
-                  <Form.Control
-                    as="select"
-                    name="repeatedType"
-                    disabled={!shiftRepeats}
-                    value={repeatedType}
-                    onChange={this.handleChange}
-                  >
-                    {shiftData.repeated
-                      ? this.getRepeatOptions(shiftData.repeated.type).map(
-                          option => (
-                            <option key={`${shiftData.id}-option-${option}`}>
-                              {option}
-                            </option>
-                          )
-                        )
-                      : null}
-                  </Form.Control>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Until</Form.Label>
-                  {/* The user should not be able to select before today's date, and not after the end start of the repeating shift. */}
-                  <Form.Control
-                    type="date"
-                    name="until"
-                    min={moment().format('YYYY-MM-DD')}
-                    disabled={!shiftRepeats}
-                    value={until}
-                    onChange={this.handleChange}
-                    max={
-                      shiftData.repeated ? shiftData.repeated.untilDate : null
-                    }
-                  />
-                </Form.Group>
-              </Form>
-            </Col>
-          </Row>
+          {repeatForm}
         </Modal.Body>
 
         <Modal.Footer
