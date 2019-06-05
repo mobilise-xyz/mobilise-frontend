@@ -107,9 +107,10 @@ class ShiftCard extends React.Component {
                       return r.numberRequired > 0 ? (
                         <RoleBadge
                           key={shiftData.id + r.role.name}
+                          isAdmin={isAdmin}
                           name={r.role.name}
-                          colour={r.role.colour}
                           selected={selected}
+                          colour={r.role.colour}
                         />
                       ) : null;
                     })}
