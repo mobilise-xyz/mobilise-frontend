@@ -36,10 +36,10 @@ const ShiftList = ({
     shiftLists.push(
       <Container>
         <Row>
-          <Col md={2}>
+          <Col md={2} style={{ paddingTop: '5%' }}>
             <DateHeading
               weekday={entry[0].format('dddd')}
-              date={entry[0].format('Do MMM')}
+              date={entry[0].format('Do MMMM')}
             />
           </Col>
           <Col md={10}>
@@ -52,7 +52,14 @@ const ShiftList = ({
                   }
                 });
                 return (
-                  <ListGroup.Item key={c.id} className={`border-0 ${card}`}>
+                  <ListGroup.Item
+                    key={c.id}
+                    className={`${card}`}
+                    style={{
+                      borderRadius: '1.1rem',
+                      backgroundColour: '#C9E1BF'
+                    }}
+                  >
                     <ShiftCard
                       clickable={clickableCards}
                       isAdmin={isAdmin}
@@ -73,8 +80,8 @@ const ShiftList = ({
 
 const DateHeading = ({ weekday, date }) => (
   <>
-    <h4>{weekday}</h4>
-    <p style={{ color: '#575757' }}>{date}</p>
+    <h5 style={{ textAlign: 'right' }}>{weekday}</h5>
+    <p style={{ color: '#575757', textAlign: 'right' }}>{date}</p>
   </>
 );
 

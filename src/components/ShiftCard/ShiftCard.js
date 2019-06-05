@@ -84,8 +84,16 @@ class ShiftCard extends React.Component {
         <Collapse in={!expanded}>
           <Card
             title={shiftData.title}
-            bg={expanded ? 'danger' : 'light'}
-            style={{ width: '100%', margin: 'auto', zIndex: 0 }}
+            bg={expanded ? 'danger' : 'white'}
+            style={{
+              width: '100%',
+              margin: 'auto',
+              zIndex: 0,
+              borderRadius: '1rem',
+              shadowOffset: { width: 10, height: 10 },
+              shadowColor: 'black',
+              shadowOpacity: 1.0
+            }}
           >
             <Card.Body>
               <Row />

@@ -50,7 +50,7 @@ class Header extends React.Component {
     }
 
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="white" expand="lg">
         <LinkContainer to="/">
           <Navbar.Brand>
             <img
