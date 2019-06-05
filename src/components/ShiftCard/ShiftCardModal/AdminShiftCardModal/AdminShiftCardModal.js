@@ -8,10 +8,13 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
 import RoleBadge from '../RoleBadge';
+import authHeader from '../../../../_helpers/auth-header';
+import utils from '../../../../_helpers/utils';
 
 class AdminShiftCardModal extends Component {
   constructor(props) {
@@ -20,15 +23,44 @@ class AdminShiftCardModal extends Component {
       shiftData: { requirements }
     } = this.props;
     this.state = { requirements };
-    console.log(requirements);
   }
 
-  handleSubmit = () => {
-    // axios PUT roles in the boi
+  handleSubmit = e => {
+    // Prevent no changes being made.
+    e.preventDefault();
+
+    const { shiftData, onHide } = this.props;
+    const { requirements } = this.state;
+    const config = { headers: authHeader() };
+
+    const postData = {
+      rolesRequired: requirements.map(r => ({
+        roleName: r.role.name,
+        number: r.numberRequired
+      }))
+    };
+
+    axios
+      .put(`/shifts/${shiftData.id}/rolesRequired`, postData, config)
+      .then(resp => {
+        utils.handleResponse(resp);
+        onHide();
+      });
   };
 
-  handleRoleNumberUpdate = e => {
-    console.log(e);
+  handleRoleNumberUpdate = (name, newNumber) => {
+    const { requirements } = this.state;
+
+    const requirementsCopy = requirements.slice();
+    const roleToUpdate = requirementsCopy.find(r => r.role.name === name);
+
+    if (roleToUpdate) {
+      roleToUpdate.numberRequired = newNumber;
+    }
+
+    this.setState(() => ({
+      requirements: requirementsCopy
+    }));
   };
 
   render() {
@@ -95,7 +127,11 @@ class AdminShiftCardModal extends Component {
             >
               Cancel
             </Button>
-            <Button variant="outline-primary" type="submit">
+            <Button
+              variant="outline-primary"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
               Save changes
             </Button>
           </ButtonToolbar>

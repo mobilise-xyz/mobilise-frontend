@@ -3,12 +3,22 @@ import { Badge, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-const AdminRoleBadge = ({ name, number, onModal = true, colour = 'info' }) => {
+const AdminRoleBadge = ({
+  name,
+  number,
+  handleUpdate,
+  onModal = true,
+  colour = 'info'
+}) => {
   const decBtn = onModal ? (
-    <Button size="sm">{<FontAwesomeIcon icon={faMinus} />}</Button>
+    <Button onClick={() => handleUpdate(name, number - 1)}>
+      {<FontAwesomeIcon icon={faMinus} />}
+    </Button>
   ) : null;
   const incBtn = onModal ? (
-    <Button size="sm">{<FontAwesomeIcon icon={faPlus} />}</Button>
+    <Button onClick={() => handleUpdate(name, number + 1)}>
+      {<FontAwesomeIcon icon={faPlus} />}
+    </Button>
   ) : null;
   return (
     <Badge
