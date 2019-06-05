@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { connect } from 'react-redux';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import shiftsActions from '../../../_actions/shifts.actions';
-import CardLayout from '../../CardLayout';
+import { Card } from 'react-bootstrap';
 import MyToolbar from './MyToolbar';
+import MyEvent from './MyEvent';
 
 moment.locale('uk', {
   week: {
@@ -16,20 +15,13 @@ moment.locale('uk', {
 
 const localizer = BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
-const MyEvent = ({ title }) => <div>{title}</div>;
-
 const customComponents = { event: MyEvent, toolbar: MyToolbar };
 
-class CalendarView extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(shiftsActions.getAll());
-  }
-
+class CalendarView extends React.Component {
   render() {
     const { shifts } = this.props;
     console.log('SHIFTS', shifts);
-    const events = shifts.shifts.all.map(s => ({
+    const events = shifts.map(s => ({
       start: moment(`${s.date} ${s.start}`).toDate(),
       end: moment(`${s.date} ${s.stop}`).toDate(),
       allDay: false,
@@ -38,7 +30,7 @@ class CalendarView extends Component {
     }));
 
     return (
-      <CardLayout>
+      <Card className="p-3">
         <div style={{ height: '60rem' }}>
           <BigCalendar
             localizer={localizer}
@@ -47,18 +39,12 @@ class CalendarView extends Component {
             endAccessor="end"
             defaultView="week"
             components={customComponents}
+            onSelectEvent={this.onSelectEvent}
           />
         </div>
-      </CardLayout>
+      </Card>
     );
   }
 }
 
-const mapStateToProps = state => {
-  const { shifts } = state;
-  return {
-    shifts
-  };
-};
-
-export default connect(mapStateToProps)(CalendarView);
+export default CalendarView;
