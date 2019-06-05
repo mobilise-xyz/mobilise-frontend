@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
 import './VolunteerShiftsPage.css';
@@ -15,6 +16,38 @@ class VolunteerShiftsPage extends React.Component {
 
   render() {
     const { shifts } = this.props;
+    const shiftMap = [];
+    let i = 0;
+    let j = 0;
+    while (i < shifts.shifts.all.length) {
+      const shift = shifts.shifts.all[i];
+      const shiftDate = moment(shift.date, 'YYYY-MM-DD');
+      const shiftsForDate = [shift];
+      i += 1;
+      while (i < shifts.shifts.all.length) {
+        const nextShift = shifts.shifts.all[i];
+        if (shiftDate.isSame(moment(nextShift.date, 'YYYY-MM-DD'))) {
+          shiftsForDate.push(nextShift);
+        } else {
+          break;
+        }
+        i += 1;
+      }
+      shiftDate.isValid();
+      shiftMap[j] = [shiftDate, shiftsForDate];
+      j += 1;
+    }
+    const shiftLists = [];
+    shiftMap.forEach(entry => {
+      shiftLists.push(
+        <ShiftList
+          key={`ShiftList${entry[0]}`}
+          heading={entry[0].format('dddd')}
+          subheading={entry[0].format('Do MMM')}
+          shifts={entry[1]}
+        />
+      );
+    });
     return (
       <Layout>
         <ShiftList
@@ -23,14 +56,8 @@ class VolunteerShiftsPage extends React.Component {
           shifts={shifts.shifts.recommended}
           cardClass="bg-primary"
         />
-        {/* TODO divider between each day */}
+        {shiftLists}
         <hr />
-        {/* TODO remove hardcoding */}
-        <ShiftList
-          heading="Today"
-          subheading="17th March"
-          shifts={shifts.shifts.all}
-        />
       </Layout>
     );
   }
