@@ -6,6 +6,7 @@ import ShiftCard from './ShiftCard';
 const ShiftList = ({
   shifts,
   cardClass,
+  recommendedCardClass = cardClass,
   isAdmin = false,
   clickableCards = true
 }) => {
@@ -38,15 +39,23 @@ const ShiftList = ({
           weekday={entry[0].format('dddd')}
           date={entry[0].format('Do MMM')}
         />
-        {entry[1].map(c => (
-          <ListGroup.Item key={c.id} className={`border-0 ${cardClass}`}>
-            <ShiftCard
-              clickable={clickableCards}
-              isAdmin={isAdmin}
-              shiftData={c}
-            />
-          </ListGroup.Item>
-        ))}
+        {entry[1].map(c => {
+          let card = cardClass;
+          c.requirements.forEach(req => {
+            if (req.recommended) {
+              card = recommendedCardClass;
+            }
+          });
+          return (
+            <ListGroup.Item key={c.id} className={`border-0 ${card}`}>
+              <ShiftCard
+                clickable={clickableCards}
+                isAdmin={isAdmin}
+                shiftData={c}
+              />
+            </ListGroup.Item>
+          );
+        })}
       </ListGroup>
     );
   });

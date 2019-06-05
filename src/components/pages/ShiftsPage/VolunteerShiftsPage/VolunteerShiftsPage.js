@@ -17,7 +17,10 @@ class VolunteerShiftsPage extends React.Component {
 
     return (
       <Layout>
-        <ShiftList shifts={shifts.shifts.all} />
+        <ShiftList
+          shifts={shifts.shifts.all}
+          recommendedCardClass="bg-primary"
+        />
         <hr />
       </Layout>
     );
