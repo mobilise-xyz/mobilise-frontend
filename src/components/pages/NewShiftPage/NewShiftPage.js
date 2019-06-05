@@ -176,7 +176,7 @@ class NewShiftPage extends React.Component {
     const { data } = this.state;
     const { roles } = data;
 
-    const rolesCopy = roles.slice();
+    const rolesCopy = [...roles];
     const roleToUpdate = rolesCopy.find(r => r.roleName === name);
 
     if (roleToUpdate) {
