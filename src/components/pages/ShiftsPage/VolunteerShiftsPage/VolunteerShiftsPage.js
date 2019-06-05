@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
@@ -15,22 +14,11 @@ class VolunteerShiftsPage extends React.Component {
 
   render() {
     const { shifts } = this.props;
+
     return (
       <Layout>
-        <ShiftList
-          heading="Recommended"
-          subheading={<Link to="/help/recommended">what&#39;s this?</Link>}
-          shifts={shifts.shifts.recommended}
-          cardClass="bg-primary"
-        />
-        {/* TODO divider between each day */}
+        <ShiftList shifts={shifts.shifts.all} />
         <hr />
-        {/* TODO remove hardcoding */}
-        <ShiftList
-          heading="Today"
-          subheading="17th March"
-          shifts={shifts.shifts.all}
-        />
       </Layout>
     );
   }
