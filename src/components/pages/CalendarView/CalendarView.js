@@ -40,6 +40,7 @@ class CalendarView extends React.Component {
             defaultView="week"
             components={customComponents}
             onSelectEvent={this.onSelectEvent}
+            onDrillDown={() => {}}
           />
         </div>
       </Card>
