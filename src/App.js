@@ -14,6 +14,7 @@ import AvailabilityPage from './components/pages/AvailabilityPage';
 import alertActions from './_actions/alert.actions';
 import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedShiftsHelpPage';
 import FeedBackPage from './components/pages/HelpPages/FeedbackPage';
+import CalendarView from './components/pages/CalendarView/CalendarView';
 
 export class App extends React.Component {
   constructor(props) {
@@ -42,6 +43,7 @@ export class App extends React.Component {
         />
         <PrivateRoute path="/help/feedback" exact component={FeedBackPage} />
 
+        <Route path="/calendar" exact component={CalendarView} />
         <Route path="/login" exact component={LoginPage} />
         <Route path="/signup" exact component={SignUpPage} />
         <Route path="/404" exact component={NotFound} />
