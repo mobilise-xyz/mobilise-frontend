@@ -13,7 +13,6 @@ const VolunteerRoleBadge = ({
   const buttonColour = isSelected ? 'green' : colour;
   return (
     <Button
-      pill
       style={{
         textTransform: 'none',
         fontSize: '1rem',

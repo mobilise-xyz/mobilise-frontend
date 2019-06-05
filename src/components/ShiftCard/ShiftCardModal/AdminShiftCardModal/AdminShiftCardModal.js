@@ -22,7 +22,10 @@ class AdminShiftCardModal extends Component {
     const {
       shiftData: { requirements }
     } = this.props;
-    this.state = { requirements };
+    this.state = {
+      originalRequirements: requirements,
+      requirements
+    };
   }
 
   handleSubmit = e => {
@@ -48,17 +51,27 @@ class AdminShiftCardModal extends Component {
       });
   };
 
+  handleCancel = () => {
+    const { onHide } = this.props;
+    const { originalRequirements } = this.state;
+    this.setState({
+      requirements: originalRequirements
+    });
+    onHide();
+  };
+
   handleRoleNumberUpdate = (name, newNumber) => {
     const { requirements } = this.state;
 
-    const requirementsCopy = requirements.slice();
+    const requirementsCopy = [...requirements];
     const roleToUpdate = requirementsCopy.find(r => r.role.name === name);
 
     if (roleToUpdate) {
       roleToUpdate.numberRequired = newNumber;
     }
 
-    this.setState(() => ({
+    this.setState(prevState => ({
+      ...prevState,
       requirements: requirementsCopy
     }));
   };
@@ -123,7 +136,7 @@ class AdminShiftCardModal extends Component {
             <Button
               className="mr-2"
               variant="outline-secondary"
-              onClick={onHide}
+              onClick={this.handleCancel}
             >
               Cancel
             </Button>
