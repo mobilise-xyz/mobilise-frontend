@@ -26,12 +26,7 @@ class AdminShiftsPage extends React.Component {
           </Button>
         </LinkContainer>
         {/* TODO remove hardcoding */}
-        <ShiftList
-          isAdmin
-          heading="Today"
-          subheading="17th March"
-          shifts={shifts.shifts.all}
-        />
+        <ShiftList isAdmin shifts={shifts.shifts.all} />
       </Layout>
     );
   }
