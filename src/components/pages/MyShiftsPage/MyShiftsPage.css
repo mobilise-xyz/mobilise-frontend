@@ -1,0 +1,4 @@
+input[type='radio'] {
+  position: fixed;
+  opacity: 0;
+}
