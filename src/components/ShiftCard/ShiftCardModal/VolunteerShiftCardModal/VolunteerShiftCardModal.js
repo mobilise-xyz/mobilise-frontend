@@ -129,11 +129,7 @@ class VolunteerShiftCardModal extends React.Component {
     ) : null;
 
     return (
-      <Modal
-        show={show}
-        onHide={() => onHide(false)}
-        dialogClassName="modal-80w"
-      >
+      <Modal show={show} onHide={() => onHide(false)} size="lg" centered>
         <Modal.Header>
           <Modal.Title>{shiftData.title}</Modal.Title>
         </Modal.Header>

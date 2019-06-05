@@ -3,12 +3,13 @@ import {
   Modal,
   Button,
   ButtonToolbar,
-  Form,
   Col,
   OverlayTrigger,
-  Tooltip
+  Tooltip,
+  Row
 } from 'react-bootstrap';
 import axios from 'axios';
+import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
@@ -19,13 +20,11 @@ import utils from '../../../../_helpers/utils';
 class AdminShiftCardModal extends Component {
   constructor(props) {
     super(props);
-    const {
-      shiftData: { requirements }
-    } = this.props;
+    const { shiftData } = this.props;
     this.state = {
-      originalRequirements: requirements,
-      requirements
+      shiftData
     };
+    this.originalRequirements = shiftData.requirements.slice();
   }
 
   handleSubmit = e => {
@@ -33,11 +32,10 @@ class AdminShiftCardModal extends Component {
     e.preventDefault();
 
     const { shiftData, onHide } = this.props;
-    const { requirements } = this.state;
     const config = { headers: authHeader() };
 
     const postData = {
-      rolesRequired: requirements.map(r => ({
+      rolesRequired: shiftData.requirements.map(r => ({
         roleName: r.role.name,
         number: r.numberRequired
       }))
@@ -53,17 +51,16 @@ class AdminShiftCardModal extends Component {
 
   handleCancel = () => {
     const { onHide } = this.props;
-    const { originalRequirements } = this.state;
     this.setState({
-      requirements: originalRequirements
+      shiftData: { requirements: this.originalRequirements }
     });
     onHide();
   };
 
   handleRoleNumberUpdate = (name, newNumber) => {
-    const { requirements } = this.state;
+    const { shiftData } = this.props;
 
-    const requirementsCopy = [...requirements];
+    const requirementsCopy = [...shiftData.requirements];
     const roleToUpdate = requirementsCopy.find(r => r.role.name === name);
 
     if (roleToUpdate) {
@@ -72,15 +69,14 @@ class AdminShiftCardModal extends Component {
 
     this.setState(prevState => ({
       ...prevState,
-      requirements: requirementsCopy
+      shiftData: { requirements: requirementsCopy }
     }));
   };
 
   render() {
     const { shiftData, onHide, show, handleDelete } = this.props;
-    const { requirements } = this.state;
     return (
-      <Modal show={show} onHide={onHide}>
+      <Modal show={show} onHide={onHide} size="lg" centered>
         <Modal.Header>
           <Modal.Title>{shiftData.title}</Modal.Title>
           <OverlayTrigger
@@ -96,12 +92,42 @@ class AdminShiftCardModal extends Component {
         </Modal.Header>
 
         <Modal.Body>
-          <h6>Roles on this shift</h6>
-          <Form>
-            {requirements.map(r => (
-              <Form.Row key={`${r.role.name}-roles-form-row`}>
+          <Row>
+            <Col>
+              <Row>
                 <Col>
-                  <Form.Label as={Col}>
+                  <h6>Description</h6>
+                  {shiftData.description}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <h6>Date</h6>
+                  {shiftData.Date}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <h6>Time</h6>
+                  {moment(shiftData.start, 'H:m:ss')
+                    .local()
+                    .format('h:mm a')}{' '}
+                  -
+                  {moment(shiftData.stop, 'H:m:ss')
+                    .local()
+                    .format('h:mm a')}
+                </Col>
+              </Row>
+            </Col>
+            <Col>
+              <Row>
+                <Col>
+                  <h6>Roles on this shift</h6>
+                </Col>
+              </Row>
+              {shiftData.requirements.map(r => (
+                <Row>
+                  <Col>
                     <RoleBadge
                       key={shiftData.id + r.role.name}
                       isAdmin
@@ -111,11 +137,11 @@ class AdminShiftCardModal extends Component {
                       onModal
                       colour={r.role.colour}
                     />
-                  </Form.Label>
-                </Col>
-              </Form.Row>
-            ))}
-          </Form>
+                  </Col>
+                </Row>
+              ))}
+            </Col>
+          </Row>
         </Modal.Body>
 
         <Modal.Footer
