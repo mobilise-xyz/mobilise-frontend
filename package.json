@@ -66,6 +66,7 @@
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
     "pretty-quick": "^1.11.0",
+    "prop-types": "^15.7.2",
     "react-test-renderer": "^16.8.6"
   },
   "lint-staged": {
