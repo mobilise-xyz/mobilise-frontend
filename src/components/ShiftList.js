@@ -1,11 +1,12 @@
 import React from 'react';
 import moment from 'moment';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Container, Row, Col } from 'react-bootstrap';
 import ShiftCard from './ShiftCard';
 
 const ShiftList = ({
   shifts,
   cardClass,
+  recommendedCardClass = cardClass,
   isAdmin = false,
   clickableCards = true
 }) => {
@@ -33,21 +34,38 @@ const ShiftList = ({
   const shiftLists = [];
   shiftMap.forEach(entry => {
     shiftLists.push(
-      <ListGroup>
-        <DateHeading
-          weekday={entry[0].format('dddd')}
-          date={entry[0].format('Do MMM')}
-        />
-        {entry[1].map(c => (
-          <ListGroup.Item key={c.id} className={`border-0 ${cardClass}`}>
-            <ShiftCard
-              clickable={clickableCards}
-              isAdmin={isAdmin}
-              shiftData={c}
+      <Container>
+        <Row>
+          <Col md={2}>
+            <DateHeading
+              weekday={entry[0].format('dddd')}
+              date={entry[0].format('Do MMM')}
             />
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+          </Col>
+          <Col md={10}>
+            <ListGroup>
+              {entry[1].map(c => {
+                let card = cardClass;
+                c.requirements.forEach(req => {
+                  if (req.recommended) {
+                    card = recommendedCardClass;
+                  }
+                });
+                return (
+                  <ListGroup.Item key={c.id} className={`border-0 ${card}`}>
+                    <ShiftCard
+                      clickable={clickableCards}
+                      isAdmin={isAdmin}
+                      shiftData={c}
+                    />
+                  </ListGroup.Item>
+                );
+              })}
+            </ListGroup>
+          </Col>
+        </Row>
+        <hr />
+      </Container>
     );
   });
   return shiftLists;
@@ -55,8 +73,8 @@ const ShiftList = ({
 
 const DateHeading = ({ weekday, date }) => (
   <>
-    <h3>{weekday}</h3>
-    <p>{date}</p>
+    <h4>{weekday}</h4>
+    <p style={{ color: '#575757' }}>{date}</p>
   </>
 );
 
