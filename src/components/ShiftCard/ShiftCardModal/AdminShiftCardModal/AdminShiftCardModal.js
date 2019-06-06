@@ -22,6 +22,7 @@ class AdminShiftCardModal extends Component {
       start: shiftData.start,
       stop: shiftData.stop,
       date: shiftData.date,
+      manager: shiftData.creator.user,
       requirements: shiftData.requirements
     };
   }
@@ -100,6 +101,7 @@ class AdminShiftCardModal extends Component {
       start,
       stop,
       date,
+      manager,
       requirements
     } = this.state;
     const { shiftData, onHide, show, handleDelete } = this.props;
@@ -149,7 +151,11 @@ class AdminShiftCardModal extends Component {
                 </Row>
                 <Row>
                   <Col>
-                    <PlainTextForm label="managed by" disabled />
+                    <PlainTextForm
+                      label="managed by"
+                      disabled
+                      content={`${manager.firstName}  ${manager.lastName}`}
+                    />
                   </Col>
                 </Row>
                 <Row>
