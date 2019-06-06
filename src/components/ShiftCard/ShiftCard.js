@@ -110,25 +110,32 @@ class ShiftCard extends React.Component {
                         width: '100%',
                         height: '100%',
                         padding: '1%',
-                        objectFit: 'none' /* Do not scale the image */,
-                        objectPosition:
-                          'center' /* Center the image within the element */,
+                        objectFit: 'none',
+                        objectPosition: 'center',
                         borderRadius: '50%'
                       }}
                     />
                   </Container>
-                  <p style={{ textAlign: 'center', padding: '1%' }}>
+                  <p
+                    style={{
+                      textAlign: 'center',
+                      marginTop: '5%',
+                      marginBottom: '1%'
+                    }}
+                  >
                     {shiftData.address}
                   </p>
                 </Col>
                 <Col>
                   <Row>
-                    <h4>{shiftData.title}</h4>
+                    <Col>
+                      <h4>{shiftData.title}</h4>
+                    </Col>
                   </Row>
                   <Row />
                   <Row>
-                    <Col style={{ paddingLeft: '0px' }}>
-                      <h5>Start time</h5>
+                    <Col>
+                      <h5>Start</h5>
                       <p>
                         {moment(shiftData.start, 'H:m:ss')
                           .local()
@@ -136,7 +143,7 @@ class ShiftCard extends React.Component {
                       </p>
                     </Col>
                     <Col>
-                      <h5>End time</h5>
+                      <h5>End</h5>
                       <p>
                         {moment(shiftData.stop, 'H:m:ss')
                           .local()
@@ -145,7 +152,9 @@ class ShiftCard extends React.Component {
                     </Col>
                   </Row>
                   <Row>
-                    <h5>Roles</h5>
+                    <Col>
+                      <h5>Roles</h5>
+                    </Col>
                   </Row>
                   <Row>
                     {shiftData.requirements.map(r => {
