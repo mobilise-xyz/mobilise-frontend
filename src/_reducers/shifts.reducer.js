@@ -35,6 +35,7 @@ const initialState = {
   }
 };
 
+// TODO This is very messy, multiple cases can be collapsed and there are many unused state fields..
 const shifts = (state = initialState, action) => {
   switch (action.type) {
     // GET
@@ -104,6 +105,34 @@ const shifts = (state = initialState, action) => {
             }
           : shift;
       return { shifts: applyToShifts(state.shifts, action, setBookFailure) };
+    }
+    case shiftsConstants.UPDATE_REQUEST: {
+      const setUpdateRequest = shift =>
+        shift.id === action.id ? { ...shift, loading: true } : shift;
+      return { shifts: applyToShifts(state.shifts, action, setUpdateRequest) };
+    }
+    case shiftsConstants.UPDATE_SUCCESS: {
+      // Search for the shift that requested to be booked.
+      const setUpdateSuccess = shift =>
+        shift.id === action.id
+          ? { ...shift, updateSuccess: true, loading: false }
+          : shift;
+      return { shifts: applyToShifts(state.shifts, action, setUpdateSuccess) };
+    }
+    case shiftsConstants.UPDATE_FAILURE: {
+      // Search for the shift that requested to be booked.
+      const setUpdateFailure = shift =>
+        shift.id === action.id
+          ? {
+              ...shift,
+              updateSuccess: false,
+              loading: false,
+              error: action.error
+            }
+          : shift;
+      return {
+        shifts: applyToShifts(state.shifts, action, setUpdateFailure)
+      };
     }
     default:
       return state;

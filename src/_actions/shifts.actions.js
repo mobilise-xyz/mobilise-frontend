@@ -99,10 +99,50 @@ const book = (shiftId, roleName, repeatedType, until) => {
         dispatch(alertActions.success('Booked successfully!'));
       },
       error => {
-        console.log('ERROR', error);
         dispatch(failure(shiftId, error));
         dispatch(
           alertActions.error('Something went wrong with booking this shift!')
+        );
+      }
+    );
+  };
+};
+
+// Updates the information and roles required for a shift.
+const update = (shiftId, data) => {
+  const request = id => {
+    return { type: shiftsConstants.UPDATE_REQUEST, id };
+  };
+  const success = id => {
+    return { type: shiftsConstants.UPDATE_SUCCESS, id };
+  };
+  const failure = (id, error) => {
+    return { type: shiftsConstants.UPDATE_FAILURE, id, error };
+  };
+
+  const { title, rolesRequired } = data;
+  const info = { title };
+
+  return dispatch => {
+    dispatch(request(shiftId));
+
+    // Update info
+    const infoPromise = shiftsService.updateInfo(shiftId, info);
+    // Update roles
+    const rolesPromise = shiftsService.updateRoles(shiftId, rolesRequired);
+
+    // Wait for both
+    const promise = Promise.all([infoPromise, rolesPromise]);
+
+    promise.then(
+      () => {
+        dispatch(success(shiftId));
+        dispatch(alertActions.success('Shift updated successfully!'));
+      },
+      error => {
+        dispatch(failure(shiftId, error));
+        dispatch(
+          alertActions.error('Something went wrong with updating this shift!')
         );
       }
     );
@@ -113,7 +153,8 @@ const shiftsActions = {
   getAll,
   getForUser,
   book,
-  deleteWithId
+  deleteWithId,
+  update
 };
 
 export default shiftsActions;

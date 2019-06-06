@@ -1,114 +1,107 @@
 import React, { Component } from 'react';
-import { Modal, Button, ButtonToolbar, Col, Row, Form } from 'react-bootstrap';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { Button, ButtonToolbar, Col, Form, Modal, Row } from 'react-bootstrap';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
 import './AdminShiftCardModal.css';
-import RoleBadge from '../RoleBadge';
-import authHeader from '../../../../_helpers/auth-header';
-import utils from '../../../../_helpers/utils';
+import AdjustableRoleBadge from '../AdjustableRoleBadge';
 import PlainTextForm from '../../../forms/PlainTextForm';
+import shiftsActions from '../../../../_actions/shifts.actions';
 
 class AdminShiftCardModal extends Component {
   constructor(props) {
     super(props);
     const { shiftData } = this.props;
+
     this.state = {
-      data: {
-        title: shiftData.title,
-        description: shiftData.description,
-        location: shiftData.address
-      },
-      requirements: shiftData.requirements,
-      dataChanged: false,
-      rolesChanged: false
+      title: shiftData.title,
+      description: shiftData.description,
+      address: shiftData.address,
+      start: shiftData.start,
+      stop: shiftData.stop,
+      date: shiftData.date,
+      requirements: shiftData.requirements
     };
   }
 
-  handleSubmit = e => {
-    // Prevent no changes being made.
-    e.preventDefault();
-    const { data, requirements, rolesChanged, dataChanged } = this.state;
-    const { shiftData, onHide } = this.props;
-    const config = { headers: authHeader() };
+  handleSubmit = () => {
+    const { title, requirements } = this.state;
+    const { shiftData, onHide, dispatch } = this.props;
 
-    if (rolesChanged) {
-      this.handleRolesChangeSubmit(requirements, shiftData.id, config);
-    }
-    if (dataChanged) {
-      this.handleDataChangeSubmit(data, shiftData.id, config);
-    }
+    // 1. Convert requirements to rolesRequired
+    const rolesRequired = requirements.map(r => ({
+      roleName: r.role.name,
+      number: requirements.numberRequired
+    }));
 
-    onHide();
-  };
-
-  handleRolesChangeSubmit = (requirements, shiftId, config) => {
-    const putData = {
-      rolesRequired: requirements.map(r => ({
-        roleName: r.role.name,
-        number: r.numberRequired
-      }))
+    // 2. Construct payload
+    const data = {
+      title,
+      rolesRequired
     };
 
-    axios
-      .put(`/shifts/${shiftId}/rolesRequired`, putData, config)
-      .then(resp => {
-        utils.handleResponse(resp);
-      });
-  };
+    // 3. Submit PUT to update information.
+    dispatch(shiftsActions.update(shiftData.id, data));
 
-  handleDataChangeSubmit = (data, shiftId, config) => {
-    const putData = {};
-
-    axios
-      .put(`/shifts/${shiftId}/rolesRequired`, putData, config)
-      .then(resp => {
-        utils.handleResponse(resp);
-      });
+    // 4. Close modal
+    onHide();
   };
 
   handleCancel = () => {
-    const { onHide } = this.props;
-    this.setState({
-      // TODO: use prevstate
-      requirements: this.originalRequirements
-    });
+    const { shiftData, onHide } = this.props;
+
+    // 1. Hide
     onHide();
+
+    // 2. Reset data
+    this.setState({
+      title: shiftData.title,
+      description: shiftData.description,
+      location: shiftData.address,
+      requirements: shiftData.requirements
+    });
   };
 
   handleRoleNumberChange = (name, newNumber) => {
-    const { shiftData } = this.props;
+    const { requirements } = this.state;
 
-    const requirementsCopy = [...shiftData.requirements];
-    const roleToUpdate = requirementsCopy.find(r => r.role.name === name);
+    const roleToUpdateIndex = requirements.findIndex(r => r.role.name === name);
 
-    if (roleToUpdate) {
-      roleToUpdate.numberRequired = newNumber;
-    }
+    const newRole = {
+      ...requirements[roleToUpdateIndex],
+      numberRequired: newNumber
+    };
+
+    const requirementsCopy = requirements.slice();
+    requirementsCopy[roleToUpdateIndex] = newRole;
 
     this.setState({
-      requirements: requirementsCopy,
-      rolesChanged: true
+      requirements: requirementsCopy
     });
+    console.log(this.state);
   };
 
   handleDataChange = e => {
     const { name, value } = e.target;
+
     this.setState(prevState => ({
       ...prevState,
-      data: {
-        ...prevState.data,
-        [name]: value
-      },
-      dataChanged: true
+      [name]: value
     }));
   };
 
   render() {
-    const { data } = this.state;
-    const { title, description, location } = data;
+    const {
+      title,
+      description,
+      address,
+      start,
+      stop,
+      date,
+      requirements
+    } = this.state;
     const { shiftData, onHide, show, handleDelete } = this.props;
     return (
       <Modal show={show} onHide={onHide} size="lg" centered>
@@ -139,37 +132,31 @@ class AdminShiftCardModal extends Component {
                 <Row>
                   <Col className="no-form">
                     <h6>Date</h6>
-                    {shiftData.date}
+                    {date}
                   </Col>
                 </Row>
                 <Row>
                   <Col className="no-form">
                     <h6>Time</h6>
-                    {moment(shiftData.start, 'H:m:ss')
+                    {moment(start, 'H:m:ss')
                       .local()
-                      .format('h:mm a')}{' '}
+                      .format('h:mm a')}
                     -
-                    {moment(shiftData.stop, 'H:m:ss')
+                    {moment(stop, 'H:m:ss')
                       .local()
                       .format('h:mm a')}
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <PlainTextForm
-                      label="managed by"
-                      disabled
-                      content={`${shiftData.creator.user.firstName} ${
-                        shiftData.creator.user.lastName
-                      }`}
-                    />
+                    <PlainTextForm label="managed by" disabled />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
                     <PlainTextForm
-                      label="location"
-                      content={location}
+                      label="address"
+                      content={address}
                       handleChange={this.handleDataChange}
                     />
                   </Col>
@@ -182,10 +169,10 @@ class AdminShiftCardModal extends Component {
                   <h6>Roles on this shift</h6>
                 </Col>
               </Row>
-              {shiftData.requirements.map(r => (
+              {requirements.map(r => (
                 <Row key={shiftData.id + r.role.name}>
                   <Col key={shiftData.id + r.role.name}>
-                    <RoleBadge
+                    <AdjustableRoleBadge
                       key={shiftData.id + r.role.name}
                       isAdmin
                       name={r.role.name}
@@ -231,4 +218,11 @@ class AdminShiftCardModal extends Component {
   }
 }
 
-export default AdminShiftCardModal;
+function mapStateToProps(state) {
+  const { shift } = state;
+  return {
+    shift
+  };
+}
+
+export default connect(mapStateToProps)(AdminShiftCardModal);
