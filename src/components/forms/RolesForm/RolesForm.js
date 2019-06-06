@@ -1,9 +1,21 @@
 import React from 'react';
-import { Form, Row, Col } from 'react-bootstrap';
-import { Typeahead, Token } from 'react-bootstrap-typeahead';
+import { Col, Form, Row } from 'react-bootstrap';
+import { Token, Typeahead } from 'react-bootstrap-typeahead';
 import './RolesForm.css';
 
 class RolesForm extends React.Component {
+  state = {
+    inputIsSelected: false
+  };
+
+  handleRemove = onRemove => {
+    const { inputIsSelected } = this.state;
+    if (inputIsSelected) {
+      return;
+    }
+    onRemove();
+  };
+
   _renderToken = (option, props, index, handleRoleNumber, roles) => {
     if (roles.length === 0) {
       return null;
@@ -14,7 +26,7 @@ class RolesForm extends React.Component {
       return null;
     }
     return (
-      <Token key={index} onRemove={props.onRemove}>
+      <Token key={index} onRemove={() => this.handleRemove(props.onRemove)}>
         <Row>
           <Col md="auto" className="role-name">
             {roleName}
@@ -27,6 +39,8 @@ class RolesForm extends React.Component {
               min={1}
               onChange={handleRoleNumber}
               value={roleToChange.number}
+              onFocus={() => this.setState({ inputIsSelected: true })}
+              onBlur={() => this.setState({ inputIsSelected: false })}
             />
           </Col>
         </Row>
@@ -49,6 +63,7 @@ class RolesForm extends React.Component {
           onChange={handleChange}
           selected={roles.map(r => r.name)}
           selectHintOnEnter
+          onKeyDown={this.onKeyDown}
           renderToken={(option, props, index) =>
             this._renderToken(option, props, index, handleRoleNumber, roles)
           }
