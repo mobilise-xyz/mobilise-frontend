@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Card } from 'react-bootstrap';
 import MyToolbar from './MyToolbar';
 import MyEvent from './MyEvent';
+import './CalendarView.css';
 
 moment.locale('uk', {
   week: {

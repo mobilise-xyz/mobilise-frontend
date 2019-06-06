@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+.bg-recommended {
+  background: #c9e1bf;
+}
+
 .shift-card-btn:focus {
   outline: none;
 }

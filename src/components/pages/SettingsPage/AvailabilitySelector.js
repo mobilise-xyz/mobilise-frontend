@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import availabilityConstants from '../../_constants/availability.constants';
-import '../ShiftCard/ShiftCard.css';
-import availabilityActions from '../../_actions/availability.actions';
-import CardLayout from '../CardLayout';
-import history from '../../_helpers/history';
+import availabilityConstants from '../../../_constants/availability.constants';
+import '../../ShiftCard/ShiftCard.css';
+import availabilityActions from '../../../_actions/availability.actions';
+import history from '../../../_helpers/history';
 
 const times = ['Morning', 'Afternoon', 'Evening'];
 
@@ -43,7 +42,14 @@ const DayCard = ({
   </Card>
 );
 
-class AvailabilityPage extends React.Component {
+const miniCardStyle = colour => ({
+  width: '1rem',
+  height: '1rem',
+  backgroundColor: colour,
+  marginLeft: 'auto'
+});
+
+class AvailabilitySelector extends React.Component {
   constructor(props) {
     super(props);
 
@@ -57,6 +63,7 @@ class AvailabilityPage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     const { uid } = this.state;
+    console.log('AVAILABILITY MOUNT', dispatch);
     dispatch(availabilityActions.get(uid));
   }
 
@@ -135,9 +142,9 @@ class AvailabilityPage extends React.Component {
     const { availability } = this.props;
     console.log(availability);
     return (
-      <CardLayout title="Availability">
+      <Card className="p-3">
         <Row>
-          <Col md={9}>
+          <Col md={8}>
             <p>
               Please select the times you will be available each week. This is
               not a commitment to a shift, but it will influence recommendations
@@ -145,16 +152,22 @@ class AvailabilityPage extends React.Component {
             </p>
           </Col>
           <Col>
-            <Row noGutters>
-              <Col>Grey</Col>
+            <Row>
+              <Col className="text-right">
+                <Card style={miniCardStyle('LightGray')} />
+              </Col>
               <Col>Unavailable</Col>
             </Row>
-            <Row noGutters>
-              <Col>Yellow</Col>
+            <Row>
+              <Col>
+                <Card style={miniCardStyle('Yellow')} />
+              </Col>
               <Col>Maybe available</Col>
             </Row>
-            <Row noGutters>
-              <Col>Green</Col>
+            <Row>
+              <Col>
+                <Card style={miniCardStyle('YellowGreen')} />
+              </Col>
               <Col>Available</Col>
             </Row>
           </Col>
@@ -171,7 +184,7 @@ class AvailabilityPage extends React.Component {
             Save changes
           </Button>
         </Container>
-      </CardLayout>
+      </Card>
     );
   }
 }
@@ -183,4 +196,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(AvailabilityPage);
+export default connect(mapStateToProps)(AvailabilitySelector);
