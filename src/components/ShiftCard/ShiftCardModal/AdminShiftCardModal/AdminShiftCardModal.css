@@ -1,0 +1,21 @@
+div.modal-header input.rbt-input-main.form-control.rbt-input {
+  font-size: inherit;
+}
+
+div.modal-body label {
+  font-weight: 500;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.form {
+  margin-bottom: 0;
+}
+
+.no-form {
+  margin-bottom: 1rem;
+}

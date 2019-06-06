@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge, Button } from 'react-bootstrap';
+import '../RoleBadge.css';
 
 const VolunteerRoleBadge = ({
   name,
@@ -13,18 +14,14 @@ const VolunteerRoleBadge = ({
   const buttonColour = isSelected ? 'green' : colour;
   return (
     <Button
-      style={{
-        textTransform: 'none',
-        fontSize: '1rem',
-        backgroundColor: buttonColour,
-        color: 'white'
-      }}
+      className="role-badge"
+      style={{ backgroundColor: buttonColour }}
       name={name}
       onClick={onModal ? handleSelect : null}
     >
       {name}
       {number ? (
-        <Badge variant="light" style={{ marginLeft: '0.3rem' }}>
+        <Badge variant="light" className="number-badge">
           {number}
         </Badge>
       ) : (

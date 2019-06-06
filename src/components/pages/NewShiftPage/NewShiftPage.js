@@ -9,7 +9,7 @@ import CardLayout from '../../CardLayout';
 import history from '../../../_helpers/history';
 import authHeader from '../../../_helpers/auth-header';
 import TitleForm from '../../forms/TitleForm';
-import DescriptionForm from '../../forms/DescriptionForm';
+import PlainTextForm from '../../forms/PlainTextForm';
 import DateTimeForm from '../../forms/DateTimeForm';
 import LocationInput from '../../LocationInput/LocationInput';
 import RolesForm from '../../forms/RolesForm';
@@ -301,9 +301,12 @@ class NewShiftPage extends React.Component {
             handleChange={this.handleShiftTitleChange}
           />
           {/* Description */}
-          <DescriptionForm
+          <PlainTextForm
             id="description"
-            description={description}
+            label="description"
+            content={description}
+            plaintext={false}
+            rows={3}
             handleChange={this.handleDataChange}
           />
           {/* Date and Time */}
