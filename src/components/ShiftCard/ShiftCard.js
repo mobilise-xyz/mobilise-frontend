@@ -74,9 +74,9 @@ class ShiftCard extends React.Component {
   };
 
   render() {
-    const { shiftData, clickable, isAdmin } = this.props;
+    const { shiftData, clickable, isAdmin, recommended } = this.props;
     const { showModal, selected } = this.state;
-    console.log('HELLO');
+
     const expanded =
       shiftData.deleteSuccess === true || shiftData.bookSuccess === true;
 
@@ -112,42 +112,50 @@ class ShiftCard extends React.Component {
                         padding: '1%',
                         objectFit: 'none',
                         objectPosition: 'center',
-                        borderRadius: '50%'
+                        borderRadius: '5%'
                       }}
                     />
                   </Container>
-                  <p
-                    style={{
-                      textAlign: 'center',
-                      marginTop: '5%',
-                      marginBottom: '1%'
-                    }}
-                  >
-                    {shiftData.address}
-                  </p>
                 </Col>
                 <Col>
                   <Row>
                     <Col>
                       <h4>{shiftData.title}</h4>
                     </Col>
+                    {recommended > 0 ? (
+                      <Col>
+                        <h5
+                          className="text-primary"
+                          style={{ textAlign: 'right' }}
+                        >
+                          RECOMMENDED
+                        </h5>
+                      </Col>
+                    ) : null}
                   </Row>
                   <Row />
                   <Row>
                     <Col>
-                      <h5>Start</h5>
-                      <p>
+                      <h5>
                         {moment(shiftData.start, 'H:m:ss')
                           .local()
-                          .format('h:mm a')}
-                      </p>
-                    </Col>
-                    <Col>
-                      <h5>End</h5>
-                      <p>
+                          .format('h:mm a')}{' '}
+                        -{' '}
                         {moment(shiftData.stop, 'H:m:ss')
                           .local()
                           .format('h:mm a')}
+                      </h5>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <p
+                        style={{
+                          marginTop: '1%',
+                          marginBottom: '3%'
+                        }}
+                      >
+                        {shiftData.address}
                       </p>
                     </Col>
                   </Row>

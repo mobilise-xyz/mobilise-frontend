@@ -45,10 +45,12 @@ const ShiftList = ({
           <Col md={10}>
             <ListGroup>
               {entry[1].map(c => {
+                let recommended = false;
                 let card = cardClass;
                 c.requirements.forEach(req => {
                   if (req.recommended) {
                     card = recommendedCardClass;
+                    recommended = true;
                   }
                 });
                 return (
@@ -64,6 +66,7 @@ const ShiftList = ({
                       clickable={clickableCards}
                       isAdmin={isAdmin}
                       shiftData={c}
+                      recommended={recommended}
                     />
                   </ListGroup.Item>
                 );
