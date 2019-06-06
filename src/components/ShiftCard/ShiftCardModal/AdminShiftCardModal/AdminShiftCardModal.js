@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
-import {
-  Modal,
-  Button,
-  ButtonToolbar,
-  Col,
-  OverlayTrigger,
-  Tooltip,
-  Row
-} from 'react-bootstrap';
+import { Modal, Button, ButtonToolbar, Col, Row, Form } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
+import './AdminShiftCardModal.css';
 import RoleBadge from '../RoleBadge';
 import authHeader from '../../../../_helpers/auth-header';
 import utils from '../../../../_helpers/utils';
+import PlainTextForm from '../../../forms/PlainTextForm';
 
 class AdminShiftCardModal extends Component {
   constructor(props) {
@@ -78,46 +72,62 @@ class AdminShiftCardModal extends Component {
     return (
       <Modal show={show} onHide={onHide} size="lg" centered>
         <Modal.Header>
-          <Modal.Title>{shiftData.title}</Modal.Title>
-          <OverlayTrigger
-            placement="left"
-            overlay={
-              <Tooltip id="edit-shift-info-tooltip">
-                Edit additional shift information
-              </Tooltip>
-            }
-          >
-            <Button variant="info">{<FontAwesomeIcon icon={faEdit} />}</Button>
-          </OverlayTrigger>
+          <Modal.Title>
+            <PlainTextForm label="" content={shiftData.title} />
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <Row>
             <Col>
-              <Row>
-                <Col>
-                  <h6>Description</h6>
-                  {shiftData.description}
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>Date</h6>
-                  {shiftData.Date}
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>Time</h6>
-                  {moment(shiftData.start, 'H:m:ss')
-                    .local()
-                    .format('h:mm a')}{' '}
-                  -
-                  {moment(shiftData.stop, 'H:m:ss')
-                    .local()
-                    .format('h:mm a')}
-                </Col>
-              </Row>
+              <Form>
+                <Row>
+                  <Col>
+                    <PlainTextForm
+                      label="description"
+                      content={shiftData.description}
+                      handleChange={null}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="no-form">
+                    <h6>Date</h6>
+                    {shiftData.date}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="no-form">
+                    <h6>Time</h6>
+                    {moment(shiftData.start, 'H:m:ss')
+                      .local()
+                      .format('h:mm a')}{' '}
+                    -
+                    {moment(shiftData.stop, 'H:m:ss')
+                      .local()
+                      .format('h:mm a')}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <PlainTextForm
+                      label="managed by"
+                      disabled
+                      content={`${shiftData.creator.user.firstName} ${
+                        shiftData.creator.user.lastName
+                      }`}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <PlainTextForm
+                      label="location"
+                      content={shiftData.address}
+                    />
+                  </Col>
+                </Row>
+              </Form>
             </Col>
             <Col>
               <Row>
@@ -126,8 +136,8 @@ class AdminShiftCardModal extends Component {
                 </Col>
               </Row>
               {shiftData.requirements.map(r => (
-                <Row>
-                  <Col>
+                <Row key={shiftData.id + r.role.name}>
+                  <Col key={shiftData.id + r.role.name}>
                     <RoleBadge
                       key={shiftData.id + r.role.name}
                       isAdmin
@@ -144,13 +154,7 @@ class AdminShiftCardModal extends Component {
           </Row>
         </Modal.Body>
 
-        <Modal.Footer
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '1rem'
-          }}
-        >
+        <Modal.Footer>
           <Button
             className="mr-2"
             variant="outline-danger"
