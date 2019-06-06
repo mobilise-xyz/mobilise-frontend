@@ -43,23 +43,22 @@ class MyContributions extends React.Component {
 
     const { shiftsCompleted, hours, challengesCompleted } = contributions;
 
-    console.log('SHIFTS COMPLETED');
     return (
       <Container className="pt-5">
         <h3>My Contributions</h3>
         <CardColumns>
           <ContributionCard
-            number={shiftsCompleted.number}
+            number={shiftsCompleted}
             description="shifts completed"
             icon={<FontAwesomeIcon icon={faCalendarCheck} size="6x" />}
           />
           <ContributionCard
-            number={hours.number}
+            number={hours}
             description="hours given"
             icon={<FontAwesomeIcon icon={faClock} size="6x" />}
           />
           <ContributionCard
-            number={challengesCompleted.number}
+            number={challengesCompleted}
             description="challenges completed"
             icon={<FontAwesomeIcon icon={faTrophy} size="6x" />}
           />

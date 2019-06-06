@@ -1,14 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faAward,
+  faChartLine,
+  faStopwatch
+} from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { Card, CardColumns, Container } from 'react-bootstrap';
 import './HallOfFame.css';
 import volunteerActions from '../../../../_actions/volunteer.actions';
 
-const HallOfFameCard = ({ id, volunteerName, category, bottomText }) => (
+const HallOfFameCard = ({ id, volunteerName, category, bottomText, icon }) => (
   <Card id={id} className="hallOfFameCard">
     <Card.Header>{category}</Card.Header>
-    <Card.Img src="https://via.placeholder.com/150" />
+    {icon}
 
     <Card.Body>
       <Card.Title>{volunteerName}</Card.Title>
@@ -41,18 +47,39 @@ class HallOfFame extends React.Component {
             category="Fastest Responder"
             volunteerName={fastResponder.name}
             bottomText={`${fastResponder.number} last minute responses`}
+            icon={
+              <FontAwesomeIcon
+                className="pt-3 text-primary"
+                icon={faStopwatch}
+                size="6x"
+              />
+            }
           />
           <HallOfFameCard
             id="mostHours"
             category="Most Hours"
             volunteerName={mostHours.name}
-            bottomText={`${mostHours.name} hours in the past week`}
+            bottomText={`${mostHours.number} hours in the past week`}
+            icon={
+              <FontAwesomeIcon
+                className="pt-3 text-primary"
+                icon={faAward}
+                size="6x"
+              />
+            }
           />
           <HallOfFameCard
             id="onTheRise"
             category="On the Rise"
             volunteerName={onTheRise.name}
             bottomText={`x${onTheRise.number} increase in activity`}
+            icon={
+              <FontAwesomeIcon
+                className="pt-3 text-primary"
+                icon={faChartLine}
+                size="6x"
+              />
+            }
           />
         </CardColumns>
       </Container>
