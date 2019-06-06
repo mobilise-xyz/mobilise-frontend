@@ -8,7 +8,6 @@ import MyShiftsPage from './components/pages/MyShiftsPage';
 import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
 import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
-import SettingsPage from './components/pages/SettingsPage';
 import SignUpPage from './components/pages/SignUpPage';
 import AvailabilityPage from './components/pages/AvailabilityPage';
 import alertActions from './_actions/alert.actions';
@@ -33,8 +32,7 @@ export class App extends React.Component {
         <PrivateRoute path="/" exact component={ShiftsPage} />
         <PrivateRoute path="/shifts" exact component={MyShiftsPage} />
         <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
-        <PrivateRoute path="/settings" exact component={SettingsPage} />
-        <PrivateRoute path="/availability" exact component={AvailabilityPage} />
+        <PrivateRoute path="/settings" exact component={AvailabilityPage} />
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
 
         <PrivateRoute
