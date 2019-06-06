@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Card, CardColumns, Container } from 'react-bootstrap';
 import './HallOfFame.css';
+import volunteerActions from '../../../../_actions/volunteer.actions';
 
 const HallOfFameCard = ({ id, volunteerName, category, bottomText }) => (
   <Card id={id} className="hallOfFameCard">
@@ -16,10 +19,19 @@ const HallOfFameCard = ({ id, volunteerName, category, bottomText }) => (
 
 class HallOfFame extends React.Component {
   componentDidMount() {
-    // TODO get data
+    const { dispatch } = this.props;
+    dispatch(volunteerActions.getHallOfFame());
   }
 
   render() {
+    const { hallOfFame, hallOfFameLoading } = this.props;
+
+    if (hallOfFameLoading === true) {
+      return null;
+    }
+
+    const { fastResponder, mostHours, onTheRise } = hallOfFame;
+
     return (
       <Container className="pt-5">
         <h3>Hall Of Fame</h3>
@@ -27,20 +39,20 @@ class HallOfFame extends React.Component {
           <HallOfFameCard
             id="fastestResponder"
             category="Fastest Responder"
-            volunteerName="Mark Wheelhouse"
-            bottomText="3 last minute responses"
+            volunteerName={fastResponder.name}
+            bottomText={`${fastResponder.number} last minute responses`}
           />
           <HallOfFameCard
             id="mostHours"
             category="Most Hours"
-            volunteerName="Bill Bailey"
-            bottomText="44 hours in the past week"
+            volunteerName={mostHours.name}
+            bottomText={`${mostHours.name} hours in the past week`}
           />
           <HallOfFameCard
             id="onTheRise"
             category="On the Rise"
-            volunteerName="Ben Dover"
-            bottomText="x1.5 increase in activity"
+            volunteerName={onTheRise.name}
+            bottomText={`x${onTheRise.number} increase in activity`}
           />
         </CardColumns>
       </Container>
@@ -48,4 +60,26 @@ class HallOfFame extends React.Component {
   }
 }
 
-export default HallOfFame;
+HallOfFame.propTypes = {
+  hallOfFame: PropTypes.shape({
+    fastResponder: {
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired
+    }.isRequired,
+    mostHours: {
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired
+    }.isRequired,
+    onTheRise: {
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired
+    }.isRequired
+  }).isRequired
+};
+
+const mapStateToProps = state => {
+  const { hallOfFame, hallOfFameLoading } = state.volunteers;
+  return { hallOfFame, hallOfFameLoading };
+};
+
+export default connect(mapStateToProps)(HallOfFame);

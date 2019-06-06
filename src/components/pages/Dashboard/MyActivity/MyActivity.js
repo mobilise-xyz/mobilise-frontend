@@ -3,41 +3,8 @@ import { Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt, faTrophy } from '@fortawesome/free-solid-svg-icons';
-
-const placeholderActivity = [
-  {
-    title: 'Completed your first shift!',
-    description: 'You volunteered for Tesco Pickup.'
-  },
-  {
-    title: 'Completed your first shift!',
-    description: 'You volunteered for Tesco Pickup.'
-  },
-  {
-    title: 'Completed your first shift!',
-    description: 'You volunteered for Tesco Pickup.'
-  },
-  {
-    title: 'Completed your first shift!',
-    description: 'You volunteered for Tesco Pickup.'
-  },
-  {
-    title: 'Completed your first shift!',
-    description: 'You volunteered for Tesco Pickup.'
-  },
-  {
-    title: 'Completed your first shift!',
-    description: 'You volunteered for Tesco Pickup.'
-  },
-  {
-    title: 'Completed your first shift!',
-    description: 'You volunteered for Tesco Pickup.'
-  },
-  {
-    title: 'Completed your first shift!',
-    description: 'You volunteered for Tesco Pickup.'
-  }
-];
+import { connect } from 'react-redux';
+import volunteerActions from '../../../../_actions/volunteer.actions';
 
 const ActivityCard = ({ title, description }) => (
   <Card className="mt-1">
@@ -57,15 +24,6 @@ const ActivityCard = ({ title, description }) => (
     </Card.Body>
   </Card>
 );
-//
-// {/*<FontAwesomeIcon icon={faTrophy} />*/}
-//
-// {/*<Card.Body>*/}
-// {/*<Card.Title>{title}</Card.Title>*/}
-// {/*<Card.Text>*/}
-// {/*{description}*/}
-// {/**/}
-// {/*</Card.Text>*/}
 
 ActivityCard.propTypes = {
   title: PropTypes.string.isRequired,
@@ -74,15 +32,23 @@ ActivityCard.propTypes = {
 
 class MyActivity extends React.Component {
   componentDidMount() {
-    // TODO get data
+    const { dispatch } = this.props;
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(volunteerActions.getActivity(uid));
   }
 
   render() {
+    const { activity: activities, activityLoading } = this.props;
+
+    if (activityLoading === true) {
+      return null;
+    }
+
     return (
       <Container className="pt-5">
         <h3>My Activity</h3>
         <ListGroup>
-          {placeholderActivity.map(activity => (
+          {activities.map(activity => (
             <ActivityCard
               title={activity.title}
               description={activity.description}
@@ -94,4 +60,18 @@ class MyActivity extends React.Component {
   }
 }
 
-export default MyActivity;
+MyActivity.propTypes = {
+  activity: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      description: PropTypes.string
+    })
+  ).isRequired
+};
+
+const mapStateToProps = state => {
+  const { activity, activityLoading } = state.volunteers;
+  return { activity, activityLoading };
+};
+
+export default connect(mapStateToProps)(MyActivity);
