@@ -1,39 +1,30 @@
 import React from 'react';
-import { Badge, Button } from 'react-bootstrap';
+import AdminRoleBadge from './AdminRoleBadge/AdminRoleBadge';
+import VolunteerRoleBadge from './VolunteerRoleBadge/VolunteerRoleBadge';
 
 const RoleBadge = ({
+  isAdmin,
   name,
   number,
+  handleUpdate,
   handleSelect,
   selected,
-  clickable = true,
+  onModal = false,
   colour = 'info'
 }) => {
-  const isSelected = selected === name;
-  const buttonColour = isSelected ? '#299688' : colour;
-  return (
-    <Button
-      type="button"
-      style={{
-        textTransform: 'none',
-        fontSize: '1rem',
-        padding: '0.3rem',
-        marginLeft: '0.3125rem',
-        backgroundColor: buttonColour,
-        color: 'white'
-      }}
-      name={name}
-      onClick={clickable ? handleSelect : null}
-    >
-      {name}
-      {number ? (
-        <Badge variant="light" style={{ marginLeft: '0.3rem' }}>
-          {number}
-        </Badge>
-      ) : (
-        number
-      )}
-    </Button>
+  const passthroughProps = {
+    name,
+    number,
+    handleUpdate,
+    handleSelect,
+    selected,
+    onModal,
+    colour
+  };
+  return isAdmin ? (
+    <AdminRoleBadge {...passthroughProps} />
+  ) : (
+    <VolunteerRoleBadge {...passthroughProps} />
   );
 };
 
