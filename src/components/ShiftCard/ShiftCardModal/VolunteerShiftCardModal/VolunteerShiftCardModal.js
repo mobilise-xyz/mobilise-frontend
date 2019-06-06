@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import RoleBadge from '../RoleBadge';
 import '../../ShiftCard.css';
@@ -178,7 +176,6 @@ class VolunteerShiftCardModal extends React.Component {
               <Row>
                 <Col>
                   <h6>Location</h6>
-                  <FontAwesomeIcon icon={faMapMarkedAlt} />
                   {shiftData.address}
                 </Col>
               </Row>
