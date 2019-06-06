@@ -1,31 +1,24 @@
 import React, { Component } from 'react';
-import {
-  Modal,
-  Button,
-  ButtonToolbar,
-  Form,
-  Col,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap';
+import { Modal, Button, ButtonToolbar, Col, Row, Form } from 'react-bootstrap';
 import axios from 'axios';
+import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
+import './AdminShiftCardModal.css';
 import RoleBadge from '../RoleBadge';
 import authHeader from '../../../../_helpers/auth-header';
 import utils from '../../../../_helpers/utils';
+import PlainTextForm from '../../../forms/PlainTextForm';
 
 class AdminShiftCardModal extends Component {
   constructor(props) {
     super(props);
-    const {
-      shiftData: { requirements }
-    } = this.props;
+    const { shiftData } = this.props;
     this.state = {
-      originalRequirements: requirements,
-      requirements
+      shiftData
     };
+    this.originalRequirements = shiftData.requirements.slice();
   }
 
   handleSubmit = e => {
@@ -33,11 +26,10 @@ class AdminShiftCardModal extends Component {
     e.preventDefault();
 
     const { shiftData, onHide } = this.props;
-    const { requirements } = this.state;
     const config = { headers: authHeader() };
 
     const postData = {
-      rolesRequired: requirements.map(r => ({
+      rolesRequired: shiftData.requirements.map(r => ({
         roleName: r.role.name,
         number: r.numberRequired
       }))
@@ -53,17 +45,16 @@ class AdminShiftCardModal extends Component {
 
   handleCancel = () => {
     const { onHide } = this.props;
-    const { originalRequirements } = this.state;
     this.setState({
-      requirements: originalRequirements
+      shiftData: { requirements: this.originalRequirements }
     });
     onHide();
   };
 
   handleRoleNumberUpdate = (name, newNumber) => {
-    const { requirements } = this.state;
+    const { shiftData } = this.props;
 
-    const requirementsCopy = [...requirements];
+    const requirementsCopy = [...shiftData.requirements];
     const roleToUpdate = requirementsCopy.find(r => r.role.name === name);
 
     if (roleToUpdate) {
@@ -72,36 +63,81 @@ class AdminShiftCardModal extends Component {
 
     this.setState(prevState => ({
       ...prevState,
-      requirements: requirementsCopy
+      shiftData: { requirements: requirementsCopy }
     }));
   };
 
   render() {
     const { shiftData, onHide, show, handleDelete } = this.props;
-    const { requirements } = this.state;
     return (
-      <Modal show={show} onHide={onHide}>
+      <Modal show={show} onHide={onHide} size="lg" centered>
         <Modal.Header>
-          <Modal.Title>{shiftData.title}</Modal.Title>
-          <OverlayTrigger
-            placement="left"
-            overlay={
-              <Tooltip id="edit-shift-info-tooltip">
-                Edit additional shift information
-              </Tooltip>
-            }
-          >
-            <Button variant="info">{<FontAwesomeIcon icon={faEdit} />}</Button>
-          </OverlayTrigger>
+          <Modal.Title>
+            <PlainTextForm label="" content={shiftData.title} />
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <h6>Roles on this shift</h6>
-          <Form>
-            {requirements.map(r => (
-              <Form.Row key={`${r.role.name}-roles-form-row`}>
+          <Row>
+            <Col>
+              <Form>
+                <Row>
+                  <Col>
+                    <PlainTextForm
+                      label="description"
+                      content={shiftData.description}
+                      handleChange={null}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="no-form">
+                    <h6>Date</h6>
+                    {shiftData.date}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="no-form">
+                    <h6>Time</h6>
+                    {moment(shiftData.start, 'H:m:ss')
+                      .local()
+                      .format('h:mm a')}{' '}
+                    -
+                    {moment(shiftData.stop, 'H:m:ss')
+                      .local()
+                      .format('h:mm a')}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <PlainTextForm
+                      label="managed by"
+                      disabled
+                      content={`${shiftData.creator.user.firstName} ${
+                        shiftData.creator.user.lastName
+                      }`}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <PlainTextForm
+                      label="location"
+                      content={shiftData.address}
+                    />
+                  </Col>
+                </Row>
+              </Form>
+            </Col>
+            <Col>
+              <Row>
                 <Col>
-                  <Form.Label as={Col}>
+                  <h6>Roles on this shift</h6>
+                </Col>
+              </Row>
+              {shiftData.requirements.map(r => (
+                <Row key={shiftData.id + r.role.name}>
+                  <Col key={shiftData.id + r.role.name}>
                     <RoleBadge
                       key={shiftData.id + r.role.name}
                       isAdmin
@@ -111,20 +147,14 @@ class AdminShiftCardModal extends Component {
                       onModal
                       colour={r.role.colour}
                     />
-                  </Form.Label>
-                </Col>
-              </Form.Row>
-            ))}
-          </Form>
+                  </Col>
+                </Row>
+              ))}
+            </Col>
+          </Row>
         </Modal.Body>
 
-        <Modal.Footer
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '1rem'
-          }}
-        >
+        <Modal.Footer>
           <Button
             className="mr-2"
             variant="outline-danger"

@@ -18,7 +18,7 @@ class VolunteerShiftsPage extends React.Component {
       <Layout heading="Book a shift">
         <ShiftList
           shifts={shifts.shifts.all}
-          recommendedCardClass="bg-recommended"
+          recommendedCardClass="bg-primary"
         />
         <hr />
       </Layout>

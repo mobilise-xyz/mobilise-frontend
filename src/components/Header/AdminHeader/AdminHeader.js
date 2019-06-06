@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 const AdminHeader = () => (
   <Nav className="mr-auto">
-    <LinkContainer exact to="/" activeStyle={{ color: 'green' }}>
+    <LinkContainer exact to="/">
       <Nav.Link>Shifts</Nav.Link>
     </LinkContainer>
   </Nav>

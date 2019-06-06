@@ -1,0 +1,10 @@
+.role-badge {
+  text-transform: none !important;
+  font-size: 1rem !important;
+  color: white !important;
+  margin: 0.5rem !important;
+}
+
+.number-badge {
+  margin-left: 0.3rem !important;
+}
