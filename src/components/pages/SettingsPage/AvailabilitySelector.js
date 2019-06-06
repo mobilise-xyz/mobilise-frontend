@@ -42,6 +42,13 @@ const DayCard = ({
   </Card>
 );
 
+const miniCardStyle = colour => ({
+  width: '1rem',
+  height: '1rem',
+  backgroundColor: colour,
+  marginLeft: 'auto'
+});
+
 class AvailabilitySelector extends React.Component {
   constructor(props) {
     super(props);
@@ -137,7 +144,7 @@ class AvailabilitySelector extends React.Component {
     return (
       <Card className="p-3">
         <Row>
-          <Col md={9}>
+          <Col md={8}>
             <p>
               Please select the times you will be available each week. This is
               not a commitment to a shift, but it will influence recommendations
@@ -145,16 +152,22 @@ class AvailabilitySelector extends React.Component {
             </p>
           </Col>
           <Col>
-            <Row noGutters>
-              <Col>Grey</Col>
+            <Row>
+              <Col className="text-right">
+                <Card style={miniCardStyle('LightGray')} />
+              </Col>
               <Col>Unavailable</Col>
             </Row>
-            <Row noGutters>
-              <Col>Yellow</Col>
+            <Row>
+              <Col>
+                <Card style={miniCardStyle('Yellow')} />
+              </Col>
               <Col>Maybe available</Col>
             </Row>
-            <Row noGutters>
-              <Col>Green</Col>
+            <Row>
+              <Col>
+                <Card style={miniCardStyle('YellowGreen')} />
+              </Col>
               <Col>Available</Col>
             </Row>
           </Col>
