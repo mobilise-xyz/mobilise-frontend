@@ -9,7 +9,7 @@ import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
 import SettingsPage from './components/pages/SettingsPage';
 import SignUpPage from './components/pages/SignUpPage';
-import AvailabilityPage from './components/pages/AvailabilityPage';
+import AvailabilityPage from './components/pages/SettingsPage/AvailabilitySelector';
 
 describe('<App />', () => {
   let app;
