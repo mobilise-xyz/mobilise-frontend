@@ -28,7 +28,7 @@ class AdminShiftCardModal extends Component {
   }
 
   handleSubmit = () => {
-    const { title, requirements } = this.state;
+    const { title, description, address, requirements } = this.state;
     const { shiftData, onHide, dispatch } = this.props;
 
     // 1. Convert requirements to rolesRequired
@@ -40,6 +40,8 @@ class AdminShiftCardModal extends Component {
     // 2. Construct payload
     const data = {
       title,
+      description,
+      address,
       rolesRequired
     };
 
@@ -60,7 +62,7 @@ class AdminShiftCardModal extends Component {
     this.setState({
       title: shiftData.title,
       description: shiftData.description,
-      location: shiftData.address,
+      address: shiftData.address,
       requirements: shiftData.requirements
     });
   };
