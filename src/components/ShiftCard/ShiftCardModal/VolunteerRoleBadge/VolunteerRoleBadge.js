@@ -23,13 +23,7 @@ const VolunteerRoleBadge = ({
       onClick={onModal ? handleSelect : null}
     >
       {name}
-      {number ? (
-        <Badge variant="light" className="number-badge">
-          {number}
-        </Badge>
-      ) : (
-        number
-      )}
+      {number ? <Badge variant="light">{number}</Badge> : number}
     </Button>
   );
 };

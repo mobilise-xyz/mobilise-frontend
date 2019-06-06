@@ -22,7 +22,8 @@ const IncrementButton = ({ handleUpdate, name, number }) => (
   </Button>
 );
 
-const AdminRoleBadge = ({
+// This is the badge used in the admin shift modal that allows the user to change the role numbers for the shift.
+const AdjustableRoleBadge = ({
   name,
   number,
   handleUpdate,
@@ -61,4 +62,4 @@ const AdminRoleBadge = ({
   );
 };
 
-export default AdminRoleBadge;
+export default AdjustableRoleBadge;

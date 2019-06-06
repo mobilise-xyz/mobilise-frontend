@@ -79,17 +79,46 @@ const book = (shiftId, roleName, repeatedType, untilDate) => {
 
   console.log('Booking shift with ID', shiftId, 'and rolename', roleName);
 
-  return axios.post(`shifts/${shiftId}/book`, data, config).then(resp => {
-    console.log('handling resp', resp);
-    utils.handleResponse(resp);
-  });
+  return axios
+    .post(`shifts/${shiftId}/book`, data, config)
+    .then(utils.handleResponse);
+};
+
+const updateInfo = (shiftId, info) => {
+  const config = {
+    headers: authHeader()
+  };
+
+  const data = {
+    title: info.title
+  };
+
+  return axios
+    .put(`/shifts/${shiftId}`, data, config)
+    .then(utils.handleResponse);
+};
+
+const updateRoles = (shiftId, rolesRequired) => {
+  const config = {
+    headers: authHeader()
+  };
+
+  const data = {
+    rolesRequired
+  };
+
+  return axios
+    .put(`/shifts/${shiftId}/rolesRequired`, data, config)
+    .then(utils.handleResponse);
 };
 
 const shiftsService = {
   getAll,
   getForUser,
   deleteWithId,
-  book
+  book,
+  updateInfo,
+  updateRoles
 };
 
 export default shiftsService;

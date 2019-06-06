@@ -19,3 +19,7 @@ div.modal-body label {
 .no-form {
   margin-bottom: 1rem;
 }
+
+textarea {
+  resize: none;
+}
