@@ -101,14 +101,15 @@ class ShiftCard extends React.Component {
                 <Col md={4}>
                   <Container>
                     <Image
-                      src={`https://maps.googleapis.com/maps/api/staticmap?center=51.505009,-0.257317&zoom=13&size=200x200&maptype=roadmap
-&markers=color:red%7C51.505009,-0.257317&&key=${
-                        process.env.REACT_APP_GOOGLE_API_KEY
-                      }`}
+                      src={`https://maps.googleapis.com/maps/api/staticmap?center=${
+                        shiftData.address
+                      }&zoom=13&size=200x200&maptype=roadmap&markers=color:red%7C${
+                        shiftData.address
+                      }&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
                       style={{
                         width: '100%',
                         height: '100%',
-                        padding: '5px',
+                        padding: '1%',
                         objectFit: 'none' /* Do not scale the image */,
                         objectPosition:
                           'center' /* Center the image within the element */,
@@ -116,7 +117,9 @@ class ShiftCard extends React.Component {
                       }}
                     />
                   </Container>
-                  <p style={{ textAlign: 'center' }}>{shiftData.address}</p>
+                  <p style={{ textAlign: 'center', padding: '1%' }}>
+                    {shiftData.address}
+                  </p>
                 </Col>
                 <Col>
                   <Row>
