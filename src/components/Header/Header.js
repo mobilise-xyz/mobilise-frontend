@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCog } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo-white.png';
 import authHeader from '../../_helpers/auth-header';
 import VolunteerHeader from './VolunteerHeaderNav';
 import AdminHeader from './AdminHeader';
