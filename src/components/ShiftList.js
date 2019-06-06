@@ -34,7 +34,7 @@ const ShiftList = ({
   const shiftLists = [];
   shiftMap.forEach(entry => {
     shiftLists.push(
-      <Container>
+      <Container key={entry[0]}>
         <Row>
           <Col md={2} style={{ paddingTop: '5%' }}>
             <DateHeading

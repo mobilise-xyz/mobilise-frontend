@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Col, Collapse, Row } from 'react-bootstrap';
+import { Card, Col, Collapse, Row, Image, Container } from 'react-bootstrap';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
@@ -76,6 +76,7 @@ class ShiftCard extends React.Component {
   render() {
     const { shiftData, clickable, isAdmin } = this.props;
     const { showModal, selected } = this.state;
+    console.log('HELLO');
     const expanded =
       shiftData.deleteSuccess === true || shiftData.bookSuccess === true;
 
@@ -96,18 +97,53 @@ class ShiftCard extends React.Component {
             }}
           >
             <Card.Body>
-              <Row />
               <Row>
-                <Col>
-                  <h6>Location</h6>
-                  <p>{shiftData.address}</p>
+                <Col md={4}>
+                  <Container>
+                    <Image
+                      src={`https://maps.googleapis.com/maps/api/staticmap?center=51.505009,-0.257317&zoom=13&size=200x200&maptype=roadmap
+&markers=color:red%7C51.505009,-0.257317&&key=${
+                        process.env.REACT_APP_GOOGLE_API_KEY
+                      }`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        padding: '5px',
+                        objectFit: 'none' /* Do not scale the image */,
+                        objectPosition:
+                          'center' /* Center the image within the element */,
+                        borderRadius: '50%'
+                      }}
+                    />
+                  </Container>
+                  <p style={{ textAlign: 'center' }}>{shiftData.address}</p>
                 </Col>
                 <Col>
-                  <h6>Description</h6>
-                  <p>{shiftData.description}</p>
-                </Col>
-                <Col>
-                  <h6>Available roles</h6>
+                  <Row>
+                    <h4>{shiftData.title}</h4>
+                  </Row>
+                  <Row />
+                  <Row>
+                    <Col style={{ paddingLeft: '0px' }}>
+                      <h5>Start time</h5>
+                      <p>
+                        {moment(shiftData.start, 'H:m:ss')
+                          .local()
+                          .format('h:mm a')}
+                      </p>
+                    </Col>
+                    <Col>
+                      <h5>End time</h5>
+                      <p>
+                        {moment(shiftData.stop, 'H:m:ss')
+                          .local()
+                          .format('h:mm a')}
+                      </p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <h5>Roles</h5>
+                  </Row>
                   <Row>
                     {shiftData.requirements.map(r => {
                       // Only show roles that are available to book
@@ -123,45 +159,6 @@ class ShiftCard extends React.Component {
                       ) : null;
                     })}
                   </Row>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <h6>Date</h6>
-                  <p>
-                    {moment(shiftData.date)
-                      .local()
-                      .format('dddd, MMMM Do YYYY')}
-                  </p>
-                  {shiftData.repeatedId ? (
-                    <p className="text-muted">Repeating</p>
-                  ) : null}
-                </Col>
-                <Col>
-                  <Row noGutters>
-                    <Col>
-                      <h6>Start time</h6>
-                      <p>
-                        {moment(shiftData.start, 'H:m:ss')
-                          .local()
-                          .format('h:mm a')}
-                      </p>
-                    </Col>
-                    <Col>
-                      <h6>End time</h6>
-                      <p>
-                        {moment(shiftData.stop, 'H:m:ss')
-                          .local()
-                          .format('h:mm a')}
-                      </p>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col>
-                  <h6>Managed by</h6>
-                  <p>{`${shiftData.creator.user.firstName} ${
-                    shiftData.creator.user.lastName
-                  }`}</p>
                 </Col>
               </Row>
             </Card.Body>
@@ -198,3 +195,72 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(ShiftCard);
+/*
+<Row />
+<Row>
+<Col>
+<h6>Location</h6>
+<p>{shiftData.address}</p>
+</Col>
+<Col>
+  <h6>Description</h6>
+  <p>{shiftData.description}</p>
+</Col>
+<Col>
+<h6>Available roles</h6>
+<Row>
+  {shiftData.requirements.map(r => {
+    // Only show roles that are available to book
+    // i.e. numberRequired > 0
+    return r.numberRequired > 0 ? (
+      <RoleBadge
+        key={shiftData.id + r.role.name}
+        isAdmin={isAdmin}
+        name={r.role.name}
+        selected={selected}
+        colour={r.role.colour}
+      />
+    ) : null;
+  })}
+</Row>
+</Col>
+</Row>
+<Row>
+<Col>
+<h6>Date</h6>
+<p>
+{moment(shiftData.date)
+.local()
+.format('dddd, MMMM Do YYYY')}
+</p>
+{shiftData.repeatedId ? (
+<p className="text-muted">Repeating</p>
+) : null}
+</Col>
+<Col>
+<Row noGutters>
+<Col>
+<h6>Start time</h6>
+<p>
+{moment(shiftData.start, 'H:m:ss')
+.local()
+.format('h:mm a')}
+</p>
+</Col>
+<Col>
+<h6>End time</h6>
+<p>
+{moment(shiftData.stop, 'H:m:ss')
+.local()
+.format('h:mm a')}
+</p>
+</Col>
+</Row>
+</Col>
+<Col>
+<h6>Managed by</h6>
+<p>{`${shiftData.creator.user.firstName} ${
+shiftData.creator.user.lastName
+}`}</p>
+</Col>
+</Row> */
