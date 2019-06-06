@@ -15,8 +15,6 @@ import LocationInput from '../../LocationInput/LocationInput';
 import RolesForm from '../../forms/RolesForm';
 import RepeatingShiftForm from '../../forms/RepeatingShiftForm/RepeatingShiftForm';
 
-const placeholderShiftTitles = ['Fundraiser', 'Regular'];
-
 class NewShiftPage extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +31,7 @@ class NewShiftPage extends React.Component {
         location: '',
         roles: []
       },
-      shiftTitleOptions: placeholderShiftTitles, // FIXME
+      shiftTitleOptions: [],
       roleOptions: [],
       newRoleModal: {
         roleName: '',
@@ -56,13 +54,29 @@ class NewShiftPage extends React.Component {
     };
 
     await axios
+      .get('/shifts/titles', config)
+      .then(resp =>
+        this.setState({
+          shiftTitleOptions: resp.data
+        })
+      )
+      .catch(err =>
+        console.log(
+          err,
+          'There was a problem retrieving possible shift titles.'
+        )
+      );
+
+    await axios
       .get('/roles', config)
       .then(({ data }) =>
         this.setState({
           roleOptions: data.map(r => ({ name: r.name, involves: r.involves }))
         })
       )
-      .catch(err => console.log(err, 'There was a problem.'));
+      .catch(err =>
+        console.log(err, 'There was a problem retrieving potential roles.')
+      );
   }
 
   handleDataChange = e => {
