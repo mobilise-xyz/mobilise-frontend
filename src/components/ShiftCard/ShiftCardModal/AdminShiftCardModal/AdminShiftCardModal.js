@@ -134,7 +134,7 @@ class AdminShiftCardModal extends Component {
                 <Row>
                   <Col className="no-form">
                     <h6>Date</h6>
-                    {date}
+                    {moment(date, 'YYYY-MM-DD').format('LL')}
                   </Col>
                 </Row>
                 <Row>

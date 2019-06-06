@@ -150,7 +150,7 @@ class VolunteerShiftCardModal extends React.Component {
               <Row>
                 <Col>
                   <h6>Date</h6>
-                  {shiftData.date}
+                  {moment(shiftData.date, 'YYYY-MM-DD').format('LL')}
                 </Col>
               </Row>
               <Row>
