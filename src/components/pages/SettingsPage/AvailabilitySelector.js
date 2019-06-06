@@ -56,6 +56,7 @@ class AvailabilitySelector extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     const { uid } = this.state;
+    console.log('AVAILABILITY MOUNT', dispatch);
     dispatch(availabilityActions.get(uid));
   }
 

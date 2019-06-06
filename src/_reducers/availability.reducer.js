@@ -25,7 +25,7 @@ const availability = (state = generateInitialGrid(), action) => {
       );
     }
     case availabilityConstants.UPDATE: {
-      return {};
+      return state;
     }
     case availabilityConstants.GET: {
       return action.availability;
