@@ -4,6 +4,11 @@ exports[`Description Form Component renders the form correctly 1`] = `
 <div
   className="form-group"
 >
+  <label
+    className="form-label"
+  >
+    
+  </label>
   <textarea
     className="form-control-plaintext"
     disabled={false}

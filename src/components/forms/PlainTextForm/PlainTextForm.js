@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 
 const PlainTextForm = props => {
   const {
+    noLabel = false,
     label,
     content,
     disabled = false,
@@ -12,11 +13,11 @@ const PlainTextForm = props => {
   } = props;
   return (
     <Form.Group>
-      {label !== '' ? (
+      {noLabel ? null : (
         <Form.Label>
           {label.charAt(0).toUpperCase() + label.slice(1)}
         </Form.Label>
-      ) : null}
+      )}
       <Form.Control
         id={label}
         name={label}

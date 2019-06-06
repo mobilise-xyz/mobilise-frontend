@@ -4,6 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../RoleBadge.css';
 
+const DecrementButton = ({ handleUpdate, name, number }) => (
+  <Button
+    className="role-control-button"
+    onClick={() => handleUpdate(name, number - 1)}
+  >
+    {<FontAwesomeIcon icon={faMinus} color="white" />}
+  </Button>
+);
+
+const IncrementButton = ({ handleUpdate, name, number }) => (
+  <Button
+    className="role-control-button"
+    onClick={() => handleUpdate(name, number + 1)}
+  >
+    {<FontAwesomeIcon icon={faPlus} color="white" />}
+  </Button>
+);
+
 const AdminRoleBadge = ({
   name,
   number,
@@ -11,16 +29,6 @@ const AdminRoleBadge = ({
   onModal = true,
   colour = 'info'
 }) => {
-  const decBtn = onModal ? (
-    <Button onClick={() => handleUpdate(name, number - 1)}>
-      {<FontAwesomeIcon icon={faMinus} color="white" />}
-    </Button>
-  ) : null;
-  const incBtn = onModal ? (
-    <Button onClick={() => handleUpdate(name, number + 1)}>
-      {<FontAwesomeIcon icon={faPlus} color="white" />}
-    </Button>
-  ) : null;
   return (
     <Badge
       className="role-badge"
@@ -28,7 +36,13 @@ const AdminRoleBadge = ({
       name={name}
     >
       {name}
-      {decBtn}
+      {onModal ? (
+        <DecrementButton
+          handleUpdate={handleUpdate}
+          name={name}
+          number={number}
+        />
+      ) : null}
       {number ? (
         <Badge variant="light" className="number-badge">
           {number}
@@ -36,7 +50,13 @@ const AdminRoleBadge = ({
       ) : (
         number
       )}
-      {incBtn}
+      {onModal ? (
+        <IncrementButton
+          handleUpdate={handleUpdate}
+          name={name}
+          number={number}
+        />
+      ) : null}
     </Badge>
   );
 };
