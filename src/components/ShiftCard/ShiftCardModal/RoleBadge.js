@@ -10,7 +10,7 @@ const RoleBadge = ({
   colour = 'info'
 }) => {
   const isSelected = selected === name;
-  const buttonColour = isSelected ? 'green' : colour;
+  const buttonColour = isSelected ? '#299688' : colour;
   return (
     <Button
       type="button"
