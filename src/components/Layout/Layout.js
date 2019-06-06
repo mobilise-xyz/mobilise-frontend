@@ -32,7 +32,7 @@ const Layout = ({
         <Col>
           <h2>{heading}</h2>
         </Col>
-        <Col style={{ textAlign: 'right' }}>{cornerComponent}</Col>
+        <Col style={{ textAlign: 'right', zIndex: '0' }}>{cornerComponent}</Col>
       </Row>
       {children}
     </Container>
