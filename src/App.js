@@ -14,6 +14,7 @@ import AvailabilityPage from './components/pages/AvailabilityPage';
 import alertActions from './_actions/alert.actions';
 import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedShiftsHelpPage';
 import FeedBackPage from './components/pages/HelpPages/FeedbackPage';
+import Dashboard from './components/pages/Dashboard';
 
 export class App extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ export class App extends React.Component {
         <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
         <PrivateRoute path="/settings" exact component={SettingsPage} />
         <PrivateRoute path="/availability" exact component={AvailabilityPage} />
+        <PrivateRoute path="/dashboard" exact component={Dashboard} />
 
         <PrivateRoute
           path="/help/recommended"

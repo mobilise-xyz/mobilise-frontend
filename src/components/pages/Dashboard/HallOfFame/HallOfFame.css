@@ -1,0 +1,7 @@
+.hallOfFameCard {
+  text-align: center;
+}
+
+.hallOfFameCard > div.card-header {
+  font-size: 1.5rem;
+}
