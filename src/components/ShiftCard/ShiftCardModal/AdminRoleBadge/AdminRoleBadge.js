@@ -13,12 +13,12 @@ const AdminRoleBadge = ({
 }) => {
   const decBtn = onModal ? (
     <Button onClick={() => handleUpdate(name, number - 1)}>
-      {<FontAwesomeIcon icon={faMinus} />}
+      {<FontAwesomeIcon icon={faMinus} color="white" />}
     </Button>
   ) : null;
   const incBtn = onModal ? (
     <Button onClick={() => handleUpdate(name, number + 1)}>
-      {<FontAwesomeIcon icon={faPlus} />}
+      {<FontAwesomeIcon icon={faPlus} color="white" />}
     </Button>
   ) : null;
   return (

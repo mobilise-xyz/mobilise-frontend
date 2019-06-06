@@ -70,6 +70,7 @@ const RepeatBookingForm = ({
               name="repeatedType"
               value={repeatedType}
               onChange={handleChange}
+              required
             >
               {shiftData.repeated
                 ? getRepeatOptions(shiftData.repeated.type).map(option => (
@@ -80,18 +81,21 @@ const RepeatBookingForm = ({
                 : null}
             </Form.Control>
           </Form.Group>
-          <Form.Group>
-            <Form.Label>Until</Form.Label>
-            {/* The user should not be able to select before today's date, and not after the end start of the repeating shift. */}
-            <Form.Control
-              type="date"
-              name="until"
-              min={moment().format('YYYY-MM-DD')}
-              value={until}
-              onChange={handleChange}
-              max={shiftData.repeated ? shiftData.repeated.untilDate : null}
-            />
-          </Form.Group>
+          {repeatedType !== 'Never' ? (
+            <Form.Group>
+              <Form.Label>Until</Form.Label>
+              {/* The user should not be able to select before today's date, and not after the end start of the repeating shift. */}
+              <Form.Control
+                type="date"
+                name="until"
+                min={moment().format('YYYY-MM-DD')}
+                value={until}
+                onChange={handleChange}
+                max={shiftData.repeated ? shiftData.repeated.untilDate : null}
+                required
+              />
+            </Form.Group>
+          ) : null}
         </Form>
       </Col>
     </Row>

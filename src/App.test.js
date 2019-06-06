@@ -4,12 +4,11 @@ import { shallow } from 'enzyme';
 import { App } from './App';
 import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
-import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
+import NewShiftPage from './components/pages/NewShiftPage';
 import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
 import SettingsPage from './components/pages/SettingsPage';
 import SignUpPage from './components/pages/SignUpPage';
-import AvailabilityPage from './components/pages/AvailabilityPage';
 
 describe('<App />', () => {
   let app;
@@ -74,15 +73,6 @@ describe('<App />', () => {
         .first()
         .prop('component')
     ).toBe(NewShiftPage);
-  });
-
-  it('privately routes to availability page', () => {
-    expect(
-      shallow(app)
-        .find('PrivateRoute[exact=true][path="/availability"]')
-        .first()
-        .prop('component')
-    ).toBe(AvailabilityPage);
   });
 
   it('privately routes to settings page', () => {

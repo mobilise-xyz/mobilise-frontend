@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import availabilityConstants from '../../_constants/availability.constants';
-import '../ShiftCard/ShiftCard.css';
-import availabilityActions from '../../_actions/availability.actions';
-import CardLayout from '../CardLayout';
-import history from '../../_helpers/history';
+import availabilityConstants from '../../../_constants/availability.constants';
+import '../../ShiftCard/ShiftCard.css';
+import availabilityActions from '../../../_actions/availability.actions';
+import history from '../../../_helpers/history';
 
 const times = ['Morning', 'Afternoon', 'Evening'];
 
@@ -43,7 +42,7 @@ const DayCard = ({
   </Card>
 );
 
-class AvailabilityPage extends React.Component {
+class AvailabilitySelector extends React.Component {
   constructor(props) {
     super(props);
 
@@ -57,6 +56,7 @@ class AvailabilityPage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     const { uid } = this.state;
+    console.log('AVAILABILITY MOUNT', dispatch);
     dispatch(availabilityActions.get(uid));
   }
 
@@ -135,7 +135,7 @@ class AvailabilityPage extends React.Component {
     const { availability } = this.props;
     console.log(availability);
     return (
-      <CardLayout title="Availability">
+      <Card className="p-3">
         <Row>
           <Col md={9}>
             <p>
@@ -171,7 +171,7 @@ class AvailabilityPage extends React.Component {
             Save changes
           </Button>
         </Container>
-      </CardLayout>
+      </Card>
     );
   }
 }
@@ -183,4 +183,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(AvailabilityPage);
+export default connect(mapStateToProps)(AvailabilitySelector);

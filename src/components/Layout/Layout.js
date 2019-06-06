@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Alert, Col, Container, Row } from 'react-bootstrap';
 import Header from '../Header';
+
 import './Layout.css';
 import alertActions from '../../_actions/alert.actions';
 
@@ -29,9 +30,9 @@ const Layout = ({
     <Container className="p-5">
       <Row>
         <Col>
-          <h3>{heading}</h3>
+          <h2>{heading}</h2>
         </Col>
-        <Col style={{ textAlign: 'right' }}>{cornerComponent}</Col>
+        <Col style={{ textAlign: 'right', zIndex: '0' }}>{cornerComponent}</Col>
       </Row>
       {children}
     </Container>
