@@ -4,7 +4,7 @@ import PlainTextForm from './PlainTextForm';
 
 describe('Description Form Component', () => {
   it('renders the form correctly', () => {
-    const component = renderer.create(<PlainTextForm />);
+    const component = renderer.create(<PlainTextForm label="" />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });

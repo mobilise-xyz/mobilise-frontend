@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Description Form Component renders the form correctly 1`] = `
+<div
+  className="form-group"
+>
+  <textarea
+    className="form-control-plaintext"
+    disabled={false}
+    name=""
+    placeholder="Enter "
+    required={true}
+    rows="1"
+  />
+</div>
+`;
