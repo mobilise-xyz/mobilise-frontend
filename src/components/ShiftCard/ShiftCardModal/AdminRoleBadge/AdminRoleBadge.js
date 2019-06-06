@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import '../RoleBadge.css';
 
 const AdminRoleBadge = ({
   name,
@@ -22,18 +23,14 @@ const AdminRoleBadge = ({
   ) : null;
   return (
     <Badge
-      style={{
-        textTransform: 'none',
-        fontSize: '1rem',
-        backgroundColor: colour,
-        color: 'white'
-      }}
+      className="role-badge"
+      style={{ backgroundColor: colour }}
       name={name}
     >
       {name}
       {decBtn}
       {number ? (
-        <Badge variant="light" style={{ marginLeft: '0.3rem' }}>
+        <Badge variant="light" className="number-badge">
           {number}
         </Badge>
       ) : (
