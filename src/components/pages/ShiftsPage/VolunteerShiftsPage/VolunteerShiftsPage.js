@@ -14,9 +14,8 @@ class VolunteerShiftsPage extends React.Component {
 
   render() {
     const { shifts } = this.props;
-
     return (
-      <Layout>
+      <Layout heading="Book a shift">
         <ShiftList
           shifts={shifts.shifts.all}
           recommendedCardClass="bg-primary"
