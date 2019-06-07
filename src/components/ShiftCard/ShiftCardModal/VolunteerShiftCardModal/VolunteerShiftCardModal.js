@@ -142,19 +142,19 @@ class VolunteerShiftCardModal extends React.Component {
           <Row>
             <Col>
               <Row>
-                <Col>
+                <Col className="info">
                   <h6>Description</h6>
                   {shiftData.description}
                 </Col>
               </Row>
               <Row>
-                <Col>
+                <Col className="info">
                   <h6>Date</h6>
                   {moment(shiftData.date, 'YYYY-MM-DD').format('LL')}
                 </Col>
               </Row>
               <Row>
-                <Col>
+                <Col className="info">
                   <h6>Time</h6>
                   {moment(shiftData.start, 'H:m:ss')
                     .local()
@@ -166,7 +166,7 @@ class VolunteerShiftCardModal extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col>
+                <Col className="info">
                   <h6>Managed by</h6>
                   {`${shiftData.creator.user.firstName} ${
                     shiftData.creator.user.lastName
@@ -174,7 +174,7 @@ class VolunteerShiftCardModal extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col>
+                <Col className="info">
                   <h6>Location</h6>
                   {shiftData.address}
                 </Col>
