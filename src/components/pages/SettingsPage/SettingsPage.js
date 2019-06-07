@@ -12,9 +12,9 @@ const SettingsPage = () => {
         <>
           <h3>Availability</h3>
           <AvailabilitySelector />
+          <hr />
         </>
       ) : null}
-      <hr />
       <h3 className="pt-5">Contact Preferences</h3>
       <ContactPreferencesForm />
     </Layout>
