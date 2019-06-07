@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router';
 import history from './_helpers/history';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/routes/PrivateRoute';
 import ShiftsPage from './components/pages/ShiftsPage';
 import MyShiftsPage from './components/pages/MyShiftsPage';
 import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
