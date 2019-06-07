@@ -120,8 +120,8 @@ const update = (shiftId, data) => {
     return { type: shiftsConstants.UPDATE_FAILURE, id, error };
   };
 
-  const { title, rolesRequired } = data;
-  const info = { title };
+  const { title, description, address, rolesRequired } = data;
+  const info = { title, description, address };
 
   return dispatch => {
     dispatch(request(shiftId));
