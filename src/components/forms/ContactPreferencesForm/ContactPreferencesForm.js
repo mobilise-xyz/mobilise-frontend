@@ -1,19 +1,72 @@
 import React from 'react';
 import { Button, Card, Container, Form } from 'react-bootstrap';
+import axios from 'axios';
+import authHeader from '../../../_helpers/auth-header';
 
 class ContactPreferencesForm extends React.Component {
-  handleSubmit = e => {
-    console.log('DO SUBMIT', e);
+  state = {
+    email: false,
+    text: false
+  };
+
+  componentDidMount() {
+    const config = {
+      headers: authHeader()
+    };
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+
+    axios
+      .get(`/users/${uid}/contact-preferences`, config)
+      .then(resp =>
+        this.setState({ email: resp.data.email, text: resp.data.text })
+      );
+  }
+
+  handleChange = e => {
+    const { name, checked } = e.target;
+    this.setState({
+      [name]: checked
+    });
+  };
+
+  handleSubmit = () => {
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    const { email, text } = this.state;
+    const data = {
+      contactPreference: {
+        email,
+        text
+      }
+    };
+    const config = {
+      headers: authHeader()
+    };
+    console.log('PUT', data);
+    axios.put(`/users/${uid}/contact-preferences`, data, config);
   };
 
   render() {
+    const { email, text } = this.state;
+
     return (
       <Card className="p-3">
         <Form>
           <Form.Group>
             <Form.Label>I would prefer to be contacted by...</Form.Label>
-            <Form.Check type="checkbox" label="Email" />
-            <Form.Check type="checkbox" label="SMS" />
+            <Form.Check
+              name="email"
+              type="checkbox"
+              label="Email"
+              checked={email}
+              onChange={this.handleChange}
+            />
+            <Form.Check
+              name="text"
+              type="checkbox"
+              label="SMS"
+              checked={text}
+              onChange={this.handleChange}
+            />
             <Form.Text className="text-muted">
               This will be used by volunteer coordinators to contact you with
               information regarding a shift.
@@ -21,7 +74,7 @@ class ContactPreferencesForm extends React.Component {
             <Container className="pt-5 text-center">
               <Button
                 variant="outline-primary"
-                type="submit"
+                type="button"
                 onClick={this.handleSubmit}
               >
                 Save changes
