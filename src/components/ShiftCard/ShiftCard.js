@@ -168,7 +168,13 @@ class ShiftCard extends React.Component {
                   </Row>
                   <Row>
                     <Col>
-                      <h5>Roles</h5>
+                      <h5>
+                        {shiftData.requirements.length === 1 ? (
+                          <p>Role</p>
+                        ) : (
+                          <p>Roles</p>
+                        )}
+                      </h5>
                     </Col>
                   </Row>
                   <Row>
