@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
 import logo from '../../assets/images/logo-white.png';
 import authHeader from '../../_helpers/auth-header';
@@ -67,20 +67,6 @@ class Header extends React.Component {
             {isAdmin ? <AdminHeader /> : <VolunteerHeader />}
           </Nav>
           <Navbar.Text className="mr-sm-2">{nameMessage}</Navbar.Text>
-          {/* Notifications dropdown */}
-          <NavDropdown
-            alignRight
-            title={<FontAwesomeIcon icon={faBell} />}
-            className="mr-sm-2 "
-          >
-            <NavDropdown.Item href="#/action-1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#/action-2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#/action-3">
-              Something else
-            </NavDropdown.Item>
-          </NavDropdown>
           {/* Settings dropdown */}
           <NavDropdown
             alignRight
