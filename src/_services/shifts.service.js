@@ -30,8 +30,9 @@ const getAll = () => {
   };
   return axios
     .get('/shifts', config)
-    .then(r => ({
-      all: r.data
+    .then(utils.handleResponse)
+    .then(data => ({
+      all: data
     }))
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
@@ -50,8 +51,9 @@ const getForUser = (uid, booked = false) => {
   // TODO link with backend. Currently same as getAll.
   return axios
     .get(`/volunteers/${uid}/shifts`, config)
-    .then(r => ({
-      all: r.data,
+    .get(utils.handleResponse)
+    .then(data => ({
+      all: data,
       recommended: [placeholderShift]
     }))
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
