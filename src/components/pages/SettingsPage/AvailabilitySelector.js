@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import availabilityConstants from '../../../_constants/availability.constants';
 import '../../ShiftCard/ShiftCard.css';
 import availabilityActions from '../../../_actions/availability.actions';
-import history from '../../../_helpers/history';
 
 const times = ['Morning', 'Afternoon', 'Evening'];
 
@@ -135,7 +134,6 @@ class AvailabilitySelector extends React.Component {
     const { availability, dispatch } = this.props;
     console.log(availability);
     dispatch(availabilityActions.update(uid, availability));
-    history.push('/');
   };
 
   render() {
@@ -178,7 +176,7 @@ class AvailabilitySelector extends React.Component {
         <Container className="pt-5 text-center">
           <Button
             variant="outline-primary"
-            type="submit"
+            type="button"
             onClick={this.handleSubmit}
           >
             Save changes
