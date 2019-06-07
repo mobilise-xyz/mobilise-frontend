@@ -22,12 +22,13 @@ class AdminShiftCardModal extends Component {
       start: shiftData.start,
       stop: shiftData.stop,
       date: shiftData.date,
+      manager: shiftData.creator.user,
       requirements: shiftData.requirements
     };
   }
 
   handleSubmit = () => {
-    const { title, requirements } = this.state;
+    const { title, description, address, requirements } = this.state;
     const { shiftData, onHide, dispatch } = this.props;
 
     // 1. Convert requirements to rolesRequired
@@ -39,6 +40,8 @@ class AdminShiftCardModal extends Component {
     // 2. Construct payload
     const data = {
       title,
+      description,
+      address,
       rolesRequired
     };
 
@@ -59,7 +62,7 @@ class AdminShiftCardModal extends Component {
     this.setState({
       title: shiftData.title,
       description: shiftData.description,
-      location: shiftData.address,
+      address: shiftData.address,
       requirements: shiftData.requirements
     });
   };
@@ -100,6 +103,7 @@ class AdminShiftCardModal extends Component {
       start,
       stop,
       date,
+      manager,
       requirements
     } = this.state;
     const { shiftData, onHide, show, handleDelete } = this.props;
@@ -132,7 +136,7 @@ class AdminShiftCardModal extends Component {
                 <Row>
                   <Col className="no-form">
                     <h6>Date</h6>
-                    {date}
+                    {moment(date, 'YYYY-MM-DD').format('LL')}
                   </Col>
                 </Row>
                 <Row>
@@ -149,7 +153,11 @@ class AdminShiftCardModal extends Component {
                 </Row>
                 <Row>
                   <Col>
-                    <PlainTextForm label="managed by" disabled />
+                    <PlainTextForm
+                      label="managed by"
+                      disabled
+                      content={`${manager.firstName}  ${manager.lastName}`}
+                    />
                   </Col>
                 </Row>
                 <Row>

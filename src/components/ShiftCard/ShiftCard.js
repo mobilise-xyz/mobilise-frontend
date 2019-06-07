@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Col, Collapse, Row, Image, Container } from 'react-bootstrap';
+import { Card, Col, Collapse, Container, Image, Row } from 'react-bootstrap';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
@@ -100,21 +100,28 @@ class ShiftCard extends React.Component {
               <Row>
                 <Col md={4}>
                   <Container>
-                    <Image
-                      src={`https://maps.googleapis.com/maps/api/staticmap?center=${
+                    <a
+                      href={`https://www.google.com/maps?safe=strict&q=${
                         shiftData.address
-                      }&zoom=13&size=200x200&maptype=roadmap&markers=color:red%7C${
-                        shiftData.address
-                      }&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        padding: '1%',
-                        objectFit: 'none',
-                        objectPosition: 'center',
-                        borderRadius: '5%'
-                      }}
-                    />
+                      }&um=1&ie=UTF-8&sa=X&ved=0ahUKEwiGr7nZxNXiAhXBUBUIHQq6DrQQ_AUIESgC`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Image
+                        src={`https://maps.googleapis.com/maps/api/staticmap?center=${
+                          shiftData.address
+                        }&zoom=13&size=180x180&maptype=roadmap&markers=color:red%7C${
+                          shiftData.address
+                        }&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
+                        style={{
+                          width: '80%',
+                          height: '80%',
+                          padding: '1%',
+                          objectPosition: 'center',
+                          borderRadius: '10%'
+                        }}
+                      />
+                    </a>
                   </Container>
                 </Col>
                 <Col>
@@ -122,7 +129,7 @@ class ShiftCard extends React.Component {
                     <Col>
                       <h4>{shiftData.title}</h4>
                     </Col>
-                    {recommended > 0 ? (
+                    {recommended ? (
                       <Col>
                         <h5
                           className="text-primary"
@@ -161,21 +168,34 @@ class ShiftCard extends React.Component {
                   </Row>
                   <Row>
                     <Col>
-                      <h5>Roles</h5>
+                      <h5>
+                        {shiftData.requirements.length === 1 ? (
+                          <p>Role</p>
+                        ) : (
+                          <p>Roles</p>
+                        )}
+                      </h5>
                     </Col>
                   </Row>
                   <Row>
                     {shiftData.requirements.map(r => {
                       // Only show roles that are available to book
                       // i.e. numberRequired > 0
+                      const { bookings } = r;
                       return r.numberRequired > 0 ? (
-                        <RoleBadge
-                          key={shiftData.id + r.role.name}
-                          isAdmin={isAdmin}
-                          name={r.role.name}
-                          selected={selected}
-                          colour={r.role.colour}
-                        />
+                        <Col key={shiftData.id + r.role.name}>
+                          <RoleBadge
+                            isAdmin={isAdmin}
+                            name={r.role.name}
+                            selected={selected}
+                            colour={r.role.colour}
+                          />
+                          {isAdmin ? (
+                            <p style={{ padding: '5%' }}>
+                              {r.numberRequired - bookings.length} SLOTS LEFT
+                            </p>
+                          ) : null}
+                        </Col>
                       ) : null;
                     })}
                   </Row>

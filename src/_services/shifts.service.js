@@ -84,13 +84,15 @@ const book = (shiftId, roleName, repeatedType, untilDate) => {
     .then(utils.handleResponse);
 };
 
-const updateInfo = (shiftId, info) => {
+const updateInfo = (shiftId, { title, description, address }) => {
   const config = {
     headers: authHeader()
   };
 
   const data = {
-    title: info.title
+    title,
+    description,
+    address
   };
 
   return axios

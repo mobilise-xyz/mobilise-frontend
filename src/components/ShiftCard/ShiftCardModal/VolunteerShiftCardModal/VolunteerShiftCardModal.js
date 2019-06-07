@@ -141,28 +141,72 @@ class VolunteerShiftCardModal extends React.Component {
         <Modal.Body>
           <Row>
             <Col>
-              <h6>Choose a role to book</h6>
+              <Row>
+                <Col className="info">
+                  <h6>Description</h6>
+                  {shiftData.description}
+                </Col>
+              </Row>
+              <Row>
+                <Col className="info">
+                  <h6>Date</h6>
+                  {moment(shiftData.date, 'YYYY-MM-DD').format('LL')}
+                </Col>
+              </Row>
+              <Row>
+                <Col className="info">
+                  <h6>Time</h6>
+                  {moment(shiftData.start, 'H:m:ss')
+                    .local()
+                    .format('h:mm a')}{' '}
+                  -
+                  {moment(shiftData.stop, 'H:m:ss')
+                    .local()
+                    .format('h:mm a')}
+                </Col>
+              </Row>
+              <Row>
+                <Col className="info">
+                  <h6>Managed by</h6>
+                  {`${shiftData.creator.user.firstName} ${
+                    shiftData.creator.user.lastName
+                  }`}
+                </Col>
+              </Row>
+              <Row>
+                <Col className="info">
+                  <h6>Location</h6>
+                  {shiftData.address}
+                </Col>
+              </Row>
             </Col>
-          </Row>
-          <Row>
             <Col>
-              {shiftData.requirements.map(r => {
-                // Only show roles that are available to book
-                // i.e. numberRequired > 0
-                return r.numberRequired > 0 ? (
-                  <RoleBadge
-                    key={shiftData.id + r.role.name}
-                    name={r.role.name}
-                    handleSelect={handleSelect}
-                    selected={selected}
-                    onModal
-                    colour={r.role.colour}
-                  />
-                ) : null;
-              })}
+              <Row>
+                <Col>
+                  <h6>Choose a role to book</h6>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {shiftData.requirements.map(r => {
+                    // Only show roles that are available to book
+                    // i.e. numberRequired > 0
+                    return r.numberRequired > 0 ? (
+                      <RoleBadge
+                        key={shiftData.id + r.role.name}
+                        name={r.role.name}
+                        handleSelect={handleSelect}
+                        selected={selected}
+                        onModal
+                        colour={r.role.colour}
+                      />
+                    ) : null;
+                  })}
+                </Col>
+              </Row>
+              {repeatForm}
             </Col>
           </Row>
-          {repeatForm}
         </Modal.Body>
 
         <Modal.Footer
