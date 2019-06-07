@@ -12,6 +12,8 @@ const TitleForm = ({ title, shiftTitleOptions, handleChange }) => (
       newSelectionPrefix="Add new title: "
       placeholder="Choose an event title, or create a new one"
       allowNew
+      invalid
+      inputProps={{ required: true }}
       onChange={handleChange}
       options={shiftTitleOptions} // TODO
     />
