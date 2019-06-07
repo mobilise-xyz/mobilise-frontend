@@ -1,14 +1,7 @@
-import userService from '../_services/user.service';
-
 const handleResponse = resp => {
   console.log('Handling response', resp);
   if (resp.status !== 200) {
-    if (resp.status === 401) {
-      // Logout automatically if a 401 is received.
-      userService.logout();
-      const { history } = this.props;
-      history.location.reload(true);
-    }
+    // BTW 401s are handled by axios interceptor.
     console.log('ERROR HANDLE', resp);
     const error = resp.statusText;
     return Promise.reject(error);

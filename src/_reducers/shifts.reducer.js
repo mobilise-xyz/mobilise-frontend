@@ -29,6 +29,7 @@ const placeholderShift = {
 };
 
 const initialState = {
+  loading: false,
   shifts: {
     all: [placeholderShift],
     recommended: [placeholderShift] // FIXME
@@ -42,18 +43,23 @@ const shifts = (state = initialState, action) => {
     case shiftsConstants.GETALL_REQUEST:
     case shiftsConstants.GETFORUSER_REQUEST:
       return {
+        ...state,
         shifts: state.shifts,
         loading: true
       };
     case shiftsConstants.GETALL_SUCCESS:
     case shiftsConstants.GETFORUSER_SUCCESS:
       return {
-        shifts: action.shifts
+        ...state,
+        shifts: action.shifts,
+        loading: false
       };
     case shiftsConstants.GETALL_FAILURE:
     case shiftsConstants.GETFORUSER_FAILURE:
       return {
-        error: action.error
+        ...state,
+        error: action.error,
+        loading: false
       };
     case shiftsConstants.DELETE_REQUEST: {
       const setDeleteRequest = shift =>

@@ -13,13 +13,20 @@ class VolunteerShiftsPage extends React.Component {
   }
 
   render() {
-    const { shifts } = this.props;
+    const { shifts, error, loading } = this.props;
+
+    if (loading === true) {
+      return null;
+    }
+
+    if (error) {
+      return <p>error</p>;
+    }
+    console.log('SHIFTS', shifts);
+
     return (
       <Layout heading="Book a shift">
-        <ShiftList
-          shifts={shifts.shifts.all}
-          recommendedCardClass="bg-primary"
-        />
+        <ShiftList shifts={shifts.all} recommendedCardClass="bg-primary" />
         <hr />
       </Layout>
     );
@@ -27,9 +34,11 @@ class VolunteerShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts } = state;
+  const { shifts, error, loading } = state.shifts;
   return {
-    shifts
+    shifts,
+    error,
+    loading
   };
 };
 

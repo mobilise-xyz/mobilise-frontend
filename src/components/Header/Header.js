@@ -9,6 +9,7 @@ import logo from '../../assets/images/logo-white.png';
 import authHeader from '../../_helpers/auth-header';
 import VolunteerHeader from './VolunteerHeaderNav';
 import AdminHeader from './AdminHeader';
+import utils from '../../_helpers/utils';
 
 class Header extends React.Component {
   state = {
@@ -30,14 +31,15 @@ class Header extends React.Component {
 
     axios
       .get(`/users/${uid}`, config)
-      .then(response =>
+      .then(utils.handleResponse)
+      .then(data =>
         this.setState({
-          firstName: response.data.firstName,
+          firstName: data.firstName,
           nameSuccess: true,
           adminMessage: isAdmin ? '(Admin)' : '(Volunteer)'
         })
       )
-      .catch(err => console.log(err));
+      .catch(utils.catchResponse);
   }
 
   render() {

@@ -1,15 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import { ListGroup, Container, Row, Col } from 'react-bootstrap';
+import { Col, Container, ListGroup, Row } from 'react-bootstrap';
 import ShiftCard from './ShiftCard';
 
-const ShiftList = ({
-  shifts,
-  cardClass,
-  recommendedCardClass = cardClass,
-  isAdmin = false,
-  clickableCards = true
-}) => {
+const partitionShiftsByDate = shifts => {
   const shiftMap = [];
   let i = 0;
   let j = 0;
@@ -31,6 +25,17 @@ const ShiftList = ({
     shiftMap[j] = [shiftDate, shiftsForDate];
     j += 1;
   }
+  return shiftMap;
+};
+
+const ShiftList = ({
+  shifts,
+  cardClass,
+  recommendedCardClass = cardClass,
+  isAdmin = false,
+  clickableCards = true
+}) => {
+  const shiftMap = partitionShiftsByDate(shifts);
   const shiftLists = [];
   shiftMap.forEach(entry => {
     shiftLists.push(

@@ -51,7 +51,7 @@ const getForUser = (uid, booked = false) => {
   // TODO link with backend. Currently same as getAll.
   return axios
     .get(`/volunteers/${uid}/shifts`, config)
-    .get(utils.handleResponse)
+    .then(utils.handleResponse)
     .then(data => ({
       all: data,
       recommended: [placeholderShift]

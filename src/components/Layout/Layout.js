@@ -5,6 +5,7 @@ import Header from '../Header';
 
 import './Layout.css';
 import alertActions from '../../_actions/alert.actions';
+import ErrorBoundary from '../ErrorBoundary';
 
 // This class defines the layout for each page i.e. Header at the top, content in the middle.
 const Layout = ({
@@ -15,28 +16,32 @@ const Layout = ({
   cornerComponent,
   dispatch
 }) => (
-  <div>
-    {navOff ? null : <Header />}
-    <Alert
-      dismissible
-      onClose={() => dispatch(alertActions.clear())}
-      className="text-center"
-      variant={alert.type}
-      show={alert.message !== undefined}
-    >
-      {alert.message}
-    </Alert>
-    {/* Use pt-5 utility class to create some space between the header and content. */}
-    <Container className="p-5">
-      <Row>
-        <Col>
-          <h2>{heading}</h2>
-        </Col>
-        <Col style={{ textAlign: 'right', zIndex: '0' }}>{cornerComponent}</Col>
-      </Row>
-      {children}
-    </Container>
-  </div>
+  <ErrorBoundary>
+    <div>
+      {navOff ? null : <Header />}
+      <Alert
+        dismissible
+        onClose={() => dispatch(alertActions.clear())}
+        className="text-center"
+        variant={alert.type}
+        show={alert.message !== undefined}
+      >
+        {alert.message}
+      </Alert>
+      {/* Use pt-5 utility class to create some space between the header and content. */}
+      <Container className="p-5">
+        <Row>
+          <Col>
+            <h2>{heading}</h2>
+          </Col>
+          <Col style={{ textAlign: 'right', zIndex: '0' }}>
+            {cornerComponent}
+          </Col>
+        </Row>
+        {children}
+      </Container>
+    </div>
+  </ErrorBoundary>
 );
 
 function mapStateToProps(state) {

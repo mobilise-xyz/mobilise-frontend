@@ -14,9 +14,26 @@ import store from './_helpers/store';
 import './index.css';
 import ConnectedApp from './App';
 import * as serviceWorker from './serviceWorker';
+import userService from './_services/user.service';
 
 // Axios configuration
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
+// Intercept 401
+axios.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    if (error.response.status === 401) {
+      console.log('unauthorised');
+      // Logout automatically if a 401 is received.
+      userService.logout();
+      history.push('/login');
+    }
+    return error;
+  }
+);
 
 ReactDOM.render(
   <Provider store={store}>
