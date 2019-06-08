@@ -46,8 +46,6 @@ const getForUser = (uid, booked = false) => {
     }
   };
 
-  console.log(`Getting shifts for user ${uid}`);
-
   // TODO link with backend. Currently same as getAll.
   return axios
     .get(`/volunteers/${uid}/shifts`, config)

@@ -52,6 +52,7 @@ class MyActivity extends React.Component {
             <ActivityCard
               title={activity.title}
               description={activity.description}
+              key={activity.title}
             />
           ))}
         </ListGroup>
@@ -60,14 +61,14 @@ class MyActivity extends React.Component {
   }
 }
 
-MyActivity.propTypes = {
-  activity: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      description: PropTypes.string
-    })
-  ).isRequired
-};
+// MyActivity.propTypes = {
+//   activity: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       title: PropTypes.string,
+//       description: PropTypes.string
+//     })
+//   ).isRequired
+// };
 
 const mapStateToProps = state => {
   const { activity, activityLoading } = state.volunteers;

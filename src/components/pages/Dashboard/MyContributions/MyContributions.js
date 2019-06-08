@@ -12,9 +12,7 @@ const ContributionCard = ({ number, description, icon }) => (
     <Card.Header className="text-center text-primary">{icon}</Card.Header>
     <Card.Body className="text-center">
       <h1>{number}</h1>
-      <Card.Text>
-        <p>{description}</p>
-      </Card.Text>
+      <Card.Text>{description}</Card.Text>
     </Card.Body>
     <Card.Footer style={{ textAlign: 'right' }}>
       <FontAwesomeIcon icon={faShareAlt} />
@@ -23,7 +21,7 @@ const ContributionCard = ({ number, description, icon }) => (
 );
 
 ContributionCard.propTypes = {
-  number: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired
 };
 
@@ -68,29 +66,28 @@ class MyContributions extends React.Component {
   }
 }
 
-MyContributions.propTypes = {
-  contributions: PropTypes.shape({
-    shiftsCompleted: PropTypes.shape(
-      PropTypes.shape({
-        number: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    hoursGiven: PropTypes.shape(
-      PropTypes.shape({
-        number: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    challengesCompleted: PropTypes.shape(
-      PropTypes.shape({
-        number: PropTypes.string.isRequired
-      })
-    ).isRequired
-  }).isRequired
-};
+// MyContributions.propTypes = {
+//   contributions: PropTypes.shape({
+//     shiftsCompleted: PropTypes.shape(
+//       PropTypes.shape({
+//         number: PropTypes.string.isRequired
+//       })
+//     ).isRequired,
+//     hoursGiven: PropTypes.shape(
+//       PropTypes.shape({
+//         number: PropTypes.string.isRequired
+//       })
+//     ).isRequired,
+//     challengesCompleted: PropTypes.shape(
+//       PropTypes.shape({
+//         number: PropTypes.string.isRequired
+//       })
+//     ).isRequired
+//   }).isRequired
+// };
 
 const mapStateToProps = state => {
   const { contributions, contributionsLoading } = state.volunteers;
-  console.log('state', state);
   return { contributions, contributionsLoading };
 };
 

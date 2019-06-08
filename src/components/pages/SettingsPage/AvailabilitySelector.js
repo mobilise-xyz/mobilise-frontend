@@ -88,7 +88,6 @@ class AvailabilitySelector extends React.Component {
   };
 
   generateGrid = availability => {
-    console.log('GENERATING AVAILABILITY', availability);
     const grid = [
       <thead key="grid-days-header">
         <tr key="grid-days-header-row">

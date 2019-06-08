@@ -26,7 +26,6 @@ axios.interceptors.response.use(
   },
   error => {
     if (error.response.status === 401) {
-      console.log('unauthorised');
       // Logout automatically if a 401 is received.
       userService.logout();
       history.push('/login');
