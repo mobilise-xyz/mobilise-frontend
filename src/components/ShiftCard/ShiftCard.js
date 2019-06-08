@@ -147,7 +147,9 @@ class ShiftCard extends React.Component {
                 type="button"
                 onClick={this.toggleModal}
                 disabled={shiftData.bookSuccess === true || clickable === false}
-                className={isRecommended ? 'btn-recommended' : null}
+                className={`btn-more-info ${
+                  isRecommended ? 'btn-recommended' : null
+                }`}
               >
                 More info
                 <span className="sr-only">Card information button</span>
