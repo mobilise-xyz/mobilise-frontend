@@ -87,6 +87,7 @@ class ShiftCard extends React.Component {
     if (selected === null) {
       console.log('THIS SHOULD BE AN ERROR'); // TODO
     }
+    this.setState({ selected: '' });
     dispatch(shiftsActions.book(shiftData.id, selected, repeatedType, until));
   };
 

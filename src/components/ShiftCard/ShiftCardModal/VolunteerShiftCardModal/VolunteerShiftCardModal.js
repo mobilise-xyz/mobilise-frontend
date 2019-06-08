@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge/ModalRoleBadge';
 import '../../ShiftCard.css';
+import utils from '../../../../_helpers/utils';
 
 const getRepeatOptions = repeatedType => {
   switch (repeatedType) {
@@ -156,13 +157,8 @@ class VolunteerShiftCardModal extends React.Component {
               <Row>
                 <Col className="info">
                   <h6>Time</h6>
-                  {moment(shiftData.start, 'H:m:ss')
-                    .local()
-                    .format('h:mm a')}{' '}
-                  -{' '}
-                  {moment(shiftData.stop, 'H:m:ss')
-                    .local()
-                    .format('h:mm a')}
+                  {utils.formatTime(shiftData.start)} -{' '}
+                  {utils.formatTime(shiftData.stop)}
                 </Col>
               </Row>
               <Row>
