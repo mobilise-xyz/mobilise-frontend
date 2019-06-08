@@ -5,7 +5,6 @@ import moment from 'moment';
 import { Card } from 'react-bootstrap';
 import MyToolbar from './MyToolbar';
 import MyEvent from './MyEvent';
-import './CalendarView.css';
 
 moment.locale('uk', {
   week: {
@@ -21,7 +20,6 @@ const customComponents = { event: MyEvent, toolbar: MyToolbar };
 class CalendarView extends React.Component {
   render() {
     const { shifts } = this.props;
-    console.log('SHIFTS', shifts);
     const events = shifts.map(s => ({
       start: moment(`${s.date} ${s.start}`).toDate(),
       end: moment(`${s.date} ${s.stop}`).toDate(),
@@ -42,6 +40,8 @@ class CalendarView extends React.Component {
             components={customComponents}
             onSelectEvent={this.onSelectEvent}
             onDrillDown={() => {}}
+            timeslots={1}
+            scrollToTime={moment('07:00:00', 'HH:mm:ss').toDate()}
           />
         </div>
       </Card>
