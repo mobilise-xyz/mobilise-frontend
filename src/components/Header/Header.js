@@ -38,8 +38,7 @@ class Header extends React.Component {
           nameSuccess: true,
           adminMessage: isAdmin ? '(Admin)' : '(Volunteer)'
         })
-      )
-      .catch(utils.catchResponse);
+      );
   }
 
   render() {

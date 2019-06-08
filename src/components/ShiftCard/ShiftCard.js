@@ -1,17 +1,12 @@
 import React from 'react';
 import { Button, Card, Col, Collapse, Row } from 'react-bootstrap';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
 import ErrorBoundary from '../ErrorBoundary';
+import utils from '../../_helpers/utils';
 import shiftsActions from '../../_actions/shifts.actions';
 import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
 import CardRoleBadge from './RoleBadges/CardRoleBadge';
-
-const formatTime = time =>
-  moment(time, 'H:m:ss')
-    .local()
-    .format('h:mm a');
 
 const generateRequirements = (shiftData, selected, isAdmin) =>
   shiftData.requirements.map(r => {
@@ -134,7 +129,8 @@ class ShiftCard extends React.Component {
               <Row noGutters>
                 <Col>{shiftData.address}</Col>
                 <Col>
-                  {formatTime(shiftData.start)} - {formatTime(shiftData.stop)}
+                  {utils.formatTime(shiftData.start)} -{' '}
+                  {utils.formatTime(shiftData.stop)}
                 </Col>
               </Row>
               <Row noGutters>

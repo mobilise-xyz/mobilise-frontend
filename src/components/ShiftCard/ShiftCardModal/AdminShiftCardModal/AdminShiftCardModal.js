@@ -9,6 +9,7 @@ import './AdminShiftCardModal.css';
 import AdjustableRoleBadge from '../AdjustableRoleBadge';
 import PlainTextForm from '../../../forms/PlainTextForm';
 import shiftsActions from '../../../../_actions/shifts.actions';
+import utils from '../../../../_helpers/utils';
 
 class AdminShiftCardModal extends Component {
   constructor(props) {
@@ -142,13 +143,7 @@ class AdminShiftCardModal extends Component {
                 <Row>
                   <Col className="no-form">
                     <h6>Time</h6>
-                    {moment(start, 'H:m:ss')
-                      .local()
-                      .format('h:mm a')}
-                    -
-                    {moment(stop, 'H:m:ss')
-                      .local()
-                      .format('h:mm a')}
+                    {utils.formatTime(start)} - {utils.formatTime(stop)}
                   </Col>
                 </Row>
                 <Row>

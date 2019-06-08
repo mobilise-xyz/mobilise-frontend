@@ -1,17 +1,17 @@
-const handleResponse = resp => {
-  console.log('Handling response', resp);
-  if (resp.status !== 200) {
-    // BTW 401s are handled by axios interceptor.
-    console.log('ERROR HANDLE', resp);
-    const error = resp.statusText;
-    return Promise.reject(error);
-  }
+import moment from 'moment';
 
+const handleResponse = resp => {
   return resp.data;
 };
 
+const formatTime = time =>
+  moment(time, 'H:m:ss')
+    .local()
+    .format('HH:mm');
+
 const utils = {
-  handleResponse
+  handleResponse,
+  formatTime
 };
 
 export default utils;
