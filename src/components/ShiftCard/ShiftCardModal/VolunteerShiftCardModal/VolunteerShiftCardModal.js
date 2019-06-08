@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import RoleBadge from '../RoleBadge';
+import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge/ModalRoleBadge';
 import '../../ShiftCard.css';
 
 const getRepeatOptions = repeatedType => {
@@ -192,7 +192,7 @@ class VolunteerShiftCardModal extends React.Component {
                     // Only show roles that are available to book
                     // i.e. numberRequired > 0
                     return r.numberRequired > 0 ? (
-                      <RoleBadge
+                      <ModalRoleBadge
                         key={shiftData.id + r.role.name}
                         name={r.role.name}
                         handleSelect={handleSelect}

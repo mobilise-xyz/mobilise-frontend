@@ -2,7 +2,7 @@ import React from 'react';
 import { Badge, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import '../RoleBadge.css';
+import '../ModalRoleBadge/RoleBadge.css';
 
 const DecrementButton = ({ handleUpdate, name, number }) => (
   <Button

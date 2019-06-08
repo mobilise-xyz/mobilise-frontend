@@ -6,7 +6,7 @@ import './ShiftCard.css';
 import ErrorBoundary from '../ErrorBoundary';
 import shiftsActions from '../../_actions/shifts.actions';
 import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
-import RoleBadge from './ShiftCardModal/RoleBadge';
+import CardRoleBadge from './RoleBadges/CardRoleBadge';
 
 const formatTime = time =>
   moment(time, 'H:m:ss')
@@ -17,19 +17,15 @@ const generateRequirements = (shiftData, selected, isAdmin) =>
   shiftData.requirements.map(r => {
     // Only show roles that are available to book
     // i.e. numberRequired > 0
-    const { bookings } = r;
+    const numberRemaining = r.numberRequired - 1; // TODO hook up
     return r.numberRequired > 0 ? (
-      <>
-        <RoleBadge
-          isAdmin={isAdmin}
-          name={r.role.name}
-          selected={selected}
-          colour={r.role.colour}
-        />
-        {isAdmin ? (
-          <p>{r.numberRequired - bookings.length} SLOTS LEFT</p>
-        ) : null}
-      </>
+      <CardRoleBadge
+        isAdmin={isAdmin}
+        name={r.role.name}
+        selected={selected}
+        colour={r.role.colour}
+        number={numberRemaining}
+      />
     ) : null;
   });
 
@@ -105,6 +101,8 @@ class ShiftCard extends React.Component {
     const expanded =
       shiftData.deleteSuccess === true || shiftData.bookSuccess === true;
 
+    const isRecommended = recommendedRoleNames.length !== 0;
+
     return (
       <ErrorBoundary>
         <Collapse in={!expanded}>
@@ -113,7 +111,6 @@ class ShiftCard extends React.Component {
             style={{
               zIndex: 0
             }}
-            className={recommendedRoleNames.length !== 0 ? 'bg-primary' : null}
           >
             <a
               href={`https://www.google.com/maps?safe=strict&q=${
@@ -145,11 +142,12 @@ class ShiftCard extends React.Component {
                 </Row>
               </Card.Text>
             </Card.Body>
-            <Card.Footer>
+            <Card.Footer className={isRecommended ? 'bg-primary' : null}>
               <Button
                 type="button"
                 onClick={this.toggleModal}
                 disabled={shiftData.bookSuccess === true || clickable === false}
+                className={isRecommended ? 'btn-recommended' : null}
               >
                 More info
                 <span className="sr-only">Card information button</span>

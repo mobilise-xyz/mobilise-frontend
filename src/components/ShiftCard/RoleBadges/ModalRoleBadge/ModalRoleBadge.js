@@ -1,8 +1,8 @@
 import React from 'react';
-import AdminRoleBadge from './AdminRoleBadge/AdminRoleBadge';
-import VolunteerRoleBadge from './VolunteerRoleBadge/VolunteerRoleBadge';
+import AdminRoleBadge from '../AdminRoleBadge/AdminRoleBadge';
+import VolunteerRoleBadge from '../VolunteerRoleBadge/VolunteerRoleBadge';
 
-const RoleBadge = ({
+const ModalRoleBadge = ({
   isAdmin,
   name,
   number,
@@ -28,4 +28,4 @@ const RoleBadge = ({
   );
 };
 
-export default RoleBadge;
+export default ModalRoleBadge;

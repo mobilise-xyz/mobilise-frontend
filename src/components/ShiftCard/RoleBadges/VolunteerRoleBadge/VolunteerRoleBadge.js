@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge, Button } from 'react-bootstrap';
-import '../RoleBadge.css';
+import '../ModalRoleBadge/RoleBadge.css';
 
 const VolunteerRoleBadge = ({
   name,

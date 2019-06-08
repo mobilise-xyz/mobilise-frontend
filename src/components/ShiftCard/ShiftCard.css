@@ -19,3 +19,7 @@
 .list-group-item :first-child {
   margin-right: 0;
 }
+
+.btn-recommended {
+  color: white !important;
+}
