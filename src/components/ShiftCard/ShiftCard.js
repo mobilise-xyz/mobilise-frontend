@@ -25,6 +25,7 @@ const generateRequirements = (shiftData, selected, isAdmin) =>
         selected={selected}
         colour={r.role.colour}
         number={numberRemaining}
+        key={`role-badge-${shiftData.id}-${r.role.name}`}
       />
     ) : null;
   });
@@ -130,17 +131,15 @@ class ShiftCard extends React.Component {
             </a>
             <Card.Body onClick={this.toggleModal}>
               <Card.Title>{shiftData.title}</Card.Title>
-              <Card.Text>
-                <Row noGutters fluid>
-                  <Col>{shiftData.address}</Col>
-                  <Col>
-                    {formatTime(shiftData.start)} - {formatTime(shiftData.stop)}
-                  </Col>
-                </Row>
-                <Row noGutters fluid>
-                  {generateRequirements(shiftData, selected, isAdmin)}
-                </Row>
-              </Card.Text>
+              <Row noGutters>
+                <Col>{shiftData.address}</Col>
+                <Col>
+                  {formatTime(shiftData.start)} - {formatTime(shiftData.stop)}
+                </Col>
+              </Row>
+              <Row noGutters>
+                {generateRequirements(shiftData, selected, isAdmin)}
+              </Row>
             </Card.Body>
             <Card.Footer className={isRecommended ? 'bg-primary' : null}>
               <Button

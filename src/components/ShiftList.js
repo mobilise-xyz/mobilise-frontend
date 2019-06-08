@@ -57,6 +57,7 @@ const ShiftList = ({ shifts, isAdmin = false, clickableCards = true }) => {
                     isAdmin={isAdmin}
                     shiftData={c}
                     recommendedRoleNames={recommendedRoleNames}
+                    key={`shiftcard-${c.id}`}
                   />
                 );
               })}
