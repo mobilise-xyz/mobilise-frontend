@@ -92,76 +92,88 @@ class ShiftCard extends React.Component {
   };
 
   render() {
-    const { shiftData, clickable, isAdmin, recommendedRoleNames } = this.props;
+    const {
+      shiftData,
+      clickable,
+      isAdmin,
+      recommendedRoleNames,
+      shifts
+    } = this.props;
     const { showModal, selected } = this.state;
 
-    const expanded =
-      shiftData.deleteSuccess === true || shiftData.bookSuccess === true;
+    const thisShift = shifts.all.find(s => s.id === shiftData.id);
+
+    const collapsed =
+      thisShift.deleteSuccess === true || thisShift.bookSuccess === true;
 
     const isRecommended = recommendedRoleNames.length !== 0;
 
     return (
       <ErrorBoundary>
-        <Collapse in={!expanded}>
-          <Card
-            bg={expanded ? 'danger' : 'white'}
-            style={{
-              zIndex: 0
-            }}
-          >
-            <a
-              href={`https://www.google.com/maps?safe=strict&q=${
-                shiftData.address
-              }&um=1&ie=UTF-8&sa=X&ved=0ahUKEwiGr7nZxNXiAhXBUBUIHQq6DrQQ_AUIESgC`}
-              target="_blank"
-              rel="noopener noreferrer"
+        <Collapse in={!collapsed}>
+          <>
+            <Card
+              bg={collapsed ? 'danger' : 'white'}
+              style={{
+                zIndex: 0
+              }}
             >
-              <Card.Img
-                variant="top"
-                src={`https://maps.googleapis.com/maps/api/staticmap?center=${
+              <a
+                href={`https://www.google.com/maps?safe=strict&q=${
                   shiftData.address
-                }&zoom=13&size=512x200&maptype=roadmap&markers=color:red%7C${
-                  shiftData.address
-                }&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
-              />
-            </a>
-            <Card.Body onClick={this.toggleModal}>
-              <Card.Title>{shiftData.title}</Card.Title>
-              <Row noGutters>
-                <Col>{shiftData.address}</Col>
-                <Col>
-                  {utils.formatTime(shiftData.start)} -{' '}
-                  {utils.formatTime(shiftData.stop)}
-                </Col>
-              </Row>
-              <Row noGutters>
-                {generateRequirements(shiftData, selected, isAdmin)}
-              </Row>
-            </Card.Body>
-            <Card.Footer className={isRecommended ? 'bg-primary' : null}>
-              <Button
-                type="button"
-                onClick={this.toggleModal}
-                disabled={shiftData.bookSuccess === true || clickable === false}
-                className={`btn-more-info ${
-                  isRecommended ? 'btn-recommended' : null
-                }`}
+                }&um=1&ie=UTF-8&sa=X&ved=0ahUKEwiGr7nZxNXiAhXBUBUIHQq6DrQQ_AUIESgC`}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                More info
-                <span className="sr-only">Card information button</span>
-              </Button>
-            </Card.Footer>
-            <ShiftCardModal
-              isAdmin={isAdmin}
-              shiftData={shiftData}
-              show={showModal}
-              onHide={this.toggleModal}
-              handleSelect={this.handleSelect}
-              selected={selected}
-              handleDelete={this.handleDelete}
-              handleBook={this.handleBook}
-            />
-          </Card>
+                <Card.Img
+                  variant="top"
+                  src={`https://maps.googleapis.com/maps/api/staticmap?center=${
+                    shiftData.address
+                  }&zoom=13&size=512x200&maptype=roadmap&markers=color:red%7C${
+                    shiftData.address
+                  }&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
+                />
+              </a>
+              <Card.Body onClick={this.toggleModal}>
+                <Card.Title>{shiftData.title}</Card.Title>
+                <Row noGutters>
+                  <Col>{shiftData.address}</Col>
+                  <Col>
+                    {utils.formatTime(shiftData.start)} -{' '}
+                    {utils.formatTime(shiftData.stop)}
+                  </Col>
+                </Row>
+                <Row noGutters>
+                  {generateRequirements(shiftData, selected, isAdmin)}
+                </Row>
+              </Card.Body>
+              <Card.Footer className={isRecommended ? 'bg-primary' : null}>
+                <Button
+                  type="button"
+                  onClick={this.toggleModal}
+                  disabled={
+                    shiftData.bookSuccess === true || clickable === false
+                  }
+                  className={`btn-more-info ${
+                    isRecommended ? 'btn-recommended' : null
+                  }`}
+                >
+                  More info
+                  <span className="sr-only">Card information button</span>
+                </Button>
+              </Card.Footer>
+              <ShiftCardModal
+                isAdmin={isAdmin}
+                shiftData={shiftData}
+                show={showModal}
+                onHide={this.toggleModal}
+                handleSelect={this.handleSelect}
+                selected={selected}
+                handleDelete={this.handleDelete}
+                handleBook={this.handleBook}
+              />
+            </Card>
+          </>
         </Collapse>
       </ErrorBoundary>
     );
@@ -169,9 +181,9 @@ class ShiftCard extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { shift } = state;
+  const { shifts } = state.shifts;
   return {
-    shift
+    shifts
   };
 }
 

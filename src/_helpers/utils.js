@@ -1,6 +1,9 @@
 import moment from 'moment';
 
 const handleResponse = resp => {
+  if (resp.status !== 200) {
+    return Promise.reject(resp);
+  }
   return resp.data;
 };
 
