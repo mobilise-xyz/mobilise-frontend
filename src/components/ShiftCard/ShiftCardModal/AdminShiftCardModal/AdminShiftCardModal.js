@@ -35,7 +35,7 @@ class AdminShiftCardModal extends Component {
     // 1. Convert requirements to rolesRequired
     const rolesRequired = requirements.map(r => ({
       roleName: r.role.name,
-      number: requirements.numberRequired
+      number: r.numberRequired
     }));
 
     // 2. Construct payload
@@ -84,7 +84,6 @@ class AdminShiftCardModal extends Component {
     this.setState({
       requirements: requirementsCopy
     });
-    console.log(this.state);
   };
 
   handleDataChange = e => {

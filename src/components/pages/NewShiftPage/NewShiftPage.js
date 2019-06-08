@@ -14,6 +14,7 @@ import DateTimeForm from '../../forms/DateTimeForm';
 import LocationInput from '../../LocationInput/LocationInput';
 import RolesForm from '../../forms/RolesForm';
 import RepeatingShiftForm from '../../forms/RepeatingShiftForm/RepeatingShiftForm';
+import alertActions from '../../../_actions/alert.actions';
 
 class NewShiftPage extends React.Component {
   constructor(props) {
@@ -205,8 +206,13 @@ class NewShiftPage extends React.Component {
     }));
   };
 
-  getRandomColour = () =>
-    `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`;
+  // getRandomColour = () =>
+  //   `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`;
+
+  getRandomColour = () => {
+    const colours = ['8EA604', 'F5BB00', 'EC9F05', 'D76A03', 'BF3100'];
+    return `#${colours[Math.floor(Math.random() * colours.length)]}`;
+  };
 
   handleRoleSubmit = () => {
     const config = {
@@ -237,7 +243,7 @@ class NewShiftPage extends React.Component {
           };
         })
       )
-      .catch(err => console.log(err));
+      .catch(alertActions.error('Adding a role failed!'));
 
     // 3. Close modal
     this.toggleRolesModal();
@@ -265,13 +271,6 @@ class NewShiftPage extends React.Component {
       };
     });
   };
-
-  toggleRepeatsModal = () =>
-    this.setState(({ customRepeatModal }) => ({
-      customRepeatModal: {
-        show: !customRepeatModal.show
-      }
-    }));
 
   handleShiftTitleChange = s => {
     let newTitle = '';
