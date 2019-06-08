@@ -22,12 +22,10 @@ class VolunteerShiftsPage extends React.Component {
     if (error) {
       return <p>error</p>;
     }
-    console.log('SHIFTS', shifts);
 
     return (
       <Layout heading="Book a shift">
         <ShiftList shifts={shifts.all} recommendedCardClass="bg-primary" />
-        <hr />
       </Layout>
     );
   }

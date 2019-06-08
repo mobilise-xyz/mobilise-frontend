@@ -64,7 +64,6 @@ class RolesForm extends React.Component {
           selected={roles.map(r => r.name)}
           selectHintOnEnter
           onKeyDown={this.onKeyDown}
-          inputProps={{ required: true }}
           renderToken={(option, props, index) =>
             this._renderToken(option, props, index, handleRoleNumber, roles)
           }

@@ -29,7 +29,7 @@ const Layout = ({
         {alert.message}
       </Alert>
       {/* Use pt-5 utility class to create some space between the header and content. */}
-      <Container className="p-5">
+      <Container className="pt-5 p-md-5 m-0" fluid>
         <Row>
           <Col>
             <h2>{heading}</h2>

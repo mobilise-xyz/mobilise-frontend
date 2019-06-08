@@ -159,7 +159,7 @@ class VolunteerShiftCardModal extends React.Component {
                   {moment(shiftData.start, 'H:m:ss')
                     .local()
                     .format('h:mm a')}{' '}
-                  -
+                  -{' '}
                   {moment(shiftData.stop, 'H:m:ss')
                     .local()
                     .format('h:mm a')}

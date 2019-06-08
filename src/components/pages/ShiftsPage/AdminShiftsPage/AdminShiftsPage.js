@@ -25,7 +25,6 @@ class AdminShiftsPage extends React.Component {
             {<FontAwesomeIcon icon={faPlus} />} Add Shift
           </Button>
         </LinkContainer>
-        {/* TODO remove hardcoding */}
         <ShiftList isAdmin shifts={shifts.shifts.all} />
       </Layout>
     );

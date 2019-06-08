@@ -1,8 +1,8 @@
 .role-badge {
-    text-transform: none;
+  text-transform: none;
   font-size: 1rem;
   color: white !important;
-  margin: 0.5rem !important;
+  margin: 0.25rem 0.25rem 0.25rem 0 !important;
 }
 
 .role-control-button {

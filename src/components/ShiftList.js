@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { CardColumns, Col, Container, Row } from 'react-bootstrap';
 import ShiftCard from './ShiftCard';
 
 const partitionShiftsByDate = shifts => {
@@ -28,56 +28,41 @@ const partitionShiftsByDate = shifts => {
   return shiftMap;
 };
 
-const ShiftList = ({
-  shifts,
-  cardClass,
-  recommendedCardClass = cardClass,
-  isAdmin = false,
-  clickableCards = true
-}) => {
+const ShiftList = ({ shifts, isAdmin = false, clickableCards = true }) => {
   const shiftMap = partitionShiftsByDate(shifts);
   const shiftLists = [];
   shiftMap.forEach(entry => {
     shiftLists.push(
-      <Container key={entry[0]}>
+      <Container key={entry[0]} fluid>
         <Row>
-          <Col md={2} style={{ paddingTop: '5%' }}>
+          {/* Date to the side */}
+          <Col md={2}>
             <DateHeading
               weekday={entry[0].format('dddd')}
               date={entry[0].format('Do MMMM')}
             />
           </Col>
-          <Col md={10}>
-            <ListGroup>
+          <Col>
+            <CardColumns>
               {entry[1].map(c => {
-                let recommended = false;
-                let card = cardClass;
+                const recommendedRoleNames = [];
                 c.requirements.forEach(req => {
                   if (req.recommended) {
-                    card = recommendedCardClass;
-                    recommended = true;
+                    recommendedRoleNames.push(req.role.name);
                   }
                 });
                 return (
-                  <ListGroup.Item
-                    key={c.id}
-                    className={`${card}`}
-                    style={{
-                      borderRadius: '1.1rem',
-                      backgroundColour: '#C9E1BF'
-                    }}
-                  >
-                    <ShiftCard
-                      clickable={clickableCards}
-                      isAdmin={isAdmin}
-                      shiftData={c}
-                      recommended={recommended}
-                    />
-                  </ListGroup.Item>
+                  <ShiftCard
+                    clickable={clickableCards}
+                    isAdmin={isAdmin}
+                    shiftData={c}
+                    recommendedRoleNames={recommendedRoleNames}
+                  />
                 );
               })}
-            </ListGroup>
+            </CardColumns>
           </Col>
+          <Col md={2} />
         </Row>
         <hr />
       </Container>
