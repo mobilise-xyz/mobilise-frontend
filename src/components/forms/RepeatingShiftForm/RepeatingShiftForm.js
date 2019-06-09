@@ -11,7 +11,7 @@ const options = [
   'Annually'
 ];
 
-const RepeatingShiftForm = ({ repeat, handleChange }) => {
+const RepeatingShiftForm = ({ startDate, repeat, handleChange }) => {
   let repeatUntil;
   if (repeat === undefined || repeat === 'Never') {
     repeatUntil = null;
@@ -25,6 +25,7 @@ const RepeatingShiftForm = ({ repeat, handleChange }) => {
           onChange={handleChange}
           type="date"
           required
+          min={startDate}
         />
       </Form.Group>
     );

@@ -37,8 +37,8 @@ const getForUser = (uid, booked = false) => {
     shiftsService.getForUser(uid, booked).then(
       shifts => dispatch(success(shifts)),
       error => {
-        dispatch(failure(error));
         dispatch(alertActions.error('Error getting shifts.'));
+        return dispatch(failure(error));
       }
     );
   };
@@ -60,12 +60,12 @@ const deleteWithId = shiftId => {
 
     shiftsService.deleteWithId(shiftId).then(
       () => {
-        dispatch(success(shiftId));
         dispatch(alertActions.success('Successfully deleted a shift'));
+        return dispatch(success(shiftId));
       },
       error => {
-        dispatch(failure(shiftId, error));
         dispatch(alertActions.error('Error deleting a shift'));
+        return dispatch(failure(shiftId, error));
       }
     );
   };

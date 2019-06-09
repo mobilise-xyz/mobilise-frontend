@@ -76,7 +76,7 @@ const shifts = (state = initialState, action) => {
           : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setDeleteSuccess())
+        shifts: applyToShifts(state.shifts, action, setDeleteSuccess)
       };
     }
     case shiftsConstants.DELETE_FAILURE: {

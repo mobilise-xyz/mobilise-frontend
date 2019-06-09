@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form, Col, Row } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import moment from 'moment';
 
-const DateTimeForm = ({ handleChange }) => {
+const DateTimeForm = ({ handleChange, date }) => {
   return (
     <Form.Row>
       {/* Date */}
@@ -13,6 +13,7 @@ const DateTimeForm = ({ handleChange }) => {
           name="date"
           onChange={handleChange}
           type="date"
+          value={date}
           min={moment().format('YYYY-MM-DD')}
           required
         />

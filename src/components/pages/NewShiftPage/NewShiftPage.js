@@ -291,7 +291,7 @@ class NewShiftPage extends React.Component {
 
   render() {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
-    const { title, description, repeat, roles } = data;
+    const { title, description, repeat, date, roles } = data;
     const { roleName, roleInvolves, show: showRoleModal } = newRoleModal;
 
     const backBtn = (
@@ -329,6 +329,7 @@ class NewShiftPage extends React.Component {
             id="repeat"
             repeat={repeat}
             handleChange={this.handleDataChange}
+            startDate={date}
           />
           {/* Location */}
           <LocationInput id="location" handleChange={this.handleDataChange} />
