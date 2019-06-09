@@ -87,11 +87,11 @@ const RepeatBookingForm = ({
               <Form.Control
                 type="date"
                 name="until"
-                min={moment().format('YYYY-MM-DD')}
                 value={until}
                 onChange={handleChange}
                 max={shiftData.repeated ? shiftData.repeated.untilDate : null}
                 required
+                min={shiftData.date}
               />
             </Form.Group>
           ) : null}
