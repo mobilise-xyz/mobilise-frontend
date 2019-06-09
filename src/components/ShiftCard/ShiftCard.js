@@ -25,6 +25,14 @@ const generateRequirements = (shiftData, selected, isAdmin) =>
     ) : null;
   });
 
+const generateGoogleMapsLink = address =>
+  `https://www.google.com/maps?safe=strict&q=${address}&um=1&ie=UTF-8&sa=X&ved=0ahUKEwiGr7nZxNXiAhXBUBUIHQq6DrQQ_AUIESgC`;
+
+const generateGoogleMapsImage = address =>
+  `https://maps.googleapis.com/maps/api/staticmap?center=${address}&zoom=13&size=512x200&maptype=roadmap&markers=color:red%7C${address}&&key=${
+    process.env.REACT_APP_GOOGLE_API_KEY
+  }`;
+
 // shiftData consists of title, description, date, start, stop, address
 
 class ShiftCard extends React.Component {
@@ -62,7 +70,6 @@ class ShiftCard extends React.Component {
       return;
     }
 
-    // TODO book and unbook requests.
     if (name === selected) {
       // Already selected, select.
       this.setState({
@@ -84,9 +91,6 @@ class ShiftCard extends React.Component {
     const { shiftData, dispatch } = this.props;
     const { selected } = this.state;
 
-    if (selected === null) {
-      console.log('THIS SHOULD BE AN ERROR'); // TODO
-    }
     this.setState({ selected: '' });
     dispatch(shiftsActions.book(shiftData.id, selected, repeatedType, until));
   };
@@ -94,10 +98,10 @@ class ShiftCard extends React.Component {
   render() {
     const {
       shiftData,
-      clickable,
       isAdmin,
       recommendedRoleNames,
-      shifts
+      shifts,
+      type
     } = this.props;
     const { showModal, selected } = this.state;
 
@@ -119,22 +123,16 @@ class ShiftCard extends React.Component {
               }}
             >
               <a
-                href={`https://www.google.com/maps?safe=strict&q=${
-                  shiftData.address
-                }&um=1&ie=UTF-8&sa=X&ved=0ahUKEwiGr7nZxNXiAhXBUBUIHQq6DrQQ_AUIESgC`}
+                href={generateGoogleMapsLink(shiftData.address)}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Card.Img
                   variant="top"
-                  src={`https://maps.googleapis.com/maps/api/staticmap?center=${
-                    shiftData.address
-                  }&zoom=13&size=512x200&maptype=roadmap&markers=color:red%7C${
-                    shiftData.address
-                  }&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
+                  src={generateGoogleMapsImage(shiftData.address)}
                 />
               </a>
-              <Card.Body onClick={this.toggleModal}>
+              <Card.Body>
                 <Card.Title>{shiftData.title}</Card.Title>
                 <Row noGutters>
                   <Col>{shiftData.address}</Col>
@@ -148,19 +146,19 @@ class ShiftCard extends React.Component {
                 </Row>
               </Card.Body>
               <Card.Footer className={isRecommended ? 'bg-primary' : null}>
-                <Button
-                  type="button"
-                  onClick={this.toggleModal}
-                  disabled={
-                    shiftData.bookSuccess === true || clickable === false
-                  }
-                  className={`btn-more-info ${
-                    isRecommended ? 'btn-recommended' : null
-                  }`}
-                >
-                  More info
-                  <span className="sr-only">Card information button</span>
-                </Button>
+                {type === 'booked' ? null : (
+                  <Button
+                    type="button"
+                    onClick={this.toggleModal}
+                    disabled={shiftData.bookSuccess === true}
+                    className={`btn-more-info ${
+                      isRecommended ? 'btn-recommended' : null
+                    }`}
+                  >
+                    More info
+                    <span className="sr-only">Card information button</span>
+                  </Button>
+                )}
               </Card.Footer>
               <ShiftCardModal
                 isAdmin={isAdmin}

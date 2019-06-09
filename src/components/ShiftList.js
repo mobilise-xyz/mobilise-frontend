@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CardColumns, Col, Container, Row } from 'react-bootstrap';
 import ShiftCard from './ShiftCard';
@@ -28,9 +29,10 @@ const partitionShiftsByDate = shifts => {
   return shiftMap;
 };
 
-const ShiftList = ({ shifts, isAdmin = false, clickableCards = true }) => {
+const ShiftList = ({ shifts, isAdmin = false, type = '' }) => {
   const shiftMap = partitionShiftsByDate(shifts);
   const shiftLists = [];
+
   shiftMap.forEach(entry => {
     shiftLists.push(
       <Container key={entry[0]} fluid>
@@ -53,11 +55,11 @@ const ShiftList = ({ shifts, isAdmin = false, clickableCards = true }) => {
                 });
                 return (
                   <ShiftCard
-                    clickable={clickableCards}
                     isAdmin={isAdmin}
                     shiftData={c}
                     recommendedRoleNames={recommendedRoleNames}
                     key={`shiftcard-${c.id}`}
+                    type={type}
                   />
                 );
               })}
@@ -70,6 +72,17 @@ const ShiftList = ({ shifts, isAdmin = false, clickableCards = true }) => {
     );
   });
   return shiftLists;
+};
+
+ShiftList.defaultProps = {
+  isAdmin: false,
+  type: ''
+};
+
+ShiftList.propTypes = {
+  shifts: PropTypes.element.isRequired,
+  isAdmin: PropTypes.bool,
+  type: PropTypes.oneOf(['', 'booked'])
 };
 
 const DateHeading = ({ weekday, date }) => (

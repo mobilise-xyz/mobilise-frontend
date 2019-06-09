@@ -46,7 +46,7 @@ class MyShiftsPage extends React.Component {
     let view = 'list';
     switch (viewType) {
       case 'list':
-        view = <ShiftList clickableCards={false} shifts={shifts.shifts.all} />;
+        view = <ShiftList type="booked" shifts={shifts.shifts.all} />;
         break;
       case 'calendar':
         view = <CalendarView shifts={shifts.shifts.all} />;

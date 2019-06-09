@@ -1,105 +1,10 @@
 import React from 'react';
-import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge/ModalRoleBadge';
 import '../../ShiftCard.css';
 import utils from '../../../../_helpers/utils';
-
-const getRepeatOptions = repeatedType => {
-  switch (repeatedType) {
-    case 'Daily':
-      return [
-        'Never',
-        'Daily',
-        'Weekends',
-        'Weekdays',
-        'Weekly',
-        'Monthly',
-        'Annually'
-      ];
-    case 'Weekly':
-      return ['Never', 'Weekly'];
-    case 'Monthly':
-      return ['Never', 'Monthly', 'Annually'];
-    case 'Weekends':
-      return ['Never', 'Weekends', 'Weekly'];
-    case 'Weekdays':
-      return ['Never', 'Weekdays', 'Weekly'];
-    default:
-      console.log('Unknown repeated type:', repeatedType);
-      return [];
-  }
-};
-
-// This component is for users to book repeating shifts. It is only shown if the shift is repeating.
-const RepeatBookingForm = ({
-  shiftData,
-  repeatedType,
-  until,
-  handleChange
-}) => (
-  <>
-    <Row>
-      {shiftData.repeated ? (
-        <p>
-          This shift repeats until&nbsp;
-          <strong>
-            {moment(shiftData.repeated.untilDate, 'YYYY-MM-DD')
-              .local()
-              .format('dddd, MMMM Do YYYY')}
-          </strong>
-          .
-        </p>
-      ) : null}
-    </Row>
-    <Row>
-      <Col>
-        <h6>Book repeating?</h6>
-      </Col>
-    </Row>
-    <Row>
-      <Col>
-        <Form id="bookingform">
-          <Form.Group>
-            <Form.Label>Repeat frequency</Form.Label>
-            {/* Only enable this form if repeatedId is not null. */}
-            <Form.Control
-              as="select"
-              name="repeatedType"
-              value={repeatedType}
-              onChange={handleChange}
-              required
-            >
-              {shiftData.repeated
-                ? getRepeatOptions(shiftData.repeated.type).map(option => (
-                    <option key={`${shiftData.id}-option-${option}`}>
-                      {option}
-                    </option>
-                  ))
-                : null}
-            </Form.Control>
-          </Form.Group>
-          {repeatedType !== 'Never' ? (
-            <Form.Group>
-              <Form.Label>Until</Form.Label>
-              {/* The user should not be able to select before today's date, and not after the end start of the repeating shift. */}
-              <Form.Control
-                type="date"
-                name="until"
-                value={until}
-                onChange={handleChange}
-                max={shiftData.repeated ? shiftData.repeated.untilDate : null}
-                required
-                min={shiftData.date}
-              />
-            </Form.Group>
-          ) : null}
-        </Form>
-      </Col>
-    </Row>
-  </>
-);
+import BookingRightPane from './BookingRightPane';
 
 class VolunteerShiftCardModal extends React.Component {
   state = {
@@ -122,16 +27,6 @@ class VolunteerShiftCardModal extends React.Component {
       selected
     } = this.props;
     const { repeatedType, until } = this.state;
-    const shiftRepeats = shiftData.repeatedId !== null;
-
-    const repeatForm = shiftRepeats ? (
-      <RepeatBookingForm
-        shiftData={shiftData}
-        repeatedType={repeatedType}
-        until={until}
-        handleChange={this.handleChange}
-      />
-    ) : null;
 
     return (
       <Modal show={show} onHide={() => onHide(false)} size="lg" centered>
@@ -177,30 +72,16 @@ class VolunteerShiftCardModal extends React.Component {
               </Row>
             </Col>
             <Col>
-              <Row>
-                <Col>
-                  <h6>Choose a role to book</h6>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  {shiftData.requirements.map(r => {
-                    // Only show roles that are available to book
-                    // i.e. numberRequired > 0
-                    return r.numberRequired > 0 ? (
-                      <ModalRoleBadge
-                        key={shiftData.id + r.role.name}
-                        name={r.role.name}
-                        handleSelect={handleSelect}
-                        selected={selected}
-                        onModal
-                        colour={r.role.colour}
-                      />
-                    ) : null;
-                  })}
-                </Col>
-              </Row>
-              {repeatForm}
+              {
+                <BookingRightPane
+                  handleSelect={handleSelect}
+                  shiftData={shiftData}
+                  repeatedType={repeatedType}
+                  until={until}
+                  handleChange={this.handleChange}
+                  selected={selected}
+                />
+              }
             </Col>
           </Row>
         </Modal.Body>
