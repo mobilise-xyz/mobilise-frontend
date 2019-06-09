@@ -30,7 +30,7 @@ class VolunteerShiftCardModal extends React.Component {
 
     return (
       <Modal show={show} onHide={() => onHide(false)} size="lg" centered>
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title>{shiftData.title}</Modal.Title>
         </Modal.Header>
 
@@ -87,13 +87,6 @@ class VolunteerShiftCardModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button
-            variant="outline-secondary"
-            onClick={() => onHide(false)}
-            form="bookingform"
-          >
-            Close
-          </Button>
           <Button
             variant="outline-primary"
             type="submit"

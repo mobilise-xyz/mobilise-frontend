@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ButtonToolbar, Col, Form, Modal, Row } from 'react-bootstrap';
+import {
+  Button,
+  ButtonToolbar,
+  Col,
+  Dropdown,
+  DropdownButton,
+  Form,
+  Modal,
+  Row
+} from 'react-bootstrap';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -109,7 +118,7 @@ class AdminShiftCardModal extends Component {
     const { shiftData, onHide, show, handleDelete } = this.props;
     return (
       <Modal show={show} onHide={onHide} size="lg" centered>
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title>
             <PlainTextForm
               noLabel
@@ -199,13 +208,14 @@ class AdminShiftCardModal extends Component {
             Delete {<FontAwesomeIcon icon={faTrash} />}
           </Button>
           <ButtonToolbar role="toolbar">
-            <Button
-              className="mr-2"
+            <DropdownButton
+              title="Ping"
               variant="outline-secondary"
-              onClick={this.handleCancel}
+              style={{ marginRight: '0.5rem' }}
             >
-              Cancel
-            </Button>
+              <Dropdown.Item>All available volunteer</Dropdown.Item>
+            </DropdownButton>
+
             <Button
               variant="outline-primary"
               type="submit"
