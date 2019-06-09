@@ -7,7 +7,6 @@ const PlainTextForm = props => {
     label,
     content,
     disabled = false,
-    plaintext = true,
     rows = '1',
     handleChange
   } = props;
@@ -21,9 +20,7 @@ const PlainTextForm = props => {
       <Form.Control
         id={label}
         name={label}
-        as="textarea"
         disabled={disabled}
-        plaintext={plaintext}
         placeholder={`Enter ${label}`}
         rows={rows}
         value={content}

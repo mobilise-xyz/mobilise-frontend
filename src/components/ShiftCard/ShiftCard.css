@@ -27,3 +27,9 @@
 .btn-more-info {
   margin-bottom: 0 !important;
 }
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem !important;
+}

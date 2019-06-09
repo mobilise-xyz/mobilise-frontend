@@ -6,12 +6,6 @@ div.modal-body label {
   font-weight: 500;
 }
 
-.modal-footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-}
-
 .form {
   margin-bottom: 0;
 }

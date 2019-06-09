@@ -86,13 +86,7 @@ class VolunteerShiftCardModal extends React.Component {
           </Row>
         </Modal.Body>
 
-        <Modal.Footer
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: '1rem'
-          }}
-        >
+        <Modal.Footer>
           <Button
             variant="outline-secondary"
             onClick={() => onHide(false)}
