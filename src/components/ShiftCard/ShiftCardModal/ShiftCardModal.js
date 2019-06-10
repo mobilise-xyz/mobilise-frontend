@@ -12,7 +12,8 @@ const ShiftCardModal = ({
   handleDelete,
   handleBook,
   booked,
-  isAdmin
+  isAdmin,
+  type
 }) => {
   const passthroughProps = {
     shiftData,
@@ -22,7 +23,8 @@ const ShiftCardModal = ({
     handleSelect,
     handleBook,
     handleDelete,
-    booked
+    booked,
+    type
   };
 
   return isAdmin ? (

@@ -114,13 +114,24 @@ const updateRoles = (shiftId, rolesRequired) => {
     .then(utils.handleResponse);
 };
 
+const ping = shiftId => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .post(`/shifts/${shiftId}/ping`, {}, config)
+    .then(utils.handleResponse);
+};
+
 const shiftsService = {
   getAll,
   getForUser,
   deleteWithId,
   book,
   updateInfo,
-  updateRoles
+  updateRoles,
+  ping
 };
 
 export default shiftsService;

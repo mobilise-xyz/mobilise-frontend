@@ -149,12 +149,40 @@ const update = (shiftId, data) => {
   };
 };
 
+const ping = shiftId => {
+  const request = id => {
+    return { type: shiftsConstants.PINGALL_REQUEST, id };
+  };
+  const success = id => {
+    return { type: shiftsConstants.PINGALL_SUCCESS, id };
+  };
+  const failure = (id, error) => {
+    return { type: shiftsConstants.PINGALL_FAILURE, id, error };
+  };
+
+  return dispatch => {
+    dispatch(request(shiftId));
+
+    shiftsService.ping(shiftId).then(
+      () => {
+        dispatch(success(shiftId));
+        dispatch(alertActions.success('Volunteers pinged successfully'));
+      },
+      error => {
+        dispatch(failure(shiftId, error));
+        dispatch(alertActions.error('There was a problem pinging volunteers.'));
+      }
+    );
+  };
+};
+
 const shiftsActions = {
   getAll,
   getForUser,
   book,
   deleteWithId,
-  update
+  update,
+  ping
 };
 
 export default shiftsActions;

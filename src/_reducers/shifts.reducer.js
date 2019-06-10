@@ -165,6 +165,36 @@ const shifts = (state = initialState, action) => {
         shifts: applyToShifts(state.shifts, action, setUpdateFailure)
       };
     }
+    case shiftsConstants.PINGALL_REQUEST: {
+      return state;
+    }
+    case shiftsConstants.PINGALL_SUCCESS: {
+      // Search for the shift that requested to be booked.
+      const setPingSuccess = shift =>
+        shift.id === action.id
+          ? { ...shift, pingSuccess: true, loading: false }
+          : shift;
+      return {
+        ...state,
+        shifts: applyToShifts(state.shifts, action, setPingSuccess)
+      };
+    }
+    case shiftsConstants.PINGALL_FAILURE: {
+      // Search for the shift that requested to be booked.
+      const setPingFailure = shift =>
+        shift.id === action.id
+          ? {
+              ...shift,
+              pingSuccess: false,
+              loading: false,
+              error: action.error
+            }
+          : shift;
+      return {
+        ...state,
+        shifts: applyToShifts(state.shifts, action, setPingFailure)
+      };
+    }
     default:
       return state;
   }

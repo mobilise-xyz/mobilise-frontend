@@ -104,6 +104,12 @@ class AdminShiftCardModal extends Component {
     }));
   };
 
+  handlePing = () => {
+    const { shiftData, dispatch } = this.props;
+
+    dispatch(shiftsActions.ping(shiftData.id));
+  };
+
   render() {
     const {
       title,
@@ -213,7 +219,9 @@ class AdminShiftCardModal extends Component {
               variant="outline-secondary"
               style={{ marginRight: '0.5rem' }}
             >
-              <Dropdown.Item>All available volunteer</Dropdown.Item>
+              <Dropdown.Item onClick={this.handlePing}>
+                All available volunteers
+              </Dropdown.Item>
             </DropdownButton>
 
             <Button

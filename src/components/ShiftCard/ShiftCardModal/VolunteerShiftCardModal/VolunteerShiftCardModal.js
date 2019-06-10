@@ -5,6 +5,7 @@ import moment from 'moment';
 import '../../ShiftCard.css';
 import utils from '../../../../_helpers/utils';
 import BookingRightPane from './BookingRightPane';
+import CancelRightPane from './CancelRightPane';
 
 class VolunteerShiftCardModal extends React.Component {
   state = {
@@ -26,7 +27,7 @@ class VolunteerShiftCardModal extends React.Component {
       handleBook,
       selected
     } = this.props;
-    const { repeatedType, until } = this.state;
+    const { repeatedType, until, type } = this.state;
 
     return (
       <Modal show={show} onHide={() => onHide(false)} size="lg" centered>
@@ -72,7 +73,9 @@ class VolunteerShiftCardModal extends React.Component {
               </Row>
             </Col>
             <Col>
-              {
+              {type === 'booked' ? (
+                <CancelRightPane />
+              ) : (
                 <BookingRightPane
                   handleSelect={handleSelect}
                   shiftData={shiftData}
@@ -81,7 +84,7 @@ class VolunteerShiftCardModal extends React.Component {
                   handleChange={this.handleChange}
                   selected={selected}
                 />
-              }
+              )}
             </Col>
           </Row>
         </Modal.Body>
@@ -92,6 +95,7 @@ class VolunteerShiftCardModal extends React.Component {
             type="submit"
             disabled={shiftData.bookSuccess === true || selected === ''}
             onClick={() => handleBook(repeatedType, until)}
+            style={{ marginLeft: 'auto' }}
           >
             Book
           </Button>

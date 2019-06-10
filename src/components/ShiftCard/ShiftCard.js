@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Col, Collapse, Row } from 'react-bootstrap';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import './ShiftCard.css';
 import ErrorBoundary from '../ErrorBoundary';
@@ -117,65 +117,60 @@ class ShiftCard extends React.Component {
 
     return (
       <ErrorBoundary>
-        <Collapse in={!collapsed}>
-          <>
-            <Card
-              bg={collapsed ? 'danger' : 'white'}
-              style={{
-                zIndex: 0
-              }}
+        <Card
+          bg={collapsed ? 'danger' : 'white'}
+          style={{
+            zIndex: 0
+          }}
+        >
+          <a
+            href={generateGoogleMapsLink(shiftData.address)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Card.Img
+              variant="top"
+              src={generateGoogleMapsImage(shiftData.address)}
+            />
+          </a>
+          <Card.Body>
+            <Card.Title>{shiftData.title}</Card.Title>
+            <Row noGutters>
+              <Col>{shiftData.address}</Col>
+              <Col>
+                {utils.formatTime(shiftData.start)} -{' '}
+                {utils.formatTime(shiftData.stop)}
+              </Col>
+            </Row>
+            <Row noGutters>
+              {generateRequirements(shiftData, selected, isAdmin)}
+            </Row>
+          </Card.Body>
+          <Card.Footer className={isRecommended ? 'bg-primary' : null}>
+            <Button
+              type="button"
+              onClick={this.toggleModal}
+              disabled={collapsed}
+              className={`btn-more-info ${
+                isRecommended ? 'btn-recommended' : null
+              }`}
             >
-              <a
-                href={generateGoogleMapsLink(shiftData.address)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Card.Img
-                  variant="top"
-                  src={generateGoogleMapsImage(shiftData.address)}
-                />
-              </a>
-              <Card.Body>
-                <Card.Title>{shiftData.title}</Card.Title>
-                <Row noGutters>
-                  <Col>{shiftData.address}</Col>
-                  <Col>
-                    {utils.formatTime(shiftData.start)} -{' '}
-                    {utils.formatTime(shiftData.stop)}
-                  </Col>
-                </Row>
-                <Row noGutters>
-                  {generateRequirements(shiftData, selected, isAdmin)}
-                </Row>
-              </Card.Body>
-              <Card.Footer className={isRecommended ? 'bg-primary' : null}>
-                {type === 'booked' ? null : (
-                  <Button
-                    type="button"
-                    onClick={this.toggleModal}
-                    disabled={shiftData.bookSuccess === true}
-                    className={`btn-more-info ${
-                      isRecommended ? 'btn-recommended' : null
-                    }`}
-                  >
-                    More info
-                    <span className="sr-only">Card information button</span>
-                  </Button>
-                )}
-              </Card.Footer>
-              <ShiftCardModal
-                isAdmin={isAdmin}
-                shiftData={shiftData}
-                show={showModal}
-                onHide={this.toggleModal}
-                handleSelect={this.handleSelect}
-                selected={selected}
-                handleDelete={this.handleDelete}
-                handleBook={this.handleBook}
-              />
-            </Card>
-          </>
-        </Collapse>
+              More info
+              <span className="sr-only">Card information button</span>
+            </Button>
+          </Card.Footer>
+          <ShiftCardModal
+            isAdmin={isAdmin}
+            shiftData={shiftData}
+            show={showModal}
+            onHide={this.toggleModal}
+            handleSelect={this.handleSelect}
+            selected={selected}
+            handleDelete={this.handleDelete}
+            handleBook={this.handleBook}
+            type={type}
+          />
+        </Card>
       </ErrorBoundary>
     );
   }
