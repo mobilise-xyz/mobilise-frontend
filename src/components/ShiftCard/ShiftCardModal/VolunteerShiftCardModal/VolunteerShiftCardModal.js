@@ -25,9 +25,10 @@ class VolunteerShiftCardModal extends React.Component {
       show,
       handleSelect,
       handleBook,
-      selected
+      selected,
+      type
     } = this.props;
-    const { repeatedType, until, type } = this.state;
+    const { repeatedType, until } = this.state;
 
     return (
       <Modal show={show} onHide={() => onHide(false)} size="lg" centered>
