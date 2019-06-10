@@ -10,7 +10,8 @@ import CancelRightPane from './CancelRightPane';
 class VolunteerShiftCardModal extends React.Component {
   state = {
     repeatedType: '',
-    until: ''
+    until: '',
+    reason: ''
   };
 
   handleChange = e => {
@@ -28,7 +29,9 @@ class VolunteerShiftCardModal extends React.Component {
       selected,
       type
     } = this.props;
-    const { repeatedType, until } = this.state;
+    const { repeatedType, until, reason } = this.state;
+
+    const booked = type === 'booked';
 
     return (
       <Modal show={show} onHide={() => onHide(false)} size="lg" centered>
@@ -74,8 +77,13 @@ class VolunteerShiftCardModal extends React.Component {
               </Row>
             </Col>
             <Col>
-              {type === 'booked' ? (
-                <CancelRightPane />
+              {booked ? (
+                <CancelRightPane
+                  shiftData={shiftData}
+                  handleChange={this.handleChange}
+                  onHide={onHide}
+                  cancelReason={reason}
+                />
               ) : (
                 <BookingRightPane
                   handleSelect={handleSelect}
@@ -91,15 +99,17 @@ class VolunteerShiftCardModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button
-            variant="outline-primary"
-            type="submit"
-            disabled={shiftData.bookSuccess === true || selected === ''}
-            onClick={() => handleBook(repeatedType, until)}
-            style={{ marginLeft: 'auto' }}
-          >
-            Book
-          </Button>
+          {!booked ? (
+            <Button
+              variant="outline-primary"
+              type="submit"
+              disabled={shiftData.bookSuccess === true || selected === ''}
+              onClick={() => handleBook(repeatedType, until)}
+              style={{ marginLeft: 'auto' }}
+            >
+              Book
+            </Button>
+          ) : null}
         </Modal.Footer>
       </Modal>
     );

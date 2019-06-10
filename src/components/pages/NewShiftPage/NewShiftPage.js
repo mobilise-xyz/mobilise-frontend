@@ -318,8 +318,6 @@ class NewShiftPage extends React.Component {
             id="description"
             label="description"
             content={description}
-            plaintext={false}
-            rows={3}
             handleChange={this.handleDataChange}
           />
           {/* Date and Time */}
