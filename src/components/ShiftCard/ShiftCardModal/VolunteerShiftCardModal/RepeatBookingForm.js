@@ -76,7 +76,7 @@ const RepeatBookingForm = ({
                 : null}
             </Form.Control>
           </Form.Group>
-          {repeatedType !== 'Never' ? (
+          {repeatedType === '' || repeatedType === 'Never' ? null : (
             <Form.Group>
               <Form.Label>Until</Form.Label>
               {/* The user should not be able to select before today's date, and not after the end start of the repeating shift. */}
@@ -90,7 +90,7 @@ const RepeatBookingForm = ({
                 min={shiftData.date}
               />
             </Form.Group>
-          ) : null}
+          )}
         </Form>
       </Col>
     </Row>
