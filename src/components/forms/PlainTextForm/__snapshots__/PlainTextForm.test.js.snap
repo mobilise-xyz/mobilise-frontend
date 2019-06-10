@@ -9,7 +9,7 @@ exports[`Description Form Component renders the form correctly 1`] = `
   >
     
   </label>
-  <input
+  <textarea
     className="form-control"
     disabled={false}
     name=""

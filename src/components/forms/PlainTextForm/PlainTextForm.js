@@ -5,11 +5,13 @@ const PlainTextForm = props => {
   const {
     noLabel = false,
     label,
+    placeHolder = '',
     content,
     disabled = false,
     rows = '1',
     handleChange
   } = props;
+  const placeholder = placeHolder === '' ? `Enter ${label}` : placeHolder;
   return (
     <Form.Group>
       {noLabel ? null : (
@@ -18,10 +20,11 @@ const PlainTextForm = props => {
         </Form.Label>
       )}
       <Form.Control
+        as="textarea"
         id={label}
         name={label}
         disabled={disabled}
-        placeholder={`Enter ${label}`}
+        placeholder={placeholder}
         rows={rows}
         value={content}
         onChange={handleChange}
