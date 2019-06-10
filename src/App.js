@@ -34,6 +34,7 @@ export class App extends React.Component {
         <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
         <PrivateRoute path="/settings" exact component={SettingsPage} />
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
+        <PrivateRoute path="/availability" exact component={SettingsPage} />
 
         <PrivateRoute
           path="/help/recommended"

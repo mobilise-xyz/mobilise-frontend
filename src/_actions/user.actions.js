@@ -21,7 +21,14 @@ const login = (username, password) => {
     userService.login(username, password).then(
       user => {
         dispatch(success(user));
-        history.push('/');
+
+        // If volunteer first login then redirect to availability screen.
+        if (!user.isAdmin && !user.lastLogin) {
+          console.log('redirect to availability');
+          history.push('/availability');
+        } else {
+          history.push('/');
+        }
       },
       error => {
         dispatch(failure(error));

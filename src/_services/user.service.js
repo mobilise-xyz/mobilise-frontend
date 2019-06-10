@@ -1,5 +1,6 @@
 import axios from 'axios';
-// import authHeader from '../_helpers/auth-header';
+import utils from '../_helpers/utils';
+import history from '../_helpers/history';
 
 const logout = () => {
   // remove user from local storage to log user out
@@ -12,24 +13,29 @@ const login = (email, password) => {
       email,
       password
     })
-    .then(response => response.data) // TODO use utils.handleResponse
-    .then(data => {
-      console.log(data);
+    .then(utils.handleResponse)
+    .then(({ uid, isAdmin, lastLogin, token }) => {
       // Store user details and JWT token in localStorage to keep user logged in between page refreshes.
       localStorage.setItem(
         'user',
         JSON.stringify({
-          uid: data.uid,
-          isAdmin: data.isAdmin,
-          token: data.token
+          uid,
+          isAdmin,
+          lastLogin,
+          token
         })
       );
-      return data;
+
+      return {
+        uid,
+        isAdmin,
+        lastLogin,
+        token
+      };
     })
     .catch(err => {
       console.log(err);
       logout();
-      const { history } = this.props;
       history.location.reload(true);
     });
 };
