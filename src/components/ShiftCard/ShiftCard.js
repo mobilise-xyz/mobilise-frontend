@@ -12,15 +12,18 @@ const generateRequirements = (shiftData, selected, isAdmin) =>
   shiftData.requirements.map(r => {
     // Only show roles that are available to book
     // i.e. numberRequired > 0
-    const numberRemaining = r.numberRequired - 1; // TODO hook up
-    return r.numberRequired > 0 ? (
+
+    const { numberRequired, role, bookings } = r;
+    const numberOfBookings = bookings ? bookings.length : 0;
+    const numberRemaining = numberRequired - numberOfBookings; // TODO hook up
+    return numberRequired > 0 ? (
       <CardRoleBadge
         isAdmin={isAdmin}
-        name={r.role.name}
+        name={role.name}
         selected={selected}
-        colour={r.role.colour}
+        colour={role.colour}
         number={numberRemaining}
-        key={`role-badge-${shiftData.id}-${r.role.name}`}
+        key={`role-badge-${shiftData.id}-${role.name}`}
       />
     ) : null;
   });
