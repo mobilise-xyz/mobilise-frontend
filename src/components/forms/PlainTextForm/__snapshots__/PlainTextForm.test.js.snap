@@ -9,13 +9,18 @@ exports[`Description Form Component renders the form correctly 1`] = `
   >
     
   </label>
-  <textarea
-    className="form-control-plaintext"
+  <input
+    className="form-control"
     disabled={false}
     name=""
     placeholder="Enter "
     required={true}
     rows="1"
+    style={
+      Object {
+        "padding": 0,
+      }
+    }
   />
 </div>
 `;
