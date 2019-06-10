@@ -24,8 +24,12 @@ const login = (username, password) => {
 
         // If volunteer first login then redirect to availability screen.
         if (!user.isAdmin && !user.lastLogin) {
-          console.log('redirect to availability');
-          history.push('/availability');
+          history.push('/settings');
+          dispatch(
+            alertActions.success(
+              'Welcome to Mobilise! Please fill in your preferences below.'
+            )
+          );
         } else {
           history.push('/');
         }
