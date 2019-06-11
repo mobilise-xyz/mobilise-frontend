@@ -76,8 +76,10 @@ class HallOfFame extends React.Component {
     let increaseOrdered = lastWeekIncrease;
 
     if (lastWeekIncrease.length > 2) {
-      hoursOrdered = swapElements(lastWeekHours, 0, 1);
       increaseOrdered = swapElements(lastWeekIncrease, 0, 1);
+    }
+    if (lastWeekHours.length > 2) {
+      hoursOrdered = swapElements(lastWeekHours, 0, 1);
     }
 
     return (
