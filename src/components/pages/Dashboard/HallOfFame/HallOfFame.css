@@ -5,3 +5,15 @@
 .hallOfFameCard > div.card-header {
   font-size: 1.5rem;
 }
+
+.text-gold {
+  color: #ffd700;
+}
+
+.text-silver {
+  color: #c0c0c0;
+}
+
+.text-bronze {
+  color: #cd7f32;
+}
