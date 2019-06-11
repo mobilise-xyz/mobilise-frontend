@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import './ShiftCard.css';
 import ErrorBoundary from '../ErrorBoundary';
 import utils from '../../_helpers/utils';
 import shiftsActions from '../../_actions/shifts.actions';
 import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
 import CardRoleBadge from './RoleBadges/CardRoleBadge';
+import shiftTypes from '../../__types/shifts.types';
 
 const generateRequirements = (shiftData, selected, isAdmin) =>
   shiftData.requirements.map(r => {
@@ -73,19 +75,10 @@ class ShiftCard extends React.Component {
       return;
     }
 
-    if (name === selected) {
-      // Already selected, select.
-      this.setState({
-        selected: ''
-      });
-      // Book
-    } else {
-      // Not already selected, select.
-      this.setState({
-        selected: name
-      });
-      // Unbook
-    }
+    // Already selected, select.
+    this.setState({
+      selected: name === selected ? '' : name
+    });
   };
 
   handleBook = (repeatedType, until) => {
@@ -175,6 +168,13 @@ class ShiftCard extends React.Component {
     );
   }
 }
+
+ShiftCard.propTypes = {
+  shiftData: shiftTypes.shift.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
+  recommendedRoleNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  type: PropTypes.oneOf(['', 'booked']).isRequired
+};
 
 function mapStateToProps(state) {
   const { shifts } = state.shifts;

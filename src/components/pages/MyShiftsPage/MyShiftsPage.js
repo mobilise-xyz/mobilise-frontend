@@ -40,16 +40,24 @@ class MyShiftsPage extends React.Component {
   };
 
   render() {
-    const { shifts } = this.props;
+    const { shifts, loading, error } = this.props;
     const { viewType } = this.state;
+
+    if (loading === true || !shifts) {
+      return null;
+    }
+
+    if (error) {
+      return <p>error</p>;
+    }
 
     let view = 'list';
     switch (viewType) {
       case 'list':
-        view = <ShiftList type="booked" shifts={shifts.shifts.all} />;
+        view = <ShiftList type="booked" shifts={shifts.all} />;
         break;
       case 'calendar':
-        view = <CalendarView shifts={shifts.shifts.all} />;
+        view = <CalendarView shifts={shifts.all} />;
         break;
       default:
     }
@@ -71,9 +79,11 @@ class MyShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts } = state;
+  const { shifts, loading, error } = state.shifts;
   return {
-    shifts
+    shifts,
+    loading,
+    error
   };
 };
 

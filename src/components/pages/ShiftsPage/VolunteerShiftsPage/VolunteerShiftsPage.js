@@ -15,7 +15,7 @@ class VolunteerShiftsPage extends React.Component {
   render() {
     const { shifts, error, loading } = this.props;
 
-    if (loading === true || shifts === undefined) {
+    if (loading === true || !shifts) {
       return null;
     }
 
