@@ -2,7 +2,7 @@ import React from 'react';
 import { Badge } from 'react-bootstrap';
 import '../ModalRoleBadge/RoleBadge.css';
 
-const VolunteerRoleBadge = ({
+const CardRoleBadge = ({
   name,
   number,
   handleSelect,
@@ -29,6 +29,6 @@ const VolunteerRoleBadge = ({
   );
 };
 
-VolunteerRoleBadge.propTypes = {};
+CardRoleBadge.propTypes = {};
 
-export default VolunteerRoleBadge;
+export default CardRoleBadge;
