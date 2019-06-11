@@ -7,37 +7,8 @@ const applyToShifts = (shifts, action, f) => ({
   recommended: shifts.recommended ? shifts.recommended.map(f) : undefined
 });
 
-// state: {shifts: {all, recommended}}
-const placeholderShift = {
-  id: -1,
-  title: 'Loading...',
-  description: null,
-  creator: {
-    user: {
-      firstName: '',
-      lastName: ''
-    }
-  },
-  requirements: [
-    {
-      numberRequired: 0,
-      role: {
-        name: 'Loading...'
-      }
-    }
-  ]
-};
-
-const initialState = {
-  loading: false,
-  shifts: {
-    all: [placeholderShift],
-    recommended: [placeholderShift] // FIXME
-  }
-};
-
 // TODO This is very messy, multiple cases can be collapsed and there are many unused state fields..
-const shifts = (state = initialState, action) => {
+const shifts = (state = {}, action) => {
   switch (action.type) {
     // GET
     case shiftsConstants.GETALL_REQUEST:
