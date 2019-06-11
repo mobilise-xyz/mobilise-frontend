@@ -17,7 +17,16 @@ class AdminShiftsPage extends React.Component {
   }
 
   render() {
-    const { shifts } = this.props;
+    const { shifts, loading, error } = this.props;
+
+    if (loading === true || !shifts) {
+      return null;
+    }
+
+    if (error) {
+      return <p>error</p>;
+    }
+
     return (
       <Layout>
         <LinkContainer exact to="new-shift" className="add-shift-link">
@@ -25,16 +34,18 @@ class AdminShiftsPage extends React.Component {
             {<FontAwesomeIcon icon={faPlus} />} Add Shift
           </Button>
         </LinkContainer>
-        <ShiftList isAdmin shifts={shifts.shifts.all} />
+        <ShiftList isAdmin shifts={shifts.all} />
       </Layout>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const { shifts } = state;
+  const { shifts, loading, error } = state.shifts;
   return {
-    shifts
+    shifts,
+    loading,
+    error
   };
 };
 
