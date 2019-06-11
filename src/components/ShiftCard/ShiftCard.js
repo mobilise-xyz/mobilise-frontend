@@ -117,12 +117,14 @@ class ShiftCard extends React.Component {
           }}
         >
           <a
+            title="Shift location maps link"
             href={generateGoogleMapsLink(shiftData.address)}
             target="_blank"
             rel="noopener noreferrer"
           >
             <Card.Img
               variant="top"
+              alt="Shift location map"
               src={generateGoogleMapsImage(shiftData.address)}
             />
           </a>
@@ -144,8 +146,8 @@ class ShiftCard extends React.Component {
               type="button"
               onClick={this.toggleModal}
               disabled={collapsed}
-              className={`btn-more-info ${
-                isRecommended ? 'btn-recommended' : null
+              className={`btn-more-info btn-raised ${
+                isRecommended ? 'btn-recommended' : ''
               }`}
             >
               More info
