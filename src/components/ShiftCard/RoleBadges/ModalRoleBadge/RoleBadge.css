@@ -3,6 +3,8 @@
   font-size: 1rem;
   color: white !important;
   margin: 0.25rem 0.25rem 0.25rem 0 !important;
+  border-radius: 2rem;
+  padding: 0 0.7rem;
 }
 
 .role-control-button {

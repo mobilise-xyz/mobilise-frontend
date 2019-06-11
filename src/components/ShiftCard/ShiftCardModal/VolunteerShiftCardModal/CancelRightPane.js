@@ -2,9 +2,9 @@ import React from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import PlainTextForm from '../../../forms/PlainTextForm';
-import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge';
 import authHeader from '../../../../_helpers/auth-header';
 import utils from '../../../../_helpers/utils';
+import CardRoleBadge from '../../RoleBadges/CardRoleBadge';
 
 const CancelRightPane = ({
   shiftData,
@@ -40,10 +40,9 @@ const CancelRightPane = ({
         <Col>
           {/* <h6>You're signed up for:</h6> */}
           {shiftData.requirements.map(r => (
-            <ModalRoleBadge
+            <CardRoleBadge
               key={shiftData.id + r.role.name}
               name={r.role.name}
-              onModal
               colour={r.role.colour}
             />
           ))}

@@ -11,10 +11,11 @@ const CardRoleBadge = ({
 }) => {
   return (
     <Badge
+      pill
       className="role-badge"
       style={{
         backgroundColor: colour,
-        padding: '0.01rem 0.5rem 0.01rem 0.5rem'
+        padding: '0.1rem 0.7rem'
       }}
       name={name}
       onClick={onModal ? handleSelect : null}

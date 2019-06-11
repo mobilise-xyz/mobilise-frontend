@@ -31,8 +31,9 @@ const AdminRoleBadge = ({
 }) => {
   return (
     <Badge
+      pill
       className="role-badge"
-      style={{ backgroundColor: colour }}
+      style={{ padding: 0, backgroundColor: colour }}
       name={name}
     >
       {name}
