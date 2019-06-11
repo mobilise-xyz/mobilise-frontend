@@ -1,53 +1,31 @@
 import React from 'react';
-import axios from 'axios';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
 import logo from '../../assets/images/logo-white.png';
-import authHeader from '../../_helpers/auth-header';
 import VolunteerHeader from './VolunteerHeaderNav';
 import AdminHeader from './AdminHeader';
-import utils from '../../_helpers/utils';
+import userActions from '../../_actions/user.actions';
 
 class Header extends React.Component {
-  state = {
-    nameSuccess: false, // Indicates if the name GET has been successful
-    firstName: '',
-    adminMessage: ''
-  };
-
   componentDidMount() {
     // Retrieve name from uid
-    const { uid, isAdmin } = JSON.parse(localStorage.getItem('user'));
-
-    const config = {
-      headers: authHeader(),
-      params: {
-        id: uid
-      }
-    };
-
-    axios
-      .get(`/users/${uid}`, config)
-      .then(utils.handleResponse)
-      .then(data =>
-        this.setState({
-          firstName: data.firstName,
-          nameSuccess: true,
-          adminMessage: isAdmin ? '(Admin)' : '(Volunteer)'
-        })
-      );
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    const { dispatch } = this.props;
+    dispatch(userActions.get(uid));
   }
 
   render() {
     const { isAdmin } = JSON.parse(localStorage.getItem('user'));
-    const { nameSuccess, firstName, adminMessage } = this.state;
-    let nameMessage = null;
+    const { firstName, lastName } = this.props;
+    const adminMessage = isAdmin ? '(Admin)' : '(Volunteer)';
 
-    if (nameSuccess) {
-      nameMessage = `Logged in as ${firstName} ${adminMessage}`;
+    let nameMessage = '';
+    if (firstName !== undefined) {
+      nameMessage = `Logged in as ${firstName} ${lastName} ${adminMessage}`;
     }
 
     return (
@@ -94,4 +72,11 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => {
+  const { firstName, lastName } = state.user;
+  return {
+    firstName,
+    lastName
+  };
+};
+export default connect(mapStateToProps)(Header);

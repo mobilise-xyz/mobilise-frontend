@@ -176,11 +176,11 @@ ShiftCard.propTypes = {
   type: PropTypes.oneOf(['', 'booked']).isRequired
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   const { shifts } = state.shifts;
   return {
     shifts
   };
-}
+};
 
 export default connect(mapStateToProps)(ShiftCard);

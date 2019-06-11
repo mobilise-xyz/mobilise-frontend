@@ -4,6 +4,18 @@ import userService from '../_services/user.service';
 import history from '../_helpers/history';
 import alertActions from './alert.actions';
 
+const get = uid => {
+  const getSuccess = user => {
+    return { type: userConstants.GET, user };
+  };
+
+  return dispatch => {
+    userService.get(uid).then(user => {
+      dispatch(getSuccess(user));
+    });
+  };
+};
+
 const login = (username, password) => {
   const request = user => {
     return { type: userConstants.LOGIN_REQUEST, user };
@@ -48,6 +60,7 @@ const logout = () => {
 };
 
 const userActions = {
+  get,
   login,
   logout
 };

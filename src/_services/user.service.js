@@ -1,6 +1,18 @@
 import axios from 'axios';
 import utils from '../_helpers/utils';
 import history from '../_helpers/history';
+import authHeader from '../_helpers/auth-header';
+
+const get = uid => {
+  const config = {
+    headers: authHeader(),
+    params: {
+      id: uid
+    }
+  };
+
+  return axios.get(`/users/${uid}`, config).then(utils.handleResponse);
+};
 
 const logout = () => {
   // remove user from local storage to log user out
@@ -41,6 +53,7 @@ const login = (email, password) => {
 };
 
 const userService = {
+  get,
   login,
   logout
 };
