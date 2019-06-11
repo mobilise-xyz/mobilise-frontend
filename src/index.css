@@ -16,6 +16,11 @@ code {
   background-color: #27a659 !important;
 }
 
+.btn.btn-raised.btn-primary {
+  color: white !important;
+  background-color: #27a659 !important;
+}
+
 .btn-primary {
   color: #27a659 !important;
 }

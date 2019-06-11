@@ -144,9 +144,10 @@ class ShiftCard extends React.Component {
           <Card.Footer className={isRecommended ? 'bg-primary' : null}>
             <Button
               type="button"
+              variant="outline-primary"
               onClick={this.toggleModal}
               disabled={collapsed}
-              className={`btn-more-info btn-raised ${
+              className={`btn-more-info ${
                 isRecommended ? 'btn-recommended' : ''
               }`}
             >
