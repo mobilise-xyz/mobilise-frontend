@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import '../ShiftCard.css';
-import VolunteerShiftCardModal from './VolunteerShiftCardModal/index';
-import AdminShiftCardModal from './AdminShiftCardModal/index';
+
+const VolunteerShiftCardModal = React.lazy(() =>
+  import('./VolunteerShiftCardModal')
+);
+const AdminShiftCardModal = React.lazy(() => import('./AdminShiftCardModal'));
 
 const ShiftCardModal = ({
   shiftData,
@@ -28,9 +31,13 @@ const ShiftCardModal = ({
   };
 
   return isAdmin ? (
-    <AdminShiftCardModal {...passthroughProps} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <AdminShiftCardModal {...passthroughProps} />
+    </Suspense>
   ) : (
-    <VolunteerShiftCardModal {...passthroughProps} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <VolunteerShiftCardModal {...passthroughProps} />
+    </Suspense>
   );
 };
 
