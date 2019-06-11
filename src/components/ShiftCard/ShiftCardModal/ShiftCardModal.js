@@ -30,15 +30,13 @@ const ShiftCardModal = ({
     type
   };
 
-  return isAdmin ? (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AdminShiftCardModal {...passthroughProps} />
-    </Suspense>
+  const toRender = isAdmin ? (
+    <AdminShiftCardModal {...passthroughProps} />
   ) : (
-    <Suspense fallback={<div>Loading...</div>}>
-      <VolunteerShiftCardModal {...passthroughProps} />
-    </Suspense>
+    <VolunteerShiftCardModal {...passthroughProps} />
   );
+
+  return <Suspense fallback={<div>Loading...</div>}>{toRender}</Suspense>;
 };
 
 export default ShiftCardModal;

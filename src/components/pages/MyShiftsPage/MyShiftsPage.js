@@ -34,9 +34,12 @@ class MyShiftsPage extends React.Component {
   };
 
   componentDidMount = () => {
-    const { dispatch } = this.props;
+    const { shifts, dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(shiftsActions.getForUser(uid, true));
+
+    if (!shifts) {
+      dispatch(shiftsActions.getForUser(uid, true));
+    }
   };
 
   render() {
