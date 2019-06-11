@@ -1,15 +1,6 @@
 import volunteerConstants from '../_constants/volunteer.constants';
 
-const initialState = {
-  contributions: {},
-  contributionsLoading: true,
-  hallOfFame: {},
-  hallOfFameLoading: true,
-  activity: {},
-  activityLoading: true
-};
-
-const volunteers = (state = initialState, action) => {
+const volunteers = (state = {}, action) => {
   switch (action.type) {
     case volunteerConstants.CONTRIBUTIONS_REQUEST:
       return {

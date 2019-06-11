@@ -14,8 +14,11 @@ class Header extends React.Component {
   componentDidMount() {
     // Retrieve name from uid
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    const { dispatch } = this.props;
-    dispatch(usersActions.get(uid));
+    const { firstName, dispatch } = this.props;
+
+    if (!firstName) {
+      dispatch(usersActions.get(uid));
+    }
   }
 
   render() {

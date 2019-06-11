@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import { Card, Col, Container, Row } from 'react-bootstrap';
 import './HallOfFame.css';
 import volunteerActions from '../../../../_actions/volunteer.actions';
 
@@ -45,14 +45,17 @@ function swapElements(arr, i, j) {
 
 class HallOfFame extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(volunteerActions.getHallOfFame());
+    const { hallOfFame, dispatch } = this.props;
+
+    if (!hallOfFame) {
+      dispatch(volunteerActions.getHallOfFame());
+    }
   }
 
   render() {
     const { hallOfFame, hallOfFameLoading } = this.props;
 
-    if (hallOfFameLoading === true) {
+    if (hallOfFameLoading === true || !hallOfFame) {
       return null;
     }
     const { lastWeekHours, lastWeekIncrease } = hallOfFame;

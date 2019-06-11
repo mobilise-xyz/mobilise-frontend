@@ -14,12 +14,15 @@ class ContactPreferencesForm extends React.Component {
   handleChange = ({ target }) => {
     const { name, checked } = target;
     const { contactPreferences, dispatch } = this.props;
-    dispatch(
-      usersActions.updatePreferenceState({
-        ...contactPreferences,
-        [name]: checked
-      })
-    );
+
+    if (!contactPreferences) {
+      dispatch(
+        usersActions.updatePreferenceState({
+          ...contactPreferences,
+          [name]: checked
+        })
+      );
+    }
   };
 
   handleSubmit = () => {

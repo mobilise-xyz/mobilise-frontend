@@ -27,15 +27,18 @@ ContributionCard.propTypes = {
 
 class MyContributions extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { contributions, dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(volunteerActions.getContributions(uid));
+
+    if (!contributions) {
+      dispatch(volunteerActions.getContributions(uid));
+    }
   }
 
   render() {
     const { contributions, contributionsLoading } = this.props;
 
-    if (contributionsLoading === true) {
+    if (contributionsLoading === true || !contributions) {
       return null;
     }
 

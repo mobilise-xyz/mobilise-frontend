@@ -32,15 +32,18 @@ ActivityCard.propTypes = {
 
 class MyActivity extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { activity, dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(volunteerActions.getActivity(uid));
+
+    if (!activity) {
+      dispatch(volunteerActions.getActivity(uid));
+    }
   }
 
   render() {
     const { activity: activities, activityLoading } = this.props;
 
-    if (activityLoading === true) {
+    if (activityLoading === true || !activities) {
       return null;
     }
 
