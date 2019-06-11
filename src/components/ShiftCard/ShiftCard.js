@@ -1,7 +1,16 @@
 import React from 'react';
-import { Button, Card, Col, Row } from 'react-bootstrap';
+import {
+  Button,
+  Card,
+  Col,
+  Row,
+  Popover,
+  OverlayTrigger
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import './ShiftCard.css';
 import ErrorBoundary from '../ErrorBoundary';
 import utils from '../../_helpers/utils';
@@ -109,6 +118,13 @@ class ShiftCard extends React.Component {
 
     const isRecommended = recommendedRoleNames.length !== 0;
 
+    const recommendedPopover = (
+      <Popover id="popover-basic" title="Recommended Shift">
+        This shift is recommended specifically for you and would help City
+        Harvest more if you booked onto it.
+      </Popover>
+    );
+
     return (
       <ErrorBoundary>
         <Card
@@ -155,6 +171,17 @@ class ShiftCard extends React.Component {
               More info
               <span className="sr-only">Card information button</span>
             </Button>
+            {isRecommended ? (
+              <span className="ic-recommended">
+                <OverlayTrigger
+                  placement="right"
+                  overlay={recommendedPopover}
+                  style={{ alignItems: 'flex-end' }}
+                >
+                  <FontAwesomeIcon icon={faExclamationCircle} color="white" />
+                </OverlayTrigger>
+              </span>
+            ) : null}
           </Card.Footer>
           <ShiftCardModal
             isAdmin={isAdmin}
