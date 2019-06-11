@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-import { Card, CardColumns, Container, Row } from 'react-bootstrap';
+import { Card, Container, Row, Col } from 'react-bootstrap';
 import './HallOfFame.css';
 import volunteerActions from '../../../../_actions/volunteer.actions';
 
@@ -74,9 +74,9 @@ class HallOfFame extends React.Component {
           <h4>MOST HOURS</h4>
         </Row>
         <Row>
-          <CardColumns>
-            {hoursOrdered.map(val => {
-              return (
+          {hoursOrdered.map(val => {
+            return (
+              <Col style={{ margin: '5px' }}>
                 <HallOfFameCard
                   key={val.rank}
                   id={val.rank}
@@ -91,17 +91,17 @@ class HallOfFame extends React.Component {
                     />
                   }
                 />
-              );
-            })}
-          </CardColumns>
+              </Col>
+            );
+          })}
         </Row>
         <Row className="justify-content-md-center" style={{ margin: '30px' }}>
           <h4>ON THE RISE!</h4>
         </Row>
         <Row>
-          <CardColumns>
-            {increaseOrdered.map(val => {
-              return (
+          {increaseOrdered.map(val => {
+            return (
+              <Col style={{ margin: '5px' }}>
                 <HallOfFameCard
                   key={val.rank}
                   id={val.rank}
@@ -116,9 +116,9 @@ class HallOfFame extends React.Component {
                     />
                   }
                 />
-              );
-            })}
-          </CardColumns>
+              </Col>
+            );
+          })}
         </Row>
       </Container>
     );
