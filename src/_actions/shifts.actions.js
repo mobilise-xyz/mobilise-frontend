@@ -44,6 +44,30 @@ const getForUser = (uid, booked = false) => {
   };
 };
 
+const getBookedForUser = uid => {
+  const request = () => ({ type: shiftsConstants.GETBOOKEDFORUSER_REQUEST });
+  const success = myShifts => ({
+    type: shiftsConstants.GETBOOKEDFORUSER_SUCCESS,
+    myShifts
+  });
+  const failure = error => ({
+    type: shiftsConstants.GETBOOKEDFORUSER_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    shiftsService.getForUser(uid, true).then(
+      shifts => dispatch(success(shifts)),
+      error => {
+        dispatch(alertActions.error('Error getting shifts.'));
+        return dispatch(failure(error));
+      }
+    );
+  };
+};
+
 const deleteWithId = shiftId => {
   const request = id => {
     return { type: shiftsConstants.DELETE_REQUEST, id };
@@ -179,6 +203,7 @@ const ping = shiftId => {
 const shiftsActions = {
   getAll,
   getForUser,
+  getBookedForUser,
   book,
   deleteWithId,
   update,

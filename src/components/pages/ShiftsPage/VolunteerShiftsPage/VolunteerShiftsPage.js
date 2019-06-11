@@ -22,7 +22,7 @@ class VolunteerShiftsPage extends React.Component {
     if (loading === true || !shifts) {
       return null;
     }
-
+    console.log(shifts);
     if (error) {
       return <p>error</p>;
     }

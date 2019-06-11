@@ -34,22 +34,23 @@ class MyShiftsPage extends React.Component {
   };
 
   componentDidMount = () => {
-    const { shifts, dispatch } = this.props;
+    const { myShifts, dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
 
-    if (!shifts) {
-      dispatch(shiftsActions.getForUser(uid, true));
+    if (!myShifts) {
+      dispatch(shiftsActions.getBookedForUser(uid));
     }
   };
 
   render() {
-    const { shifts, loading, error } = this.props;
+    const { myShifts, loading, error } = this.props;
     const { viewType } = this.state;
 
-    if (loading === true || !shifts) {
+    if (loading === true || !myShifts) {
       return null;
     }
 
+    console.log(myShifts);
     if (error) {
       return <p>error</p>;
     }
@@ -57,10 +58,10 @@ class MyShiftsPage extends React.Component {
     let view = 'list';
     switch (viewType) {
       case 'list':
-        view = <ShiftList type="booked" shifts={shifts.all} />;
+        view = <ShiftList type="booked" shifts={myShifts.all} />;
         break;
       case 'calendar':
-        view = <CalendarView shifts={shifts.all} />;
+        view = <CalendarView shifts={myShifts.all} />;
         break;
       default:
     }
@@ -82,9 +83,9 @@ class MyShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts, loading, error } = state.shifts;
+  const { myShifts, loading, error } = state.shifts;
   return {
-    shifts,
+    myShifts,
     loading,
     error
   };

@@ -32,6 +32,25 @@ const shifts = (state = {}, action) => {
         error: action.error,
         loading: false
       };
+    case shiftsConstants.GETBOOKEDFORUSER_REQUEST:
+      return {
+        ...state,
+        myShifts: state.myShifts,
+        loading: true
+      };
+    case shiftsConstants.GETBOOKEDFORUSER_SUCCESS:
+      return {
+        ...state,
+        myShifts: action.myShifts,
+        loading: false
+      };
+    case shiftsConstants.GETBOOKEDFORUSER_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+        loading: false
+      };
+
     case shiftsConstants.DELETE_REQUEST: {
       const setDeleteRequest = shift =>
         shift.id === action.id ? { ...shift, loading: true } : shift;

@@ -102,12 +102,15 @@ class ShiftCard extends React.Component {
     } = this.props;
     const { showModal, selected } = this.state;
 
-    const thisShift = shifts.all.find(s => s.id === shiftData.id);
+    let collapsed = false;
+    let isRecommended = false;
+    if (type !== 'booked') {
+      const thisShift = shifts.all.find(s => s.id === shiftData.id);
 
-    const collapsed =
-      thisShift.deleteSuccess === true || thisShift.bookSuccess === true;
-
-    const isRecommended = recommendedRoleNames.length !== 0;
+      collapsed =
+        thisShift.deleteSuccess === true || thisShift.bookSuccess === true;
+      isRecommended = recommendedRoleNames.length !== 0;
+    }
 
     return (
       <ErrorBoundary>
