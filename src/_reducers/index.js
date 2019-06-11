@@ -5,7 +5,7 @@ import shifts from './shifts.reducer';
 import alert from './alert.reducer';
 import availability from './availability.reducer';
 import volunteers from './volunteers.reducer';
-import user from './user.reducer';
+import user from './users.reducer';
 
 const rootReducer = combineReducers({
   authentication,

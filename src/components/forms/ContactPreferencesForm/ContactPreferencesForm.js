@@ -1,52 +1,42 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button, Card, Container, Form } from 'react-bootstrap';
-import axios from 'axios';
-import authHeader from '../../../_helpers/auth-header';
+import usersActions from '../../../_actions/users.actions';
 
 class ContactPreferencesForm extends React.Component {
-  state = {
-    email: false,
-    text: false
-  };
-
   componentDidMount() {
-    const config = {
-      headers: authHeader()
-    };
     const { uid } = JSON.parse(localStorage.getItem('user'));
+    const { dispatch } = this.props;
 
-    axios
-      .get(`/users/${uid}/contact-preferences`, config)
-      .then(resp =>
-        this.setState({ email: resp.data.email, text: resp.data.text })
-      );
+    dispatch(usersActions.get(uid));
   }
 
-  handleChange = e => {
-    const { name, checked } = e.target;
-    this.setState({
-      [name]: checked
-    });
+  handleChange = ({ target }) => {
+    const { name, checked } = target;
+    const { contactPreferences, dispatch } = this.props;
+    dispatch(
+      usersActions.updatePreferenceState({
+        ...contactPreferences,
+        [name]: checked
+      })
+    );
   };
 
   handleSubmit = () => {
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    const { email, text } = this.state;
-    const data = {
-      contactPreference: {
-        email,
-        text
-      }
-    };
-    const config = {
-      headers: authHeader()
-    };
-    console.log('PUT', data);
-    axios.put(`/users/${uid}/contact-preferences`, data, config);
+    const { contactPreferences, dispatch } = this.props;
+    const { email, text } = contactPreferences;
+    dispatch(usersActions.updateContactPreferences(uid, email, text));
   };
 
   render() {
-    const { email, text } = this.state;
+    const { contactPreferences, loading } = this.props;
+
+    if (loading === true || !contactPreferences) {
+      return null;
+    }
+
+    const { email, text } = contactPreferences;
 
     return (
       <Card className="p-3">
@@ -87,4 +77,12 @@ class ContactPreferencesForm extends React.Component {
   }
 }
 
-export default ContactPreferencesForm;
+const mapStateToProps = state => {
+  const { contactPreferences, loading } = state.user;
+  return {
+    contactPreferences,
+    loading
+  };
+};
+
+export default connect(mapStateToProps)(ContactPreferencesForm);

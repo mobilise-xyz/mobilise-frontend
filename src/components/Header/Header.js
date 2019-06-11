@@ -8,14 +8,14 @@ import './Header.css';
 import logo from '../../assets/images/logo-white.png';
 import VolunteerHeader from './VolunteerHeaderNav';
 import AdminHeader from './AdminHeader';
-import userActions from '../../_actions/user.actions';
+import usersActions from '../../_actions/users.actions';
 
 class Header extends React.Component {
   componentDidMount() {
     // Retrieve name from uid
     const { uid } = JSON.parse(localStorage.getItem('user'));
     const { dispatch } = this.props;
-    dispatch(userActions.get(uid));
+    dispatch(usersActions.get(uid));
   }
 
   render() {

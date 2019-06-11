@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
-import userActions from '../../_actions/user.actions';
+import { Button, Form } from 'react-bootstrap';
+import usersActions from '../../_actions/users.actions';
 import CardLayout from '../CardLayout';
 
 class LoginPage extends React.Component {
@@ -11,7 +11,7 @@ class LoginPage extends React.Component {
     const { dispatch } = this.props;
 
     // Logs the user out
-    dispatch(userActions.logout());
+    dispatch(usersActions.logout());
 
     this.state = {
       email: '',
@@ -30,7 +30,7 @@ class LoginPage extends React.Component {
     const { email, password } = this.state;
     const { dispatch } = this.props;
     if (email && password) {
-      dispatch(userActions.login(email, password));
+      dispatch(usersActions.login(email, password));
     }
   };
 

@@ -14,6 +14,20 @@ const get = uid => {
   return axios.get(`/users/${uid}`, config).then(utils.handleResponse);
 };
 
+const updateContactPreferences = (uid, email, text) => {
+  const data = {
+    contactPreferences: {
+      email,
+      text
+    }
+  };
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios.put(`/users/${uid}/contact-preferences`, data, config);
+};
+
 const logout = () => {
   // remove user from local storage to log user out
   localStorage.removeItem('user');
@@ -52,10 +66,11 @@ const login = (email, password) => {
     });
 };
 
-const userService = {
+const usersService = {
   get,
+  updateContactPreferences,
   login,
   logout
 };
 
-export default userService;
+export default usersService;
