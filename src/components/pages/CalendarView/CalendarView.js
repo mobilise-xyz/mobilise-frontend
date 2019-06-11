@@ -49,7 +49,7 @@ class CalendarView extends React.Component {
   }
 
   toggleModal = e => {
-    if (e !== false) {
+    if (e !== false && e !== undefined) {
       const { shiftData } = e;
       this.setState({ selectedShiftData: shiftData });
     }
@@ -57,7 +57,7 @@ class CalendarView extends React.Component {
   };
 
   render() {
-    const { shifts } = this.props;
+    const { shifts, isAdmin } = this.props;
     const { showModal, selectedShiftData } = this.state;
     const events = shifts.map(s => ({
       start: moment(`${s.date} ${s.start}`).toDate(),
@@ -87,6 +87,7 @@ class CalendarView extends React.Component {
           />
         </div>
         <ShiftCardModal
+          isAdmin={isAdmin}
           shiftData={selectedShiftData}
           show={showModal}
           onHide={this.toggleModal}

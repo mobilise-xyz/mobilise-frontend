@@ -1,14 +1,33 @@
 import React from 'react';
+import { Col, ToggleButton, ToggleButtonGroup, OverlayTrigger, Tooltip  } from 'react-bootstrap';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
 import shiftsActions from '../../../../_actions/shifts.actions';
 import './AdminShiftsPage.css';
+import CalendarView from '../../CalendarView';
+
+// TODO: remove duplication between here and MyShiftsPage
+const ViewSwitch = ({ handleListView, handleCalendarView }) => (
+  <Col>
+    <ToggleButtonGroup type="radio" name="viewOptions" defaultValue={1}>
+      <ToggleButton value={1} onClick={handleListView}>
+        List
+      </ToggleButton>
+      <ToggleButton value={2} onClick={handleCalendarView}>
+        Calendar
+      </ToggleButton>
+    </ToggleButtonGroup>
+  </Col>
+);
 
 class AdminShiftsPage extends React.Component {
+  state = {
+    viewType: 'list'
+  };
+
   // TODO Handle exception properly.
   componentDidMount() {
     const { dispatch } = this.props;
@@ -16,8 +35,17 @@ class AdminShiftsPage extends React.Component {
     dispatch(shiftsActions.getAll(now));
   }
 
+  handleListView = () => {
+    this.setState({ viewType: 'list' });
+  };
+
+  handleCalendarView = () => {
+    this.setState({ viewType: 'calendar' });
+  };
+
   render() {
     const { shifts, loading, error } = this.props;
+    const { viewType } = this.state;
 
     if (loading === true || !shifts) {
       return null;
@@ -27,8 +55,25 @@ class AdminShiftsPage extends React.Component {
       return <p>error</p>;
     }
 
+    let view = 'list';
+    switch (viewType) {
+      case 'list':
+        view = <ShiftList isAdmin shifts={shifts.shifts.all} />;
+        break;
+      case 'calendar':
+        view = <CalendarView isAdmin shifts={shifts.shifts.all} />;
+        break;
+      default:
+    }
+
     return (
-      <Layout>
+      <Layout cornerComponent={
+                               <ViewSwitch
+                                 handleListView={this.handleListView}
+                                 handleCalendarView={this.handleCalendarView}
+                               />
+                             }
+      >
         <Link to="new-shift">
           <OverlayTrigger overlay={<Tooltip>Add new shift</Tooltip>}>
             <button
@@ -39,8 +84,7 @@ class AdminShiftsPage extends React.Component {
             </button>
           </OverlayTrigger>
         </Link>
-
-        <ShiftList isAdmin shifts={shifts.all} />
+        {view}
       </Layout>
     );
   }
