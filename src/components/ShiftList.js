@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CardColumns, Col, Container, Row } from 'react-bootstrap';
+import shiftTypes from '../__types/shifts.types';
 import ShiftCard from './ShiftCard';
 
 const partitionShiftsByDate = shifts => {
@@ -80,7 +81,7 @@ ShiftList.defaultProps = {
 };
 
 ShiftList.propTypes = {
-  shifts: PropTypes.element.isRequired,
+  shifts: PropTypes.arrayOf(shiftTypes.shift).isRequired,
   isAdmin: PropTypes.bool,
   type: PropTypes.oneOf(['', 'booked'])
 };

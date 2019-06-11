@@ -1,21 +1,33 @@
 import React from 'react';
-import { Button, Card, Col, Row } from 'react-bootstrap';
+import {
+  Button,
+  Card,
+  Col,
+  Row,
+  Popover,
+  OverlayTrigger
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import './ShiftCard.css';
 import ErrorBoundary from '../ErrorBoundary';
 import utils from '../../_helpers/utils';
 import shiftsActions from '../../_actions/shifts.actions';
 import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
 import CardRoleBadge from './RoleBadges/CardRoleBadge';
+import shiftTypes from '../../__types/shifts.types';
 
-const generateRequirements = (shiftData, selected, isAdmin) =>
+const generateRequirements = (shiftData, selected, isAdmin, type) =>
   shiftData.requirements.map(r => {
     // Only show roles that are available to book
     // i.e. numberRequired > 0
 
     const { numberRequired, role, bookings } = r;
     const numberOfBookings = bookings ? bookings.length : 0;
-    const numberRemaining = numberRequired - numberOfBookings; // TODO hook up
+    const numberRemaining =
+      type === 'booked' ? null : numberRequired - numberOfBookings;
     return numberRequired > 0 ? (
       <CardRoleBadge
         isAdmin={isAdmin}
@@ -73,19 +85,10 @@ class ShiftCard extends React.Component {
       return;
     }
 
-    if (name === selected) {
-      // Already selected, select.
-      this.setState({
-        selected: ''
-      });
-      // Book
-    } else {
-      // Not already selected, select.
-      this.setState({
-        selected: name
-      });
-      // Unbook
-    }
+    // Already selected, select.
+    this.setState({
+      selected: name === selected ? '' : name
+    });
   };
 
   handleBook = (repeatedType, until) => {
@@ -115,6 +118,13 @@ class ShiftCard extends React.Component {
 
     const isRecommended = recommendedRoleNames.length !== 0;
 
+    const recommendedPopover = (
+      <Popover id="popover-basic" title="Recommended Shift">
+        This shift is recommended specifically for you and would help City
+        Harvest more if you booked onto it.
+      </Popover>
+    );
+
     return (
       <ErrorBoundary>
         <Card
@@ -124,12 +134,14 @@ class ShiftCard extends React.Component {
           }}
         >
           <a
+            title="Shift location maps link"
             href={generateGoogleMapsLink(shiftData.address)}
             target="_blank"
             rel="noopener noreferrer"
           >
             <Card.Img
               variant="top"
+              alt="Shift location map"
               src={generateGoogleMapsImage(shiftData.address)}
             />
           </a>
@@ -143,21 +155,33 @@ class ShiftCard extends React.Component {
               </Col>
             </Row>
             <Row noGutters>
-              {generateRequirements(shiftData, selected, isAdmin)}
+              {generateRequirements(shiftData, selected, isAdmin, type)}
             </Row>
           </Card.Body>
           <Card.Footer className={isRecommended ? 'bg-primary' : null}>
             <Button
               type="button"
+              variant="outline-primary"
               onClick={this.toggleModal}
               disabled={collapsed}
               className={`btn-more-info ${
-                isRecommended ? 'btn-recommended' : null
+                isRecommended ? 'btn-recommended' : ''
               }`}
             >
               More info
               <span className="sr-only">Card information button</span>
             </Button>
+            {isRecommended ? (
+              <span className="ic-recommended">
+                <OverlayTrigger
+                  placement="right"
+                  overlay={recommendedPopover}
+                  style={{ alignItems: 'flex-end' }}
+                >
+                  <FontAwesomeIcon icon={faExclamationCircle} color="white" />
+                </OverlayTrigger>
+              </span>
+            ) : null}
           </Card.Footer>
           <ShiftCardModal
             isAdmin={isAdmin}
@@ -176,11 +200,18 @@ class ShiftCard extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+ShiftCard.propTypes = {
+  shiftData: shiftTypes.shift.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
+  recommendedRoleNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  type: PropTypes.oneOf(['', 'booked']).isRequired
+};
+
+const mapStateToProps = state => {
   const { shifts } = state.shifts;
   return {
     shifts
   };
-}
+};
 
 export default connect(mapStateToProps)(ShiftCard);

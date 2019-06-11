@@ -1,4 +1,11 @@
 body {
+  background: #fafafa url('./assets/images/background-triangle.svg') no-repeat
+    fixed center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -14,6 +21,15 @@ code {
 
 .bg-primary {
   background-color: #27a659 !important;
+}
+
+.btn.btn-raised.btn-primary {
+  color: white !important;
+  background-color: #27a659 !important;
+}
+
+.btn.btn-outline-primary {
+  border: 1px solid #27a659;
 }
 
 .btn-primary {

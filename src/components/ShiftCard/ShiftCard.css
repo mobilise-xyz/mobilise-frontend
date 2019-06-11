@@ -22,10 +22,17 @@
 
 .btn-recommended {
   color: white !important;
+  border: 1px solid white !important;
 }
 
 .btn-more-info {
   margin-bottom: 0 !important;
+  border-color: white;
+}
+
+.ic-recommended {
+  float: right;
+  margin-top: 0.6em;
 }
 
 .modal-footer {

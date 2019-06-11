@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge';
 import RepeatBookingForm from './RepeatBookingForm';
 
@@ -51,6 +51,20 @@ const BookingPane = ({
               selected={selected}
             />
           ) : null}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Button
+            variant="outline-success"
+            type="button"
+            disabled={shiftData.bookSuccess === true || selected === ''}
+            onClick={() => handleBook(repeatedType, until)}
+            style={{ marginLeft: 'auto' }}
+            block
+          >
+            Book
+          </Button>
         </Col>
       </Row>
     </>
