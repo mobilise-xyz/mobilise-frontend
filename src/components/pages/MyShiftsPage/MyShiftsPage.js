@@ -10,10 +10,10 @@ import CalendarView from '../CalendarView/CalendarView';
 const ViewSwitch = ({ handleListView, handleCalendarView }) => (
   <Col>
     <ToggleButtonGroup type="radio" name="viewOptions" defaultValue={1}>
-      <ToggleButton value={1} onClick={handleListView}>
+      <ToggleButton value={1} variant="primary" onClick={handleListView}>
         List
       </ToggleButton>
-      <ToggleButton value={2} onClick={handleCalendarView}>
+      <ToggleButton value={2} variant="primary" onClick={handleCalendarView}>
         Calendar
       </ToggleButton>
     </ToggleButtonGroup>
