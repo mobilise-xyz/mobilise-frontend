@@ -10,14 +10,15 @@ import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
 import CardRoleBadge from './RoleBadges/CardRoleBadge';
 import shiftTypes from '../../__types/shifts.types';
 
-const generateRequirements = (shiftData, selected, isAdmin) =>
+const generateRequirements = (shiftData, selected, isAdmin, type) =>
   shiftData.requirements.map(r => {
     // Only show roles that are available to book
     // i.e. numberRequired > 0
 
     const { numberRequired, role, bookings } = r;
     const numberOfBookings = bookings ? bookings.length : 0;
-    const numberRemaining = numberRequired - numberOfBookings; // TODO hook up
+    const numberRemaining =
+      type === 'booked' ? null : numberRequired - numberOfBookings;
     return numberRequired > 0 ? (
       <CardRoleBadge
         isAdmin={isAdmin}
@@ -138,7 +139,7 @@ class ShiftCard extends React.Component {
               </Col>
             </Row>
             <Row noGutters>
-              {generateRequirements(shiftData, selected, isAdmin)}
+              {generateRequirements(shiftData, selected, isAdmin, type)}
             </Row>
           </Card.Body>
           <Card.Footer className={isRecommended ? 'bg-primary' : null}>
