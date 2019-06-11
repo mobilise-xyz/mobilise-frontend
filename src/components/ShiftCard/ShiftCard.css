@@ -28,6 +28,11 @@
   margin-bottom: 0 !important;
 }
 
+.ic-recommended {
+  float: right;
+  margin-top: 0.6em;
+}
+
 .modal-footer {
   display: flex;
   justify-content: space-between;

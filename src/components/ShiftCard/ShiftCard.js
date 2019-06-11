@@ -120,8 +120,8 @@ class ShiftCard extends React.Component {
 
     const recommendedPopover = (
       <Popover id="popover-basic" title="Recommended Shift">
-        This shift is recomended for <strong>you</strong> as it matches your
-        availability and will help City Harvest a lot more if you book onto it.
+        This shift is recommended specifically for you and would help City
+        Harvest more if you booked onto it.
       </Popover>
     );
 
@@ -172,9 +172,15 @@ class ShiftCard extends React.Component {
               <span className="sr-only">Card information button</span>
             </Button>
             {isRecommended ? (
-              <OverlayTrigger placement="right" overlay={recommendedPopover}>
-                <FontAwesomeIcon icon={faExclamationCircle} colour="white" />
-              </OverlayTrigger>
+              <span className="ic-recommended">
+                <OverlayTrigger
+                  placement="right"
+                  overlay={recommendedPopover}
+                  style={{ alignItems: 'flex-end' }}
+                >
+                  <FontAwesomeIcon icon={faExclamationCircle} color="white" />
+                </OverlayTrigger>
+              </span>
             ) : null}
           </Card.Footer>
           <ShiftCardModal
