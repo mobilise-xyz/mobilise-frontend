@@ -49,7 +49,7 @@ class CalendarView extends React.Component {
   }
 
   toggleModal = e => {
-    if (e !== false && e !== undefined) {
+    if (e !== false) {
       const { shiftData } = e;
       this.setState({ selectedShiftData: shiftData });
     }
