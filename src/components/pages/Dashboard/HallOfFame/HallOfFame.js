@@ -69,7 +69,7 @@ class HallOfFame extends React.Component {
 
     return (
       <Container className="pt-5">
-        <h3>Hall Of Fame</h3>
+        <h3>Weekly Hall Of Fame</h3>
         <Row className="justify-content-md-center" style={{ margin: '30px' }}>
           <h4>MOST HOURS</h4>
         </Row>
