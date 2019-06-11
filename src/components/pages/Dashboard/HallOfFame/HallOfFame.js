@@ -100,7 +100,7 @@ class HallOfFame extends React.Component {
           })}
         </Row>
         <Row className="justify-content-md-center" style={{ margin: '30px' }}>
-          <h4>ON THE RISE!</h4>
+          <h4>ON THE RISE</h4>
         </Row>
         <Row>
           {increaseOrdered.map(val => {
