@@ -20,34 +20,19 @@ const HallOfFameCard = ({ id, volunteerName, category, bottomText, icon }) => (
 );
 
 function getIconClassForRank(rank) {
-  let iconClass = 'text-primary';
-  switch (rank) {
-    case 1:
-      iconClass = 'text-gold';
-      break;
-    case 2:
-      iconClass = 'text-silver';
-      break;
-    case 3:
-      iconClass = 'text-bronze';
-      break;
-    default:
-      break;
+  const classes = ['text-gold', 'text-silver', 'text-bronze'];
+  if (rank <= 3 && rank > 0) {
+    return classes[rank - 1];
   }
-  return iconClass;
+  return 'text-primary';
 }
 
 function getRankNameForRank(rank) {
-  switch (rank) {
-    case 1:
-      return '1st';
-    case 2:
-      return '2nd';
-    case 3:
-      return '3rd';
-    default:
-      return '-';
+  const names = ['1st', '2nd', '3rd'];
+  if (rank <= 3 && rank > 0) {
+    return names[rank - 1];
   }
+  return '-';
 }
 
 function swapElements(arr, i, j) {
