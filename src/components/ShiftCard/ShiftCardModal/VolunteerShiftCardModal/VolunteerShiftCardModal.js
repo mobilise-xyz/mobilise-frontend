@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Modal, Row } from 'react-bootstrap';
+import { Col, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -40,14 +40,14 @@ class VolunteerShiftCardModal extends React.Component {
     const booked = type === 'booked';
 
     return (
-      <Modal show={show} onHide={() => onHide(false)} size="lg" centered>
+      <Modal show={show} onHide={() => onHide(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>{shiftData.title}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <Row>
-            <Col md={6}>
+            <Col md={12}>
               <Row className="pb-2" noGutters>
                 <Col xs={1} className="icon-col">
                   <FontAwesomeIcon icon={faCalendarAlt} />
@@ -73,7 +73,7 @@ class VolunteerShiftCardModal extends React.Component {
                 <Col>
                   {`${shiftData.creator.user.firstName} ${
                     shiftData.creator.user.lastName
-                  } ${shiftData.creator.user.email}`}
+                  } (${shiftData.creator.user.email})`}
                 </Col>
               </Row>
               <Row className="pb-4">
@@ -101,25 +101,12 @@ class VolunteerShiftCardModal extends React.Component {
                   until={until}
                   handleChange={this.handleChange}
                   selected={selected}
+                  handleBook={handleBook}
                 />
               )}
             </Col>
           </Row>
         </Modal.Body>
-
-        <Modal.Footer>
-          {!booked ? (
-            <Button
-              variant="outline-primary"
-              type="submit"
-              disabled={shiftData.bookSuccess === true || selected === ''}
-              onClick={() => handleBook(repeatedType, until)}
-              style={{ marginLeft: 'auto' }}
-            >
-              Book
-            </Button>
-          ) : null}
-        </Modal.Footer>
       </Modal>
     );
   }

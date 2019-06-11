@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import moment from 'moment';
 
 const getRepeatOptions = repeatedType => {
@@ -33,12 +33,14 @@ const RepeatBookingForm = ({
   shiftData,
   repeatedType,
   until,
-  handleChange
+  handleChange,
+  handleBook,
+  selected
 }) => (
   <>
-    <Row>
+    <Row className="pb-2">
       {shiftData.repeated ? (
-        <p>
+        <Col>
           This shift repeats until&nbsp;
           <strong>
             {moment(shiftData.repeated.untilDate, 'YYYY-MM-DD')
@@ -46,7 +48,7 @@ const RepeatBookingForm = ({
               .format('dddd, MMMM Do YYYY')}
           </strong>
           .
-        </p>
+        </Col>
       ) : null}
     </Row>
     <Row>
@@ -91,6 +93,16 @@ const RepeatBookingForm = ({
               />
             </Form.Group>
           )}
+          <Button
+            variant="outline-success"
+            type="button"
+            disabled={shiftData.bookSuccess === true || selected === ''}
+            onClick={() => handleBook(repeatedType, until)}
+            style={{ marginLeft: 'auto' }}
+            block
+          >
+            Book
+          </Button>
         </Form>
       </Col>
     </Row>

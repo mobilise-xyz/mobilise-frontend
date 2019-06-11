@@ -9,18 +9,10 @@ const BookingPane = ({
   until,
   handleChange,
   handleSelect,
+  handleBook,
   selected
 }) => {
   const shiftRepeats = shiftData.repeatedId !== null;
-
-  const repeatForm = shiftRepeats ? (
-    <RepeatBookingForm
-      shiftData={shiftData}
-      repeatedType={repeatedType}
-      until={until}
-      handleChange={handleChange}
-    />
-  ) : null;
 
   return (
     <>
@@ -29,7 +21,7 @@ const BookingPane = ({
           <h6>Choose a role to book</h6>
         </Col>
       </Row>
-      <Row>
+      <Row className="pb-2">
         <Col>
           {shiftData.requirements.map(r => {
             // Only show roles that are available to book
@@ -48,7 +40,18 @@ const BookingPane = ({
         </Col>
       </Row>
       <Row>
-        <Col>{repeatForm}</Col>
+        <Col>
+          {shiftRepeats ? (
+            <RepeatBookingForm
+              shiftData={shiftData}
+              repeatedType={repeatedType}
+              until={until}
+              handleChange={handleChange}
+              handleBook={handleBook}
+              selected={selected}
+            />
+          ) : null}
+        </Col>
       </Row>
     </>
   );
