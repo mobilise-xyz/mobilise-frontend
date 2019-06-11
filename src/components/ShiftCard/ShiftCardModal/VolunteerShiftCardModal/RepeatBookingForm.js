@@ -53,14 +53,9 @@ const RepeatBookingForm = ({
     </Row>
     <Row>
       <Col>
-        <h6>Book repeating?</h6>
-      </Col>
-    </Row>
-    <Row>
-      <Col>
         <Form id="bookingform">
           <Form.Group>
-            <Form.Label>Repeat frequency</Form.Label>
+            <Form.Label>Repeat booking frequency</Form.Label>
             {/* Only enable this form if repeatedId is not null. */}
             <Form.Control
               as="select"
