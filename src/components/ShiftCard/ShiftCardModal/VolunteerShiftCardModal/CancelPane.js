@@ -6,7 +6,7 @@ import authHeader from '../../../../_helpers/auth-header';
 import utils from '../../../../_helpers/utils';
 import CardRoleBadge from '../../RoleBadges/CardRoleBadge';
 
-const CancelRightPane = ({
+const CancelPane = ({
   shiftData,
   cancelReason,
   onHide,
@@ -33,12 +33,11 @@ const CancelRightPane = ({
     <>
       <Row>
         <Col>
-          <h6>Signed up to:</h6>
+          <h6>You&#39;re signed up for</h6>
         </Col>
       </Row>
-      <Row>
+      <Row className="pb-4">
         <Col>
-          {/* <h6>You're signed up for:</h6> */}
           {shiftData.requirements.map(r => (
             <CardRoleBadge
               key={shiftData.id + r.role.name}
@@ -48,7 +47,7 @@ const CancelRightPane = ({
           ))}
         </Col>
       </Row>
-      <Row style={{ position: 'inherit', bottom: '-20%' }}>
+      <Row>
         <Col>
           <Row>
             <Col>
@@ -86,4 +85,4 @@ const CancelRightPane = ({
   );
 };
 
-export default CancelRightPane;
+export default CancelPane;

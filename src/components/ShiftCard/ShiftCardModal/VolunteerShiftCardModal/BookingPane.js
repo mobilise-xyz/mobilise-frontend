@@ -3,7 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge';
 import RepeatBookingForm from './RepeatBookingForm';
 
-const BookingRightPane = ({
+const BookingPane = ({
   shiftData,
   repeatedType,
   until,
@@ -54,4 +54,4 @@ const BookingRightPane = ({
   );
 };
 
-export default BookingRightPane;
+export default BookingPane;

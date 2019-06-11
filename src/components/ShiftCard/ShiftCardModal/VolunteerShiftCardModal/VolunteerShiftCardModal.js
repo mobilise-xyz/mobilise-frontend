@@ -1,11 +1,17 @@
 import React from 'react';
 import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faAddressCard,
+  faCalendarAlt,
+  faInfoCircle,
+  faMapMarkerAlt
+} from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
 import utils from '../../../../_helpers/utils';
-import BookingRightPane from './BookingRightPane';
-import CancelRightPane from './CancelRightPane';
+import BookingPane from './BookingPane';
+import CancelPane from './CancelPane';
 
 class VolunteerShiftCardModal extends React.Component {
   state = {
@@ -41,51 +47,54 @@ class VolunteerShiftCardModal extends React.Component {
 
         <Modal.Body>
           <Row>
-            <Col>
-              <Row>
-                <Col className="info">
-                  <h6>Description</h6>
-                  {shiftData.description}
+            <Col md={6}>
+              <Row className="pb-2" noGutters>
+                <Col xs={1} className="icon-col">
+                  <FontAwesomeIcon icon={faCalendarAlt} />
                 </Col>
-              </Row>
-              <Row>
-                <Col className="info">
-                  <h6>Date</h6>
-                  {moment(shiftData.date, 'YYYY-MM-DD').format('LL')}
-                </Col>
-              </Row>
-              <Row>
-                <Col className="info">
-                  <h6>Time</h6>
-                  {utils.formatTime(shiftData.start)} -{' '}
+                <Col>
+                  {utils.formatDate(shiftData.date)}{' '}
+                  <span className="text-muted">at</span>{' '}
+                  {utils.formatTime(shiftData.start)}{' '}
+                  <span className="text-muted">to</span>{' '}
                   {utils.formatTime(shiftData.stop)}
                 </Col>
               </Row>
-              <Row>
-                <Col className="info">
-                  <h6>Managed by</h6>
+              <Row className="pb-2" noGutters>
+                <Col xs={1} className="icon-col">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                </Col>
+                <Col>{shiftData.address}</Col>
+              </Row>
+              <Row className="pb-2">
+                <Col xs={1} className="icon-col">
+                  <FontAwesomeIcon icon={faAddressCard} />
+                </Col>
+                <Col>
                   {`${shiftData.creator.user.firstName} ${
                     shiftData.creator.user.lastName
-                  }`}
+                  } ${shiftData.creator.user.email}`}
                 </Col>
               </Row>
-              <Row>
-                <Col className="info">
-                  <h6>Location</h6>
-                  {shiftData.address}
+              <Row className="pb-4">
+                <Col xs={1} className="icon-col">
+                  <FontAwesomeIcon icon={faInfoCircle} />
                 </Col>
+                <Col>{shiftData.description}</Col>
               </Row>
             </Col>
+          </Row>
+          <Row>
             <Col>
               {booked ? (
-                <CancelRightPane
+                <CancelPane
                   shiftData={shiftData}
                   handleChange={this.handleChange}
                   onHide={onHide}
                   cancelReason={reason}
                 />
               ) : (
-                <BookingRightPane
+                <BookingPane
                   handleSelect={handleSelect}
                   shiftData={shiftData}
                   repeatedType={repeatedType}

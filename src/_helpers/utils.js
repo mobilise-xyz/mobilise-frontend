@@ -12,9 +12,12 @@ const formatTime = time =>
     .local()
     .format('HH:mm');
 
+const formatDate = date => moment(date).format('LL');
+
 const utils = {
   handleResponse,
-  formatTime
+  formatTime,
+  formatDate
 };
 
 export default utils;
