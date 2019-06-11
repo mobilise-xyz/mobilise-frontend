@@ -2,6 +2,7 @@ import React from 'react';
 import { Badge, Button } from 'react-bootstrap';
 import '../ModalRoleBadge/RoleBadge.css';
 
+// This badge goes on the Volunteer Modal.
 const VolunteerRoleBadge = ({
   name,
   number,
@@ -11,12 +12,11 @@ const VolunteerRoleBadge = ({
   colour = 'info'
 }) => {
   const isSelected = selected === name;
-  const buttonColour = isSelected ? '#299688' : colour;
   return (
     <Button
       className="role-badge"
       style={{
-        backgroundColor: buttonColour,
+        backgroundColor: isSelected ? colour : 'LightGray',
         padding: '0.01rem 0.8rem 0.01rem 0.8rem'
       }}
       name={name}
