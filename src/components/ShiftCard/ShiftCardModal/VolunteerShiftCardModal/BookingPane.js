@@ -18,7 +18,9 @@ const BookingPane = ({
     <>
       <Row>
         <Col>
-          <h6>Choose a role to book</h6>
+          <h6>
+            <strong>Click to choose a role to book!</strong>
+          </h6>
         </Col>
       </Row>
       <Row className="pb-2">
@@ -39,34 +41,40 @@ const BookingPane = ({
           })}
         </Col>
       </Row>
-      <Row>
-        <Col>
-          {shiftRepeats ? (
-            <RepeatBookingForm
-              shiftData={shiftData}
-              repeatedType={repeatedType}
-              until={until}
-              handleChange={handleChange}
-              handleBook={handleBook}
-              selected={selected}
-            />
-          ) : null}
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Button
-            variant="outline-success"
-            type="button"
-            disabled={shiftData.bookSuccess === true || selected === ''}
-            onClick={() => handleBook(repeatedType, until)}
-            style={{ marginLeft: 'auto' }}
-            block
-          >
-            Book
-          </Button>
-        </Col>
-      </Row>
+
+      {selected === '' ? null : (
+        <>
+          {' '}
+          <Row>
+            <Col>
+              {shiftRepeats ? (
+                <RepeatBookingForm
+                  shiftData={shiftData}
+                  repeatedType={repeatedType}
+                  until={until}
+                  handleChange={handleChange}
+                  handleBook={handleBook}
+                  selected={selected}
+                />
+              ) : null}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button
+                variant="outline-success"
+                type="button"
+                disabled={shiftData.bookSuccess === true || selected === ''}
+                onClick={() => handleBook(repeatedType, until)}
+                style={{ marginLeft: 'auto' }}
+                block
+              >
+                Book
+              </Button>
+            </Col>
+          </Row>
+        </>
+      )}
     </>
   );
 };

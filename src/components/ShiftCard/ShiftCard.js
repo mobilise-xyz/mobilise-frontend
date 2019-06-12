@@ -3,9 +3,9 @@ import {
   Button,
   Card,
   Col,
-  Row,
+  OverlayTrigger,
   Popover,
-  OverlayTrigger
+  Row
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
