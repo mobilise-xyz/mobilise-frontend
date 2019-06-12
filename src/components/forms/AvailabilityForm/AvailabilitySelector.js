@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
+import { Card, Col, Container, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import availabilityConstants from '../../../_constants/availability.constants';
 import '../../ShiftCard/ShiftCard.css';
@@ -130,18 +130,10 @@ class AvailabilitySelector extends React.Component {
     return <Table>{grid}</Table>;
   };
 
-  handleSubmit = () => {
-    const { uid } = this.state;
-    const { availability, dispatch } = this.props;
-    console.log(availability);
-    dispatch(availabilityActions.update(uid, availability));
-  };
-
   render() {
     const { availability } = this.props;
-    console.log(availability);
     return (
-      <Card className="p-3">
+      <>
         <Row>
           <Col md={8}>
             <p>
@@ -174,16 +166,7 @@ class AvailabilitySelector extends React.Component {
         <Container className="table-responsive">
           {this.generateGrid(availability)}
         </Container>
-        <Container className="pt-5 text-center">
-          <Button
-            variant="outline-primary"
-            type="button"
-            onClick={this.handleSubmit}
-          >
-            Save changes
-          </Button>
-        </Container>
-      </Card>
+      </>
     );
   }
 }

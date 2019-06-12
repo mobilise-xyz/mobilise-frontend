@@ -14,6 +14,7 @@ import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedSh
 import FeedBackPage from './components/pages/HelpPages/FeedbackPage';
 import Dashboard from './components/pages/Dashboard';
 import SettingsPage from './components/pages/SettingsPage';
+import WelcomePage from './components/pages/WelcomePage/WelcomePage';
 
 export class App extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ export class App extends React.Component {
         <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
         <PrivateRoute path="/settings" exact component={SettingsPage} />
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
+        <PrivateRoute path="/welcome" exact component={WelcomePage} />
 
         <PrivateRoute
           path="/help/recommended"

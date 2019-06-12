@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../../Layout';
-import AvailabilitySelector from './AvailabilitySelector';
+import AvailabilityForm from '../../forms/AvailabilityForm/AvailabilityForm';
 import MetricForm from '../../forms/MetricForm';
 import ContactPreferencesForm from '../../forms/ContactPreferencesForm';
 import ErrorBoundary from '../../ErrorBoundary';
@@ -14,7 +14,7 @@ const SettingsPage = () => {
         {!isAdmin ? (
           <>
             <h3>Availability</h3>
-            <AvailabilitySelector />
+            <AvailabilityForm />
             <hr />
           </>
         ) : (

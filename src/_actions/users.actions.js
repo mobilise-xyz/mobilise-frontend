@@ -75,7 +75,7 @@ const login = (username, password) => {
 
         // If volunteer first login then redirect to availability screen.
         if (!user.isAdmin && !user.lastLogin) {
-          history.push('/settings');
+          history.push('/welcome');
           dispatch(
             alertActions.success(
               'Welcome to Mobilise! Please fill in your preferences below.'
