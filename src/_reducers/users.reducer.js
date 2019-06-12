@@ -1,6 +1,6 @@
 import usersConstants from '../_constants/users.constants';
 
-const authentication = (state = { loading: true }, action) => {
+const users = (state = { loading: true }, action) => {
   switch (action.type) {
     case usersConstants.GET:
       return {
@@ -29,4 +29,4 @@ const authentication = (state = { loading: true }, action) => {
   }
 };
 
-export default authentication;
+export default users;
