@@ -3,6 +3,8 @@
 }
 
 .add-shift-fab {
-  position: sticky;
+  position: fixed;
   left: 90%;
+  margin: initial;
+  z-index: 50;
 }
