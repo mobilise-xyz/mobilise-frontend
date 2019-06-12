@@ -43,3 +43,11 @@ code {
 .text-primary {
   color: #27a659 !important;
 }
+
+.btn.btn-primary.bmd-btn-fab {
+  background-color: #27a659;
+}
+
+.material-icons.md-light {
+  color: white;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import './PlainTextForm.css';
 
 const PlainTextForm = props => {
   const {
@@ -8,7 +9,7 @@ const PlainTextForm = props => {
     placeHolder = '',
     content,
     disabled = false,
-    rows = '1',
+    rows = '2',
     handleChange
   } = props;
   const placeholder = placeHolder === '' ? `Enter ${label}` : placeHolder;
