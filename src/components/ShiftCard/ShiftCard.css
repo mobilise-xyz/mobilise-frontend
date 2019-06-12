@@ -33,12 +33,22 @@
 }
 
 .ic-recommended {
-  float: right;
-  margin-top: 0.6em;
+  color: white;
+  margin-top: auto;
 }
 
 .modal-footer {
   display: flex;
   justify-content: space-between;
   padding: 1rem !important;
+}
+
+.shift-card {
+  z-index: 0;
+}
+
+.shift-card-recommended {
+  border-style: solid;
+  border-width: thick;
+  border-color: #27a659;
 }
