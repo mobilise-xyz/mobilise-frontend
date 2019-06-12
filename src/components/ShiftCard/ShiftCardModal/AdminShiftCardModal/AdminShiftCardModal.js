@@ -9,8 +9,6 @@ import {
   Modal,
   Row
 } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
 import './AdminShiftCardModal.css';
 import AdjustableRoleBadge from '../AdjustableRoleBadge';
@@ -37,7 +35,14 @@ class AdminShiftCardModal extends Component {
 
   handleSubmit = () => {
     // TODO handle date, time, manager, etc
-    const { title, description, address, requirements } = this.state;
+    const {
+      title,
+      description,
+      start,
+      stop,
+      address,
+      requirements
+    } = this.state;
     const { shiftData, onHide, dispatch } = this.props;
 
     // 1. Convert requirements to rolesRequired
@@ -51,6 +56,8 @@ class AdminShiftCardModal extends Component {
       title,
       description,
       address,
+      start,
+      stop,
       rolesRequired
     };
 
@@ -72,6 +79,10 @@ class AdminShiftCardModal extends Component {
       title: shiftData.title,
       description: shiftData.description,
       address: shiftData.address,
+      start: shiftData.start,
+      stop: shiftData.stop,
+      date: shiftData.date,
+      manager: shiftData.creator.user,
       requirements: shiftData.requirements
     });
   };
@@ -96,7 +107,6 @@ class AdminShiftCardModal extends Component {
 
   handleDataChange = e => {
     const { name, value } = e.target;
-
     this.setState(prevState => ({
       ...prevState,
       [name]: value
@@ -120,15 +130,15 @@ class AdminShiftCardModal extends Component {
       manager,
       requirements
     } = this.state;
-    const { shiftData, onHide, show, handleDelete } = this.props;
+    const { shiftData, show, handleDelete } = this.props;
 
     return (
-      <Modal show={show} onHide={onHide} size="lg" centered>
+      <Modal show={show} onHide={this.handleCancel} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>
             <PlainTextForm
               noLabel
-              label="title"
+              name="title"
               content={title}
               handleChange={this.handleDataChange}
             />
@@ -139,11 +149,12 @@ class AdminShiftCardModal extends Component {
           <Row>
             <Col md={12}>
               <Row className="pb-2" noGutters>
-                <Col xs={1} className="icon-col">
+                <Col xs={1} className="icon-col" style={{ margin: 'auto' }}>
                   <i className="material-icons">calendar_today</i>
                 </Col>
                 <Col>
                   <DateTimeForm
+                    noLabel
                     startTime={start}
                     endTime={stop}
                     date={date}
@@ -158,6 +169,7 @@ class AdminShiftCardModal extends Component {
                 <Col>
                   <PlainTextForm
                     id="address-form"
+                    name="address"
                     noLabel
                     handleChange={this.handleDataChange}
                     content={address}
@@ -185,6 +197,7 @@ class AdminShiftCardModal extends Component {
                   <PlainTextForm
                     id="description-form"
                     noLabel
+                    name="description"
                     handleChange={this.handleDataChange}
                     content={description}
                   />
@@ -220,7 +233,7 @@ class AdminShiftCardModal extends Component {
             variant="outline-danger"
             onClick={handleDelete}
           >
-            Delete {<FontAwesomeIcon icon={faTrash} />}
+            Delete
           </Button>
           <ButtonToolbar role="toolbar">
             <DropdownButton
