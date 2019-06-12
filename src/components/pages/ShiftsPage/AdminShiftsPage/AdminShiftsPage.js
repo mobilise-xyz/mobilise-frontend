@@ -1,9 +1,7 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { LinkContainer } from 'react-router-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
 import shiftsActions from '../../../../_actions/shifts.actions';
@@ -29,11 +27,17 @@ class AdminShiftsPage extends React.Component {
 
     return (
       <Layout>
-        <LinkContainer exact to="new-shift" className="add-shift-link">
-          <Button variant="outline-primary">
-            {<FontAwesomeIcon icon={faPlus} />} Add Shift
-          </Button>
-        </LinkContainer>
+        <Link to="new-shift">
+          <OverlayTrigger overlay={<Tooltip>Add new shift</Tooltip>}>
+            <button
+              type="button"
+              className="btn btn-primary bmd-btn-fab add-shift-fab"
+            >
+              <i className="material-icons md-light">add</i>
+            </button>
+          </OverlayTrigger>
+        </Link>
+
         <ShiftList isAdmin shifts={shifts.all} />
       </Layout>
     );
