@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,8 @@ class AdminShiftsPage extends React.Component {
   // TODO Handle exception properly.
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(shiftsActions.getAll());
+    const now = moment().format();
+    dispatch(shiftsActions.getAll(now));
   }
 
   render() {

@@ -63,8 +63,8 @@ class LoginPage extends React.Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
+          <Button type="submit" className="btn-more-info">
+            Log in
           </Button>
         </Form>
       </CardLayout>
