@@ -26,6 +26,8 @@
 }
 
 .btn-more-info {
+  color: white !important;
+  background-color: #27a659 !important;
   margin-bottom: 0 !important;
   border-color: white;
 }
