@@ -6,19 +6,15 @@ import {
   Col,
   Dropdown,
   DropdownButton,
-  Form,
   Modal,
   Row
 } from 'react-bootstrap';
-import moment from 'moment';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
 import './AdminShiftCardModal.css';
 import AdjustableRoleBadge from '../AdjustableRoleBadge';
 import PlainTextForm from '../../../forms/PlainTextForm';
 import shiftsActions from '../../../../_actions/shifts.actions';
-import utils from '../../../../_helpers/utils';
+import DateTimeForm from '../../../forms/DateTimeForm';
 
 class AdminShiftCardModal extends Component {
   constructor(props) {
@@ -38,7 +34,15 @@ class AdminShiftCardModal extends Component {
   }
 
   handleSubmit = () => {
-    const { title, description, address, requirements } = this.state;
+    // TODO handle date, time, manager, etc
+    const {
+      title,
+      description,
+      start,
+      stop,
+      address,
+      requirements
+    } = this.state;
     const { shiftData, onHide, dispatch } = this.props;
 
     // 1. Convert requirements to rolesRequired
@@ -52,6 +56,8 @@ class AdminShiftCardModal extends Component {
       title,
       description,
       address,
+      start,
+      stop,
       rolesRequired
     };
 
@@ -73,6 +79,10 @@ class AdminShiftCardModal extends Component {
       title: shiftData.title,
       description: shiftData.description,
       address: shiftData.address,
+      start: shiftData.start,
+      stop: shiftData.stop,
+      date: shiftData.date,
+      manager: shiftData.creator.user,
       requirements: shiftData.requirements
     });
   };
@@ -97,7 +107,6 @@ class AdminShiftCardModal extends Component {
 
   handleDataChange = e => {
     const { name, value } = e.target;
-
     this.setState(prevState => ({
       ...prevState,
       [name]: value
@@ -121,14 +130,15 @@ class AdminShiftCardModal extends Component {
       manager,
       requirements
     } = this.state;
-    const { shiftData, onHide, show, handleDelete } = this.props;
+    const { shiftData, show, handleDelete } = this.props;
+
     return (
-      <Modal show={show} onHide={onHide} size="lg" centered>
+      <Modal show={show} onHide={this.handleCancel} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>
             <PlainTextForm
               noLabel
-              label="title"
+              name="title"
               content={title}
               handleChange={this.handleDataChange}
             />
@@ -137,69 +147,81 @@ class AdminShiftCardModal extends Component {
 
         <Modal.Body>
           <Row>
-            <Col>
-              <Form>
-                <Row>
-                  <Col>
-                    <PlainTextForm
-                      label="description"
-                      content={description}
-                      handleChange={this.handleDataChange}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="no-form">
-                    <h6>Date</h6>
-                    {moment(date, 'YYYY-MM-DD').format('LL')}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="no-form">
-                    <h6>Time</h6>
-                    {utils.formatTime(start)} - {utils.formatTime(stop)}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <PlainTextForm
-                      label="managed by"
-                      disabled
-                      content={`${manager.firstName}  ${manager.lastName}`}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <PlainTextForm
-                      label="address"
-                      content={address}
-                      handleChange={this.handleDataChange}
-                    />
-                  </Col>
-                </Row>
-              </Form>
-            </Col>
-            <Col>
-              <Row>
+            <Col md={12}>
+              <Row className="pb-2" noGutters>
+                <Col xs={1} className="icon-col" style={{ margin: 'auto' }}>
+                  <i className="material-icons">calendar_today</i>
+                </Col>
                 <Col>
-                  <h6>Roles on this shift</h6>
+                  <DateTimeForm
+                    noLabel
+                    startTime={start}
+                    endTime={stop}
+                    date={date}
+                    handleChange={this.handleDataChange}
+                  />
                 </Col>
               </Row>
+              <Row className="pb-2" noGutters>
+                <Col xs={1} className="icon-col">
+                  <i className="material-icons">location_on</i>
+                </Col>
+                <Col>
+                  <PlainTextForm
+                    id="address-form"
+                    name="address"
+                    noLabel
+                    handleChange={this.handleDataChange}
+                    content={address}
+                  />
+                </Col>
+              </Row>
+              <Row className="pb-2">
+                <Col xs={1} className="icon-col">
+                  <i className="material-icons">perm_contact_calendar</i>
+                </Col>
+                <Col>
+                  <PlainTextForm
+                    noLabel
+                    handleChange={this.handleDataChange}
+                    content={`${manager.firstName}  ${manager.lastName}`}
+                  />
+                </Col>
+              </Row>
+              <Row className="pb-4">
+                <Col xs={1} className="icon-col">
+                  <i className="material-icons">info</i>
+                </Col>
+                <Col>
+                  {' '}
+                  <PlainTextForm
+                    id="description-form"
+                    noLabel
+                    name="description"
+                    handleChange={this.handleDataChange}
+                    content={description}
+                  />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h6>Roles on this shift</h6>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
               {requirements.map(r => (
-                <Row key={shiftData.id + r.role.name}>
-                  <Col key={shiftData.id + r.role.name}>
-                    <AdjustableRoleBadge
-                      key={shiftData.id + r.role.name}
-                      isAdmin
-                      name={r.role.name}
-                      number={r.numberRequired}
-                      handleUpdate={this.handleRoleNumberChange}
-                      onModal
-                      colour={r.role.colour}
-                    />
-                  </Col>
-                </Row>
+                <AdjustableRoleBadge
+                  key={shiftData.id + r.role.name}
+                  isAdmin
+                  name={r.role.name}
+                  number={r.numberRequired}
+                  handleUpdate={this.handleRoleNumberChange}
+                  onModal
+                  colour={r.role.colour}
+                />
               ))}
             </Col>
           </Row>
@@ -211,7 +233,7 @@ class AdminShiftCardModal extends Component {
             variant="outline-danger"
             onClick={handleDelete}
           >
-            Delete {<FontAwesomeIcon icon={faTrash} />}
+            Delete
           </Button>
           <ButtonToolbar role="toolbar">
             <DropdownButton

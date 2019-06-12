@@ -1,6 +1,6 @@
 body {
-  background: #fafafa url('./assets/images/background-triangle.svg') no-repeat
-    fixed center center;
+  /*background: #fafafa url('./assets/images/background-triangle.svg') no-repeat*/
+  /*  fixed center center;*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -42,4 +42,12 @@ code {
 
 .text-primary {
   color: #27a659 !important;
+}
+
+.btn.btn-primary.bmd-btn-fab {
+  background-color: #27a659;
+}
+
+.material-icons.md-light {
+  color: white;
 }

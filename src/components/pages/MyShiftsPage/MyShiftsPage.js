@@ -34,12 +34,10 @@ class MyShiftsPage extends React.Component {
   };
 
   componentDidMount = () => {
-    const { myShifts, dispatch } = this.props;
+    const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
 
-    if (!myShifts) {
-      dispatch(shiftsActions.getBookedForUser(uid));
-    }
+    dispatch(shiftsActions.getBookedForUser(uid));
   };
 
   render() {

@@ -2,7 +2,23 @@
   text-align: center;
 }
 
-.add-shift-link {
-  position: sticky;
-  left: 80%;
+.fab-container {
+  position: relative;
+}
+
+/* For desktop */
+.add-shift-fab {
+  position: fixed;
+  bottom: 5rem;
+  right: 5rem;
+  z-index: 100;
+}
+
+/* For mobile */
+@media (max-width: 600px) {
+  .add-shift-fab {
+    bottom: 2.5rem;
+    right: 2.5rem;
+    z-index: 100;
+  }
 }

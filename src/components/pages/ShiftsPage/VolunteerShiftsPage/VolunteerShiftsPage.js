@@ -7,13 +7,11 @@ import shiftsActions from '../../../../_actions/shifts.actions';
 
 class VolunteerShiftsPage extends React.Component {
   componentDidMount() {
-    const { shifts, dispatch } = this.props;
+    const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
 
     // Do not make the request again if shifts are already in the store.
-    if (!shifts) {
-      dispatch(shiftsActions.getForUser(uid, false));
-    }
+    dispatch(shiftsActions.getForUser(uid, false));
   }
 
   render() {
@@ -22,7 +20,7 @@ class VolunteerShiftsPage extends React.Component {
     if (loading === true || !shifts) {
       return null;
     }
-    console.log(shifts);
+
     if (error) {
       return <p>error</p>;
     }

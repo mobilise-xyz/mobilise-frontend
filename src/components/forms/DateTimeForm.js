@@ -1,13 +1,14 @@
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
-const DateTimeForm = ({ handleChange, date }) => {
+const DateTimeForm = ({ handleChange, date, startTime, endTime, noLabel }) => {
   return (
     <Form.Row>
       {/* Date */}
       <Form.Group as={Col}>
-        <Form.Label>Date</Form.Label>
+        {noLabel ? null : <Form.Label>Date</Form.Label>}
         <Form.Control
           id="date"
           name="date"
@@ -22,22 +23,24 @@ const DateTimeForm = ({ handleChange, date }) => {
       <Form.Group as={Col}>
         <Row>
           <Col>
-            <Form.Label>Start</Form.Label>
+            {noLabel ? null : <Form.Label>Start</Form.Label>}
             <Form.Control
               id="start-time"
-              name="startTime"
+              name="start"
               type="time"
               onChange={handleChange}
+              value={startTime}
               required
             />
           </Col>
           <Col>
-            <Form.Label>End</Form.Label>
+            {noLabel ? null : <Form.Label>End</Form.Label>}
             <Form.Control
               id="end-time"
-              name="endTime"
+              name="stop"
               type="time"
               onChange={handleChange}
+              value={endTime}
               required
             />
           </Col>
@@ -45,6 +48,18 @@ const DateTimeForm = ({ handleChange, date }) => {
       </Form.Group>
     </Form.Row>
   );
+};
+
+DateTimeForm.defaultProps = {
+  noLabel: false
+};
+
+DateTimeForm.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  date: PropTypes.string.isRequired,
+  startTime: PropTypes.string.isRequired,
+  endTime: PropTypes.string.isRequired,
+  noLabel: PropTypes.bool
 };
 
 export default DateTimeForm;
