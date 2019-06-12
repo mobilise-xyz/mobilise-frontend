@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, Container, Form, Row, Col } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import metricActions from '../../../_actions/metric.actions';
 import PlainTextForm from '../PlainTextForm';
 
@@ -62,7 +62,7 @@ class MetricForm extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { metric, loading } = state;
+  const { metric, loading } = state.metric;
   return {
     metric,
     loading
