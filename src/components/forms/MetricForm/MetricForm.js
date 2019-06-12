@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, Container, Form } from 'react-bootstrap';
+import { Button, Card, Container, Form, Row, Col } from 'react-bootstrap';
 import metricActions from '../../../_actions/metric.actions';
 import PlainTextForm from '../PlainTextForm';
 
@@ -19,12 +19,14 @@ class MetricForm extends React.Component {
 
   render() {
     const { metric, loading } = this.props;
+    console.log(metric);
 
     if (loading === true || !metric) {
       return null;
     }
 
     const { name, verb, value } = metric;
+
     return (
       <Card className="p-3">
         <Form>
@@ -32,9 +34,17 @@ class MetricForm extends React.Component {
             <Form.Label>
               Please provide a metric for your volunteers!
             </Form.Label>
-            <PlainTextForm id="name" label="Name" content={name} />
-            <PlainTextForm id="verb" label="verb" content={verb} />
-            <PlainTextForm id="value" label="value" content={value} />
+            <Row>
+              <Col>
+                <PlainTextForm id="name" label="Name" content={name} />
+              </Col>
+              <Col>
+                <PlainTextForm id="verb" label="verb" content={verb} />
+              </Col>
+              <Col>
+                <PlainTextForm id="value" label="value" content={value} />
+              </Col>
+            </Row>
             <Container className="pt-5 text-center">
               <Button
                 variant="outline-primary"
