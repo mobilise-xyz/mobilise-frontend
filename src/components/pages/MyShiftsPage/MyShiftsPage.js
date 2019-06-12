@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { Col, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import './MyShiftsPage.css';
 import Layout from '../../Layout';
@@ -36,8 +37,8 @@ class MyShiftsPage extends React.Component {
   componentDidMount = () => {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-
-    dispatch(shiftsActions.getBookedForUser(uid));
+    const now = moment().format();
+    dispatch(shiftsActions.getBookedForUser(uid, now));
   };
 
   render() {
