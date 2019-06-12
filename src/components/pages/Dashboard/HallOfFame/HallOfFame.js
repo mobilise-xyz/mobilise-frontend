@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faStopwatch } from '@fortawesome/free-solid-svg-icons';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import './HallOfFame.css';
 import volunteerActions from '../../../../_actions/volunteer.actions';
@@ -58,6 +58,7 @@ class HallOfFame extends React.Component {
     if (hallOfFameLoading === true || !hallOfFame) {
       return null;
     }
+
     const { uid } = JSON.parse(localStorage.getItem('user'));
 
     const { lastWeekHours, lastWeekIncrease } = hallOfFame;
@@ -65,31 +66,32 @@ class HallOfFame extends React.Component {
     let hoursOrdered = lastWeekHours;
     let increaseOrdered = lastWeekIncrease;
 
-    if (lastWeekIncrease.length > 2) {
+    if (lastWeekIncrease.length > 2 && lastWeekIncrease[1].rank !== 1) {
       increaseOrdered = swapElements(lastWeekIncrease, 0, 1);
     }
-    if (lastWeekHours.length > 2) {
+    if (lastWeekHours.length > 2 && lastWeekHours[1].rank !== 1) {
       hoursOrdered = swapElements(lastWeekHours, 0, 1);
     }
 
     return (
       <Container className="pt-5">
         <h3>Weekly Hall Of Fame</h3>
-        <Row className="justify-content-md-center" style={{ margin: '30px' }}>
+        <Row className="justify-content-md-center" style={{ margin: '20px' }}>
           <h4>MOST HOURS</h4>
         </Row>
         <Row>
           {hoursOrdered.map(val => {
             return (
-              <Col style={{ margin: '5px' }}>
+              <Col key={val.rank} style={{ margin: '5px' }}>
                 <HallOfFameCard
+                  md={1}
                   key={val.rank}
                   id={val.rank}
                   category={getRankNameForRank(val.rank)}
                   volunteerName={
                     val.uid === uid ? `${val.name} (You)` : val.name
                   }
-                  bottomText={`${val.number} hours in the past week`}
+                  bottomText={`${val.number} hours given last week`}
                   icon={
                     <FontAwesomeIcon
                       className={`pt-3 ${getIconClassForRank(val.rank)}`}
@@ -108,7 +110,7 @@ class HallOfFame extends React.Component {
         <Row>
           {increaseOrdered.map(val => {
             return (
-              <Col style={{ margin: '5px' }}>
+              <Col key={val.rank} style={{ margin: '5px' }}>
                 <HallOfFameCard
                   key={val.rank}
                   id={val.rank}
@@ -116,7 +118,7 @@ class HallOfFame extends React.Component {
                   volunteerName={
                     val.uid === uid ? `${val.name} (You)` : val.name
                   }
-                  bottomText={`${val.number}x increase in activity`}
+                  bottomText={`${val.number}x increase in activity last week`}
                   icon={
                     <FontAwesomeIcon
                       className={`pt-3 ${getIconClassForRank(val.rank)}`}
@@ -134,22 +136,22 @@ class HallOfFame extends React.Component {
   }
 }
 
-HallOfFame.propTypes = {
-  hallOfFame: PropTypes.shape({
-    lastWeekHours: PropTypes.arrayOf({
-      uuid: PropTypes.string.isRequired,
-      rank: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.number.isRequired
-    }).isRequired,
-    lastWeekIncrease: PropTypes.arrayOf({
-      uuid: PropTypes.string.isRequired,
-      rank: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.number.isRequired
-    }).isRequired
-  }).isRequired
-};
+// HallOfFame.propTypes = {
+//   hallOfFame: PropTypes.shape({
+//     lastWeekHours: PropTypes.arrayOf({
+//       uuid: PropTypes.string.isRequired,
+//       rank: PropTypes.number.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.number.isRequired
+//     }).isRequired,
+//     lastWeekIncrease: PropTypes.arrayOf({
+//       uuid: PropTypes.string.isRequired,
+//       rank: PropTypes.number.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.number.isRequired
+//     }).isRequired
+//   }).isRequired
+// };
 
 const mapStateToProps = state => {
   const { hallOfFame, hallOfFameLoading } = state.volunteers;

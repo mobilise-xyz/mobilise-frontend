@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardColumns, Container } from 'react-bootstrap';
+import { Card, CardColumns, Container, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -51,25 +51,27 @@ class MyContributions extends React.Component {
     return (
       <Container className="pt-5">
         <h3>My Contributions</h3>
-        <CardColumns>
-          <ContributionCard
-            number={shiftsCompleted}
-            description="shifts completed"
-            icon={<FontAwesomeIcon icon={faCalendarCheck} size="6x" />}
-          />
-          <ContributionCard
-            number={hours}
-            description="hours given"
-            icon={<FontAwesomeIcon icon={faClock} size="6x" />}
-          />
-          {metric ? (
+        <Row style={{ margin: '20px' }}>
+          <CardColumns>
             <ContributionCard
-              number={metric.value}
-              description={`${metric.name} ${metric.verb} last week`}
-              icon={<FontAwesomeIcon icon={faHeart} size="6x" />}
+              number={shiftsCompleted}
+              description="shifts completed"
+              icon={<FontAwesomeIcon icon={faCalendarCheck} size="6x" />}
             />
-          ) : null}
-        </CardColumns>
+            <ContributionCard
+              number={hours}
+              description="hours given"
+              icon={<FontAwesomeIcon icon={faClock} size="6x" />}
+            />
+            {metric ? (
+              <ContributionCard
+                number={metric.value}
+                description={`${metric.name} ${metric.verb} last week`}
+                icon={<FontAwesomeIcon icon={faHeart} size="6x" />}
+              />
+            ) : null}
+          </CardColumns>
+        </Row>
       </Container>
     );
   }
