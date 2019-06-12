@@ -1,13 +1,6 @@
 import React from 'react';
 import { Col, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faAddressCard,
-  faCalendarAlt,
-  faInfoCircle,
-  faMapMarkerAlt
-} from '@fortawesome/free-solid-svg-icons';
 import '../../ShiftCard.css';
 import utils from '../../../../_helpers/utils';
 import BookingPane from './BookingPane';
@@ -50,7 +43,7 @@ class VolunteerShiftCardModal extends React.Component {
             <Col md={12}>
               <Row className="pb-2" noGutters>
                 <Col xs={1} className="icon-col">
-                  <FontAwesomeIcon icon={faCalendarAlt} />
+                  <i className="material-icons">calendar_today</i>
                 </Col>
                 <Col>
                   {utils.formatDate(shiftData.date)}{' '}
@@ -62,13 +55,13 @@ class VolunteerShiftCardModal extends React.Component {
               </Row>
               <Row className="pb-2" noGutters>
                 <Col xs={1} className="icon-col">
-                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                  <i className="material-icons">location_on</i>
                 </Col>
                 <Col>{shiftData.address}</Col>
               </Row>
               <Row className="pb-2">
                 <Col xs={1} className="icon-col">
-                  <FontAwesomeIcon icon={faAddressCard} />
+                  <i className="material-icons">perm_contact_calendar</i>
                 </Col>
                 <Col>
                   {`${shiftData.creator.user.firstName} ${
@@ -82,7 +75,7 @@ class VolunteerShiftCardModal extends React.Component {
               </Row>
               <Row className="pb-4">
                 <Col xs={1} className="icon-col">
-                  <FontAwesomeIcon icon={faInfoCircle} />
+                  <i className="material-icons">info</i>
                 </Col>
                 <Col>{shiftData.description}</Col>
               </Row>
