@@ -52,7 +52,7 @@ class MetricForm extends React.Component {
 
     return (
       <Row>
-        <Col md={6}>
+        <Col>
           <Card className="p-3">
             <Form>
               <Form.Group>
@@ -95,20 +95,22 @@ class MetricForm extends React.Component {
             </Form>
           </Card>
         </Col>
-        <CardColumns>
-          <Card>
-            <Card.Header className="text-center text-primary">
-              <FontAwesomeIcon icon={faHeart} size="6x" />
-            </Card.Header>
-            <Card.Body className="text-center">
-              <h1>{value}</h1>
-              <Card.Text>{`${name} ${verb} last week`}</Card.Text>
-            </Card.Body>
-            <Card.Footer style={{ textAlign: 'right' }}>
-              <FontAwesomeIcon icon={faShareAlt} />
-            </Card.Footer>
-          </Card>
-        </CardColumns>
+        <Col>
+          <CardColumns>
+            <Card>
+              <Card.Header className="text-center text-primary">
+                <FontAwesomeIcon icon={faHeart} size="6x" />
+              </Card.Header>
+              <Card.Body className="text-center">
+                <h1>{value}</h1>
+                <Card.Text>{`${name} ${verb} last week`}</Card.Text>
+              </Card.Body>
+              <Card.Footer style={{ textAlign: 'right' }}>
+                <FontAwesomeIcon icon={faShareAlt} />
+              </Card.Footer>
+            </Card>
+          </CardColumns>
+        </Col>
       </Row>
     );
   }
