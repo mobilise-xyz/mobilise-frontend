@@ -5,7 +5,9 @@ import DateTimeForm from './DateTimeForm';
 let wrapper;
 
 beforeEach(() => {
-  wrapper = shallow(<DateTimeForm />);
+  wrapper = shallow(
+    <DateTimeForm handleChange={() => {}} date="" startTime="" endTime="" />
+  );
 });
 
 describe('Date and Time Form Component', () => {
