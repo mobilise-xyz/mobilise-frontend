@@ -73,7 +73,11 @@ class VolunteerShiftCardModal extends React.Component {
                 <Col>
                   {`${shiftData.creator.user.firstName} ${
                     shiftData.creator.user.lastName
-                  } (${shiftData.creator.user.email})`}
+                  } `}
+                  (
+                  <a href={`mailto:${shiftData.creator.user.email}`}>
+                    {shiftData.creator.user.email})
+                  </a>
                 </Col>
               </Row>
               <Row className="pb-4">
