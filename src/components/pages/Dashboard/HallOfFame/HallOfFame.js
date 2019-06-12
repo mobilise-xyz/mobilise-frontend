@@ -58,6 +58,8 @@ class HallOfFame extends React.Component {
     if (hallOfFameLoading === true || !hallOfFame) {
       return null;
     }
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+
     const { lastWeekHours, lastWeekIncrease } = hallOfFame;
 
     let hoursOrdered = lastWeekHours;
@@ -84,7 +86,9 @@ class HallOfFame extends React.Component {
                   key={val.rank}
                   id={val.rank}
                   category={getRankNameForRank(val.rank)}
-                  volunteerName={val.name}
+                  volunteerName={
+                    val.uid === uid ? `${val.name} (You)` : val.name
+                  }
                   bottomText={`${val.number} hours in the past week`}
                   icon={
                     <FontAwesomeIcon
@@ -99,7 +103,7 @@ class HallOfFame extends React.Component {
           })}
         </Row>
         <Row className="justify-content-md-center" style={{ margin: '30px' }}>
-          <h4>ON THE RISE!</h4>
+          <h4>ON THE RISE</h4>
         </Row>
         <Row>
           {increaseOrdered.map(val => {
@@ -109,7 +113,9 @@ class HallOfFame extends React.Component {
                   key={val.rank}
                   id={val.rank}
                   category={getRankNameForRank(val.rank)}
-                  volunteerName={val.name}
+                  volunteerName={
+                    val.uid === uid ? `${val.name} (You)` : val.name
+                  }
                   bottomText={`${val.number}x increase in activity`}
                   icon={
                     <FontAwesomeIcon
@@ -131,11 +137,13 @@ class HallOfFame extends React.Component {
 HallOfFame.propTypes = {
   hallOfFame: PropTypes.shape({
     lastWeekHours: PropTypes.arrayOf({
+      uuid: PropTypes.string.isRequired,
       rank: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.number.isRequired
     }).isRequired,
     lastWeekIncrease: PropTypes.arrayOf({
+      uuid: PropTypes.string.isRequired,
       rank: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.number.isRequired

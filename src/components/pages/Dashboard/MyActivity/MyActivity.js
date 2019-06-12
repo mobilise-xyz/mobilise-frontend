@@ -49,7 +49,6 @@ class MyActivity extends React.Component {
 
     return (
       <Container className="pt-5">
-        <h3>My Activity</h3>
         <ListGroup>
           {activities.map(activity => (
             <ActivityCard
