@@ -3,9 +3,9 @@ import {
   Button,
   Card,
   Col,
-  Row,
+  OverlayTrigger,
   Popover,
-  OverlayTrigger
+  Row
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -131,7 +131,7 @@ class ShiftCard extends React.Component {
     return (
       <ErrorBoundary>
         <Card
-          bg={collapsed ? 'danger' : 'white'}
+          className={`shift-card ${collapsed ? 'card-booked' : ''}`}
           style={{
             zIndex: 0
           }}

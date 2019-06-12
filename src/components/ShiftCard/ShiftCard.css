@@ -40,3 +40,8 @@
   justify-content: space-between;
   padding: 1rem !important;
 }
+
+.card-booked {
+  border: 6px solid #27a659;
+  opacity: 0.5;
+}
