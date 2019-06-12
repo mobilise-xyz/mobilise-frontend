@@ -19,7 +19,7 @@ const update = (name, verb, value) => {
   });
 
   return dispatch => {
-    metricConstants.update(name, verb, value).then(() => {
+    metricService.update(name, verb, value).then(() => {
       dispatch(alertActions.success('Metric successfully updated.'));
       return dispatch(updateSuccess());
     });
