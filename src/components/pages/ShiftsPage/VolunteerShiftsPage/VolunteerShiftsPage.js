@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
 import './VolunteerShiftsPage.css';
@@ -9,9 +10,9 @@ class VolunteerShiftsPage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-
+    const now = moment().format();
     // Do not make the request again if shifts are already in the store.
-    dispatch(shiftsActions.getForUser(uid, false));
+    dispatch(shiftsActions.getForUser(uid, false, now));
   }
 
   render() {

@@ -2,7 +2,7 @@ import shiftsConstants from '../_constants/shifts.constants';
 import shiftsService from '../_services/shifts.service';
 import alertActions from './alert.actions';
 
-const getAll = () => {
+const getAll = after => {
   const request = () => ({ type: shiftsConstants.GETALL_REQUEST });
   const success = shifts => ({ type: shiftsConstants.GETALL_SUCCESS, shifts });
   const failure = error => ({ type: shiftsConstants.GETALL_FAILURE, error });
@@ -10,7 +10,7 @@ const getAll = () => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getAll().then(
+    shiftsService.getAll(after).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(failure(error));
@@ -20,7 +20,7 @@ const getAll = () => {
 };
 
 // Gets shifts + recommended shifts for the specified user.
-const getForUser = (uid, booked = false) => {
+const getForUser = (uid, booked = false, after) => {
   const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
   const success = shifts => ({
     type: shiftsConstants.GETFORUSER_SUCCESS,
@@ -34,7 +34,7 @@ const getForUser = (uid, booked = false) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getForUser(uid, booked).then(
+    shiftsService.getForUser(uid, booked, after).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(alertActions.error('Error getting shifts.'));
@@ -44,7 +44,7 @@ const getForUser = (uid, booked = false) => {
   };
 };
 
-const getBookedForUser = uid => {
+const getBookedForUser = (uid, after) => {
   const request = () => ({ type: shiftsConstants.GETBOOKEDFORUSER_REQUEST });
   const success = myShifts => ({
     type: shiftsConstants.GETBOOKEDFORUSER_SUCCESS,
@@ -58,7 +58,7 @@ const getBookedForUser = uid => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getForUser(uid, true).then(
+    shiftsService.getForUser(uid, true, after).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(alertActions.error('Error getting shifts.'));

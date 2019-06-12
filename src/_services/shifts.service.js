@@ -23,10 +23,13 @@ const placeholderShift = {
   ]
 };
 
-const getAll = () => {
+const getAll = after => {
   // Get all shifts
   const config = {
-    headers: authHeader()
+    headers: authHeader(),
+    params: {
+      after
+    }
   };
   return axios
     .get('/shifts', config)
@@ -37,12 +40,13 @@ const getAll = () => {
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
 
-const getForUser = (uid, booked = false) => {
+const getForUser = (uid, booked = false, after) => {
   // Get all shifts
   const config = {
     headers: authHeader(),
     params: {
-      booked
+      booked,
+      after
     }
   };
 
