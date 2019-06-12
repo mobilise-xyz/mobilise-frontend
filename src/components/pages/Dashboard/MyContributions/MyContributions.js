@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { Card, CardColumns, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
-import { faCalendarCheck, faClock } from '@fortawesome/free-regular-svg-icons';
+import {
+  faCalendarCheck,
+  faClock,
+  faHeart
+} from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux';
 import volunteerActions from '../../../../_actions/volunteer.actions';
 
@@ -39,7 +43,7 @@ class MyContributions extends React.Component {
       return null;
     }
 
-    const { shiftsCompleted, hours } = contributions;
+    const { shiftsCompleted, hours, metric } = contributions;
 
     return (
       <Container className="pt-5">
@@ -55,6 +59,13 @@ class MyContributions extends React.Component {
             description="hours given"
             icon={<FontAwesomeIcon icon={faClock} size="6x" />}
           />
+          {metric ? (
+            <ContributionCard
+              number={metric.value}
+              description={`${metric.name} ${metric.verb} last week`}
+              icon={<FontAwesomeIcon icon={faHeart} size="6x" />}
+            />
+          ) : null}
         </CardColumns>
       </Container>
     );
