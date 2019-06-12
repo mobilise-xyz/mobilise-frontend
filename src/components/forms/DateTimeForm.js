@@ -1,8 +1,9 @@
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
-const DateTimeForm = ({ handleChange, date }) => {
+const DateTimeForm = ({ handleChange, date, startTime, endTime }) => {
   return (
     <Form.Row>
       {/* Date */}
@@ -25,9 +26,10 @@ const DateTimeForm = ({ handleChange, date }) => {
             <Form.Label>Start</Form.Label>
             <Form.Control
               id="start-time"
-              name="startTime"
+              name="start"
               type="time"
               onChange={handleChange}
+              value={startTime}
               required
             />
           </Col>
@@ -35,9 +37,10 @@ const DateTimeForm = ({ handleChange, date }) => {
             <Form.Label>End</Form.Label>
             <Form.Control
               id="end-time"
-              name="endTime"
+              name="stop"
               type="time"
               onChange={handleChange}
+              value={endTime}
               required
             />
           </Col>
@@ -45,6 +48,13 @@ const DateTimeForm = ({ handleChange, date }) => {
       </Form.Group>
     </Form.Row>
   );
+};
+
+DateTimeForm.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  date: PropTypes.string.isRequired,
+  startTime: PropTypes.string.isRequired,
+  endTime: PropTypes.string.isRequired
 };
 
 export default DateTimeForm;

@@ -27,11 +27,10 @@ class AdminShiftsPage extends React.Component {
 
     return (
       <Layout>
-        <Link exact to="new-shift">
+        <Link to="new-shift">
           <OverlayTrigger overlay={<Tooltip>Add new shift</Tooltip>}>
             <button
               type="button"
-              tooltip="Add a new shift"
               className="btn btn-primary bmd-btn-fab add-shift-fab"
             >
               <i className="material-icons md-light">add</i>

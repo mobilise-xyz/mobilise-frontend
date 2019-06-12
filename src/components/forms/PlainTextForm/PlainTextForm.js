@@ -1,18 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import './PlainTextForm.css';
 
 const PlainTextForm = props => {
   const {
     noLabel = false,
-    label,
-    placeHolder = '',
+    label = '',
+    placeholder = '',
     content,
     disabled = false,
-    rows = '2',
     handleChange
   } = props;
-  const placeholder = placeHolder === '' ? `Enter ${label}` : placeHolder;
   return (
     <Form.Group>
       {noLabel ? null : (
@@ -26,7 +25,6 @@ const PlainTextForm = props => {
         name={label}
         disabled={disabled}
         placeholder={placeholder}
-        rows={rows}
         value={content}
         onChange={handleChange}
         required
@@ -34,6 +32,22 @@ const PlainTextForm = props => {
       />
     </Form.Group>
   );
+};
+
+PlainTextForm.defaultProps = {
+  noLabel: false,
+  label: '',
+  placeholder: '',
+  disabled: false
+};
+
+PlainTextForm.propTypes = {
+  noLabel: PropTypes.bool,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  content: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default PlainTextForm;

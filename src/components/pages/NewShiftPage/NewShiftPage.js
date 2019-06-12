@@ -25,8 +25,8 @@ class NewShiftPage extends React.Component {
         title: '',
         description: '',
         date: '',
-        startTime: '',
-        endTime: '',
+        start: '',
+        stop: '',
         repeat: 'Never',
         repeatUntil: '',
         location: '',
@@ -109,8 +109,8 @@ class NewShiftPage extends React.Component {
       title: data.title,
       description: data.description,
       date: data.date,
-      start: data.startTime,
-      stop: data.endTime,
+      start: data.start,
+      stop: data.stop,
       repeatedType: data.repeat,
       untilDate: data.repeatUntil,
       address: data.location,
@@ -291,7 +291,7 @@ class NewShiftPage extends React.Component {
 
   render() {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
-    const { title, description, repeat, date, roles } = data;
+    const { title, description, repeat, date, start, stop, roles } = data;
     const { roleName, roleInvolves, show: showRoleModal } = newRoleModal;
 
     const backBtn = (
@@ -321,7 +321,13 @@ class NewShiftPage extends React.Component {
             handleChange={this.handleDataChange}
           />
           {/* Date and Time */}
-          <DateTimeForm id="datetime" handleChange={this.handleDataChange} />
+          <DateTimeForm
+            id="datetime"
+            date={date}
+            startTime={start}
+            endTime={stop}
+            handleChange={this.handleDataChange}
+          />
           {/* Repeating Shifts */}
           <RepeatingShiftForm
             id="repeat"
