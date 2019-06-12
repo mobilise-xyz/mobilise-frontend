@@ -295,7 +295,7 @@ class NewShiftPage extends React.Component {
     const { roleName, roleInvolves, show: showRoleModal } = newRoleModal;
 
     const backBtn = (
-      <LinkContainer exact to="/" style={{ position: 'sticky', left: '80%' }}>
+      <LinkContainer exact to="/" className="float-right">
         <Button variant="outline-secondary">
           {<FontAwesomeIcon icon={faAngleLeft} />} Back
         </Button>
