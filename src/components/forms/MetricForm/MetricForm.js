@@ -1,72 +1,119 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
+import axios from 'axios';
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  CardColumns
+} from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShareAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
 import metricActions from '../../../_actions/metric.actions';
 import PlainTextForm from '../PlainTextForm';
+import authHeader from '../../../_helpers/auth-header';
+import utils from '../../../_helpers/utils';
+import store from '../../../_helpers/store';
 
 class MetricForm extends React.Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
+  state = {
+    name: '',
+    verb: '',
+    value: -1
+  };
 
-    dispatch(metricActions.get());
+  componentDidMount() {
+    const config = {
+      headers: authHeader()
+    };
+
+    axios
+      .get(`/metric`, config)
+      .then(utils.handleResponse)
+      .then(metric => this.setState(metric));
   }
 
   handleSubmit = () => {
-    const { metric, dispatch } = this.props;
-    const { name, verb, value } = metric;
-    dispatch(metricActions.update(name, verb, value));
+    const { name, verb, value } = this.state;
+    store.dispatch(metricActions.update(name, verb, value));
+  };
+
+  handleDataChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
   };
 
   render() {
-    const { metric, loading } = this.props;
-    console.log(metric);
-
-    if (loading === true || !metric) {
-      return null;
-    }
-
-    const { name, verb, value } = metric;
+    const { name, verb, value } = this.state;
 
     return (
-      <Card className="p-3">
-        <Form>
-          <Form.Group>
-            <Form.Label>
-              Please provide a metric for your volunteers!
-            </Form.Label>
-            <Row>
-              <Col>
-                <PlainTextForm id="name" label="Name" content={name} />
-              </Col>
-              <Col>
-                <PlainTextForm id="verb" label="verb" content={verb} />
-              </Col>
-              <Col>
-                <PlainTextForm id="value" label="value" content={value} />
-              </Col>
-            </Row>
-            <Container className="pt-5 text-center">
-              <Button
-                variant="outline-primary"
-                type="button"
-                onClick={this.handleSubmit}
-              >
-                Save changes
-              </Button>
-            </Container>
-          </Form.Group>
-        </Form>
-      </Card>
+      <Row>
+        <Col>
+          <Card className="p-3">
+            <Form>
+              <Form.Group>
+                <Form.Label>Please provide a metric:</Form.Label>
+                <Form.Text className="text-muted">
+                  This will be used to provide a volunteer contribution item
+                  relating to the work you do. This is previewed on the right.
+                </Form.Text>
+                <PlainTextForm
+                  id="name"
+                  label="Name:"
+                  name="name"
+                  content={name}
+                  handleChange={this.handleDataChange}
+                />
+                <PlainTextForm
+                  id="verb"
+                  label="Verb:"
+                  name="verb"
+                  content={verb}
+                  handleChange={this.handleDataChange}
+                />
+                <PlainTextForm
+                  id="value"
+                  label="Value per week"
+                  name="value"
+                  content={value.toString(10)}
+                  handleChange={this.handleDataChange}
+                />
+                <Container className="pt-5 text-center">
+                  <Button
+                    variant="outline-primary"
+                    type="button"
+                    onClick={this.handleSubmit}
+                  >
+                    Save changes
+                  </Button>
+                </Container>
+              </Form.Group>
+            </Form>
+          </Card>
+        </Col>
+        <Col>
+          <CardColumns>
+            <Card>
+              <Card.Header className="text-center text-primary">
+                <FontAwesomeIcon icon={faHeart} size="6x" />
+              </Card.Header>
+              <Card.Body className="text-center">
+                <h1>{value}</h1>
+                <Card.Text>{`${name} ${verb} last week`}</Card.Text>
+              </Card.Body>
+              <Card.Footer style={{ textAlign: 'right' }}>
+                <FontAwesomeIcon icon={faShareAlt} />
+              </Card.Footer>
+            </Card>
+          </CardColumns>
+        </Col>
+      </Row>
     );
   }
 }
 
-const mapStateToProps = state => {
-  const { metric, loading } = state.metric;
-  return {
-    metric,
-    loading
-  };
-};
-
-export default connect(mapStateToProps)(MetricForm);
+export default MetricForm;
