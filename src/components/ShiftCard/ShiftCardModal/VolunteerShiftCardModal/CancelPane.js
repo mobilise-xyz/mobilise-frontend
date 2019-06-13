@@ -52,12 +52,16 @@ class CancelPane extends React.Component {
           </Col>
         </Row>
         <Row>
-          {requirements.map(r => (
-            <Col>
-              <h6>This role involves:</h6>
-              <p>{r.role.involves}</p>
-            </Col>
-          ))}
+          <Col>
+            <h6>This role involves:</h6>
+            {requirements.map(r => (
+              <Row>
+                <Col>
+                  <p>{r.role.involves}</p>
+                </Col>
+              </Row>
+            ))}
+          </Col>
         </Row>
         <Row>
           <Col>
