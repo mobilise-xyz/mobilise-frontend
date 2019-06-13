@@ -34,13 +34,6 @@ class NewShiftPage extends React.Component {
       roleOptions: [],
       newRoleModal: {
         roleName: '',
-        roleInvolves: '',
-        show: false
-      },
-      customRepeatModal: {
-        frequency: '',
-        timeFrame: '',
-        repeatDays: '',
         show: false
       }
     };
@@ -215,19 +208,20 @@ class NewShiftPage extends React.Component {
     return `#${colours[Math.floor(Math.random() * colours.length)]}`;
   };
 
-  handleRoleSubmit = () => {
+  handleRoleSubmit = roleInvolves => {
     const config = {
       headers: authHeader()
     };
 
     const { newRoleModal } = this.state;
-    const { roleName, roleInvolves } = newRoleModal;
+    const { roleName } = newRoleModal;
 
     const data = {
       name: roleName,
       involves: roleInvolves,
       colour: this.getRandomColour()
     };
+
     // 1. Create new role with post request
     axios
       .post('/roles', data, config)
@@ -293,7 +287,7 @@ class NewShiftPage extends React.Component {
   render() {
     const { data, shiftTitleOptions, roleOptions, newRoleModal } = this.state;
     const { title, description, repeat, date, start, stop, roles } = data;
-    const { roleName, roleInvolves, show: showRoleModal } = newRoleModal;
+    const { roleName, show: showRoleModal } = newRoleModal;
 
     return (
       <CardLayout title="New Shift" backButton container>
@@ -353,12 +347,10 @@ class NewShiftPage extends React.Component {
         </Form>
         <NewRoleModal
           roleName={roleName}
-          roleInvolves={roleInvolves}
           show={showRoleModal}
           onHide={this.toggleRolesModal}
           handleRoleSubmit={this.handleRoleSubmit}
           handleRoleCancel={this.handleRoleCancel}
-          handleInvolvesChange={this.handleInvolvesChange}
         />
       </CardLayout>
     );
