@@ -29,7 +29,6 @@ const PlainTextForm = props => {
         value={content}
         onChange={handleChange}
         required
-        style={{ padding: 0 }}
       />
     </Form.Group>
   );
