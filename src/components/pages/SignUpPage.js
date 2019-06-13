@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import CardLayout from '../CardLayout';
 
 const placeholderForms = [
@@ -39,7 +39,7 @@ export default class SignUpPage extends React.Component {
   render() {
     const { forms } = this.state;
     return (
-      <CardLayout navOff title="Sign up">
+      <CardLayout title="Sign up">
         <Form>
           {forms}
           <div className="text-center" style={{ margin: 'auto' }}>

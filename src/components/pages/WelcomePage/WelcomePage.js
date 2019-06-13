@@ -32,7 +32,7 @@ class WelcomePage extends Component {
 
   render() {
     return (
-      <Layout navOff className="welcome-page-layout">
+      <Layout className="welcome-page-layout">
         <Container>
           <Card>
             <Card.Body>
