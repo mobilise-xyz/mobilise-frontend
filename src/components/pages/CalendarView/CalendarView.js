@@ -34,7 +34,8 @@ const defaultShiftdata = {
       numberRequired: 0,
       role: {
         name: 'Loading...'
-      }
+      },
+      bookings: []
     }
   ]
 };
@@ -72,7 +73,7 @@ class CalendarView extends React.Component {
     }));
 
     const eventSelector = isAdmin ? () => {} : this.toggleModal;
-
+    console.log(selectedShiftData);
     return (
       <Card className="p-3">
         <div style={{ height: '60rem' }}>
