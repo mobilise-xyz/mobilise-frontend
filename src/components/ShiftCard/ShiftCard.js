@@ -142,7 +142,7 @@ class ShiftCard extends React.Component {
       <ErrorBoundary>
         <Card className={cardClass}>
           <a
-            title="Shift location maps link"
+            title="Click Here to see where the shift is on google maps!"
             href={generateGoogleMapsLink(shiftData.address)}
             target="_blank"
             rel="noopener noreferrer"
@@ -184,16 +184,18 @@ class ShiftCard extends React.Component {
               </Col>
               {isRecommended ? (
                 <Col className="mt-2" lg={8} md={12} sm={12} xs={12}>
-                  <span className="ic-recommended">RECOMMENDED</span>
                   <OverlayTrigger
                     placement="right"
                     overlay={recommendedPopover}
                   >
-                    <FontAwesomeIcon
-                      icon={faExclamationCircle}
-                      className="ml-1"
-                      color="white"
-                    />
+                    <div>
+                      <span className="ic-recommended">RECOMMENDED</span>
+                      <FontAwesomeIcon
+                        icon={faExclamationCircle}
+                        className="ml-2"
+                        color="white"
+                      />
+                    </div>
                   </OverlayTrigger>
                 </Col>
               ) : null}
