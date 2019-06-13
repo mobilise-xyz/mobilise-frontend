@@ -308,6 +308,7 @@ class NewShiftPage extends React.Component {
             label="description"
             content={description}
             handleChange={this.handleDataChange}
+            name="description"
           />
           {/* Date and Time */}
           <DateTimeForm
