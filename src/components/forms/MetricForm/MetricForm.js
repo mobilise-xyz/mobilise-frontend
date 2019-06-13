@@ -10,8 +10,7 @@ import {
   CardColumns
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import { faGrinBeam } from '@fortawesome/free-regular-svg-icons';
 import metricActions from '../../../_actions/metric.actions';
 import PlainTextForm from '../PlainTextForm';
 import authHeader from '../../../_helpers/auth-header';
@@ -22,7 +21,7 @@ class MetricForm extends React.Component {
   state = {
     name: '',
     verb: '',
-    value: -1
+    value: 0
   };
 
   componentDidMount() {
@@ -33,7 +32,11 @@ class MetricForm extends React.Component {
     axios
       .get(`/metric`, config)
       .then(utils.handleResponse)
-      .then(metric => this.setState(metric));
+      .then(metric => {
+        if (metric) {
+          this.setState(metric);
+        }
+      });
   }
 
   handleSubmit = () => {
@@ -58,7 +61,10 @@ class MetricForm extends React.Component {
             <Form>
               <Form.Group>
                 <Form.Label>Please provide a metric:</Form.Label>
-                <Form.Text className="text-muted">
+                <Form.Text
+                  className="text-muted"
+                  style={{ paddingBottom: '10px' }}
+                >
                   This will be used to provide a volunteer contribution item
                   relating to the work you do. This is previewed on the right.
                 </Form.Text>
@@ -100,15 +106,12 @@ class MetricForm extends React.Component {
           <CardColumns>
             <Card>
               <Card.Header className="text-center text-primary">
-                <FontAwesomeIcon icon={faHeart} size="6x" />
+                <FontAwesomeIcon icon={faGrinBeam} size="6x" />
               </Card.Header>
               <Card.Body className="text-center">
                 <h1>{value}</h1>
                 <Card.Text>{`${name} ${verb} last week`}</Card.Text>
               </Card.Body>
-              <Card.Footer style={{ textAlign: 'right' }}>
-                <FontAwesomeIcon icon={faShareAlt} />
-              </Card.Footer>
             </Card>
           </CardColumns>
         </Col>
