@@ -25,7 +25,7 @@ const CardRoleBadge = ({
       {name}
       {number !== undefined ? (
         <Badge variant="light" style={{ margin: '0.3rem' }}>
-          {`${number}${outOf}`}
+          {number !== '' ? `${number}${outOf}` : ''}
         </Badge>
       ) : null}
     </Badge>

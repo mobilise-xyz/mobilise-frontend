@@ -26,15 +26,14 @@ const generateRequirements = (shiftData, selected, isAdmin, type) =>
 
     const { numberRequired, role, bookings } = r;
     const numberOfBookings = bookings ? bookings.length : 0;
-    const numberRemaining =
-      type === 'booked' ? null : numberRequired - numberOfBookings;
+    const numberRemaining = numberRequired - numberOfBookings;
     return numberRequired > 0 ? (
       <CardRoleBadge
         isAdmin={isAdmin}
         name={role.name}
         selected={selected}
         colour={role.colour}
-        number={numberRequired - numberRemaining}
+        number={type === 'booked' ? '' : numberRequired - numberRemaining}
         numberRequired={numberRequired}
         key={`role-badge-${shiftData.id}-${role.name}`}
       />
@@ -45,9 +44,7 @@ const generateGoogleMapsLink = address =>
   `https://www.google.com/maps?safe=strict&q=${address}&um=1&ie=UTF-8&sa=X&ved=0ahUKEwiGr7nZxNXiAhXBUBUIHQq6DrQQ_AUIESgC`;
 
 const generateGoogleMapsImage = address =>
-  `https://maps.googleapis.com/maps/api/staticmap?center=${address}&zoom=13&size=512x200&maptype=roadmap&markers=color:red%7C${address}&&key=${
-    process.env.REACT_APP_GOOGLE_API_KEY
-  }`;
+  `https://maps.googleapis.com/maps/api/staticmap?center=${address}&zoom=13&size=512x200&maptype=roadmap&markers=color:red%7C${address}&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
 
 // shiftData consists of title, description, date, start, stop, address
 
