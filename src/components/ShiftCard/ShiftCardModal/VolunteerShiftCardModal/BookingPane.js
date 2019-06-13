@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Col, Collapse, Row } from 'react-bootstrap';
 import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge';
 import RepeatBookingForm from './RepeatBookingForm';
-import './BookingPane.css';
 
 const BookingPane = ({
   shiftData,
