@@ -6,7 +6,8 @@ import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import {
   faCalendarCheck,
   faClock,
-  faHeart
+  faSmile,
+  faMeh
 } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux';
 import volunteerActions from '../../../../_actions/volunteer.actions';
@@ -67,7 +68,12 @@ class MyContributions extends React.Component {
               <ContributionCard
                 number={metric.value}
                 description={`${metric.name} ${metric.verb} last week`}
-                icon={<FontAwesomeIcon icon={faHeart} size="6x" />}
+                icon={
+                  <FontAwesomeIcon
+                    icon={metric.value > 0 ? faSmile : faMeh}
+                    size="6x"
+                  />
+                }
               />
             ) : null}
           </CardColumns>
