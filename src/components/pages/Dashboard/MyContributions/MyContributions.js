@@ -67,7 +67,7 @@ class MyContributions extends React.Component {
             {metric ? (
               <ContributionCard
                 number={metric.value}
-                description={`${metric.roleName} ${metric.verb} last week`}
+                description={`${metric.name} ${metric.verb} last week`}
                 icon={
                   <FontAwesomeIcon
                     icon={metric.value > 0 ? faGrinBeam : faMeh}

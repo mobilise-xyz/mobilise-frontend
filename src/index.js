@@ -1,7 +1,3 @@
-// For IE support.
-import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/stable';
-
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
