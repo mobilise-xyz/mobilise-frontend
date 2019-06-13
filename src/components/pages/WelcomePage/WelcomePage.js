@@ -38,7 +38,8 @@ class WelcomePage extends Component {
             <Card.Body>
               <Card.Text>
                 Welcome to Mobilise for City Harvest London! Please fill in your
-                availability and contact preferences below.
+                availability and contact preferences below. You can change these
+                at any time in Settings!
               </Card.Text>
             </Card.Body>
           </Card>

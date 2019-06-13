@@ -42,7 +42,13 @@ class Header extends React.Component {
     }
 
     return (
-      <Navbar variant="dark" bg="primary" expand="lg" sticky="top">
+      <Navbar
+        variant="dark"
+        bg="primary"
+        expand="lg"
+        sticky="top"
+        style={{ zIndex: 2000 }}
+      >
         <LinkContainer to="/">
           <Navbar.Brand>
             <img

@@ -184,7 +184,7 @@ class AdminShiftCardModal extends Component {
                   <PlainTextForm
                     noLabel
                     handleChange={this.handleDataChange}
-                    content={`${manager.firstName}  ${manager.lastName}`}
+                    content={`${manager.firstName} ${manager.lastName}`}
                   />
                 </Col>
               </Row>
@@ -193,7 +193,6 @@ class AdminShiftCardModal extends Component {
                   <i className="material-icons">info</i>
                 </Col>
                 <Col>
-                  {' '}
                   <PlainTextForm
                     id="description-form"
                     noLabel
@@ -219,9 +218,7 @@ class AdminShiftCardModal extends Component {
                   roleName={r.role.name}
                   volunteerNames={r.bookings.map(
                     b =>
-                      `${b.volunteer.user.firstName} ${
-                        b.volunteer.user.lastName
-                      }`
+                      `${b.volunteer.user.firstName} ${b.volunteer.user.lastName}`
                   )}
                   number={r.numberRequired}
                   handleUpdate={this.handleRoleNumberChange}
