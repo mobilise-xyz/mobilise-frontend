@@ -1,8 +1,9 @@
 import React from 'react';
-import { Badge, Button } from 'react-bootstrap';
+import { Badge, Button, ListGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../ModalRoleBadge/RoleBadge.css';
+import './AdminRoleBadge.css';
 
 const DecrementButton = ({ handleUpdate, name, number }) => (
   <Button
@@ -30,35 +31,43 @@ const AdminRoleBadge = ({
   colour = 'info'
 }) => {
   return (
-    <Badge
-      pill
-      className="role-badge"
-      style={{ padding: 0, backgroundColor: colour }}
-      name={name}
-    >
-      {name}
-      {onModal ? (
-        <DecrementButton
-          handleUpdate={handleUpdate}
-          name={name}
-          number={number}
-        />
-      ) : null}
-      {number ? (
-        <Badge variant="light" className="number-badge">
-          {number}
-        </Badge>
-      ) : (
-        number
-      )}
-      {onModal ? (
-        <IncrementButton
-          handleUpdate={handleUpdate}
-          name={name}
-          number={number}
-        />
-      ) : null}
-    </Badge>
+    <div>
+      <Badge
+        pill
+        className="role-badge admin"
+        style={{ padding: 0, backgroundColor: colour }}
+        name={name}
+      >
+        {name}
+        {onModal ? (
+          <DecrementButton
+            handleUpdate={handleUpdate}
+            name={name}
+            number={number}
+          />
+        ) : null}
+        {number ? (
+          <Badge variant="light" className="number-badge">
+            {number}
+          </Badge>
+        ) : (
+          number
+        )}
+        {onModal ? (
+          <IncrementButton
+            handleUpdate={handleUpdate}
+            name={name}
+            number={number}
+          />
+        ) : null}
+
+        <div>
+          <ListGroup>
+            <ListGroup.Item>Hi</ListGroup.Item>
+          </ListGroup>
+        </div>
+      </Badge>
+    </div>
   );
 };
 

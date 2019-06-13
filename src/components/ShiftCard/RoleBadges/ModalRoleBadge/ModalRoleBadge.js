@@ -22,6 +22,7 @@ const ModalRoleBadge = ({
     colour
   };
   return isAdmin ? (
+    // TODO what is this actually for?
     <AdminRoleBadge {...passthroughProps} />
   ) : (
     <VolunteerRoleBadge {...passthroughProps} />

@@ -1,3 +1,7 @@
 .dropdown-toggle {
   color: white;
 }
+
+.dropdown-menu {
+  z-index: 2000;
+}

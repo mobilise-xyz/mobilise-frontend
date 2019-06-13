@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Col, Collapse, Row } from 'react-bootstrap';
-import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge';
 import RepeatBookingForm from './RepeatBookingForm';
+import VolunteerRoleBadge from '../../RoleBadges/VolunteerRoleBadge';
 
 const BookingPane = ({
   shiftData,
@@ -29,8 +29,8 @@ const BookingPane = ({
             // Only show roles that are available to book
             // i.e. numberRequired > 0
             return r.numberRequired > 0 ? (
-              <ModalRoleBadge
-                key={shiftData.id + r.role.name}
+              <VolunteerRoleBadge
+                key={shiftData.id + r.role.roleName}
                 name={r.role.name}
                 handleSelect={handleSelect}
                 selected={selected}

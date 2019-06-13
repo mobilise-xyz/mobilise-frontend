@@ -57,11 +57,11 @@ class RolesForm extends React.Component {
           id="roles"
           placeholder="Add available roles for shift"
           newSelectionPrefix="Add new role:  "
-          options={roleOptions.map(r => r.name)}
+          options={roleOptions.map(r => r.roleName)}
           allowNew
           multiple
           onChange={handleChange}
-          selected={roles.map(r => r.name)}
+          selected={roles.map(r => r.roleName)}
           selectHintOnEnter
           onKeyDown={this.onKeyDown}
           renderToken={(option, props, index) =>

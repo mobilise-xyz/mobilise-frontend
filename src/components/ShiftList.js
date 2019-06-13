@@ -51,7 +51,7 @@ const ShiftList = ({ shifts, isAdmin = false, type = '' }) => {
                 const recommendedRoleNames = [];
                 c.requirements.forEach(req => {
                   if (req.recommended) {
-                    recommendedRoleNames.push(req.role.name);
+                    recommendedRoleNames.push(req.role.roleName);
                   }
                 });
                 return (

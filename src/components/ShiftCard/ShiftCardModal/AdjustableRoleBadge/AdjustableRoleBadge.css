@@ -1,0 +1,37 @@
+.role-control-button {
+  margin-bottom: 0 !important;
+  z-index: 1000;
+}
+
+.role-control-button:active {
+  background-color: unset !important;
+}
+
+.role-badge.adjustable {
+  /*padding: .0em .4em !important;*/
+  display: block;
+}
+
+.role-control-button.open {
+  float: right;
+  padding: 0;
+}
+
+.role-control-button.open > i {
+  line-height: 1.5;
+}
+
+.role-list-name {
+  padding: 0.5rem 1rem;
+}
+
+.role-list-container {
+  border-radius: 1rem;
+  margin: 0;
+  padding: 0;
+  color: white;
+  filter: brightness(125%);
+}
+
+.collapse {
+}

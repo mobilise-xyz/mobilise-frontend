@@ -44,8 +44,8 @@ class CancelPane extends React.Component {
           <Col>
             {requirements.map(r => (
               <CardRoleBadge
-                key={id + r.role.name}
-                name={r.role.name}
+                key={id + r.role.roleName}
+                name={r.role.roleName}
                 colour={r.role.colour}
               />
             ))}

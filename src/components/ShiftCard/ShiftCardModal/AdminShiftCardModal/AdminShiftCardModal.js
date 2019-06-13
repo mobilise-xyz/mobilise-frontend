@@ -216,7 +216,13 @@ class AdminShiftCardModal extends Component {
                 <AdjustableRoleBadge
                   key={shiftData.id + r.role.name}
                   isAdmin
-                  name={r.role.name}
+                  roleName={r.role.name}
+                  volunteerNames={r.bookings.map(
+                    b =>
+                      `${b.volunteer.user.firstName} ${
+                        b.volunteer.user.lastName
+                      }`
+                  )}
                   number={r.numberRequired}
                   handleUpdate={this.handleRoleNumberChange}
                   onModal

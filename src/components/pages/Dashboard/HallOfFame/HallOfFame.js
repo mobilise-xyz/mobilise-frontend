@@ -89,7 +89,7 @@ class HallOfFame extends React.Component {
                   id={val.rank}
                   category={getRankNameForRank(val.rank)}
                   volunteerName={
-                    val.uid === uid ? `${val.name} (You)` : val.name
+                    val.uid === uid ? `${val.roleName} (You)` : val.roleName
                   }
                   bottomText={`${val.number} hours given last week`}
                   icon={
@@ -116,7 +116,7 @@ class HallOfFame extends React.Component {
                   id={val.rank}
                   category={getRankNameForRank(val.rank)}
                   volunteerName={
-                    val.uid === uid ? `${val.name} (You)` : val.name
+                    val.uid === uid ? `${val.roleName} (You)` : val.roleName
                   }
                   bottomText={`${val.number}x increase in activity last week`}
                   icon={
