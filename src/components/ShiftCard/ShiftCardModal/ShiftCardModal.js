@@ -36,7 +36,7 @@ const ShiftCardModal = ({
     <VolunteerShiftCardModal {...passthroughProps} />
   );
 
-  return <Suspense fallback={<div>Loading...</div>}>{toRender}</Suspense>;
+  return <Suspense fallback={<div />}>{toRender}</Suspense>;
 };
 
 export default ShiftCardModal;
