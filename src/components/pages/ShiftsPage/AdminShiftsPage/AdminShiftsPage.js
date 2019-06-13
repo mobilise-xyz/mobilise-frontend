@@ -1,5 +1,11 @@
 import React from 'react';
-import { Col, ToggleButton, ToggleButtonGroup, OverlayTrigger, Tooltip  } from 'react-bootstrap';
+import {
+  Col,
+  ToggleButton,
+  ToggleButtonGroup,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -46,7 +52,6 @@ class AdminShiftsPage extends React.Component {
   render() {
     const { shifts, loading, error } = this.props;
     const { viewType } = this.state;
-
     if (loading === true || !shifts) {
       return null;
     }
@@ -58,21 +63,22 @@ class AdminShiftsPage extends React.Component {
     let view = 'list';
     switch (viewType) {
       case 'list':
-        view = <ShiftList isAdmin shifts={shifts.shifts.all} />;
+        view = <ShiftList isAdmin shifts={shifts.all} />;
         break;
       case 'calendar':
-        view = <CalendarView isAdmin shifts={shifts.shifts.all} />;
+        view = <CalendarView isAdmin shifts={shifts.all} />;
         break;
       default:
     }
 
     return (
-      <Layout cornerComponent={
-                               <ViewSwitch
-                                 handleListView={this.handleListView}
-                                 handleCalendarView={this.handleCalendarView}
-                               />
-                             }
+      <Layout
+        cornerComponent={
+          <ViewSwitch
+            handleListView={this.handleListView}
+            handleCalendarView={this.handleCalendarView}
+          />
+        }
       >
         <Link to="new-shift">
           <OverlayTrigger overlay={<Tooltip>Add new shift</Tooltip>}>

@@ -59,6 +59,7 @@ class CalendarView extends React.Component {
   render() {
     const { shifts, isAdmin } = this.props;
     const { showModal, selectedShiftData } = this.state;
+
     const events = shifts.map(s => ({
       start: moment(`${s.date} ${s.start}`).toDate(),
       end: moment(`${s.date} ${s.stop}`).toDate(),
@@ -70,6 +71,8 @@ class CalendarView extends React.Component {
       toggleModal: this.toggleModal
     }));
 
+    const eventSelector = isAdmin ? () => {} : this.toggleModal;
+
     return (
       <Card className="p-3">
         <div style={{ height: '60rem' }}>
@@ -80,7 +83,7 @@ class CalendarView extends React.Component {
             endAccessor="end"
             defaultView="week"
             components={customComponents}
-            onSelectEvent={this.toggleModal}
+            onSelectEvent={eventSelector}
             onDrillDown={() => {}}
             timeslots={1}
             scrollToTime={moment('07:00:00', 'HH:mm:ss').toDate()}
