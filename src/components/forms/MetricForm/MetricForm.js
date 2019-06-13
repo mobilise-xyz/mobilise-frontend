@@ -61,7 +61,10 @@ class MetricForm extends React.Component {
             <Form>
               <Form.Group>
                 <Form.Label>Please provide a metric:</Form.Label>
-                <Form.Text className="text-muted">
+                <Form.Text
+                  className="text-muted"
+                  style={{ paddingBottom: '10px' }}
+                >
                   This will be used to provide a volunteer contribution item
                   relating to the work you do. This is previewed on the right.
                 </Form.Text>
