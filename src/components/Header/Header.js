@@ -11,7 +11,13 @@ import usersActions from '../../_actions/users.actions';
 class Header extends React.Component {
   componentDidMount() {
     // Retrieve name from uid
-    const { uid } = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (!user) {
+      return;
+    }
+
+    const { uid } = user;
     const { firstName, dispatch } = this.props;
 
     if (!firstName) {
@@ -20,7 +26,13 @@ class Header extends React.Component {
   }
 
   render() {
-    const { isAdmin } = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (!user) {
+      return null;
+    }
+
+    const { isAdmin } = user;
     const { firstName, lastName } = this.props;
     const adminMessage = isAdmin ? '(Admin)' : '(Volunteer)';
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch, withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import history from './_helpers/history';
 import PrivateRoute from './components/routes/PrivateRoute';
 import ShiftsPage from './components/pages/ShiftsPage';
@@ -16,7 +17,6 @@ import SettingsPage from './components/pages/SettingsPage';
 import WelcomePage from './components/pages/WelcomePage/WelcomePage';
 import AdminRoute from './components/routes/AdminRoute';
 import Header from './components/Header';
-import store from './_helpers/store';
 
 // List of pathnames to compare against to decide whether or not to render the
 // header.
@@ -26,9 +26,11 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
 
+    const { dispatch } = this.props;
+
     // Clear alerts on location change.
     history.listen(() => {
-      store.dispatch(alertActions.clear());
+      dispatch(alertActions.clear());
     });
   }
 
@@ -68,4 +70,8 @@ export class App extends React.Component {
   }
 }
 
-export default withRouter(App);
+const mapStateToProps = () => {
+  return {};
+};
+
+export default withRouter(connect(mapStateToProps)(App));
