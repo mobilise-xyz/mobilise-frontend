@@ -120,6 +120,42 @@ const shifts = (state = {}, action) => {
         shifts: applyToShifts(state.shifts, action, setBookFailure)
       };
     }
+    case shiftsConstants.CANCEL_BOOKING_REQUEST: {
+      // Search for the shift that requested to be booked.
+      const setCancelBookingRequest = shift =>
+        shift.id === action.id ? { ...shift, loading: true } : shift;
+      return {
+        ...state,
+        shifts: applyToShifts(state.shifts, action, setCancelBookingRequest)
+      };
+    }
+    case shiftsConstants.CANCEL_BOOKING_SUCCESS: {
+      // Search for the shift that requested to be booked.
+      const setCancelBookingSuccess = shift =>
+        shift.id === action.id
+          ? { ...shift, bookSuccess: true, loading: false }
+          : shift;
+      return {
+        ...state,
+        shifts: applyToShifts(state.shifts, action, setCancelBookingSuccess)
+      };
+    }
+    case shiftsConstants.CANCEL_BOOKING_FAILURE: {
+      // Search for the shift that requested to be booked.
+      const setCancelBookingFailure = shift =>
+        shift.id === action.id
+          ? {
+              ...shift,
+              bookSuccess: false,
+              loading: false,
+              error: action.error
+            }
+          : shift;
+      return {
+        ...state,
+        shifts: applyToShifts(state.shifts, action, setCancelBookingFailure)
+      };
+    }
     case shiftsConstants.UPDATE_REQUEST: {
       const setUpdateRequest = shift =>
         shift.id === action.id ? { ...shift, loading: true } : shift;

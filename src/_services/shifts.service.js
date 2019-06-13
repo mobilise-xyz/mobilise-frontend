@@ -87,6 +87,14 @@ const book = (shiftId, roleName, repeatedType, untilDate) => {
     .then(utils.handleResponse);
 };
 
+const cancelBooking = (shiftId, data) => {
+  const headers = authHeader();
+
+  return axios
+    .delete(`/shifts/${shiftId}/booking`, { headers, data })
+    .then(utils.handleResponse);
+};
+
 const updateInfo = (shiftId, { title, description, address }) => {
   const config = {
     headers: authHeader()
@@ -132,6 +140,7 @@ const shiftsService = {
   getForUser,
   deleteWithId,
   book,
+  cancelBooking,
   updateInfo,
   updateRoles,
   ping
