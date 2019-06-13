@@ -16,7 +16,7 @@ const Layout = ({ children, alert, heading, cornerComponent, dispatch }) => (
         className="text-center"
         variant={alert.type}
         show={alert.message !== undefined}
-        style={{ position: 'fixed', width: '100%', zIndex: 'auto' }}
+        style={{ position: 'fixed', width: '100%', zIndex: 100 }}
       >
         {alert.message}
       </Alert>

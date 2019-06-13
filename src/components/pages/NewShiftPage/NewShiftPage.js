@@ -207,11 +207,8 @@ class NewShiftPage extends React.Component {
     }));
   };
 
-  // getRandomColour = () =>
-  //   `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`;
-
   getRandomColour = () => {
-    const colours = ['8EA604', 'F5BB00', 'EC9F05', 'D76A03', 'BF3100'];
+    const colours = ['5F0F40', '397367', 'FF5454', '274690', '20BF55'];
     return `#${colours[Math.floor(Math.random() * colours.length)]}`;
   };
 
