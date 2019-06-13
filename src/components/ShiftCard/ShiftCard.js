@@ -106,13 +106,16 @@ class ShiftCard extends React.Component {
       shiftData,
       isAdmin,
       recommendedRoleNames,
+      type,
+      // Redux props
       shifts,
-      type
+      myShifts
     } = this.props;
     const { showModal, selected } = this.state;
 
     let deleted = false;
     let booked = false;
+    let cancelled = false;
     let isRecommended = false;
     if (type !== 'booked') {
       const thisShift = shifts.all.find(s => s.id === shiftData.id);
@@ -120,6 +123,10 @@ class ShiftCard extends React.Component {
       deleted = thisShift.deleteSuccess === true;
       booked = thisShift.bookSuccess === true;
       isRecommended = recommendedRoleNames.length !== 0;
+    } else {
+      const thisShift = myShifts.all.find(s => s.id === shiftData.id);
+
+      cancelled = thisShift.cancelSuccess === true;
     }
 
     const recommendedPopover = (
@@ -131,7 +138,7 @@ class ShiftCard extends React.Component {
 
     const cardClass = `shift-card ${booked ? 'booked' : ''} ${
       isRecommended ? 'recommended' : ''
-    } ${deleted ? 'deleted' : ''}`;
+    } ${deleted ? 'deleted' : ''} ${cancelled ? 'cancelled' : ''}`;
 
     return (
       <ErrorBoundary>
@@ -227,9 +234,10 @@ ShiftCard.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { shifts } = state.shifts;
+  const { shifts, myShifts } = state.shifts;
   return {
-    shifts
+    shifts,
+    myShifts
   };
 };
 
