@@ -47,13 +47,18 @@
   z-index: 0;
 }
 
-.shift-card-recommended {
+.shift-card.recommended {
   border-style: solid;
   border-width: thick;
   border-color: #27a659;
 }
 
-.card-booked {
+.shift-card.booked {
   border: 6px solid #27a659;
+  opacity: 0.5;
+}
+
+.shift-card.deleted {
+  border: 6px solid #f44336;
   opacity: 0.5;
 }

@@ -111,13 +111,14 @@ class ShiftCard extends React.Component {
     } = this.props;
     const { showModal, selected } = this.state;
 
-    let collapsed = false;
+    let deleted = false;
+    let booked = false;
     let isRecommended = false;
     if (type !== 'booked') {
       const thisShift = shifts.all.find(s => s.id === shiftData.id);
 
-      collapsed =
-        thisShift.deleteSuccess === true || thisShift.bookSuccess === true;
+      deleted = thisShift.deleteSuccess === true;
+      booked = thisShift.bookSuccess === true;
       isRecommended = recommendedRoleNames.length !== 0;
     }
 
@@ -128,9 +129,9 @@ class ShiftCard extends React.Component {
       </Popover>
     );
 
-    const cardClass = `shift-card ${collapsed ? 'card-booked' : ''} ${
-      isRecommended ? 'shift-card-recommended' : ''
-    }`;
+    const cardClass = `shift-card ${booked ? 'booked' : ''} ${
+      isRecommended ? 'recommended' : ''
+    } ${deleted ? 'deleted' : ''}`;
 
     return (
       <ErrorBoundary>
@@ -169,7 +170,7 @@ class ShiftCard extends React.Component {
                       type="button"
                       variant="outline-primary"
                       onClick={this.toggleModal}
-                      disabled={collapsed}
+                      disabled={deleted || booked}
                       className={`btn-more-info ${
                         isRecommended ? 'btn-recommended' : ''
                       }`}
