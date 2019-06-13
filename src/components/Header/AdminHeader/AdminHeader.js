@@ -7,6 +7,9 @@ const AdminHeader = () => (
     <LinkContainer exact to="/">
       <Nav.Link>Shifts</Nav.Link>
     </LinkContainer>
+    <LinkContainer exact to="/dashboard">
+      <Nav.Link>Dashboard</Nav.Link>
+    </LinkContainer>
   </Nav>
 );
 

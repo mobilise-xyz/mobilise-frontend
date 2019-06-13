@@ -10,7 +10,8 @@ import {
   CardColumns
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShareAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import metricActions from '../../../_actions/metric.actions';
 import PlainTextForm from '../PlainTextForm';
 import authHeader from '../../../_helpers/auth-header';

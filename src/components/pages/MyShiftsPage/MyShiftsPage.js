@@ -49,7 +49,6 @@ class MyShiftsPage extends React.Component {
       return null;
     }
 
-    console.log(myShifts);
     if (error) {
       return <p>error</p>;
     }
@@ -75,6 +74,9 @@ class MyShiftsPage extends React.Component {
           />
         }
       >
+        {myShifts.all.length === 0 ? (
+          <h5>You have no upcoming shifts. Why not book one?</h5>
+        ) : null}
         {view}
       </Layout>
     );
