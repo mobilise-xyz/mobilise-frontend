@@ -52,3 +52,8 @@
   border-width: thick;
   border-color: #27a659;
 }
+
+.card-booked {
+  border: 6px solid #27a659;
+  opacity: 0.5;
+}

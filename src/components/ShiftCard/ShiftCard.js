@@ -128,14 +128,13 @@ class ShiftCard extends React.Component {
       </Popover>
     );
 
+    const cardClass = `shift-card ${collapsed ? 'card-booked' : ''} ${
+      isRecommended ? 'shift-card-recommended' : ''
+    }`;
+
     return (
       <ErrorBoundary>
-        <Card
-          bg={collapsed ? 'danger' : 'white'}
-          className={`shift-card ${
-            isRecommended ? 'shift-card-recommended' : ''
-          }`}
-        >
+        <Card className={cardClass}>
           <a
             title="Shift location maps link"
             href={generateGoogleMapsLink(shiftData.address)}
