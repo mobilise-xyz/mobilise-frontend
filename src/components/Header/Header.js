@@ -55,9 +55,6 @@ class Header extends React.Component {
             title={<FontAwesomeIcon icon={faCog} />}
             className="mr-sm-2"
           >
-            <LinkContainer to="profile">
-              <NavDropdown.Item>Profile</NavDropdown.Item>
-            </LinkContainer>
             <LinkContainer to="settings">
               <NavDropdown.Item>Settings</NavDropdown.Item>
             </LinkContainer>
