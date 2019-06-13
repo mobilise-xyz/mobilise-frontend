@@ -13,6 +13,13 @@ const BookingPane = ({
   selected
 }) => {
   const shiftRepeats = shiftData.repeatedId !== null;
+  const selectedRoleInvolves =
+    selected === ''
+      ? ''
+      : shiftData.requirements.find(r => r.role.name === selected).role
+          .involves;
+
+  console.log(selectedRoleInvolves);
 
   return (
     <>
@@ -43,6 +50,12 @@ const BookingPane = ({
       </Row>
       <Collapse in={selected !== ''}>
         <div>
+          <Row>
+            <Col>
+              <h6>This role involves:</h6>
+              <p>{selectedRoleInvolves}</p>
+            </Col>
+          </Row>
           <Row>
             <Col>
               {shiftRepeats ? (
