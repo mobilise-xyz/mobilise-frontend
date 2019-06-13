@@ -62,3 +62,8 @@
   border: 6px solid #f44336;
   opacity: 0.5;
 }
+
+.shift-card.cancelled {
+  border: 6px solid #f44336;
+  opacity: 0.5;
+}

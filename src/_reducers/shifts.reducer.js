@@ -7,8 +7,18 @@ const applyToShifts = (shifts, action, f) => ({
   recommended: shifts.recommended ? shifts.recommended.map(f) : undefined
 });
 
-// TODO This is very messy, multiple cases can be collapsed and there are many unused state fields..
 const shifts = (state = {}, action) => {
+  // Helper method to set the state of a shift.
+  const setShiftState = (newState, shiftsToMap = state.shifts) =>
+    applyToShifts(shiftsToMap, action, shift =>
+      shift.id === action.id
+        ? {
+            ...shift,
+            ...newState
+          }
+        : shift
+    );
+
   switch (action.type) {
     // GET
     case shiftsConstants.GETALL_REQUEST:
@@ -52,137 +62,143 @@ const shifts = (state = {}, action) => {
       };
 
     case shiftsConstants.DELETE_REQUEST: {
-      const setDeleteRequest = shift =>
-        shift.id === action.id ? { ...shift, loading: true } : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setDeleteRequest)
+        shifts: setShiftState({ loading: true })
       };
     }
     case shiftsConstants.DELETE_SUCCESS: {
-      const setDeleteSuccess = shift =>
-        shift.id === action.id
-          ? { ...shift, deleteSuccess: true, loading: false }
-          : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setDeleteSuccess)
+        shifts: setShiftState({ deleteSuccess: true, loading: false })
       };
     }
     case shiftsConstants.DELETE_FAILURE: {
-      const setBookFailure = shift =>
-        shift.id === action.id
-          ? {
-              ...shift,
-              deleteSuccess: false,
-              loading: false,
-              error: action.error
-            }
-          : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setBookFailure)
+        shifts: setShiftState({
+          deleteSuccess: false,
+          loading: false,
+          error: action.error
+        })
       };
     }
     case shiftsConstants.BOOK_REQUEST: {
       // Search for the shift that requested to be booked.
-      const setBookRequest = shift =>
-        shift.id === action.id ? { ...shift, loading: true } : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setBookRequest)
+        shifts: setShiftState({
+          loading: true
+        })
       };
     }
     case shiftsConstants.BOOK_SUCCESS: {
       // Search for the shift that requested to be booked.
-      const setBookSuccess = shift =>
-        shift.id === action.id
-          ? { ...shift, bookSuccess: true, loading: false }
-          : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setBookSuccess)
+        shifts: setShiftState({
+          bookSuccess: true,
+          loading: false
+        })
       };
     }
     case shiftsConstants.BOOK_FAILURE: {
       // Search for the shift that requested to be booked.
-      const setBookFailure = shift =>
-        shift.id === action.id
-          ? {
-              ...shift,
-              bookSuccess: false,
-              loading: false,
-              error: action.error
-            }
-          : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setBookFailure)
+        shifts: setShiftState({
+          bookSuccess: false,
+          loading: false,
+          error: action.error
+        })
+      };
+    }
+    case shiftsConstants.CANCEL_REQUEST: {
+      // Search for the shift that requested to be booked.
+      return {
+        ...state,
+        myShifts: setShiftState(
+          {
+            loading: true
+          },
+          state.myShifts
+        )
+      };
+    }
+    case shiftsConstants.CANCEL_SUCCESS: {
+      // Search for the shift that requested to be booked.
+      return {
+        ...state,
+        myShifts: setShiftState(
+          {
+            cancelSuccess: true,
+            loading: false
+          },
+          state.myShifts
+        )
+      };
+    }
+    case shiftsConstants.CANCEL_FAILURE: {
+      return {
+        ...state,
+        myShifts: setShiftState(
+          {
+            cancelSuccess: false,
+            loading: false,
+            error: action.error
+          },
+          state.myShifts
+        )
       };
     }
     case shiftsConstants.UPDATE_REQUEST: {
-      const setUpdateRequest = shift =>
-        shift.id === action.id ? { ...shift, loading: true } : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setUpdateRequest)
+        shifts: setShiftState({
+          loading: true
+        })
       };
     }
     case shiftsConstants.UPDATE_SUCCESS: {
-      // Search for the shift that requested to be booked.
-      const setUpdateSuccess = shift =>
-        shift.id === action.id
-          ? { ...shift, updateSuccess: true, loading: false }
-          : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setUpdateSuccess)
+        shifts: setShiftState({
+          updateSuccess: true,
+          loading: false
+        })
       };
     }
     case shiftsConstants.UPDATE_FAILURE: {
       // Search for the shift that requested to be booked.
-      const setUpdateFailure = shift =>
-        shift.id === action.id
-          ? {
-              ...shift,
-              updateSuccess: false,
-              loading: false,
-              error: action.error
-            }
-          : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setUpdateFailure)
+        shifts: setShiftState({
+          updateSuccess: false,
+          loading: false,
+          error: action.error
+        })
       };
     }
     case shiftsConstants.PINGALL_REQUEST: {
       return state;
     }
     case shiftsConstants.PINGALL_SUCCESS: {
-      // Search for the shift that requested to be booked.
-      const setPingSuccess = shift =>
-        shift.id === action.id
-          ? { ...shift, pingSuccess: true, loading: false }
-          : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setPingSuccess)
+        shifts: setShiftState({
+          pingSuccess: true,
+          loading: false
+        })
       };
     }
     case shiftsConstants.PINGALL_FAILURE: {
-      // Search for the shift that requested to be booked.
-      const setPingFailure = shift =>
-        shift.id === action.id
-          ? {
-              ...shift,
-              pingSuccess: false,
-              loading: false,
-              error: action.error
-            }
-          : shift;
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setPingFailure)
+        shifts: setShiftState({
+          pingSuccess: false,
+          loading: false,
+          error: action.error
+        })
       };
     }
     default:

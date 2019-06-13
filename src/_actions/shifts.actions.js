@@ -132,6 +132,41 @@ const book = (shiftId, roleName, repeatedType, until) => {
   };
 };
 
+const cancel = (shiftId, reason) => {
+  const request = id => {
+    return { type: shiftsConstants.CANCEL_REQUEST, id };
+  };
+  const success = id => {
+    return { type: shiftsConstants.CANCEL_SUCCESS, id };
+  };
+  const failure = (id, error) => {
+    return { type: shiftsConstants.CANCEL_FAILURE, id, error };
+  };
+
+  console.log('cancelled shift with id and message', shiftId, reason);
+
+  return dispatch => {
+    dispatch(request(shiftId));
+
+    shiftsService.cancel(shiftId, reason).then(
+      () => {
+        dispatch(success(shiftId));
+        dispatch(
+          alertActions.success(
+            'Cancelled Successfully, the shift manager has been notified.'
+          )
+        );
+      },
+      error => {
+        dispatch(failure(shiftId, error));
+        dispatch(
+          alertActions.error('Something went wrong when cancelling the shift.')
+        );
+      }
+    );
+  };
+};
+
 // Updates the information and roles required for a shift.
 const update = (shiftId, data) => {
   const request = id => {
@@ -204,8 +239,9 @@ const shiftsActions = {
   getAll,
   getForUser,
   getBookedForUser,
-  book,
   deleteWithId,
+  book,
+  cancel,
   update,
   ping
 };

@@ -80,10 +80,22 @@ const book = (shiftId, roleName, repeatedType, untilDate) => {
     untilDate
   };
 
-  console.log('Booking shift with ID', shiftId, 'and rolename', roleName);
-
   return axios
     .post(`shifts/${shiftId}/book`, data, config)
+    .then(utils.handleResponse);
+};
+
+const cancel = (shiftId, reason) => {
+  const headers = authHeader();
+
+  const data = {
+    reason
+  };
+
+  console.log('cancel', shiftId, reason);
+
+  return axios
+    .delete(`/shifts/${shiftId}/booking`, { headers, data })
     .then(utils.handleResponse);
 };
 
@@ -132,6 +144,7 @@ const shiftsService = {
   getForUser,
   deleteWithId,
   book,
+  cancel,
   updateInfo,
   updateRoles,
   ping
