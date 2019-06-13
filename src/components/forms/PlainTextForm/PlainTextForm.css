@@ -1,7 +1,11 @@
+.form-control {
+  padding: 0;
+}
+
 textarea {
-    height: 1.5rem !important;
+  height: 1.5rem !important;
 }
 
 textarea#description.form-control {
-    height: 3rem !important;
+  height: 3rem !important;
 }
