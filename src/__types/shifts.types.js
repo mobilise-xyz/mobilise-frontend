@@ -43,8 +43,22 @@ const shift = PropTypes.shape({
   updatedAt: PropTypes.string.isRequired
 });
 
+const requirement = PropTypes.shape({
+  numberRequired: PropTypes.number.isRequired,
+  bookings: PropTypes.arrayOf(
+    PropTypes.shape({
+      volunteerId: PropTypes.string.isRequired
+    }).isRequired
+  ),
+  role: {
+    name: PropTypes.string.isRequired,
+    involves: PropTypes.string.isRequired
+  }
+});
+
 const shiftTypes = {
-  shift
+  shift,
+  requirement
 };
 
 export default shiftTypes;

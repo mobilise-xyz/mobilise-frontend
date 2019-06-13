@@ -132,23 +132,23 @@ const book = (shiftId, roleName, repeatedType, until) => {
   };
 };
 
-const cancelBooking = (shiftId, data) => {
+const cancel = (shiftId, reason) => {
   const request = id => {
-    return { type: shiftsConstants.CANCEL_BOOKING_REQUEST, id };
+    return { type: shiftsConstants.CANCEL_REQUEST, id };
   };
   const success = id => {
-    return { type: shiftsConstants.CANCEL_BOOKING_SUCCESS, id };
+    return { type: shiftsConstants.CANCEL_SUCCESS, id };
   };
   const failure = (id, error) => {
-    return { type: shiftsConstants.CANCEL_BOOKING_FAILURE, id, error };
+    return { type: shiftsConstants.CANCEL_FAILURE, id, error };
   };
 
-  console.log('cancelled shift with id and message', shiftId, data);
+  console.log('cancelled shift with id and message', shiftId, reason);
 
   return dispatch => {
     dispatch(request(shiftId));
 
-    shiftsService.cancelBooking(shiftId, data).then(
+    shiftsService.cancel(shiftId, reason).then(
       () => {
         dispatch(success(shiftId));
         dispatch(
@@ -241,7 +241,7 @@ const shiftsActions = {
   getBookedForUser,
   deleteWithId,
   book,
-  cancelBooking,
+  cancel,
   update,
   ping
 };

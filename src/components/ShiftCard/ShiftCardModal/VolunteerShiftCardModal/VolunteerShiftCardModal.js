@@ -9,8 +9,7 @@ import CancelPane from './CancelPane';
 class VolunteerShiftCardModal extends React.Component {
   state = {
     repeatedType: '',
-    until: '',
-    reason: ''
+    until: ''
   };
 
   handleChange = e => {
@@ -28,7 +27,7 @@ class VolunteerShiftCardModal extends React.Component {
       selected,
       type
     } = this.props;
-    const { repeatedType, until, reason } = this.state;
+    const { repeatedType, until } = this.state;
 
     const booked = type === 'booked';
 
@@ -85,10 +84,9 @@ class VolunteerShiftCardModal extends React.Component {
             <Col>
               {booked ? (
                 <CancelPane
-                  shiftData={shiftData}
-                  handleChange={this.handleChange}
                   onHide={onHide}
-                  cancelReason={reason}
+                  requirements={shiftData.requirements}
+                  id={shiftData.id}
                 />
               ) : (
                 <BookingPane
