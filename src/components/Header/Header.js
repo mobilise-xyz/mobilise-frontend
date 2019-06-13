@@ -61,7 +61,6 @@ class Header extends React.Component {
           <Navbar.Text className="mr-sm-2">{nameMessage}</Navbar.Text>
           {/* Settings dropdown */}
           <NavDropdown
-            alignRight
             title={
               <i className="material-icons" style={{ verticalAlign: 'sub' }}>
                 settings
