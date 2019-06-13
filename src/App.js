@@ -15,6 +15,7 @@ import FeedBackPage from './components/pages/HelpPages/FeedbackPage';
 import Dashboard from './components/pages/Dashboard';
 import SettingsPage from './components/pages/SettingsPage';
 import WelcomePage from './components/pages/WelcomePage/WelcomePage';
+import AdminRoute from './components/routes/AdminRoute';
 
 export class App extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ export class App extends React.Component {
       <Switch>
         <PrivateRoute path="/" exact component={ShiftsPage} />
         <PrivateRoute path="/shifts" exact component={MyShiftsPage} />
-        <PrivateRoute path="/new-shift" exact component={NewShiftPage} />
+        <AdminRoute path="/new-shift" exact component={NewShiftPage} />
         <PrivateRoute path="/settings" exact component={SettingsPage} />
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
         <PrivateRoute path="/welcome" exact component={WelcomePage} />

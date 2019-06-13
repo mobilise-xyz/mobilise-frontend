@@ -25,6 +25,7 @@ const Layout = ({
         className="text-center"
         variant={alert.type}
         show={alert.message !== undefined}
+        style={{ position: 'fixed', width: '100%', zIndex: 1000 }}
       >
         {alert.message}
       </Alert>

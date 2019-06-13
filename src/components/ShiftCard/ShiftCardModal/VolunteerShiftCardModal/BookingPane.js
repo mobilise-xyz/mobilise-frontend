@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Col, Collapse, Row } from 'react-bootstrap';
 import ModalRoleBadge from '../../RoleBadges/ModalRoleBadge';
 import RepeatBookingForm from './RepeatBookingForm';
 
@@ -41,10 +41,8 @@ const BookingPane = ({
           })}
         </Col>
       </Row>
-
-      {selected === '' ? null : (
-        <>
-          {' '}
+      <Collapse in={selected !== ''}>
+        <div>
           <Row>
             <Col>
               {shiftRepeats ? (
@@ -73,8 +71,8 @@ const BookingPane = ({
               </Button>
             </Col>
           </Row>
-        </>
-      )}
+        </div>
+      </Collapse>
     </>
   );
 };

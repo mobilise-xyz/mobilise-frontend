@@ -7,7 +7,7 @@ import AvailabilitySelector from './AvailabilitySelector';
 
 class AvailabilityForm extends React.Component {
   handleSubmit = () => {
-    const { uid } = this.state;
+    const { uid } = JSON.parse(localStorage.getItem('user'));
     const { availability, dispatch } = this.props;
     dispatch(availabilityActions.update(uid, availability));
   };

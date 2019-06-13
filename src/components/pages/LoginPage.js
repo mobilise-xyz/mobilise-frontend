@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
     const { email, password } = this.state;
 
     return (
-      <CardLayout navOff title="Login">
+      <CardLayout navOff title="Login" container>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>

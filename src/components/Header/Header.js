@@ -2,8 +2,6 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './Header.css';
 import logo from '../../assets/images/logo-white.png';
 import VolunteerHeader from './VolunteerHeaderNav';
@@ -32,7 +30,7 @@ class Header extends React.Component {
     }
 
     return (
-      <Navbar variant="dark" bg="primary" expand="lg">
+      <Navbar variant="dark" bg="primary" expand="lg" sticky="top">
         <LinkContainer to="/">
           <Navbar.Brand>
             <img
@@ -52,12 +50,13 @@ class Header extends React.Component {
           {/* Settings dropdown */}
           <NavDropdown
             alignRight
-            title={<FontAwesomeIcon icon={faCog} />}
+            title={
+              <i className="material-icons" style={{ verticalAlign: 'sub' }}>
+                settings
+              </i>
+            }
             className="mr-sm-2"
           >
-            <LinkContainer to="profile">
-              <NavDropdown.Item>Profile</NavDropdown.Item>
-            </LinkContainer>
             <LinkContainer to="settings">
               <NavDropdown.Item>Settings</NavDropdown.Item>
             </LinkContainer>
