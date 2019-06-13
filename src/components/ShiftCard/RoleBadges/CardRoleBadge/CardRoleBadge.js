@@ -5,10 +5,12 @@ import '../ModalRoleBadge/RoleBadge.css';
 const CardRoleBadge = ({
   name,
   number,
+  numberRequired,
   handleSelect,
   onModal = true,
   colour = 'info'
 }) => {
+  const outOf = numberRequired ? `/${numberRequired}` : '';
   return (
     <Badge
       pill
@@ -21,9 +23,9 @@ const CardRoleBadge = ({
       onClick={onModal ? handleSelect : null}
     >
       {name}
-      {number ? (
+      {number !== undefined ? (
         <Badge variant="light" style={{ margin: '0.3rem' }}>
-          {number}
+          {`${number}${outOf}`}
         </Badge>
       ) : null}
     </Badge>

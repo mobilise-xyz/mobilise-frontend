@@ -97,7 +97,10 @@ class AdjustableRoleBadge extends React.Component {
           >
             <ListGroup className="role-list">
               {volunteerNames.map(volunteerName => (
-                <ListGroup.Item className="role-list-name">
+                <ListGroup.Item
+                  className="role-list-name"
+                  key={`volunteer-${volunteerName.toLowerCase()}`}
+                >
                   {volunteerName}
                 </ListGroup.Item>
               ))}

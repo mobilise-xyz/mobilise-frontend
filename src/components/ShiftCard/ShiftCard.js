@@ -34,7 +34,8 @@ const generateRequirements = (shiftData, selected, isAdmin, type) =>
         name={role.name}
         selected={selected}
         colour={role.colour}
-        number={numberRemaining}
+        number={numberRequired - numberRemaining}
+        numberRequired={numberRequired}
         key={`role-badge-${shiftData.id}-${role.name}`}
       />
     ) : null;
