@@ -14,6 +14,8 @@ const BookingPane = ({
 }) => {
   const shiftRepeats = shiftData.repeatedId !== null;
 
+  // const selectedRoleInvolves = shiftData.roles.find(r => r.roleName === selected).involves;
+
   return (
     <>
       <Row>
@@ -44,18 +46,26 @@ const BookingPane = ({
       <Collapse in={selected !== ''}>
         <div>
           <Row>
-            <Col>
-              {shiftRepeats ? (
-                <RepeatBookingForm
-                  shiftData={shiftData}
-                  repeatedType={repeatedType}
-                  until={until}
-                  handleChange={handleChange}
-                  handleBook={handleBook}
-                  selected={selected}
-                />
-              ) : null}
-            </Col>
+            <Row>
+              <Col>
+                <h6>This role involves:</h6>
+                <p>{/* {selectedRoleInvolves} */}</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {shiftRepeats ? (
+                  <RepeatBookingForm
+                    shiftData={shiftData}
+                    repeatedType={repeatedType}
+                    until={until}
+                    handleChange={handleChange}
+                    handleBook={handleBook}
+                    selected={selected}
+                  />
+                ) : null}
+              </Col>
+            </Row>
           </Row>
           <Row>
             <Col>
