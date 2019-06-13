@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import PlainTextForm from '../../../forms/PlainTextForm';
 
-class NewRoleModal extends React.Component {
+class NewRoleModal extends Component {
   state = {
     roleInvolves: ''
   };
@@ -13,27 +15,21 @@ class NewRoleModal extends React.Component {
   render() {
     const { roleName, show, handleRoleSubmit, handleRoleCancel } = this.props;
     const { roleInvolves } = this.state;
-
     return (
-      // TODO center modal
       // TODO onHide should be bound to a cancel.
-      <Modal show={show} onHide={handleRoleCancel}>
+      <Modal show={show} onHide={handleRoleCancel} centered>
         <Modal.Header>
           <Modal.Title>Add new role: &quot;{roleName}&quot;</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleRoleSubmit}>
-            <Form.Group>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                id="roleInvolves"
-                name="roleInvolves"
-                value={roleInvolves}
-                onChange={this.handleInvolvesChange}
-                placeholder="What does this role involve?"
-                type="text"
-              />
-            </Form.Group>
+          <Form onSubmit={() => handleRoleSubmit(roleInvolves)}>
+            <PlainTextForm
+              id="roleInvolves"
+              label="role description"
+              placeHolder="What does this role involve?"
+              content={roleInvolves}
+              handleChange={this.handleInvolvesChange}
+            />
             <div className="text-center">
               <Button
                 variant="secondary"
@@ -45,7 +41,7 @@ class NewRoleModal extends React.Component {
               <Button
                 variant="primary"
                 type="button"
-                onClick={handleRoleSubmit}
+                onClick={() => handleRoleSubmit(roleInvolves)}
               >
                 Create
               </Button>
@@ -56,5 +52,17 @@ class NewRoleModal extends React.Component {
     );
   }
 }
+
+NewRoleModal.defaultProps = {
+  roleName: '',
+  show: false
+};
+
+NewRoleModal.propTypes = {
+  roleName: PropTypes.string,
+  show: PropTypes.bool,
+  handleRoleSubmit: PropTypes.func.isRequired,
+  handleRoleCancel: PropTypes.func.isRequired
+};
 
 export default NewRoleModal;

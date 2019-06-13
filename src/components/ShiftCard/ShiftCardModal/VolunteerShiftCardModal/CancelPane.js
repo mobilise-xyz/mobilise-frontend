@@ -65,7 +65,6 @@ class CancelPane extends React.Component {
                   label="reason"
                   placeHolder="Provide a brief reason for cancellation"
                   content={cancelReason}
-                  rows="5"
                   handleChange={this.handleChange}
                 />
               </Col>
