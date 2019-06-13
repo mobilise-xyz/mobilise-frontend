@@ -30,6 +30,4 @@ const CardRoleBadge = ({
   );
 };
 
-CardRoleBadge.propTypes = {};
-
 export default CardRoleBadge;

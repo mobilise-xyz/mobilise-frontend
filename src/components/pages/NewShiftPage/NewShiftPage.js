@@ -71,7 +71,7 @@ class NewShiftPage extends React.Component {
       .then(({ data }) =>
         this.setState({
           roleOptions: data.map(r => ({
-            name: r.roleName,
+            name: r.name,
             involves: r.involves
           }))
         })
@@ -236,7 +236,7 @@ class NewShiftPage extends React.Component {
         this.setState(prevState => {
           const newOptions = prevState.roleOptions.slice();
           newOptions.push({
-            name: respData.roleName,
+            name: respData.name,
             involves: respData.involves
           });
           return {

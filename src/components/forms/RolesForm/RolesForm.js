@@ -50,6 +50,7 @@ class RolesForm extends React.Component {
 
   render() {
     const { roles, roleOptions, handleChange, handleRoleNumber } = this.props;
+    console.log(roleOptions);
     return (
       <Form.Group controlId="rolesForm">
         <Form.Label>Roles</Form.Label>
@@ -58,11 +59,11 @@ class RolesForm extends React.Component {
           id="roles"
           placeholder="Add available roles for shift"
           newSelectionPrefix="Add new role:  "
-          options={roleOptions.map(r => r.roleName)}
+          options={roleOptions.map(r => r.name)}
           allowNew
           multiple
           onChange={handleChange}
-          selected={roles.map(r => r.roleName)}
+          selected={roles.map(r => r.name)}
           selectHintOnEnter
           onKeyDown={this.onKeyDown}
           renderToken={(option, props, index) =>
