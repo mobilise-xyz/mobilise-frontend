@@ -82,7 +82,7 @@ class HallOfFame extends React.Component {
         <Row>
           {hoursOrdered.map(val => {
             return (
-              <Col key={val.rank} style={{ margin: '5px' }}>
+              <Col key={val.rank} style={{ marginTop: '5px' }} xs={8} md={4}>
                 <HallOfFameCard
                   md={1}
                   key={val.rank}
@@ -110,7 +110,7 @@ class HallOfFame extends React.Component {
         <Row>
           {increaseOrdered.map(val => {
             return (
-              <Col key={val.rank} style={{ margin: '5px' }}>
+              <Col key={val.rank} style={{ marginTop: '5px' }} xs={8} md={4}>
                 <HallOfFameCard
                   key={val.rank}
                   id={val.rank}
