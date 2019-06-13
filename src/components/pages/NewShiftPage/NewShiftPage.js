@@ -12,6 +12,7 @@ import LocationInput from '../../LocationInput/LocationInput';
 import RolesForm from '../../forms/RolesForm';
 import RepeatingShiftForm from '../../forms/RepeatingShiftForm/RepeatingShiftForm';
 import alertActions from '../../../_actions/alert.actions';
+import './NewShiftPage.css';
 
 class NewShiftPage extends React.Component {
   constructor(props) {
@@ -307,10 +308,13 @@ class NewShiftPage extends React.Component {
           />
           {/* Description */}
           <PlainTextForm
+            className="description-form"
             id="description"
             label="description"
+            name="description"
             content={description}
             handleChange={this.handleDataChange}
+            name="description"
           />
           {/* Date and Time */}
           <DateTimeForm
@@ -340,8 +344,8 @@ class NewShiftPage extends React.Component {
           <div className="text-center" style={{ margin: 'auto' }}>
             <Button
               id="submitbutton"
-              variant="outline-primary"
               type="submit"
+              className="btn-confirm"
               block
             >
               Confirm Shift

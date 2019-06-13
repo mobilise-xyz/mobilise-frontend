@@ -53,7 +53,8 @@ class RolesForm extends React.Component {
     return (
       <Form.Group controlId="rolesForm">
         <Form.Label>Roles</Form.Label>
-        <Typeahead // TODO make async & SORT OUT CSS so letters like g dont get cut off.
+        <Typeahead
+          className="typeahead"
           id="roles"
           placeholder="Add available roles for shift"
           newSelectionPrefix="Add new role:  "

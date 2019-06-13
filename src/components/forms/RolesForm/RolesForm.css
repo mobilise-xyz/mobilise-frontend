@@ -14,3 +14,7 @@
   height: 1.4rem;
   text-align: center;
 }
+
+.rbt-input-multi .rbt-input-main {
+  height: 1.5rem !important;
+}
