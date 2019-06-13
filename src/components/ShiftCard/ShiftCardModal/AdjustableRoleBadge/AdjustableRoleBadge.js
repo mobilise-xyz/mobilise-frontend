@@ -55,7 +55,7 @@ class AdjustableRoleBadge extends React.Component {
           name={roleName}
         >
           <Row noGutters>
-            <Col style={{ margin: 'auto' }}>{roleName}</Col>
+            <Col style={{ margin: 'auto', textAlign: 'right' }}>{roleName}</Col>
             <Col>
               {onModal ? (
                 <DecrementButton
