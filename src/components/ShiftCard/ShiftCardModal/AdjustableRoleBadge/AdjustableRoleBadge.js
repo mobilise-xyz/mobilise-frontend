@@ -97,7 +97,7 @@ class AdjustableRoleBadge extends React.Component {
           >
             <ListGroup className="role-list">
               {volunteerNames.map(volunteerName => (
-                <ListGroup.Item variant="primary" className="role-list-name">
+                <ListGroup.Item className="role-list-name">
                   {volunteerName}
                 </ListGroup.Item>
               ))}
