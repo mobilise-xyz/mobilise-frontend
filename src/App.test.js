@@ -66,10 +66,10 @@ describe('<App />', () => {
     ).toBe(MyShiftsPage);
   });
 
-  it('privately routes to new shift page', () => {
+  it('only admin can route to new shift page', () => {
     expect(
       shallow(app)
-        .find('PrivateRoute[exact=true][path="/new-shift"]')
+        .find('AdminRoute[exact=true][path="/new-shift"]')
         .first()
         .prop('component')
     ).toBe(NewShiftPage);
