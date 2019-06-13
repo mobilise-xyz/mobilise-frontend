@@ -76,7 +76,7 @@ class HallOfFame extends React.Component {
     return (
       <Container className="pt-5">
         <h3>Weekly Hall Of Fame</h3>
-        <Row className="justify-content-md-center" style={{ margin: '20px' }}>
+        <Row className="justify-content-md-center" style={{ margin: '40px' }}>
           <h4>MOST HOURS</h4>
         </Row>
         <Row>
@@ -104,7 +104,7 @@ class HallOfFame extends React.Component {
             );
           })}
         </Row>
-        <Row className="justify-content-md-center" style={{ margin: '30px' }}>
+        <Row className="justify-content-md-center" style={{ margin: '40px' }}>
           <h4>ON THE RISE</h4>
         </Row>
         <Row>

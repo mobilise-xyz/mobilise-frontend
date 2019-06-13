@@ -18,7 +18,7 @@ const days = [
 ];
 
 const availabilityColours = {
-  AVAILABILITY_AVAILABLE: 'YellowGreen',
+  AVAILABILITY_AVAILABLE: '#27a659',
   AVAILABILITY_MAYBE: 'Yellow',
   AVAILABILITY_UNAVAILABLE: 'LightGray'
 };
@@ -157,7 +157,7 @@ class AvailabilitySelector extends React.Component {
             </Row>
             <Row>
               <Col>
-                <Card style={miniCardStyle('YellowGreen')} />
+                <Card style={miniCardStyle('#27a659')} />
               </Col>
               <Col>Available</Col>
             </Row>
