@@ -5,13 +5,7 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import Layout from './Layout';
 
-const CardLayout = ({
-  title,
-  navOff,
-  backButton,
-  children,
-  container = false
-}) => {
+const CardLayout = ({ title, backButton, children, container = false }) => {
   const backBtn = backButton ? (
     <Row>
       <Col>
@@ -38,11 +32,7 @@ const CardLayout = ({
     </>
   );
 
-  return (
-    <Layout navOff={navOff}>
-      {container ? <Container>{inner}</Container> : inner}
-    </Layout>
-  );
+  return <Layout>{container ? <Container>{inner}</Container> : inner}</Layout>;
 };
 
 export default CardLayout;

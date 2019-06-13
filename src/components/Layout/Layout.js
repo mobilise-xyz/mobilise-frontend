@@ -1,24 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Alert, Col, Container, Row } from 'react-bootstrap';
-import Header from '../Header';
 
 import './Layout.css';
 import alertActions from '../../_actions/alert.actions';
 import ErrorBoundary from '../ErrorBoundary';
 
 // This class defines the layout for each page i.e. Header at the top, content in the middle.
-const Layout = ({
-  navOff,
-  children,
-  alert,
-  heading,
-  cornerComponent,
-  dispatch
-}) => (
+const Layout = ({ children, alert, heading, cornerComponent, dispatch }) => (
   <ErrorBoundary>
     <div>
-      {navOff ? null : <Header />}
       <Alert
         dismissible
         onClose={() => dispatch(alertActions.clear())}
