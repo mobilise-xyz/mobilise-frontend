@@ -6,6 +6,7 @@ import '../../ShiftCard/ShiftCard.css';
 import availabilityActions from '../../../_actions/availability.actions';
 
 const times = ['Morning', 'Afternoon', 'Evening'];
+const timesInfo = ['6AM - 12PM', '12PM - 5PM', '5PM-11PM'];
 
 const days = [
   'Monday',
@@ -96,7 +97,13 @@ class AvailabilitySelector extends React.Component {
           <th style={{ width: '12.5%' }} />
           {days.map((day, dayIndex) => (
             <th
-              style={{ width: '12.5%' }}
+              style={{
+                width: '12.5%',
+                fontStyle: 'unset',
+                color: 'unset',
+                fontWeight: 'unset',
+                textAlign: 'center'
+              }}
               key={`grid-${days[dayIndex].toLowerCase()}-header`}
             >
               {days[dayIndex]}
@@ -110,7 +117,10 @@ class AvailabilitySelector extends React.Component {
       <tbody key="grid-days-body  ">
         {availability.map((time, timeIndex) => (
           <tr key={`grid-${times[timeIndex].toLowerCase()}`} className="pt-4">
-            <td>{times[timeIndex]}</td>
+            <td>
+              <Row>{times[timeIndex]}</Row>
+              <Row style={{ color: 'gray' }}>{timesInfo[timeIndex]}</Row>
+            </td>
             {time.map((day, dayIndex) => (
               <td key={`grid-${days[dayIndex].toLowerCase()}`}>
                 <DayCard
@@ -139,7 +149,8 @@ class AvailabilitySelector extends React.Component {
             <p>
               Please select the times you will be available each week. This is
               not a commitment to a shift, but it will influence recommendations
-              for shifts.
+              for shifts. <br /> <br />
+              Click on a slot to toggle availability!
             </p>
           </Col>
           <Col>
