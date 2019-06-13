@@ -61,12 +61,9 @@ class AvailabilitySelector extends React.Component {
   }
 
   componentDidMount() {
-    const { availability, dispatch } = this.props;
+    const { dispatch } = this.props;
     const { uid } = this.state;
-
-    if (!availability) {
-      dispatch(availabilityActions.get(uid));
-    }
+    dispatch(availabilityActions.get(uid));
   }
 
   handleClick = (timeIndex, dayIndex, availabilityConstant) => {

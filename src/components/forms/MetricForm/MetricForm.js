@@ -10,7 +10,7 @@ import {
   CardColumns
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGrinBeam } from '@fortawesome/free-regular-svg-icons';
+import { faGrinBeam, faMeh } from '@fortawesome/free-regular-svg-icons';
 import metricActions from '../../../_actions/metric.actions';
 import PlainTextForm from '../PlainTextForm';
 import authHeader from '../../../_helpers/auth-header';
@@ -106,7 +106,10 @@ class MetricForm extends React.Component {
           <CardColumns>
             <Card>
               <Card.Header className="text-center text-primary">
-                <FontAwesomeIcon icon={faGrinBeam} size="6x" />
+                <FontAwesomeIcon
+                  icon={value > 0 ? faGrinBeam : faMeh}
+                  size="6x"
+                />
               </Card.Header>
               <Card.Body className="text-center">
                 <h1>{value}</h1>

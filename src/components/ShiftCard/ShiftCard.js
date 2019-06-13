@@ -170,43 +170,35 @@ class ShiftCard extends React.Component {
           </Card.Body>
           <Card.Footer className={isRecommended ? 'bg-primary' : null}>
             <Row>
-              <Col>
-                <Row>
-                  <Col>
-                    <Button
-                      type="button"
-                      variant="outline-primary"
-                      onClick={this.toggleModal}
-                      disabled={deleted || booked}
-                      className={`btn-more-info ${
-                        isRecommended ? 'btn-recommended' : ''
-                      }`}
-                    >
-                      More info
-                      <span className="sr-only">Card information button</span>
-                    </Button>
-                  </Col>
-                </Row>
-                <Row className="mt-1">
-                  <Col>
-                    {isRecommended ? (
-                      <span className="ic-recommended">
-                        Recommended
-                        <OverlayTrigger
-                          placement="right"
-                          overlay={recommendedPopover}
-                        >
-                          <FontAwesomeIcon
-                            icon={faExclamationCircle}
-                            className="ml-1"
-                            color="white"
-                          />
-                        </OverlayTrigger>
-                      </span>
-                    ) : null}
-                  </Col>
-                </Row>
+              <Col lg={4} md={12} sm={12} xs={12}>
+                <Button
+                  type="button"
+                  variant="outline-primary"
+                  onClick={this.toggleModal}
+                  disabled={deleted || booked}
+                  className={`btn-more-info ${
+                    isRecommended ? 'btn-recommended' : ''
+                  }`}
+                >
+                  Info
+                  <span className="sr-only">Card information button</span>
+                </Button>
               </Col>
+              {isRecommended ? (
+                <Col className="mt-2" lg={8} md={12} sm={12} xs={12}>
+                  <span className="ic-recommended">RECOMMENDED</span>
+                  <OverlayTrigger
+                    placement="right"
+                    overlay={recommendedPopover}
+                  >
+                    <FontAwesomeIcon
+                      icon={faExclamationCircle}
+                      className="ml-1"
+                      color="white"
+                    />
+                  </OverlayTrigger>
+                </Col>
+              ) : null}
             </Row>
           </Card.Footer>
           <ShiftCardModal
