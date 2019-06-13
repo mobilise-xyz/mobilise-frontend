@@ -1,6 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
-import { Badge, Button, Collapse, ListGroup } from 'react-bootstrap';
+import { Badge, Button, Col, Collapse, ListGroup, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../../RoleBadges/ModalRoleBadge/RoleBadge.css';
@@ -54,35 +54,41 @@ class AdjustableRoleBadge extends React.Component {
           style={{ backgroundColor: colour, width: '100%' }}
           name={roleName}
         >
-          {roleName}
-          {onModal ? (
-            <DecrementButton
-              handleUpdate={handleUpdate}
-              name={roleName}
-              number={number}
-            />
-          ) : null}
-          {number ? (
-            <Badge variant="light" className="number-badge">
-              {number}
-            </Badge>
-          ) : (
-            number
-          )}
-          {onModal ? (
-            <IncrementButton
-              handleUpdate={handleUpdate}
-              name={roleName}
-              number={number}
-            />
-          ) : null}
-          <Button
-            type="button"
-            onClick={this.toggleOpen}
-            className="role-control-button open"
-          >
-            <i className="material-icons md-light">menu</i>
-          </Button>
+          <Row noGutters>
+            <Col style={{ margin: 'auto' }}>{roleName}</Col>
+            <Col>
+              {onModal ? (
+                <DecrementButton
+                  handleUpdate={handleUpdate}
+                  name={roleName}
+                  number={number}
+                />
+              ) : null}
+              {number ? (
+                <Badge variant="light" className="number-badge">
+                  {number}
+                </Badge>
+              ) : (
+                number
+              )}
+              {onModal ? (
+                <IncrementButton
+                  handleUpdate={handleUpdate}
+                  name={roleName}
+                  number={number}
+                />
+              ) : null}
+            </Col>
+            <Col>
+              <Button
+                type="button"
+                onClick={this.toggleOpen}
+                className="role-control-button open"
+              >
+                <i className="material-icons md-light">menu</i>
+              </Button>
+            </Col>
+          </Row>
         </Badge>
         <Collapse in={show}>
           <div
