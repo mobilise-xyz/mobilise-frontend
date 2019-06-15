@@ -155,7 +155,7 @@ const shifts = (state = {}, action) => {
       return {
         ...state,
         shifts: setShiftState({
-          // loading: true
+          loading: true
         })
       };
     }
