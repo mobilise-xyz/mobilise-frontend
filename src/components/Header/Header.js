@@ -18,11 +18,9 @@ class Header extends React.Component {
     }
 
     const { uid } = user;
-    const { firstName, dispatch } = this.props;
+    const { dispatch } = this.props;
 
-    if (!firstName) {
-      dispatch(usersActions.get(uid));
-    }
+    dispatch(usersActions.get(uid));
   }
 
   render() {
