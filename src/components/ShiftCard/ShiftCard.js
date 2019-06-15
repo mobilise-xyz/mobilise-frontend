@@ -142,7 +142,7 @@ class ShiftCard extends React.Component {
       <ErrorBoundary>
         <Card className={cardClass}>
           <a
-            title="Click Here to see where the shift is on google maps!"
+            title="Click here to see where the shift is on Google Maps!"
             href={generateGoogleMapsLink(shiftData.address)}
             target="_blank"
             rel="noopener noreferrer"
