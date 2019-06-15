@@ -28,6 +28,17 @@ const getRepeatOptions = repeatedType => {
   }
 };
 
+function getNameForRepeatType(repeatedType) {
+  switch (repeatedType) {
+    case 'Weekends':
+      return 'on Weekends';
+    case 'Weekdays':
+      return 'on Weekdays';
+    default:
+      return repeatedType;
+  }
+}
+
 // This component is for users to book repeating shifts. It is only shown if the shift is repeating.
 const RepeatBookingForm = ({
   shiftData,
@@ -39,7 +50,9 @@ const RepeatBookingForm = ({
     <Row className="pb-2">
       {shiftData.repeated ? (
         <Col>
-          This shift repeats until&nbsp;
+          This shift repeats{' '}
+          <strong>{getNameForRepeatType(shiftData.repeated.type)}</strong>{' '}
+          until&nbsp;
           <strong>
             {moment(shiftData.repeated.untilDate, 'YYYY-MM-DD')
               .local()

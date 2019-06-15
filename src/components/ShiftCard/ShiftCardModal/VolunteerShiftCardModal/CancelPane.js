@@ -40,14 +40,26 @@ class CancelPane extends React.Component {
             <h6>You&#39;re signed up for</h6>
           </Col>
         </Row>
-        <Row className="pb-4">
+        <Row className="pb-2">
           <Col>
             {requirements.map(r => (
               <CardRoleBadge
-                key={id + r.role.roleName}
-                name={r.role.roleName}
+                key={id + r.role.name}
+                name={r.role.name}
                 colour={r.role.colour}
               />
+            ))}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h6>This role involves:</h6>
+            {requirements.map(r => (
+              <Row>
+                <Col>
+                  <p>{r.role.involves}</p>
+                </Col>
+              </Row>
             ))}
           </Col>
         </Row>

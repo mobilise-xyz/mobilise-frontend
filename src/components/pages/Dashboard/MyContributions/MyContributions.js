@@ -66,7 +66,7 @@ class MyContributions extends React.Component {
             />
             {metric ? (
               <ContributionCard
-                number={metric.value}
+                number={metric.value ? metric.value : 0}
                 description={`${metric.name} ${metric.verb} last week`}
                 icon={
                   <FontAwesomeIcon
