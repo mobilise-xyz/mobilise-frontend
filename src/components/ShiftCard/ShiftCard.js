@@ -155,7 +155,7 @@ class ShiftCard extends React.Component {
           </a>
           <Card.Body>
             <Card.Title>{shiftData.title}</Card.Title>
-            <Row noGutters>
+            <Row>
               <Col>{shiftData.address}</Col>
               <Col>
                 {utils.formatTime(shiftData.start)} -{' '}
