@@ -88,6 +88,11 @@ class AdminShiftCardModal extends Component {
   };
 
   handleRoleNumberChange = (name, newNumber) => {
+    // User should not be able to set this number below 0.
+    if (newNumber < 0) {
+      return;
+    }
+
     const { requirements } = this.state;
 
     const roleToUpdateIndex = requirements.findIndex(r => r.role.name === name);
