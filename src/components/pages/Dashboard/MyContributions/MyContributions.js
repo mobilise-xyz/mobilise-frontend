@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardColumns, Container, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import {
   faCalendarCheck,
   faClock,
@@ -19,9 +18,6 @@ const ContributionCard = ({ number, description, icon }) => (
       <h1>{number}</h1>
       <Card.Text>{description}</Card.Text>
     </Card.Body>
-    <Card.Footer style={{ textAlign: 'right' }}>
-      <FontAwesomeIcon icon={faShareAlt} />
-    </Card.Footer>
   </Card>
 );
 

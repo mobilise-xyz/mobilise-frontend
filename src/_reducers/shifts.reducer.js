@@ -155,17 +155,44 @@ const shifts = (state = {}, action) => {
       return {
         ...state,
         shifts: setShiftState({
-          loading: true
+          // loading: true
         })
       };
     }
     case shiftsConstants.UPDATE_SUCCESS: {
+      const setUpdateSuccess = shift => {
+        // TODO this information should be updated for all fields, not just requirements
+
+        // Find the shift to update.
+        if (shift.id === action.id) {
+          const newRoles = action.data.rolesRequired;
+
+          const requirementsCopy = [...shift.requirements];
+
+          // Update the number required for each role
+          newRoles.forEach(newRole => {
+            const requirementToUpdateIndex = requirementsCopy.findIndex(
+              r => r.role.name === newRole.roleName
+            );
+            requirementsCopy[requirementToUpdateIndex] = {
+              ...shift.requirements[requirementToUpdateIndex],
+              numberRequired: newRole.number
+            };
+          });
+
+          return {
+            ...shift,
+            requirements: requirementsCopy,
+            updateSuccess: true,
+            loading: false
+          };
+        }
+
+        return shift;
+      };
       return {
         ...state,
-        shifts: setShiftState({
-          updateSuccess: true,
-          loading: false
-        })
+        shifts: applyToShifts(state.shifts, action, setUpdateSuccess)
       };
     }
     case shiftsConstants.UPDATE_FAILURE: {

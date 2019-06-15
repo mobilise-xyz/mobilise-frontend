@@ -153,7 +153,7 @@ const cancel = (shiftId, reason) => {
         dispatch(success(shiftId));
         dispatch(
           alertActions.success(
-            'Cancelled Successfully, the shift manager has been notified.'
+            'Cancelled successfully, the shift manager has been notified.'
           )
         );
       },
@@ -168,18 +168,18 @@ const cancel = (shiftId, reason) => {
 };
 
 // Updates the information and roles required for a shift.
-const update = (shiftId, data) => {
+const update = (shiftId, shiftData) => {
   const request = id => {
     return { type: shiftsConstants.UPDATE_REQUEST, id };
   };
-  const success = id => {
-    return { type: shiftsConstants.UPDATE_SUCCESS, id };
+  const success = (id, data) => {
+    return { type: shiftsConstants.UPDATE_SUCCESS, id, data };
   };
   const failure = (id, error) => {
     return { type: shiftsConstants.UPDATE_FAILURE, id, error };
   };
 
-  const { title, description, address, rolesRequired } = data;
+  const { title, description, address, rolesRequired } = shiftData;
   const info = { title, description, address };
 
   return dispatch => {
@@ -195,7 +195,7 @@ const update = (shiftId, data) => {
 
     promise.then(
       () => {
-        dispatch(success(shiftId));
+        dispatch(success(shiftId, shiftData));
         dispatch(alertActions.success('Shift updated successfully!'));
       },
       error => {
