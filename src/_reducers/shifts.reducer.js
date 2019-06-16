@@ -165,6 +165,8 @@ const shifts = (state = {}, action) => {
 
         // Find the shift to update.
         if (shift.id === action.id) {
+          const { title, description, address, start, stop } = action.data;
+
           const newRoles = action.data.rolesRequired;
 
           const requirementsCopy = [...shift.requirements];
@@ -182,6 +184,11 @@ const shifts = (state = {}, action) => {
 
           return {
             ...shift,
+            title,
+            description,
+            address,
+            start,
+            stop,
             requirements: requirementsCopy,
             updateSuccess: true,
             loading: false
