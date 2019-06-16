@@ -50,10 +50,10 @@ const requirement = PropTypes.shape({
       volunteerId: PropTypes.string.isRequired
     }).isRequired
   ),
-  role: {
+  role: PropTypes.shape({
     name: PropTypes.string.isRequired,
     involves: PropTypes.string.isRequired
-  }
+  })
 });
 
 const shiftTypes = {
