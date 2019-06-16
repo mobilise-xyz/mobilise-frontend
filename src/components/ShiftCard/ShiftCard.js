@@ -27,7 +27,9 @@ const generateRequirements = (shiftData, selected, isAdmin, type) =>
     const { numberRequired, role, bookings } = r;
     const numberOfBookings = bookings ? bookings.length : 0;
     const numberRemaining = numberRequired - numberOfBookings;
-    return numberRequired > 0 && numberRemaining > 0 ? (
+    const adminSees = isAdmin ? true : numberRemaining > 0;
+
+    return numberRequired > 0 && adminSees > 0 ? (
       <CardRoleBadge
         isAdmin={isAdmin}
         name={role.name}
@@ -102,7 +104,6 @@ class ShiftCard extends React.Component {
   render() {
     const {
       shiftData,
-      isAdmin,
       recommendedRoleNames,
       type,
       // Redux props
@@ -115,6 +116,8 @@ class ShiftCard extends React.Component {
     let booked = false;
     let cancelled = false;
     let isRecommended = false;
+
+    const { isAdmin } = JSON.parse(localStorage.getItem('user'));
 
     if (!isAdmin) {
       // Do not show if there are no available roles to book.
@@ -235,7 +238,6 @@ class ShiftCard extends React.Component {
 
 ShiftCard.propTypes = {
   shiftData: shiftTypes.shift.isRequired,
-  isAdmin: PropTypes.bool.isRequired,
   recommendedRoleNames: PropTypes.arrayOf(PropTypes.string).isRequired,
   type: PropTypes.oneOf(['', 'booked']).isRequired
 };

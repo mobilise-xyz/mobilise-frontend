@@ -106,14 +106,6 @@ const book = (shiftId, roleName, repeatedType, until) => {
     return { type: shiftsConstants.BOOK_FAILURE, id, error };
   };
 
-  console.log(
-    'book id with role action',
-    shiftId,
-    roleName,
-    repeatedType,
-    until
-  );
-
   return dispatch => {
     dispatch(request(shiftId));
 
@@ -142,8 +134,6 @@ const cancel = (shiftId, reason) => {
   const failure = (id, error) => {
     return { type: shiftsConstants.CANCEL_FAILURE, id, error };
   };
-
-  console.log('cancelled shift with id and message', shiftId, reason);
 
   return dispatch => {
     dispatch(request(shiftId));

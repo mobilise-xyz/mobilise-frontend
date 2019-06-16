@@ -38,7 +38,7 @@ const BookingPane = ({
             // i.e. numberRequired > 0
             return numberRequired > 0 && numberRemaining > 0 ? (
               <VolunteerRoleBadge
-                key={shiftData.id + role.roleName}
+                key={shiftData.id + role.name}
                 name={role.name}
                 handleSelect={handleSelect}
                 selected={selected}

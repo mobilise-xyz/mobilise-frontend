@@ -32,7 +32,7 @@ const shift = PropTypes.shape({
       numberRequired: PropTypes.number.isRequired,
       role: PropTypes.shape({
         colour: PropTypes.string.isRequired,
-        involves: PropTypes.string.isRequired,
+        involves: PropTypes.string,
         name: PropTypes.string.isRequired
       }).isRequired
     }).isRequired

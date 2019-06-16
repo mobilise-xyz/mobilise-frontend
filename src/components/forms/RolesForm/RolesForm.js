@@ -50,7 +50,6 @@ class RolesForm extends React.Component {
 
   render() {
     const { roles, roleOptions, handleChange, handleRoleNumber } = this.props;
-    console.log(roleOptions);
     return (
       <Form.Group controlId="rolesForm">
         <Form.Label>Roles</Form.Label>
