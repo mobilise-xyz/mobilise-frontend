@@ -19,8 +19,6 @@ const BookingPane = ({
       : shiftData.requirements.find(r => r.role.name === selected).role
           .involves;
 
-  console.log(selectedRoleInvolves);
-
   return (
     <>
       <Row>
@@ -33,16 +31,19 @@ const BookingPane = ({
       <Row className="pb-2">
         <Col>
           {shiftData.requirements.map(r => {
+            const { numberRequired, role, bookings } = r;
+            const numberOfBookings = bookings ? bookings.length : 0;
+            const numberRemaining = numberRequired - numberOfBookings;
             // Only show roles that are available to book
             // i.e. numberRequired > 0
-            return r.numberRequired > 0 ? (
+            return numberRequired > 0 && numberRemaining > 0 ? (
               <VolunteerRoleBadge
-                key={shiftData.id + r.role.roleName}
-                name={r.role.name}
+                key={shiftData.id + role.roleName}
+                name={role.name}
                 handleSelect={handleSelect}
                 selected={selected}
                 onModal
-                colour={r.role.colour}
+                colour={role.colour}
               />
             ) : null;
           })}
