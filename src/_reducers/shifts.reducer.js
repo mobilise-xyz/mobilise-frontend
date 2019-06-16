@@ -161,8 +161,6 @@ const shifts = (state = {}, action) => {
     }
     case shiftsConstants.UPDATE_SUCCESS: {
       const setUpdateSuccess = shift => {
-        // TODO this information should be updated for all fields, not just requirements
-
         // Find the shift to update.
         if (shift.id === action.id) {
           const { title, description, address, start, stop } = action.data;

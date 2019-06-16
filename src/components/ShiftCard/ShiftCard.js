@@ -116,16 +116,18 @@ class ShiftCard extends React.Component {
     let cancelled = false;
     let isRecommended = false;
 
-    // Do not show if there are no available roles to book.
-    const numberOfAvailableRoles = shiftData.requirements.filter(r => {
-      const { numberRequired, bookings } = r;
-      const numberOfBookings = bookings ? bookings.length : 0;
-      const numberRemaining = numberRequired - numberOfBookings;
-      return numberRemaining > 0;
-    }).length;
+    if (!isAdmin) {
+      // Do not show if there are no available roles to book.
+      const numberOfAvailableRoles = shiftData.requirements.filter(r => {
+        const { numberRequired, bookings } = r;
+        const numberOfBookings = bookings ? bookings.length : 0;
+        const numberRemaining = numberRequired - numberOfBookings;
+        return numberRemaining > 0;
+      }).length;
 
-    if (numberOfAvailableRoles < 1) {
-      return null;
+      if (numberOfAvailableRoles < 1) {
+        return null;
+      }
     }
 
     if (type !== 'booked') {
