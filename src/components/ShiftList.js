@@ -66,7 +66,6 @@ const ShiftList = ({ shifts, isAdmin = false, type = '' }) => {
               })}
             </CardColumns>
           </Col>
-          <Col md={2} />
         </Row>
         <hr />
       </Container>
