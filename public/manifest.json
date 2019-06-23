@@ -3,7 +3,7 @@
   "name": "Mobilise",
   "icons": [
     {
-      "src": "icons-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
