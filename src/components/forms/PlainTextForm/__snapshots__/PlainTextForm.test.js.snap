@@ -15,11 +15,6 @@ exports[`Description Form Component renders the form correctly 1`] = `
     onChange={[Function]}
     placeholder=""
     required={true}
-    style={
-      Object {
-        "padding": 0,
-      }
-    }
     value=""
   />
 </div>
