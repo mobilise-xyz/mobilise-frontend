@@ -61,14 +61,15 @@ class NewShiftPage extends React.Component {
 
     await axios
       .get('/roles', config)
-      .then(({ data }) =>
+      .then(({ data }) => {
+        const { roles } = data;
         this.setState({
-          roleOptions: data.map(r => ({
+          roleOptions: roles.map(r => ({
             name: r.name,
             involves: r.involves
           }))
-        })
-      )
+        });
+      })
       .catch(err =>
         console.log(err, 'There was a problem retrieving potential roles.')
       );
@@ -222,19 +223,20 @@ class NewShiftPage extends React.Component {
     // 1. Create new role with post request
     axios
       .post('/roles', data, config)
-      .then(({ data: respData }) =>
+      .then(({ data: respData }) => {
+        const { role } = respData;
         // 2. Add to role options
         this.setState(prevState => {
           const newOptions = prevState.roleOptions.slice();
           newOptions.push({
-            name: respData.name,
-            involves: respData.involves
+            name: role.name,
+            involves: role.involves
           });
           return {
             roleOptions: newOptions
           };
-        })
-      )
+        });
+      })
       .catch(alertActions.error('Adding a role failed!'));
 
     // 3. Close modal
