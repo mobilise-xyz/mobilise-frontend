@@ -26,7 +26,10 @@ const get = uid => {
   return axios
     .get(`/volunteers/${uid}/availability`, config)
     .then(utils.handleResponse)
-    .then(availability => transposeArray(availability))
+    .then(data => {
+      const { availability } = data;
+      return transposeArray(availability);
+    })
     .then(arr => arr.map(i => i.map(j => integerToAvailability[j])))
     .catch(alertActions.error('Could not get availability.'));
 };

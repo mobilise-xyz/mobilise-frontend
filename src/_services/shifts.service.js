@@ -54,10 +54,13 @@ const getForUser = (uid, booked = false, after) => {
   return axios
     .get(`/volunteers/${uid}/shifts`, config)
     .then(utils.handleResponse)
-    .then(data => ({
-      all: data,
-      recommended: [placeholderShift]
-    }))
+    .then(data => {
+      const { shifts } = data;
+      return {
+        all: shifts,
+        recommended: [placeholderShift]
+      };
+    })
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
 
