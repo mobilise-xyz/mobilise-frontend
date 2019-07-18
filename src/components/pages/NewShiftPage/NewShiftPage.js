@@ -47,11 +47,12 @@ class NewShiftPage extends React.Component {
 
     await axios
       .get('/shifts/titles', config)
-      .then(resp =>
+      .then(({ data }) => {
+        const { titles } = data;
         this.setState({
-          shiftTitleOptions: resp.data
-        })
-      )
+          shiftTitleOptions: titles
+        });
+      })
       .catch(err =>
         console.log(
           err,

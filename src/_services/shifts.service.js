@@ -34,9 +34,10 @@ const getAll = after => {
   return axios
     .get('/shifts', config)
     .then(utils.handleResponse)
-    .then(data => ({
-      all: data
-    }))
+    .then(data => {
+      const { shifts } = data;
+      return { all: shifts };
+    })
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
 
