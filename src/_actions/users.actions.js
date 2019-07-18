@@ -10,7 +10,8 @@ const get = uid => {
   };
 
   return dispatch => {
-    usersService.get(uid).then(user => {
+    usersService.get(uid).then(resp => {
+      const { user } = resp;
       dispatch(getSuccess(user));
     });
   };

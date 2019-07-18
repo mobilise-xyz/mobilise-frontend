@@ -32,7 +32,7 @@ class MetricForm extends React.Component {
     axios
       .get(`/metric`, config)
       .then(utils.handleResponse)
-      .then(metric => {
+      .then(({ metric }) => {
         if (metric) {
           this.setState(metric);
         }

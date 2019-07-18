@@ -40,7 +40,9 @@ const login = (email, password) => {
       password
     })
     .then(utils.handleResponse)
-    .then(({ uid, isAdmin, lastLogin, token }) => {
+    .then(data => {
+      const { user } = data;
+      const { uid, isAdmin, lastLogin, token } = user;
       // Store user details and JWT token in localStorage to keep user logged in between page refreshes.
       localStorage.setItem(
         'user',
