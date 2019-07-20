@@ -12,7 +12,7 @@ class VolunteerShiftsPage extends React.Component {
     const { uid } = JSON.parse(localStorage.getItem('user'));
     const now = moment().format();
     // Do not make the request again if shifts are already in the store.
-    dispatch(shiftsActions.getForUser(uid, false, now));
+    dispatch(shiftsActions.getAvailableForUser(uid, now));
   }
 
   render() {

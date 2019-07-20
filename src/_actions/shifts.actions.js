@@ -19,8 +19,8 @@ const getAll = after => {
   };
 };
 
-// Gets shifts + recommended shifts for the specified user.
-const getForUser = (uid, booked = false, after) => {
+// Gets available + recommended shifts for the specified user.
+const getAvailableForUser = (uid, after) => {
   const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
   const success = shifts => ({
     type: shiftsConstants.GETFORUSER_SUCCESS,
@@ -34,16 +34,17 @@ const getForUser = (uid, booked = false, after) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getForUser(uid, booked, after).then(
+    shiftsService.getAvailableForUser(uid, after).then(
       shifts => dispatch(success(shifts)),
       error => {
-        dispatch(alertActions.error('Error getting shifts.'));
+        dispatch(alertActions.error('Error getting available shifts.'));
         return dispatch(failure(error));
       }
     );
   };
 };
 
+// Gets booked shifts for the specified user.
 const getBookedForUser = (uid, after) => {
   const request = () => ({ type: shiftsConstants.GETBOOKEDFORUSER_REQUEST });
   const success = myShifts => ({
@@ -58,10 +59,10 @@ const getBookedForUser = (uid, after) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getForUser(uid, true, after).then(
+    shiftsService.getBookedForUser(uid, after).then(
       shifts => dispatch(success(shifts)),
       error => {
-        dispatch(alertActions.error('Error getting shifts.'));
+        dispatch(alertActions.error('Error getting booked shifts.'));
         return dispatch(failure(error));
       }
     );
@@ -227,7 +228,7 @@ const ping = shiftId => {
 
 const shiftsActions = {
   getAll,
-  getForUser,
+  getAvailableForUser,
   getBookedForUser,
   deleteWithId,
   book,
