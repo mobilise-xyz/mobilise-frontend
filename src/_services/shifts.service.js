@@ -41,12 +41,33 @@ const getAll = after => {
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
 
-const getForUser = (uid, booked = false, after) => {
-  // Get all shifts
+const getAvailableForUser = (uid, after) => {
   const config = {
     headers: authHeader(),
     params: {
-      booked,
+      after
+    }
+  };
+
+  return axios
+    .get(`/volunteers/${uid}/availableShifts`, config)
+    .then(utils.handleResponse)
+    .then(data => {
+      const { shifts } = data;
+      return {
+        all: shifts,
+        recommended: [placeholderShift]
+      };
+    })
+    .catch(
+      alertActions.error('There was a problem retrieving available shifts.')
+    );
+};
+
+const getBookedForUser = (uid, after) => {
+  const config = {
+    headers: authHeader(),
+    params: {
       after
     }
   };
@@ -142,7 +163,8 @@ const ping = shiftId => {
 
 const shiftsService = {
   getAll,
-  getForUser,
+  getAvailableForUser,
+  getBookedForUser,
   deleteWithId,
   book,
   cancel,
