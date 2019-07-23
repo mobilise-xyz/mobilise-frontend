@@ -4,6 +4,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   OverlayTrigger,
+  Spinner,
   Tooltip
 } from 'react-bootstrap';
 import moment from 'moment';
@@ -37,9 +38,7 @@ class AdminShiftsPage extends React.Component {
 
   // TODO Handle exception properly.
   componentDidMount() {
-    const { dispatch } = this.props;
-    const now = moment().format();
-    dispatch(shiftsActions.getAll(now, 1, true));
+    this.fetchInitialShifts();
   }
 
   handleListView = () => {
@@ -50,10 +49,20 @@ class AdminShiftsPage extends React.Component {
     this.setState({ viewType: 'calendar' });
   };
 
-  fetchMoreData = () => {
+  fetchInitialShifts = () => {
+    const { dispatch } = this.props;
+    const now = moment().format();
+    dispatch(shiftsActions.getAll(now, 1, true));
+  };
+
+  fetchMoreShifts = () => {
     const { dispatch, page } = this.props;
     const now = moment().format();
     dispatch(shiftsActions.getAll(now, page));
+  };
+
+  refresh = () => {
+    this.fetchInitialShifts();
   };
 
   render() {
@@ -74,13 +83,33 @@ class AdminShiftsPage extends React.Component {
         view = (
           <InfiniteScroll
             dataLength={shifts.all.length}
-            next={this.fetchMoreData}
+            next={this.fetchMoreShifts}
             hasMore={hasMore}
             loader={<h4>Loading...</h4>}
             endMessage={
               <p style={{ textAlign: 'center' }}>
                 <b>No more shifts coming up!</b>
               </p>
+            }
+            refreshFunction={this.refresh}
+            pullDownToRefresh
+            pullDownToRefreshContent={
+              <Spinner
+                animation="border"
+                role="status"
+                style={{ marginLeft: '50%', marginBottom: '30px' }}
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            }
+            releaseToRefreshContent={
+              <Spinner
+                animation="border"
+                role="status"
+                style={{ marginLeft: '50%', marginBottom: '30px' }}
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
             }
           >
             <ShiftList isAdmin shifts={shifts.all} />
