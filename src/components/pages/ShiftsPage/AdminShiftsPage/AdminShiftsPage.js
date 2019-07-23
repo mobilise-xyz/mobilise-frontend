@@ -7,6 +7,7 @@ import {
   Tooltip
 } from 'react-bootstrap';
 import moment from 'moment';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Layout from '../../../Layout/Layout';
@@ -38,7 +39,7 @@ class AdminShiftsPage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     const now = moment().format();
-    dispatch(shiftsActions.getAll(now));
+    dispatch(shiftsActions.getAll(now, 1));
   }
 
   handleListView = () => {
@@ -49,13 +50,18 @@ class AdminShiftsPage extends React.Component {
     this.setState({ viewType: 'calendar' });
   };
 
+  fetchMoreData = () => {
+    const { dispatch, page } = this.props;
+    const now = moment().format();
+    dispatch(shiftsActions.getAll(now, page));
+  };
+
   render() {
-    const { shifts, loading, error } = this.props;
+    const { shifts, hasMore, error } = this.props;
     const { viewType } = this.state;
-    if (loading === true || !shifts) {
+    if (!shifts) {
       return null;
     }
-
     if (error) {
       return <p>error</p>;
     }
@@ -63,7 +69,21 @@ class AdminShiftsPage extends React.Component {
     let view = 'list';
     switch (viewType) {
       case 'list':
-        view = <ShiftList isAdmin shifts={shifts.all} />;
+        view = (
+          <InfiniteScroll
+            dataLength={shifts.all.length}
+            next={this.fetchMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>No more shifts coming up!</b>
+              </p>
+            }
+          >
+            <ShiftList isAdmin shifts={shifts.all} />
+          </InfiniteScroll>
+        );
         break;
       case 'calendar':
         view = <CalendarView isAdmin shifts={shifts.all} />;
@@ -97,10 +117,12 @@ class AdminShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts, loading, error } = state.shifts;
+  const { shifts, page, loading, hasMore, error } = state.shifts;
   return {
     shifts,
+    page,
     loading,
+    hasMore,
     error
   };
 };

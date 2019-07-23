@@ -26,9 +26,20 @@ const shifts = (state = {}, action) => {
       return {
         ...state,
         shifts: state.shifts,
-        loading: true
+        loading: true,
+        hasMore: true
       };
-    case shiftsConstants.GETALL_SUCCESS:
+    case shiftsConstants.GETALL_SUCCESS: {
+      const prevShifts = state.shifts ? state.shifts : { all: [] };
+      const page = state.page ? state.page + 1 : 2;
+      return {
+        ...state,
+        shifts: { all: [...prevShifts.all, ...action.shifts.all] },
+        page,
+        hasMore: action.shifts.all.length > 0,
+        loading: false
+      };
+    }
     case shiftsConstants.GETFORUSER_SUCCESS:
       return {
         ...state,
