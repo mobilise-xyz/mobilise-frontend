@@ -42,11 +42,15 @@ const generateRequirements = (shiftData, selected, isAdmin, type) =>
     ) : null;
   });
 
-const generateGoogleMapsLink = address =>
-  `https://www.google.com/maps?safe=strict&q=${address}&um=1&ie=UTF-8&sa=X&ved=0ahUKEwiGr7nZxNXiAhXBUBUIHQq6DrQQ_AUIESgC`;
+const generateGoogleMapsLink = address => {
+  const encodedAddress = encodeURIComponent(address);
+  return `https://www.google.com/maps?safe=strict&q=${encodedAddress}&um=1&ie=UTF-8&sa=X&ved=0ahUKEwiGr7nZxNXiAhXBUBUIHQq6DrQQ_AUIESgC`;
+};
 
-const generateGoogleMapsImage = address =>
-  `https://maps.googleapis.com/maps/api/staticmap?center=${address}&zoom=13&size=512x200&maptype=roadmap&markers=color:red%7C${address}&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
+const generateGoogleMapsImage = address => {
+  const encodedAddress = encodeURIComponent(address);
+  return `https://maps.googleapis.com/maps/api/staticmap?center=${encodedAddress}&zoom=13&size=512x200&maptype=roadmap&markers=color:red%7C${encodedAddress}&&key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
+};
 
 // shiftData consists of title, description, date, start, stop, address
 
