@@ -29,13 +29,19 @@ const shifts = (state = {}, action) => {
         loading: true,
         hasMore: true
       };
-    case shiftsConstants.GETALL_SUCCESS: {
-      const prevShifts = state.shifts ? state.shifts : { all: [] };
-      const page = state.page ? state.page + 1 : 2;
+    case shiftsConstants.GETFIRST_SUCCESS: {
       return {
         ...state,
-        shifts: { all: [...prevShifts.all, ...action.shifts.all] },
-        page,
+        shifts: action.shifts,
+        page: 2,
+        hasMore: action.shifts.all.length > 0
+      };
+    }
+    case shiftsConstants.GETALL_SUCCESS: {
+      return {
+        ...state,
+        shifts: { all: [...state.shifts.all, ...action.shifts.all] },
+        page: state.page + 1,
         hasMore: action.shifts.all.length > 0,
         loading: false
       };

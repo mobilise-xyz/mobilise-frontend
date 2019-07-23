@@ -39,7 +39,7 @@ class AdminShiftsPage extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     const now = moment().format();
-    dispatch(shiftsActions.getAll(now, 1));
+    dispatch(shiftsActions.getAll(now, 1, true));
   }
 
   handleListView = () => {
@@ -57,7 +57,9 @@ class AdminShiftsPage extends React.Component {
   };
 
   render() {
-    const { shifts, hasMore, error } = this.props;
+    const { shifts, hasMore, error, page } = this.props;
+    console.log(shifts);
+    console.log(page);
     const { viewType } = this.state;
     if (!shifts) {
       return null;
