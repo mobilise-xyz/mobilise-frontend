@@ -4,9 +4,11 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   OverlayTrigger,
+  Spinner,
   Tooltip
 } from 'react-bootstrap';
 import moment from 'moment';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Layout from '../../../Layout/Layout';
@@ -36,9 +38,7 @@ class AdminShiftsPage extends React.Component {
 
   // TODO Handle exception properly.
   componentDidMount() {
-    const { dispatch } = this.props;
-    const now = moment().format();
-    dispatch(shiftsActions.getAll(now));
+    this.fetchInitialShifts();
   }
 
   handleListView = () => {
@@ -49,13 +49,43 @@ class AdminShiftsPage extends React.Component {
     this.setState({ viewType: 'calendar' });
   };
 
+  handleCalendarRangeChange = dates => {
+    const { dispatch, shifts } = this.props;
+    const lastDate = moment(dates[dates.length - 1]);
+    const lastShift = shifts.all[shifts.all.length - 1];
+    const lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
+    if (lastDate.isAfter(lastShiftDate)) {
+      dispatch(shiftsActions.getAll(lastShiftDate.format(), lastDate.format()));
+    }
+  };
+
+  fetchInitialShifts = () => {
+    const { dispatch } = this.props;
+    const now = moment().format();
+    const later = moment()
+      .add(14, 'days')
+      .format();
+    dispatch(shiftsActions.getAll(now, later, true));
+  };
+
+  fetchMoreShifts = () => {
+    const { dispatch, before } = this.props;
+    const later = moment(before)
+      .add(14, 'days')
+      .format();
+    dispatch(shiftsActions.getAll(before, later));
+  };
+
+  refresh = () => {
+    this.fetchInitialShifts();
+  };
+
   render() {
-    const { shifts, loading, error } = this.props;
+    const { shifts, hasMore, error } = this.props;
     const { viewType } = this.state;
-    if (loading === true || !shifts) {
+    if (!shifts) {
       return null;
     }
-
     if (error) {
       return <p>error</p>;
     }
@@ -63,10 +93,50 @@ class AdminShiftsPage extends React.Component {
     let view = 'list';
     switch (viewType) {
       case 'list':
-        view = <ShiftList isAdmin shifts={shifts.all} />;
+        view = (
+          <InfiniteScroll
+            dataLength={shifts.all.length}
+            next={this.fetchMoreShifts}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>No more shifts coming up!</b>
+              </p>
+            }
+            refreshFunction={this.refresh}
+            pullDownToRefresh
+            pullDownToRefreshContent={
+              <Spinner
+                animation="border"
+                role="status"
+                style={{ marginLeft: '50%', marginBottom: '30px' }}
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            }
+            releaseToRefreshContent={
+              <Spinner
+                animation="border"
+                role="status"
+                style={{ marginLeft: '50%', marginBottom: '30px' }}
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            }
+          >
+            <ShiftList isAdmin shifts={shifts.all} />
+          </InfiniteScroll>
+        );
         break;
       case 'calendar':
-        view = <CalendarView isAdmin shifts={shifts.all} />;
+        view = (
+          <CalendarView
+            isAdmin
+            shifts={shifts.all}
+            onRangeChange={this.handleCalendarRangeChange}
+          />
+        );
         break;
       default:
     }
@@ -97,10 +167,12 @@ class AdminShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts, loading, error } = state.shifts;
+  const { shifts, before, loading, hasMore, error } = state.shifts;
   return {
     shifts,
+    before,
     loading,
+    hasMore,
     error
   };
 };
