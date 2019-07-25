@@ -58,7 +58,7 @@ class CalendarView extends React.Component {
   };
 
   render() {
-    const { shifts, isAdmin } = this.props;
+    const { shifts, isAdmin, onRangeChange } = this.props;
     const { showModal, selectedShiftData } = this.state;
 
     const events = shifts.map(s => ({
@@ -85,6 +85,7 @@ class CalendarView extends React.Component {
             defaultView="week"
             components={customComponents}
             onSelectEvent={eventSelector}
+            onRangeChange={onRangeChange || (() => {})}
             onDrillDown={() => {}}
             timeslots={1}
             scrollToTime={moment('07:00:00', 'HH:mm:ss').toDate()}

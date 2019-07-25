@@ -23,13 +23,13 @@ const placeholderShift = {
   ]
 };
 
-const getAll = (after, page) => {
+const getAll = (after, before) => {
   // Get all shifts
   const config = {
     headers: authHeader(),
     params: {
       after,
-      page
+      before
     }
   };
   return axios

@@ -2,7 +2,7 @@ import shiftsConstants from '../_constants/shifts.constants';
 import shiftsService from '../_services/shifts.service';
 import alertActions from './alert.actions';
 
-const getAll = (after, page, firstTime = false) => {
+const getAll = (after, before, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETALL_REQUEST });
   const success = shifts => ({
     type: firstTime
@@ -15,7 +15,7 @@ const getAll = (after, page, firstTime = false) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getAll(after, page).then(
+    shiftsService.getAll(after, before).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(failure(error));

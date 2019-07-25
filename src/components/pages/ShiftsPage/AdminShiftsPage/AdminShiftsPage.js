@@ -49,16 +49,31 @@ class AdminShiftsPage extends React.Component {
     this.setState({ viewType: 'calendar' });
   };
 
+  handleCalendarRangeChange = dates => {
+    const { dispatch, shifts } = this.props;
+    const lastDate = moment(dates[dates.length - 1]);
+    const lastShift = shifts.all[shifts.all.length - 1];
+    const lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
+    if (lastDate.isAfter(lastShiftDate)) {
+      dispatch(shiftsActions.getAll(lastShiftDate.format(), lastDate.format()));
+    }
+  };
+
   fetchInitialShifts = () => {
     const { dispatch } = this.props;
     const now = moment().format();
-    dispatch(shiftsActions.getAll(now, 1, true));
+    const later = moment()
+      .add(14, 'days')
+      .format();
+    dispatch(shiftsActions.getAll(now, later, true));
   };
 
   fetchMoreShifts = () => {
-    const { dispatch, page } = this.props;
-    const now = moment().format();
-    dispatch(shiftsActions.getAll(now, page));
+    const { dispatch, before } = this.props;
+    const later = moment(before)
+      .add(14, 'days')
+      .format();
+    dispatch(shiftsActions.getAll(before, later));
   };
 
   refresh = () => {
@@ -66,9 +81,7 @@ class AdminShiftsPage extends React.Component {
   };
 
   render() {
-    const { shifts, hasMore, error, page } = this.props;
-    console.log(shifts);
-    console.log(page);
+    const { shifts, hasMore, error } = this.props;
     const { viewType } = this.state;
     if (!shifts) {
       return null;
@@ -117,7 +130,13 @@ class AdminShiftsPage extends React.Component {
         );
         break;
       case 'calendar':
-        view = <CalendarView isAdmin shifts={shifts.all} />;
+        view = (
+          <CalendarView
+            isAdmin
+            shifts={shifts.all}
+            onRangeChange={this.handleCalendarRangeChange}
+          />
+        );
         break;
       default:
     }
@@ -148,10 +167,10 @@ class AdminShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts, page, loading, hasMore, error } = state.shifts;
+  const { shifts, before, loading, hasMore, error } = state.shifts;
   return {
     shifts,
-    page,
+    before,
     loading,
     hasMore,
     error

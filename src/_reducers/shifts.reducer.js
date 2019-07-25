@@ -1,3 +1,4 @@
+import moment from 'moment';
 import shiftsConstants from '../_constants/shifts.constants';
 
 // Utility function that applies a function to all and recommended shifts and
@@ -33,15 +34,29 @@ const shifts = (state = {}, action) => {
       return {
         ...state,
         shifts: action.shifts,
-        page: 2,
+        before: moment()
+          .add(14, 'days')
+          .format(),
         hasMore: action.shifts.all.length > 0
       };
     }
     case shiftsConstants.GETALL_SUCCESS: {
+      action.shifts.all.forEach(shift => {
+        let shiftExists = false;
+        state.shifts.all.forEach(stateShift => {
+          if (shift.id === stateShift.id) {
+            shiftExists = true;
+          }
+        });
+        if (!shiftExists) {
+          state.shifts.all.push(shift);
+        }
+      });
       return {
         ...state,
-        shifts: { all: [...state.shifts.all, ...action.shifts.all] },
-        page: state.page + 1,
+        before: moment(state.before)
+          .add(14, 'days')
+          .format(),
         hasMore: action.shifts.all.length > 0,
         loading: false
       };
