@@ -62,9 +62,23 @@ const shifts = (state = {}, action) => {
       };
     }
     case shiftsConstants.GETFORUSER_SUCCESS:
+      action.shifts.all.forEach(shift => {
+        let shiftExists = false;
+        state.shifts.all.forEach(stateShift => {
+          if (shift.id === stateShift.id) {
+            shiftExists = true;
+          }
+        });
+        if (!shiftExists) {
+          state.shifts.all.push(shift);
+        }
+      });
       return {
         ...state,
-        shifts: action.shifts,
+        before: moment(state.before)
+          .add(14, 'days')
+          .format(),
+        hasMore: action.shifts.all.length > 0,
         loading: false
       };
     case shiftsConstants.GETALL_FAILURE:

@@ -42,11 +42,12 @@ const getAll = (after, before) => {
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
 
-const getAvailableForUser = (uid, after) => {
+const getAvailableForUser = (uid, after, before) => {
   const config = {
     headers: authHeader(),
     params: {
-      after
+      after,
+      before
     }
   };
 

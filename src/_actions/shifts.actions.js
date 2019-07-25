@@ -25,10 +25,12 @@ const getAll = (after, before, firstTime = false) => {
 };
 
 // Gets available + recommended shifts for the specified user.
-const getAvailableForUser = (uid, after) => {
+const getAvailableForUser = (uid, after, before, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
   const success = shifts => ({
-    type: shiftsConstants.GETFORUSER_SUCCESS,
+    type: firstTime
+      ? shiftsConstants.GETFIRST_SUCCESS
+      : shiftsConstants.GETFORUSER_SUCCESS,
     shifts
   });
   const failure = error => ({
@@ -39,7 +41,7 @@ const getAvailableForUser = (uid, after) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getAvailableForUser(uid, after).then(
+    shiftsService.getAvailableForUser(uid, after, before).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(alertActions.error('Error getting available shifts.'));
