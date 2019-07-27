@@ -17,6 +17,8 @@ import shiftsActions from '../../../../_actions/shifts.actions';
 import './AdminShiftsPage.css';
 import CalendarView from '../../CalendarView';
 
+const ITEMS_PER_PAGE = 5;
+
 // TODO: remove duplication between here and MyShiftsPage
 const ViewSwitch = ({ handleListView, handleCalendarView }) => (
   <Col>
@@ -62,18 +64,14 @@ class AdminShiftsPage extends React.Component {
   fetchInitialShifts = () => {
     const { dispatch } = this.props;
     const now = moment().format();
-    const later = moment()
-      .add(14, 'days')
-      .format();
-    dispatch(shiftsActions.getAll(now, later, true));
+    dispatch(shiftsActions.getAll(now, null, 1, true));
   };
 
   fetchMoreShifts = () => {
-    const { dispatch, before } = this.props;
-    const later = moment(before)
-      .add(14, 'days')
-      .format();
-    dispatch(shiftsActions.getAll(before, later));
+    const { dispatch, startTime, shifts } = this.props;
+    const { length } = shifts.all;
+    const page = length / ITEMS_PER_PAGE;
+    dispatch(shiftsActions.getAll(startTime, null, page + 1));
   };
 
   refresh = () => {
@@ -167,10 +165,10 @@ class AdminShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts, before, loading, hasMore, error } = state.shifts;
+  const { shifts, startTime, loading, hasMore, error } = state.shifts;
   return {
     shifts,
-    before,
+    startTime,
     loading,
     hasMore,
     error
