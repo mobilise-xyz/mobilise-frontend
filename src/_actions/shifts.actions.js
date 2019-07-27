@@ -52,10 +52,12 @@ const getAvailableForUser = (uid, after, page, firstTime = false) => {
 };
 
 // Gets booked shifts for the specified user.
-const getBookedForUser = (uid, after) => {
+const getBookedForUser = (uid, after, before, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETBOOKEDFORUSER_REQUEST });
   const success = myShifts => ({
-    type: shiftsConstants.GETBOOKEDFORUSER_SUCCESS,
+    type: firstTime
+      ? shiftsConstants.GETBOOKEDFIRST_SUCCESS
+      : shiftsConstants.GETBOOKEDFORUSER_SUCCESS,
     myShifts
   });
   const failure = error => ({
@@ -66,7 +68,7 @@ const getBookedForUser = (uid, after) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getBookedForUser(uid, after).then(
+    shiftsService.getBookedForUser(uid, after, before, page).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(alertActions.error('Error getting booked shifts.'));

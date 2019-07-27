@@ -67,11 +67,13 @@ const getAvailableForUser = (uid, after, page) => {
     );
 };
 
-const getBookedForUser = (uid, after) => {
+const getBookedForUser = (uid, after, before, page) => {
   const config = {
     headers: authHeader(),
     params: {
-      after
+      after,
+      before,
+      page
     }
   };
 

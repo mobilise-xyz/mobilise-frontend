@@ -1,12 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Col, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Col, Spinner, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import './MyShiftsPage.css';
 import Layout from '../../Layout';
 import ShiftList from '../../ShiftList';
 import shiftsActions from '../../../_actions/shifts.actions';
 import CalendarView from '../CalendarView/CalendarView';
+
+const ITEMS_PER_PAGE = 5;
 
 const ViewSwitch = ({ handleListView, handleCalendarView }) => (
   <Col>
@@ -35,17 +38,50 @@ class MyShiftsPage extends React.Component {
   };
 
   componentDidMount = () => {
+    this.fetchInitialShifts();
+  };
+
+  fetchInitialShifts = () => {
     const { dispatch } = this.props;
-    const { uid } = JSON.parse(localStorage.getItem('user'));
     const now = moment().format();
-    dispatch(shiftsActions.getBookedForUser(uid, now));
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(shiftsActions.getBookedForUser(uid, now, null, 1, true));
+  };
+
+  fetchMoreShifts = () => {
+    const { dispatch, startTime, myShifts } = this.props;
+    const { length } = myShifts.all;
+    const page = length / ITEMS_PER_PAGE;
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(shiftsActions.getBookedForUser(uid, startTime, null, page + 1));
+  };
+
+  refresh = () => {
+    this.fetchInitialShifts();
+  };
+
+  handleCalendarRangeChange = dates => {
+    const { dispatch, myShifts } = this.props;
+    const lastDate = moment(dates[dates.length - 1]);
+    const lastShift = myShifts.all[myShifts.all.length - 1];
+    const lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    if (lastDate.isAfter(lastShiftDate)) {
+      dispatch(
+        shiftsActions.getBookedForUser(
+          uid,
+          lastShiftDate.format(),
+          lastDate.format()
+        )
+      );
+    }
   };
 
   render() {
-    const { myShifts, loading, error } = this.props;
+    const { myShifts, error, hasMore } = this.props;
     const { viewType } = this.state;
 
-    if (loading === true || !myShifts) {
+    if (!myShifts) {
       return null;
     }
 
@@ -56,10 +92,49 @@ class MyShiftsPage extends React.Component {
     let view = 'list';
     switch (viewType) {
       case 'list':
-        view = <ShiftList type="booked" shifts={myShifts.all} />;
+        view = (
+          <InfiniteScroll
+            dataLength={myShifts.all.length}
+            next={this.fetchMoreShifts}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>No more shifts coming up!</b>
+              </p>
+            }
+            refreshFunction={this.refresh}
+            pullDownToRefresh
+            pullDownToRefreshContent={
+              <Spinner
+                animation="border"
+                role="status"
+                style={{ marginLeft: '50%', marginBottom: '30px' }}
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            }
+            releaseToRefreshContent={
+              <Spinner
+                animation="border"
+                role="status"
+                style={{ marginLeft: '50%', marginBottom: '30px' }}
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            }
+          >
+            <ShiftList type="booked" shifts={myShifts.all} />
+          </InfiniteScroll>
+        );
         break;
       case 'calendar':
-        view = <CalendarView shifts={myShifts.all} />;
+        view = (
+          <CalendarView
+            shifts={myShifts.all}
+            onRangeChange={this.handleCalendarRangeChange}
+          />
+        );
         break;
       default:
     }
@@ -84,11 +159,12 @@ class MyShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { myShifts, loading, error } = state.shifts;
+  const { myShifts, hasMore, startTime, error } = state.shifts;
   return {
     myShifts,
-    loading,
-    error
+    error,
+    hasMore,
+    startTime
   };
 };
 

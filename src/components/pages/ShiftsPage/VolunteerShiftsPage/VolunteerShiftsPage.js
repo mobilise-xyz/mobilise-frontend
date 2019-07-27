@@ -8,6 +8,8 @@ import ShiftList from '../../../ShiftList';
 import './VolunteerShiftsPage.css';
 import shiftsActions from '../../../../_actions/shifts.actions';
 
+const ITEMS_PER_PAGE = 5;
+
 class VolunteerShiftsPage extends React.Component {
   componentDidMount() {
     this.fetchInitialShifts();
@@ -21,9 +23,11 @@ class VolunteerShiftsPage extends React.Component {
   };
 
   fetchMoreShifts = () => {
-    const { dispatch, page, startTime } = this.props;
+    const { dispatch, shifts, startTime } = this.props;
+    const { length } = shifts.all;
+    const page = length / ITEMS_PER_PAGE;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(shiftsActions.getAvailableForUser(uid, startTime, page));
+    dispatch(shiftsActions.getAvailableForUser(uid, startTime, page + 1));
   };
 
   refresh = () => {
@@ -82,13 +86,13 @@ class VolunteerShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts, error, page, hasMore, startTime } = state.shifts;
+  const { shifts, error, hasMore, loading, startTime } = state.shifts;
   return {
     shifts,
     error,
     startTime,
     hasMore,
-    page
+    loading
   };
 };
 
