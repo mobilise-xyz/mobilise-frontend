@@ -15,22 +15,15 @@ class VolunteerShiftsPage extends React.Component {
 
   fetchInitialShifts = () => {
     const { dispatch } = this.props;
-    const { uid } = JSON.parse(localStorage.getItem('user'));
     const now = moment().format();
-    const later = moment()
-      .add(14, 'days')
-      .format();
-    // Do not make the request again if shifts are already in the store.
-    dispatch(shiftsActions.getAvailableForUser(uid, now, later, true));
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(shiftsActions.getAvailableForUser(uid, now, 1, true));
   };
 
   fetchMoreShifts = () => {
-    const { dispatch, before } = this.props;
+    const { dispatch, page, startTime } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    const later = moment(before)
-      .add(14, 'days')
-      .format();
-    dispatch(shiftsActions.getAvailableForUser(uid, before, later));
+    dispatch(shiftsActions.getAvailableForUser(uid, startTime, page));
   };
 
   refresh = () => {
@@ -89,13 +82,13 @@ class VolunteerShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts, error, loading, hasMore, before } = state.shifts;
+  const { shifts, error, page, hasMore, startTime } = state.shifts;
   return {
     shifts,
     error,
-    loading,
+    startTime,
     hasMore,
-    before
+    page
   };
 };
 

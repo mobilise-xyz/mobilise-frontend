@@ -62,18 +62,12 @@ class AdminShiftsPage extends React.Component {
   fetchInitialShifts = () => {
     const { dispatch } = this.props;
     const now = moment().format();
-    const later = moment()
-      .add(14, 'days')
-      .format();
-    dispatch(shiftsActions.getAll(now, later, true));
+    dispatch(shiftsActions.getAll(now, null, 1, true));
   };
 
   fetchMoreShifts = () => {
-    const { dispatch, before } = this.props;
-    const later = moment(before)
-      .add(14, 'days')
-      .format();
-    dispatch(shiftsActions.getAll(before, later));
+    const { dispatch, page, startTime } = this.props;
+    dispatch(shiftsActions.getAll(startTime, null, page));
   };
 
   refresh = () => {
@@ -167,10 +161,11 @@ class AdminShiftsPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { shifts, before, loading, hasMore, error } = state.shifts;
+  const { shifts, page, startTime, loading, hasMore, error } = state.shifts;
   return {
     shifts,
-    before,
+    startTime,
+    page,
     loading,
     hasMore,
     error

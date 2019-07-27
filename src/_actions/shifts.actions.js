@@ -2,7 +2,7 @@ import shiftsConstants from '../_constants/shifts.constants';
 import shiftsService from '../_services/shifts.service';
 import alertActions from './alert.actions';
 
-const getAll = (after, before, firstTime = false) => {
+const getAll = (after, before, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETALL_REQUEST });
   const success = shifts => ({
     type: firstTime
@@ -15,7 +15,7 @@ const getAll = (after, before, firstTime = false) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getAll(after, before).then(
+    shiftsService.getAll(after, before, page).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(failure(error));
@@ -25,7 +25,7 @@ const getAll = (after, before, firstTime = false) => {
 };
 
 // Gets available + recommended shifts for the specified user.
-const getAvailableForUser = (uid, after, before, firstTime = false) => {
+const getAvailableForUser = (uid, after, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
   const success = shifts => ({
     type: firstTime
@@ -41,7 +41,7 @@ const getAvailableForUser = (uid, after, before, firstTime = false) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getAvailableForUser(uid, after, before).then(
+    shiftsService.getAvailableForUser(uid, after, page).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(alertActions.error('Error getting available shifts.'));
