@@ -1,21 +1,54 @@
-import React from 'react';
-import { Form, Button } from 'react-bootstrap';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Button, Form } from 'react-bootstrap';
 import CardLayout from '../../CardLayout';
+import usersActions from '../../../_actions/users.actions';
 
-const FeedbackPage = () => (
-  <CardLayout title="Feedback">
-    <p>Your feedback is valuable to</p>
-    <Form>
-      <Form.Group>
-        <Form.Label>Enter your message below</Form.Label>
-        <Form.Control as="textarea" rows="30" />
-      </Form.Group>
-      <Button type="submit" className="btn-more-info">
-        Send
-      </Button>
-    </Form>
-  </CardLayout>
-);
+class FeedbackPage extends Component {
+  state = {
+    feedback: ''
+  };
 
-export default FeedbackPage;
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const { feedback } = this.state;
+    const { dispatch } = this.props;
+
+    // If a user is on the feedback page, they should be logged in so this should exist.
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(usersActions.submitFeedback(uid, feedback));
+  };
+
+  render() {
+    const { feedback } = this.state;
+
+    return (
+      <CardLayout title="Feedback">
+        <p>Your feedback is valuable to</p>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group>
+            <Form.Label>Enter your message below</Form.Label>
+            <Form.Control
+              name="feedback"
+              value={feedback}
+              as="textarea"
+              rows="30"
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Button type="submit" className="btn-more-info">
+            Send
+          </Button>
+        </Form>
+      </CardLayout>
+    );
+  }
+}
+
+export default connect()(FeedbackPage);

@@ -24,6 +24,9 @@ const users = (state = { loading: true }, action) => {
     case usersConstants.UPDATE_CONTACT_REQUEST:
     case usersConstants.UPDATE_CONTACT_SUCCESS:
     case usersConstants.UPDATE_CONTACT_FAILURE:
+    case usersConstants.FEEDBACK_REQUEST:
+    case usersConstants.FEEDBACK_SUCCESS:
+    case usersConstants.FEEDBACK_FAILURE:
     default:
       return state;
   }
