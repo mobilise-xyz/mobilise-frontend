@@ -2,13 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {
-  Button,
-  Col,
-  Spinner,
-  ToggleButton,
-  ToggleButtonGroup
-} from 'react-bootstrap';
+import { Col, Spinner, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import './MyShiftsPage.css';
 import Layout from '../../Layout';
 import ShiftList from '../../ShiftList';
@@ -86,7 +80,6 @@ class MyShiftsPage extends React.Component {
   render() {
     const { myShifts, error, hasMore } = this.props;
     const { viewType } = this.state;
-    const { uid } = JSON.parse(localStorage.getItem('user'));
 
     if (!myShifts) {
       return null;
@@ -145,7 +138,6 @@ class MyShiftsPage extends React.Component {
         break;
       default:
     }
-    const calendarLink = `${process.env.REACT_APP_API_URL}/calendar/${uid}/bookings.ics`;
     return (
       <Layout
         heading="My Upcoming Shifts"
@@ -156,11 +148,6 @@ class MyShiftsPage extends React.Component {
           />
         }
       >
-        <Col style={{ textAlign: 'right', zIndex: '0' }}>
-          <Button variant="outline-primary" href={calendarLink}>
-            Export Calendar
-          </Button>
-        </Col>
         {myShifts.all.length === 0 ? (
           <h5>You have no upcoming shifts. Why not book one?</h5>
         ) : null}
