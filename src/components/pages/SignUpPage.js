@@ -29,13 +29,7 @@ export default class SignUpPage extends React.Component {
     forms: placeholderForms
   };
 
-  // async componentDidMount() {
-  //   // TODO create actual error message.
-  //   await axios
-  //     .get('/forms')
-  //     .then(forms => this.setState({ forms }).catch(err => console.log(err)));
-  // }
-
+  // TODO: TIGER Privacy and Data security form.
   render() {
     const { forms } = this.state;
     return (

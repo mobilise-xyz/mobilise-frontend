@@ -17,10 +17,12 @@ import SettingsPage from './components/pages/SettingsPage';
 import WelcomePage from './components/pages/WelcomePage/WelcomePage';
 import AdminRoute from './components/routes/AdminRoute';
 import Header from './components/Header';
+import HomePage from './components/pages/WelcomePage/HomePage';
 
 // List of pathnames to compare against to decide whether or not to render the
 // header.
-const noHeaderPathnames = ['/welcome', '/login', '/signup'];
+const noHeaderPathnames = ['/welcome', '/login', '/signup', '/home'];
+const entryPoints = ['/login', '/signup'];
 
 export class App extends React.Component {
   constructor(props) {
@@ -38,7 +40,11 @@ export class App extends React.Component {
     const { location } = this.props;
     return (
       <div>
-        {noHeaderPathnames.includes(location.pathname) ? null : <Header />}
+        <Header
+          loggedIn={!noHeaderPathnames.includes(location.pathname)}
+          homeBtn={entryPoints.includes(location.pathname)}
+          homePage={location.pathname === '/home'}
+        />
         <main>
           <Switch>
             <PrivateRoute path="/" exact component={ShiftsPage} />
@@ -58,7 +64,7 @@ export class App extends React.Component {
               exact
               component={FeedBackPage}
             />
-
+            <Route path="/home" exact component={HomePage} />
             <Route path="/login" exact component={LoginPage} />
             <Route path="/signup" exact component={SignUpPage} />
             <Route path="/404" exact component={NotFound} />
