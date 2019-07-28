@@ -11,7 +11,7 @@ import NotFound from './components/pages/NotFound';
 import SignUpPage from './components/pages/SignUpPage';
 import alertActions from './_actions/alert.actions';
 import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedShiftsHelpPage';
-import FeedBackPage from './components/pages/HelpPages/FeedbackPage';
+import FeedbackPage from './components/pages/HelpPages/FeedbackPage';
 import Dashboard from './components/pages/Dashboard';
 import SettingsPage from './components/pages/SettingsPage';
 import WelcomePage from './components/pages/WelcomePage/WelcomePage';
@@ -56,7 +56,7 @@ export class App extends React.Component {
             <PrivateRoute
               path="/help/feedback"
               exact
-              component={FeedBackPage}
+              component={FeedbackPage}
             />
 
             <Route path="/login" exact component={LoginPage} />

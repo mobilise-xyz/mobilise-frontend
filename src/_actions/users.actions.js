@@ -56,6 +56,34 @@ const updateContactPreferences = (uid, email, text) => {
   };
 };
 
+const submitFeedback = (uid, feedback) => {
+  const request = () => {
+    return { type: usersConstants.FEEDBACK_REQUEST };
+  };
+  const success = () => {
+    return { type: usersConstants.FEEDBACK_SUCCESS };
+  };
+  const failure = () => {
+    return { type: usersConstants.FEEDBACK_FAILURE };
+  };
+
+  return dispatch => {
+    dispatch(request());
+
+    usersService.submitFeedback(uid, feedback).then(
+      () => {
+        dispatch(success());
+
+        dispatch(alertActions.success('Your feedback has been submitted!'));
+      },
+      () => {
+        dispatch(failure());
+        dispatch(alertActions.error('Your feedback has not been submitted.'));
+      }
+    );
+  };
+};
+
 const login = (username, password) => {
   const request = user => {
     return { type: usersConstants.LOGIN_REQUEST, user };
@@ -98,6 +126,7 @@ const usersActions = {
   get,
   updateContactPreferences,
   updatePreferenceState: updateContactState,
+  submitFeedback,
   login,
   logout
 };
