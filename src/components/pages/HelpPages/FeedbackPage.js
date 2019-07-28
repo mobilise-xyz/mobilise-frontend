@@ -30,7 +30,7 @@ class FeedbackPage extends Component {
 
     return (
       <CardLayout title="Feedback">
-        <p>Your feedback is valuable to</p>
+        <p>Your feedback enables us to improve Mobilise!</p>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label>Enter your message below</Form.Label>
@@ -40,6 +40,7 @@ class FeedbackPage extends Component {
               as="textarea"
               rows="30"
               onChange={this.handleChange}
+              required
             />
           </Form.Group>
           <Button type="submit" className="btn-more-info">
