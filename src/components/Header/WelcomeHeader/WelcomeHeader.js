@@ -5,18 +5,21 @@ import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { LinkContainer } from 'react-router-bootstrap';
 import logo from '../../../assets/images/logo.png';
 
-const WelcomeHeader = (homeBtn, homePage) => {
-  const homeButton = homeBtn ? (
-    <LinkContainer exact to="/home">
-      <Button>
-        <span style={{ margin: 'auto' }}>
-          <FontAwesomeIcon className="small" icon={faHome} size="1x" />
-        </span>
-      </Button>
-    </LinkContainer>
-  ) : null;
+const entryPoints = ['/login', '/signup', '/home'];
 
-  const loginSignUpBtns = homePage ? (
+const WelcomeHeader = location => {
+  const homeButton =
+    location.location.pathname !== '/home' ? (
+      <LinkContainer exact to="/home">
+        <Button>
+          <span style={{ margin: 'auto' }}>
+            <FontAwesomeIcon className="small" icon={faHome} size="1x" />
+          </span>
+        </Button>
+      </LinkContainer>
+    ) : null;
+
+  const loginSignUpBtns = entryPoints.includes(location.location.pathname) ? (
     <Nav>
       <LinkContainer to="signup">
         <Button>Sign Up</Button>

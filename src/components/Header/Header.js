@@ -20,17 +20,16 @@ class Header extends React.Component {
 
     const { uid } = user;
     const { dispatch } = this.props;
-
     dispatch(usersActions.get(uid));
   }
 
   render() {
     const user = JSON.parse(localStorage.getItem('user'));
 
-    const { firstName, lastName, loggedIn, homeBtn, homePage } = this.props;
+    const { loggedIn, location, firstName, lastName } = this.props;
 
     if (!user || !loggedIn) {
-      return <WelcomeHeader homebtn={homeBtn} homePage={homePage} />;
+      return <WelcomeHeader location={location} />;
     }
     const { isAdmin } = user;
     const adminMessage = isAdmin ? '(Admin)' : '(Volunteer)';

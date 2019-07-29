@@ -22,7 +22,6 @@ import HomePage from './components/pages/WelcomePage/HomePage';
 // List of pathnames to compare against to decide whether or not to render the
 // header.
 const noHeaderPathnames = ['/welcome', '/login', '/signup', '/home'];
-const entryPoints = ['/login', '/signup'];
 
 export class App extends React.Component {
   constructor(props) {
@@ -42,8 +41,7 @@ export class App extends React.Component {
       <div>
         <Header
           loggedIn={!noHeaderPathnames.includes(location.pathname)}
-          homeBtn={entryPoints.includes(location.pathname)}
-          homePage={location.pathname === '/home'}
+          location={location}
         />
         <main>
           <Switch>
