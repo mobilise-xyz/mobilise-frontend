@@ -1,5 +1,6 @@
 import volunteerConstants from '../_constants/volunteer.constants';
 import volunteerService from '../_services/volunteer.service';
+import alertActions from './alert.actions';
 
 const getContributions = uid => {
   const request = () => ({ type: volunteerConstants.CONTRIBUTIONS_REQUEST });
@@ -88,6 +89,9 @@ const getCalendarForUser = uid => {
       calendar => dispatch(success(calendar)),
       error => {
         dispatch(failure(error));
+        dispatch(
+          alertActions.error('Something went wrong when getting calendar!')
+        );
       }
     );
   };

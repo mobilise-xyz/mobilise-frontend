@@ -42,7 +42,7 @@ const getCalendar = uid => {
     .get(`/volunteers/${uid}/shifts/calendar`, config)
     .then(utils.handleResponse)
     .then(({ link }) => {
-      return window.open(link, '_blank');
+      return window.open(link, '_self');
     });
 };
 
