@@ -2,12 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Col, Spinner, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import {
+  Button,
+  Col,
+  Spinner,
+  ToggleButton,
+  ToggleButtonGroup
+} from 'react-bootstrap';
 import './MyShiftsPage.css';
 import Layout from '../../Layout';
 import ShiftList from '../../ShiftList';
 import shiftsActions from '../../../_actions/shifts.actions';
 import CalendarView from '../CalendarView/CalendarView';
+import volunteerActions from '../../../_actions/volunteer.actions';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -75,6 +82,13 @@ class MyShiftsPage extends React.Component {
         )
       );
     }
+  };
+
+  exportCalendar = () => {
+    const { dispatch } = this.props;
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+
+    dispatch(volunteerActions.getCalendarForUser(uid));
   };
 
   render() {
@@ -148,6 +162,12 @@ class MyShiftsPage extends React.Component {
           />
         }
       >
+        <Col style={{ textAlign: 'right', zIndex: '0' }}>
+          <Button variant="outline-primary" onClick={this.exportCalendar}>
+            Export Calendar
+          </Button>
+        </Col>
+
         {myShifts.all.length === 0 ? (
           <h5>You have no upcoming shifts. Why not book one?</h5>
         ) : null}
