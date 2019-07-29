@@ -70,10 +70,34 @@ const getActivity = uid => {
   };
 };
 
+const getCalendarForUser = uid => {
+  const request = () => ({ type: volunteerConstants.CALENDAR_REQUEST });
+  const success = calendar => ({
+    type: volunteerConstants.CALENDAR_SUCCESS,
+    calendar
+  });
+  const failure = error => ({
+    type: volunteerConstants.CALENDAR_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    volunteerService.getCalendar(uid).then(
+      calendar => dispatch(success(calendar)),
+      error => {
+        dispatch(failure(error));
+      }
+    );
+  };
+};
+
 const volunteerActions = {
   getContributions,
   getHallOfFame,
-  getActivity
+  getActivity,
+  getCalendarForUser
 };
 
 export default volunteerActions;

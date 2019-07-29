@@ -14,6 +14,7 @@ import Layout from '../../Layout';
 import ShiftList from '../../ShiftList';
 import shiftsActions from '../../../_actions/shifts.actions';
 import CalendarView from '../CalendarView/CalendarView';
+import volunteerActions from '../../../_actions/volunteer.actions';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -83,10 +84,16 @@ class MyShiftsPage extends React.Component {
     }
   };
 
+  exportCalendar = () => {
+    const { dispatch } = this.props;
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+
+    dispatch(volunteerActions.getCalendarForUser(uid));
+  };
+
   render() {
     const { myShifts, error, hasMore } = this.props;
     const { viewType } = this.state;
-    const { uid } = JSON.parse(localStorage.getItem('user'));
 
     if (!myShifts) {
       return null;
@@ -145,7 +152,6 @@ class MyShiftsPage extends React.Component {
         break;
       default:
     }
-    const calendarLink = `${process.env.REACT_APP_API_URL}/calendar/${uid}/bookings.ics`;
     return (
       <Layout
         heading="My Upcoming Shifts"
@@ -157,7 +163,7 @@ class MyShiftsPage extends React.Component {
         }
       >
         <Col style={{ textAlign: 'right', zIndex: '0' }}>
-          <Button variant="outline-primary" href={calendarLink}>
+          <Button variant="outline-primary" onClick={this.exportCalendar}>
             Export Calendar
           </Button>
         </Col>
