@@ -28,6 +28,19 @@ const updateContactPreferences = (uid, email, text) => {
   return axios.put(`/users/${uid}/contact-preferences`, data, config);
 };
 
+const submitFeedback = (uid, feedback) => {
+  const data = {
+    feedback
+  };
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .post(`/users/${uid}/feedback`, data, config)
+    .then(utils.handleResponse);
+};
+
 const logout = () => {
   // remove user from local storage to log user out
   localStorage.removeItem('user');
@@ -71,6 +84,7 @@ const login = (email, password) => {
 const usersService = {
   get,
   updateContactPreferences,
+  submitFeedback,
   login,
   logout
 };

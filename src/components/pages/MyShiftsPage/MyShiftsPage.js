@@ -167,6 +167,7 @@ class MyShiftsPage extends React.Component {
             Export Calendar
           </Button>
         </Col>
+
         {myShifts.all.length === 0 ? (
           <h5>You have no upcoming shifts. Why not book one?</h5>
         ) : null}
