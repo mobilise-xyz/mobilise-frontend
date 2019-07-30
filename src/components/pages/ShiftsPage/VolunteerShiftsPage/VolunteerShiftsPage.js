@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Spinner } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
@@ -56,26 +55,6 @@ class VolunteerShiftsPage extends React.Component {
             <p style={{ textAlign: 'center' }}>
               <b>No more shifts coming up!</b>
             </p>
-          }
-          refreshFunction={this.refresh}
-          pullDownToRefresh
-          pullDownToRefreshContent={
-            <Spinner
-              animation="border"
-              role="status"
-              style={{ marginLeft: '50%', marginBottom: '30px' }}
-            >
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          }
-          releaseToRefreshContent={
-            <Spinner
-              animation="border"
-              role="status"
-              style={{ marginLeft: '50%', marginBottom: '30px' }}
-            >
-              <span className="sr-only">Loading...</span>
-            </Spinner>
           }
         >
           <ShiftList shifts={shifts.all} recommendedCardClass="bg-primary" />

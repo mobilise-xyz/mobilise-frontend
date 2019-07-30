@@ -4,7 +4,6 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   OverlayTrigger,
-  Spinner,
   Tooltip
 } from 'react-bootstrap';
 import moment from 'moment';
@@ -101,26 +100,6 @@ class AdminShiftsPage extends React.Component {
               <p style={{ textAlign: 'center' }}>
                 <b>No more shifts coming up!</b>
               </p>
-            }
-            refreshFunction={this.refresh}
-            pullDownToRefresh
-            pullDownToRefreshContent={
-              <Spinner
-                animation="border"
-                role="status"
-                style={{ marginLeft: '50%', marginBottom: '30px' }}
-              >
-                <span className="sr-only">Loading...</span>
-              </Spinner>
-            }
-            releaseToRefreshContent={
-              <Spinner
-                animation="border"
-                role="status"
-                style={{ marginLeft: '50%', marginBottom: '30px' }}
-              >
-                <span className="sr-only">Loading...</span>
-              </Spinner>
             }
           >
             <ShiftList isAdmin shifts={shifts.all} />

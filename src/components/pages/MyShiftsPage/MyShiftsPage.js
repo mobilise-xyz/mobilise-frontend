@@ -2,13 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {
-  Button,
-  Col,
-  Spinner,
-  ToggleButton,
-  ToggleButtonGroup
-} from 'react-bootstrap';
+import { Button, Col, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import './MyShiftsPage.css';
 import Layout from '../../Layout';
 import ShiftList from '../../ShiftList';
@@ -116,26 +110,6 @@ class MyShiftsPage extends React.Component {
               <p style={{ textAlign: 'center' }}>
                 <b>No more shifts coming up!</b>
               </p>
-            }
-            refreshFunction={this.refresh}
-            pullDownToRefresh
-            pullDownToRefreshContent={
-              <Spinner
-                animation="border"
-                role="status"
-                style={{ marginLeft: '50%', marginBottom: '30px' }}
-              >
-                <span className="sr-only">Loading...</span>
-              </Spinner>
-            }
-            releaseToRefreshContent={
-              <Spinner
-                animation="border"
-                role="status"
-                style={{ marginLeft: '50%', marginBottom: '30px' }}
-              >
-                <span className="sr-only">Loading...</span>
-              </Spinner>
             }
           >
             <ShiftList type="booked" shifts={myShifts.all} />
