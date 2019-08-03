@@ -12,8 +12,20 @@ const get = () => {
   };
 };
 
+const download = filename => {
+  const downloadSuccess = res => ({
+    type: filesConstants.DOWNLOAD,
+    res
+  });
+
+  return dispatch => {
+    filesService.download(filename).then(res => dispatch(downloadSuccess(res)));
+  };
+};
+
 const filesActions = {
-  get
+  get,
+  download
 };
 
 export default filesActions;

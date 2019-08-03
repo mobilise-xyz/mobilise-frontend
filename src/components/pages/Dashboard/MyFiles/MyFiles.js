@@ -34,7 +34,9 @@ class MyFiles extends React.Component {
   }
 
   downloadFile = fileName => {
-    console.log(fileName);
+    const { dispatch } = this.props;
+
+    dispatch(filesActions.download(fileName));
   };
 
   render() {
