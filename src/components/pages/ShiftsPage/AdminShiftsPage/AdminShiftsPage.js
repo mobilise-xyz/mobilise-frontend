@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   Col,
+  OverlayTrigger,
   ToggleButton,
   ToggleButtonGroup,
-  OverlayTrigger,
   Tooltip
 } from 'react-bootstrap';
 import moment from 'moment';
@@ -71,10 +71,6 @@ class AdminShiftsPage extends React.Component {
     const { length } = shifts.all;
     const page = length / ITEMS_PER_PAGE;
     dispatch(shiftsActions.getAll(startTime, null, page + 1));
-  };
-
-  refresh = () => {
-    this.fetchInitialShifts();
   };
 
   render() {

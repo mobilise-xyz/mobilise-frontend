@@ -57,10 +57,6 @@ class MyShiftsPage extends React.Component {
     dispatch(shiftsActions.getBookedForUser(uid, startTime, null, page + 1));
   };
 
-  refresh = () => {
-    this.fetchInitialShifts();
-  };
-
   handleCalendarRangeChange = dates => {
     const { dispatch, myShifts } = this.props;
     const lastDate = moment(dates[dates.length - 1]);
@@ -120,6 +116,7 @@ class MyShiftsPage extends React.Component {
         view = (
           <CalendarView
             shifts={myShifts.all}
+            type="booked"
             onRangeChange={this.handleCalendarRangeChange}
           />
         );
