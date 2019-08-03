@@ -49,45 +49,50 @@ class MyFiles extends React.Component {
     return (
       <Container className="pt-5 relaxed">
         <h3>My Files</h3>
-        {files.map(file => {
-          const icon = getImageForFileExt(
-            file.name.substr(file.name.lastIndexOf('.') + 1)
-          );
-          return (
-            <Row key={file.name} style={{ margin: '20px' }}>
-              <Col>
-                <Card>
-                  <Card.Body>
-                    <Row>
-                      <Col md={2}>
-                        <FontAwesomeIcon icon={icon} size="5x" />
-                      </Col>
-                      <Col>
-                        <Card.Title>{file.name}</Card.Title>
-                        <div style={{ height: '7%' }} />
-                        <Card.Text className="mb-2 text-muted">{`Modified: ${moment(
-                          file.modified
-                        ).format('MMMM Do YYYY, h:mm:ss a')}`}</Card.Text>
-                      </Col>
-                      <Col
-                        md={1}
-                        style={{ marginTop: 'auto', marginBottom: 'auto' }}
-                      >
-                        <Button onClick={() => this.downloadFile(file.name)}>
-                          <FontAwesomeIcon
-                            className="text-secondary"
-                            icon={faDownload}
-                            size="2x"
-                          />
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          );
-        })}
+
+        {files.length > 0 ? (
+          files.map(file => {
+            const icon = getImageForFileExt(
+              file.name.substr(file.name.lastIndexOf('.') + 1)
+            );
+            return (
+              <Row key={file.name} style={{ margin: '20px' }}>
+                <Col>
+                  <Card>
+                    <Card.Body>
+                      <Row>
+                        <Col md={2}>
+                          <FontAwesomeIcon icon={icon} size="5x" />
+                        </Col>
+                        <Col>
+                          <Card.Title>{file.name}</Card.Title>
+                          <div style={{ height: '7%' }} />
+                          <Card.Text className="mb-2 text-muted">{`Modified: ${moment(
+                            file.modified
+                          ).format('MMMM Do YYYY, h:mm:ss a')}`}</Card.Text>
+                        </Col>
+                        <Col
+                          md={1}
+                          style={{ marginTop: 'auto', marginBottom: 'auto' }}
+                        >
+                          <Button onClick={() => this.downloadFile(file.name)}>
+                            <FontAwesomeIcon
+                              className="text-secondary"
+                              icon={faDownload}
+                              size="2x"
+                            />
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            );
+          })
+        ) : (
+          <h5>Files uploaded by admins will be shown here!</h5>
+        )}
       </Container>
     );
   }

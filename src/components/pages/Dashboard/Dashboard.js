@@ -9,9 +9,9 @@ const Dashboard = () => {
   const { isAdmin } = JSON.parse(localStorage.getItem('user'));
   return (
     <Layout heading="Dashboard">
-      <MyFiles />
       {!isAdmin ? <MyContributions /> : null}
       <hr />
+      <MyFiles />
       <HallOfFame />
       <hr />
       <MyActivity />
