@@ -166,9 +166,37 @@ const ping = shiftId => {
     .then(utils.handleResponse);
 };
 
+const getCalendarForUser = uid => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .get(`/volunteers/${uid}/shifts/calendar`, config)
+    .then(utils.handleResponse)
+    .then(({ link }) => {
+      return window.open(link, '_self');
+    });
+};
+
+const getCalendarForAll = () => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .get(`/shifts/calendar`, config)
+    .then(utils.handleResponse)
+    .then(({ link }) => {
+      return window.open(link, '_self');
+    });
+};
+
 const shiftsService = {
   getAll,
   getAvailableForUser,
+  getCalendarForUser,
+  getCalendarForAll,
   getBookedForUser,
   deleteWithId,
   book,

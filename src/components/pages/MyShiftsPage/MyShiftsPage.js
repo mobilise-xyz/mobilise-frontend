@@ -8,7 +8,6 @@ import Layout from '../../Layout';
 import ShiftList from '../../ShiftList';
 import shiftsActions from '../../../_actions/shifts.actions';
 import CalendarView from '../CalendarView/CalendarView';
-import volunteerActions from '../../../_actions/volunteer.actions';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -82,7 +81,7 @@ class MyShiftsPage extends React.Component {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
 
-    dispatch(volunteerActions.getCalendarForUser(uid));
+    dispatch(shiftsActions.getCalendarForUser(uid));
   };
 
   render() {

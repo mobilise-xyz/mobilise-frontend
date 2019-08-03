@@ -4,7 +4,8 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   OverlayTrigger,
-  Tooltip
+  Tooltip,
+  Button
 } from 'react-bootstrap';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -58,6 +59,11 @@ class AdminShiftsPage extends React.Component {
     if (lastDate.isAfter(lastShiftDate)) {
       dispatch(shiftsActions.getAll(lastShiftDate.format(), lastDate.format()));
     }
+  };
+
+  exportCalendar = () => {
+    const { dispatch } = this.props;
+    dispatch(shiftsActions.getCalendarForAll());
   };
 
   fetchInitialShifts = () => {
@@ -120,6 +126,7 @@ class AdminShiftsPage extends React.Component {
 
     return (
       <Layout
+        heading="Upcoming Shifts"
         cornerComponent={
           <ViewSwitch
             handleListView={this.handleListView}
@@ -127,6 +134,11 @@ class AdminShiftsPage extends React.Component {
           />
         }
       >
+        <Col style={{ textAlign: 'right', zIndex: '0' }}>
+          <Button variant="outline-primary" onClick={this.exportCalendar}>
+            Export Calendar
+          </Button>
+        </Col>
         <Link to="new-shift">
           <OverlayTrigger overlay={<Tooltip>Add new shift</Tooltip>}>
             <button

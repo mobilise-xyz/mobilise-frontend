@@ -33,24 +33,10 @@ const getActivity = uid => {
     .then(({ myActivity }) => ({ activity: myActivity }));
 };
 
-const getCalendar = uid => {
-  const config = {
-    headers: authHeader()
-  };
-
-  return axios
-    .get(`/volunteers/${uid}/shifts/calendar`, config)
-    .then(utils.handleResponse)
-    .then(({ link }) => {
-      return window.open(link, '_self');
-    });
-};
-
 const volunteerService = {
   getContributions,
   getHallOfFame,
-  getActivity,
-  getCalendar
+  getActivity
 };
 
 export default volunteerService;
