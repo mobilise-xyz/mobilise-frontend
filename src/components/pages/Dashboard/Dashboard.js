@@ -3,6 +3,7 @@ import Layout from '../../Layout';
 import MyContributions from './MyContributions';
 import HallOfFame from './HallOfFame';
 import MyActivity from './MyActivity';
+import MyFiles from './MyFiles';
 
 const Dashboard = () => {
   const { isAdmin } = JSON.parse(localStorage.getItem('user'));
@@ -10,6 +11,7 @@ const Dashboard = () => {
     <Layout heading="Dashboard">
       {!isAdmin ? <MyContributions /> : null}
       <hr />
+      <MyFiles />
       <HallOfFame />
       <hr />
       <MyActivity />
