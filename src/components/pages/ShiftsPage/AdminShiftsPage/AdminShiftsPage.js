@@ -60,6 +60,11 @@ class AdminShiftsPage extends React.Component {
     }
   };
 
+  exportCalendar = () => {
+    const { dispatch } = this.props;
+    dispatch(shiftsActions.getCalendarForAll());
+  };
+
   fetchInitialShifts = () => {
     const { dispatch } = this.props;
     const now = moment().format();
@@ -116,6 +121,7 @@ class AdminShiftsPage extends React.Component {
 
     return (
       <Layout
+        heading="Upcoming Shifts"
         cornerComponent={
           <ViewSwitch
             handleListView={this.handleListView}
@@ -123,6 +129,11 @@ class AdminShiftsPage extends React.Component {
           />
         }
       >
+        <Col style={{ textAlign: 'right', zIndex: '0' }}>
+          <Button variant="outline-primary" onClick={this.exportCalendar}>
+            Export Calendar
+          </Button>
+        </Col>
         <Link to="new-shift">
           <OverlayTrigger overlay={<Tooltip>Add new shift</Tooltip>}>
             <button

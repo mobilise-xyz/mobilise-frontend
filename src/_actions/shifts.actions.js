@@ -24,6 +24,58 @@ const getAll = (after, before, page, firstTime = false) => {
   };
 };
 
+const getCalendarForAll = () => {
+  const request = () => ({ type: shiftsConstants.GETALLCALENDAR_REQUEST });
+  const success = calendar => ({
+    type: shiftsConstants.GETALLCALENDAR_SUCCESS,
+    calendar
+  });
+  const failure = error => ({
+    type: shiftsConstants.GETALLCALENDAR_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    shiftsService.getCalendarForAll().then(
+      calendar => dispatch(success(calendar)),
+      error => {
+        dispatch(failure(error));
+        dispatch(
+          alertActions.error('Something went wrong when getting calendar!')
+        );
+      }
+    );
+  };
+};
+
+const getCalendarForUser = uid => {
+  const request = () => ({ type: shiftsConstants.GETUSERCALENDAR_REQUEST });
+  const success = calendar => ({
+    type: shiftsConstants.GETUSERCALENDAR_SUCCESS,
+    calendar
+  });
+  const failure = error => ({
+    type: shiftsConstants.GETUSERCALENDAR_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    shiftsService.getCalendarForUser(uid).then(
+      calendar => dispatch(success(calendar)),
+      error => {
+        dispatch(failure(error));
+        dispatch(
+          alertActions.error('Something went wrong when getting calendar!')
+        );
+      }
+    );
+  };
+};
+
 // Gets available + recommended shifts for the specified user.
 const getAvailableForUser = (uid, after, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
@@ -238,6 +290,8 @@ const ping = shiftId => {
 const shiftsActions = {
   getAll,
   getAvailableForUser,
+  getCalendarForUser,
+  getCalendarForAll,
   getBookedForUser,
   deleteWithId,
   book,
