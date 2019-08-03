@@ -36,7 +36,7 @@ const updateContactPreferences = (uid, email, text) => {
     return { type: usersConstants.UPDATE_CONTACT_SUCCESS };
   };
   const failure = () => {
-    return { type: usersConstants.UPDATE_CONTACT_SUCCESS };
+    return { type: usersConstants.UPDATE_CONTACT_FAILURE };
   };
 
   return dispatch => {
