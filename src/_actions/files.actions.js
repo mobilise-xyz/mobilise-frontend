@@ -23,9 +23,21 @@ const download = filename => {
   };
 };
 
+const upload = file => {
+  const uploadSuccess = res => ({
+    type: filesConstants.UPLOAD,
+    res
+  });
+
+  return dispatch => {
+    filesService.upload(file).then(res => dispatch(uploadSuccess(res)));
+  };
+};
+
 const filesActions = {
   get,
-  download
+  download,
+  upload
 };
 
 export default filesActions;

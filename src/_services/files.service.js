@@ -18,18 +18,29 @@ const download = filename => {
   };
 
   return axios.get(`/files/${filename}`, config).then(result => {
-    console.log(result.headers['content-type']);
     const blob = new Blob([result.data], {
       type: result.headers['content-type']
     });
-    console.log(blob);
     FileSaver.saveAs(blob, filename);
   });
 };
 
+const upload = file => {
+  const header = authHeader();
+  header['content-type'] = 'multipart/form-data';
+  const config = {
+    headers: header
+  };
+  console.log(file);
+  const formData = new FormData();
+  formData.append('file', file);
+  return axios.post(`/files`, formData, config).then(utils.handleResponse);
+};
+
 const filesService = {
   get,
-  download
+  download,
+  upload
 };
 
 export default filesService;

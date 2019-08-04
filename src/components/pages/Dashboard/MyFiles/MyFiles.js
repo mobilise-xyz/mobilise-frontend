@@ -6,10 +6,12 @@ import {
   faFileWord,
   faFilePdf,
   faFile,
-  faDownload
+  faDownload,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import filesActions from '../../../../_actions/files.actions';
+import NewFileModal from './NewFileModal/NewFileModal';
 
 const getImageForFileExt = ext => {
   switch (ext) {
@@ -25,6 +27,10 @@ const getImageForFileExt = ext => {
 };
 
 class MyFiles extends React.Component {
+  state = {
+    showModal: false
+  };
+
   componentDidMount() {
     const { files, dispatch } = this.props;
 
@@ -33,14 +39,27 @@ class MyFiles extends React.Component {
     }
   }
 
+  toggleModal = () => {
+    this.setState(state => ({ showModal: !state.showModal }));
+  };
+
   downloadFile = fileName => {
     const { dispatch } = this.props;
 
     dispatch(filesActions.download(fileName));
   };
 
+  uploadFile = file => {
+    const { dispatch } = this.props;
+
+    dispatch(filesActions.upload(file));
+    this.toggleModal();
+  };
+
   render() {
     let { files } = this.props;
+
+    const { showModal } = this.state;
 
     if (!files) {
       files = [];
@@ -67,9 +86,11 @@ class MyFiles extends React.Component {
                         <Col>
                           <Card.Title>{file.name}</Card.Title>
                           <div style={{ height: '7%' }} />
-                          <Card.Text className="mb-2 text-muted">{`Modified: ${moment(
-                            file.modified
-                          ).format('MMMM Do YYYY, h:mm:ss a')}`}</Card.Text>
+                          <Card.Text className="mb-2 text-muted">
+                            {moment(file.modified).format(
+                              'MMMM Do YYYY, h:mm:ss a'
+                            )}
+                          </Card.Text>
                         </Col>
                         <Col
                           md={1}
@@ -93,6 +114,23 @@ class MyFiles extends React.Component {
         ) : (
           <h5>Files uploaded by admins will be shown here!</h5>
         )}
+        <Row>
+          <Button
+            style={{ marginLeft: 'auto', marginRight: 'auto' }}
+            onClick={this.toggleModal}
+          >
+            <FontAwesomeIcon
+              className="text-secondary"
+              icon={faPlus}
+              size="2x"
+            />
+          </Button>
+        </Row>
+        <NewFileModal
+          show={showModal}
+          onHide={this.toggleModal}
+          handleSubmit={this.uploadFile}
+        />
       </Container>
     );
   }
