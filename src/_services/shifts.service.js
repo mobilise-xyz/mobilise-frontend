@@ -2,6 +2,7 @@ import axios from 'axios';
 import authHeader from '../_helpers/auth-header';
 import utils from '../_helpers/utils';
 import alertActions from '../_actions/alert.actions';
+import history from '../_helpers/history';
 
 const placeholderShift = {
   id: -1,
@@ -21,6 +22,16 @@ const placeholderShift = {
       }
     }
   ]
+};
+
+const create = shiftData => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios.post('/shifts', shiftData, config).then(() => {
+    history.push('/');
+  });
 };
 
 const getAll = (after, before, page) => {
@@ -193,6 +204,7 @@ const getCalendarForAll = () => {
 };
 
 const shiftsService = {
+  create,
   getAll,
   getAvailableForUser,
   getCalendarForUser,

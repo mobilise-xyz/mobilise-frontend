@@ -2,6 +2,26 @@ import shiftsConstants from '../_constants/shifts.constants';
 import shiftsService from '../_services/shifts.service';
 import alertActions from './alert.actions';
 
+const create = shiftData => {
+  const request = () => ({ type: shiftsConstants.CREATE_REQUEST });
+  const success = () => ({ type: shiftsConstants.CREATE_SUCCESS });
+  const failure = error => ({ type: shiftsConstants.CREATE_FAILURE, error });
+
+  return dispatch => {
+    dispatch(request());
+    shiftsService.create(shiftData).then(
+      () => {
+        dispatch(success());
+        dispatch(alertActions.success('Shift successfully created!'));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error('Could not create shift.'));
+      }
+    );
+  };
+};
+
 const getAll = (after, before, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETALL_REQUEST });
   const success = shifts => ({
@@ -288,6 +308,7 @@ const ping = shiftId => {
 };
 
 const shiftsActions = {
+  create,
   getAll,
   getAvailableForUser,
   getCalendarForUser,

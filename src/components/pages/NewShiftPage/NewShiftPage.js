@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import NewRoleModal from './modals/NewRoleModal';
 import CardLayout from '../../CardLayout';
-import history from '../../../_helpers/history';
 import authHeader from '../../../_helpers/auth-header';
 import TitleForm from '../../forms/TitleForm';
 import PlainTextForm from '../../forms/PlainTextForm';
@@ -13,6 +13,7 @@ import RolesForm from '../../forms/RolesForm';
 import RepeatingShiftForm from '../../forms/RepeatingShiftForm/RepeatingShiftForm';
 import alertActions from '../../../_actions/alert.actions';
 import './NewShiftPage.css';
+import shiftsActions from '../../../_actions/shifts.actions';
 
 class NewShiftPage extends React.Component {
   constructor(props) {
@@ -87,19 +88,15 @@ class NewShiftPage extends React.Component {
   };
 
   handleSubmit = e => {
-    // Submit this
     e.preventDefault();
 
-    // TODO validation
-
+    const { dispatch } = this.props;
     const { data } = this.state;
 
     // Map roles to role ids
     // const roleIds = data.roles.map(r => roleOptions[r]);
 
     // Map roles to role IDs.
-
-    const config = { headers: authHeader() };
 
     const postData = {
       title: data.title,
@@ -112,10 +109,8 @@ class NewShiftPage extends React.Component {
       address: data.location,
       rolesRequired: data.roles
     };
-    axios.post('/shifts', postData, config).then(() => {
-      history.push('/');
-    });
-    // TODO success toast here.
+
+    dispatch(shiftsActions.create(postData));
   };
 
   toggleRolesModal = () =>
@@ -357,4 +352,4 @@ class NewShiftPage extends React.Component {
   }
 }
 
-export default NewShiftPage;
+export default connect()(NewShiftPage);
