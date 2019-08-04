@@ -65,7 +65,7 @@ class MyFiles extends React.Component {
 
   render() {
     let { files } = this.props;
-
+    const { isAdmin } = this.props;
     const { showModal } = this.state;
 
     if (!files) {
@@ -99,18 +99,20 @@ class MyFiles extends React.Component {
                             )}
                           </Card.Text>
                         </Col>
-                        <Col
-                          md={1}
-                          style={{ marginTop: 'auto', marginBottom: 'auto' }}
-                        >
-                          <Button onClick={() => this.deleteFile(file.name)}>
-                            <FontAwesomeIcon
-                              className="text-danger"
-                              icon={faTrash}
-                              size="2x"
-                            />
-                          </Button>
-                        </Col>
+                        {isAdmin ? (
+                          <Col
+                            md={1}
+                            style={{ marginTop: 'auto', marginBottom: 'auto' }}
+                          >
+                            <Button onClick={() => this.deleteFile(file.name)}>
+                              <FontAwesomeIcon
+                                className="text-danger"
+                                icon={faTrash}
+                                size="2x"
+                              />
+                            </Button>
+                          </Col>
+                        ) : null}
                         <Col
                           md={1}
                           style={{ marginTop: 'auto', marginBottom: 'auto' }}
@@ -133,18 +135,20 @@ class MyFiles extends React.Component {
         ) : (
           <h5>Files uploaded by admins will be shown here!</h5>
         )}
-        <Row>
-          <Button
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-            onClick={this.toggleModal}
-          >
-            <FontAwesomeIcon
-              className="text-secondary"
-              icon={faPlus}
-              size="2x"
-            />
-          </Button>
-        </Row>
+        {isAdmin ? (
+          <Row>
+            <Button
+              style={{ marginLeft: 'auto', marginRight: 'auto' }}
+              onClick={this.toggleModal}
+            >
+              <FontAwesomeIcon
+                className="text-secondary"
+                icon={faPlus}
+                size="2x"
+              />
+            </Button>
+          </Row>
+        ) : null}
         <NewFileModal
           show={showModal}
           onHide={this.toggleModal}

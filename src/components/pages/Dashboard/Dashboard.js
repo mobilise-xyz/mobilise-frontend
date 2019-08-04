@@ -11,7 +11,7 @@ const Dashboard = () => {
     <Layout heading="Dashboard">
       {!isAdmin ? <MyContributions /> : null}
       <hr />
-      <MyFiles />
+      <MyFiles isAdmin={isAdmin} />
       <HallOfFame />
       <hr />
       <MyActivity />
