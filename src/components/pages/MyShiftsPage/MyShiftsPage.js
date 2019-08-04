@@ -8,6 +8,7 @@ import Layout from '../../Layout';
 import ShiftList from '../../ShiftList';
 import shiftsActions from '../../../_actions/shifts.actions';
 import CalendarView from '../CalendarView/CalendarView';
+import { shiftStatus } from '../../Shift';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -107,7 +108,7 @@ class MyShiftsPage extends React.Component {
               </p>
             }
           >
-            <ShiftList type="booked" shifts={myShifts.all} />
+            <ShiftList type={shiftStatus.BOOKED} shifts={myShifts.all} />
           </InfiniteScroll>
         );
         break;
@@ -115,7 +116,7 @@ class MyShiftsPage extends React.Component {
         view = (
           <CalendarView
             shifts={myShifts.all}
-            type="booked"
+            type={shiftStatus.BOOKED}
             onRangeChange={this.handleCalendarRangeChange}
           />
         );
