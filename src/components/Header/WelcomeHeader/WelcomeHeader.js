@@ -1,23 +1,23 @@
 import React from 'react';
-import { Button, Nav, Navbar } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { Image, Button, Nav, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import logo from '../../../assets/images/logo.png';
+import chlogo from '../../../assets/images/CH-Logo-g.png';
 
-const entryPoints = ['/login', '/signup', '/home'];
+const entryPoints = ['/login', '/signup'];
 
 const WelcomeHeader = location => {
-  const homeButton =
-    location.location.pathname !== '/home' ? (
-      <LinkContainer exact to="/home">
-        <Button>
-          <span style={{ margin: 'auto' }}>
-            <FontAwesomeIcon className="small" icon={faHome} size="1x" />
-          </span>
-        </Button>
-      </LinkContainer>
-    ) : null;
+  const cityHarvestBtn = (
+    <Button onClick={() => window.open('http://www.cityharvest.org.uk/')}>
+      <Image
+        src={chlogo}
+        height="50"
+        alt="City Harvest London"
+        className="d-inline-block align-top"
+        rounded
+      />
+    </Button>
+  );
 
   const loginSignUpBtns = entryPoints.includes(location.location.pathname) ? (
     <Nav>
@@ -46,7 +46,7 @@ const WelcomeHeader = location => {
           className="d-inline-block align-top"
         />
       </Navbar.Brand>
-      <Nav className="mr-auto">{homeButton}</Nav>
+      <Nav className="mr-auto">{cityHarvestBtn}</Nav>
       {loginSignUpBtns}
     </Navbar>
   );
