@@ -21,7 +21,6 @@ const shifts = (state = {}, action) => {
     );
 
   switch (action.type) {
-    // GET
     case shiftsConstants.GETALL_REQUEST:
     case shiftsConstants.GETFORUSER_REQUEST:
       return {

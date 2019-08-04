@@ -7,15 +7,11 @@ import {
   Popover,
   Row
 } from 'react-bootstrap';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import './ShiftCard.css';
-import ErrorBoundary from '../ErrorBoundary';
 import utils from '../../_helpers/utils';
-import shiftsActions from '../../_actions/shifts.actions';
-import ShiftCardModal from './ShiftCardModal/ShiftCardModal';
 import CardRoleBadge from './RoleBadges/CardRoleBadge';
 import shiftTypes from '../../__types/shifts.types';
 
@@ -54,204 +50,100 @@ const generateGoogleMapsImage = address => {
 
 // shiftData consists of title, description, date, start, stop, address
 
-class ShiftCard extends React.Component {
-  state = {
-    showModal: false,
-    selected: '',
-    booked: false
-  };
+const ShiftCard = ({
+  toggleModal,
+  shiftData,
+  type,
+  isAdmin,
+  isDeleted,
+  isBooked,
+  isRecommended,
+  isCancelled,
+  isSelected
+}) => {
+  const recommendedPopover = (
+    <Popover id="popover-basic" title="Recommended Shift">
+      This shift is recommended specifically for you and would help City Harvest
+      more if you booked onto it.
+    </Popover>
+  );
 
-  toggleModal = (submitted = true) => {
-    const { booked } = this.state;
-    this.setState(state => ({ showModal: !state.showModal }));
-    if (!submitted && !booked) {
-      this.setState({ selected: '' });
-    }
-  };
+  const cardClass = `shift-card ${isBooked ? 'booked' : ''} ${
+    isRecommended ? 'recommended' : ''
+  } ${isDeleted ? 'deleted' : ''} ${isCancelled ? 'cancelled' : ''}`;
 
-  handleDelete = () => {
-    // Hide the modal
-    this.toggleModal();
-
-    // Perform deletion
-    const { shiftData } = this.props;
-    const { dispatch } = this.props;
-    const shiftId = shiftData.id;
-    dispatch(shiftsActions.deleteWithId(shiftId));
-  };
-
-  handleSelect = e => {
-    const { name } = e.target;
-
-    const { selected, booked } = this.state;
-
-    if (booked) {
-      return;
-    }
-
-    // Already selected, select.
-    this.setState({
-      selected: name === selected ? '' : name
-    });
-  };
-
-  handleBook = (repeatedType, until) => {
-    this.toggleModal();
-
-    const { shiftData, dispatch } = this.props;
-    const { selected } = this.state;
-
-    this.setState({ selected: '' });
-    dispatch(shiftsActions.book(shiftData.id, selected, repeatedType, until));
-  };
-
-  render() {
-    const {
-      shiftData,
-      recommendedRoleNames,
-      type,
-      // Redux props
-      shifts,
-      myShifts
-    } = this.props;
-    const { showModal, selected } = this.state;
-
-    let deleted = false;
-    let booked = false;
-    let cancelled = false;
-    let isRecommended = false;
-
-    const { isAdmin } = JSON.parse(localStorage.getItem('user'));
-
-    if (!isAdmin) {
-      // Do not show if there are no available roles to book.
-      const numberOfAvailableRoles = shiftData.requirements.filter(r => {
-        const { numberRequired, bookings } = r;
-        const numberOfBookings = bookings ? bookings.length : 0;
-        const numberRemaining = numberRequired - numberOfBookings;
-        return numberRemaining > 0;
-      }).length;
-
-      if (numberOfAvailableRoles < 1) {
-        return null;
-      }
-    }
-
-    if (type !== 'booked') {
-      const thisShift = shifts.all.find(s => s.id === shiftData.id);
-
-      deleted = thisShift.deleteSuccess === true;
-      booked = thisShift.bookSuccess === true;
-      isRecommended = recommendedRoleNames.length !== 0;
-    } else {
-      const thisShift = myShifts.all.find(s => s.id === shiftData.id);
-
-      cancelled = thisShift.cancelSuccess === true;
-    }
-
-    const recommendedPopover = (
-      <Popover id="popover-basic" title="Recommended Shift">
-        This shift is recommended specifically for you and would help City
-        Harvest more if you booked onto it.
-      </Popover>
-    );
-
-    const cardClass = `shift-card ${booked ? 'booked' : ''} ${
-      isRecommended ? 'recommended' : ''
-    } ${deleted ? 'deleted' : ''} ${cancelled ? 'cancelled' : ''}`;
-
-    return (
-      <ErrorBoundary>
-        <Card className={cardClass}>
-          <a
-            title="Click here to see where the shift is on Google Maps!"
-            href={generateGoogleMapsLink(shiftData.address)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Card.Img
-              variant="top"
-              alt="Shift location map"
-              src={generateGoogleMapsImage(shiftData.address)}
-            />
-          </a>
-          <Card.Body>
-            <Card.Title>{shiftData.title}</Card.Title>
-            <Row>
-              <Col>{shiftData.address}</Col>
-              <Col>
-                {utils.formatTime(shiftData.start)} -{' '}
-                {utils.formatTime(shiftData.stop)}
-              </Col>
-            </Row>
-            <Row noGutters>
-              {generateRequirements(shiftData, selected, isAdmin, type)}
-            </Row>
-          </Card.Body>
-          <Card.Footer className={isRecommended ? 'bg-primary' : null}>
-            <Row>
-              <Col lg={4} md={12} sm={12} xs={12}>
-                <Button
-                  type="button"
-                  variant="outline-primary"
-                  onClick={this.toggleModal}
-                  disabled={deleted || booked}
-                  className={`btn-more-info ${
-                    isRecommended ? 'btn-recommended' : ''
-                  }`}
-                >
-                  Info
-                  <span className="sr-only">Card information button</span>
-                </Button>
-              </Col>
-              {isRecommended ? (
-                <Col className="mt-2" lg={8} md={12} sm={12} xs={12}>
-                  <OverlayTrigger
-                    placement="right"
-                    overlay={recommendedPopover}
-                  >
-                    <div>
-                      <span className="ic-recommended">RECOMMENDED</span>
-                      <FontAwesomeIcon
-                        icon={faExclamationCircle}
-                        className="ml-2"
-                        color="white"
-                      />
-                    </div>
-                  </OverlayTrigger>
-                </Col>
-              ) : null}
-            </Row>
-          </Card.Footer>
-          <ShiftCardModal
-            isAdmin={isAdmin}
-            shiftData={shiftData}
-            show={showModal}
-            onHide={this.toggleModal}
-            handleSelect={this.handleSelect}
-            selected={selected}
-            handleDelete={this.handleDelete}
-            handleBook={this.handleBook}
-            type={type}
-          />
-        </Card>
-      </ErrorBoundary>
-    );
-  }
-}
+  return (
+    <Card className={cardClass}>
+      <a
+        title="Click here to see where the shift is on Google Maps!"
+        href={generateGoogleMapsLink(shiftData.address)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Card.Img
+          variant="top"
+          alt="Shift location map"
+          src={generateGoogleMapsImage(shiftData.address)}
+        />
+      </a>
+      <Card.Body>
+        <Card.Title>{shiftData.title}</Card.Title>
+        <Row>
+          <Col>{shiftData.address}</Col>
+          <Col>
+            {utils.formatTime(shiftData.start)} -{' '}
+            {utils.formatTime(shiftData.stop)}
+          </Col>
+        </Row>
+        <Row noGutters>
+          {generateRequirements(shiftData, isSelected, isAdmin, type)}
+        </Row>
+      </Card.Body>
+      <Card.Footer className={isRecommended ? 'bg-primary' : null}>
+        <Row>
+          <Col lg={4} md={12} sm={12} xs={12}>
+            <Button
+              type="button"
+              variant="outline-primary"
+              onClick={toggleModal}
+              disabled={isDeleted || isBooked}
+              className={`btn-more-info ${
+                isRecommended ? 'btn-recommended' : ''
+              }`}
+            >
+              Info
+              <span className="sr-only">Card information button</span>
+            </Button>
+          </Col>
+          {isRecommended ? (
+            <Col className="mt-2" lg={8} md={12} sm={12} xs={12}>
+              <OverlayTrigger placement="right" overlay={recommendedPopover}>
+                <div>
+                  <span className="ic-recommended">RECOMMENDED</span>
+                  <FontAwesomeIcon
+                    icon={faExclamationCircle}
+                    className="ml-2"
+                    color="white"
+                  />
+                </div>
+              </OverlayTrigger>
+            </Col>
+          ) : null}
+        </Row>
+      </Card.Footer>
+    </Card>
+  );
+};
 
 ShiftCard.propTypes = {
   shiftData: shiftTypes.shift.isRequired,
-  recommendedRoleNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-  type: PropTypes.oneOf(['', 'booked']).isRequired
+  toggleModal: PropTypes.func.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
+  isDeleted: PropTypes.bool.isRequired,
+  isBooked: PropTypes.bool.isRequired,
+  isRecommended: PropTypes.bool.isRequired,
+  isCancelled: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => {
-  const { shifts, myShifts } = state.shifts;
-  return {
-    shifts,
-    myShifts
-  };
-};
-
-export default connect(mapStateToProps)(ShiftCard);
+export default ShiftCard;

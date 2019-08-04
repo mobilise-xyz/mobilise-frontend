@@ -1,11 +1,11 @@
 import React from 'react';
 import {
+  Button,
   Col,
+  OverlayTrigger,
   ToggleButton,
   ToggleButtonGroup,
-  OverlayTrigger,
-  Tooltip,
-  Button
+  Tooltip
 } from 'react-bootstrap';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -77,10 +77,6 @@ class AdminShiftsPage extends React.Component {
     const { length } = shifts.all;
     const page = length / ITEMS_PER_PAGE;
     dispatch(shiftsActions.getAll(startTime, null, page + 1));
-  };
-
-  refresh = () => {
-    this.fetchInitialShifts();
   };
 
   render() {

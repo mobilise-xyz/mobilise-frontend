@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CardColumns, Col, Container, Row } from 'react-bootstrap';
 import shiftTypes from '../__types/shifts.types';
+import Shift from './Shift';
 import ShiftCard from './ShiftCard';
 
 const partitionShiftsByDate = shifts => {
@@ -55,17 +56,19 @@ const ShiftList = ({ shifts, isAdmin = false, type = '' }) => {
                   }
                 });
                 return (
-                  <ShiftCard
+                  <Shift
                     isAdmin={isAdmin}
                     shiftData={c}
                     recommendedRoleNames={recommendedRoleNames}
                     key={`shiftcard-${c.id}`}
                     type={type}
+                    renderer={ShiftCard}
                   />
                 );
               })}
             </CardColumns>
           </Col>
+          <Col md={2} />
         </Row>
         <hr />
       </Container>
