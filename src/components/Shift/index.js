@@ -1,1 +1,1 @@
-export { default } from './Shift';
+export { default, shiftStatus } from './Shift';

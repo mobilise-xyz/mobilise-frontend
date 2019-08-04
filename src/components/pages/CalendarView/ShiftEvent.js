@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import * as PropTypes from 'prop-types';
 import shiftTypes from '../../../__types/shifts.types';
-import Shift from '../../Shift';
+import Shift, { shiftStatus } from '../../Shift';
 
 const generateRequirements = () => {};
 
@@ -56,7 +56,7 @@ const ShiftEvent = ({ event }) => {
 const eventProptypes = PropTypes.shape({
   shiftData: shiftTypes.shift.isRequired,
   recommendedRoleNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-  type: PropTypes.oneOf(['', 'booked']).isRequired
+  type: PropTypes.oneOf([shiftStatus.NONE, shiftStatus.BOOKED]).isRequired
 });
 
 ShiftEvent.propTypes = {

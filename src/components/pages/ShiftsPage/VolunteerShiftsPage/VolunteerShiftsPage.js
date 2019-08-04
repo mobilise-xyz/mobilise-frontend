@@ -29,10 +29,6 @@ class VolunteerShiftsPage extends React.Component {
     dispatch(shiftsActions.getAvailableForUser(uid, startTime, page + 1));
   };
 
-  refresh = () => {
-    this.fetchInitialShifts();
-  };
-
   render() {
     const { shifts, error, hasMore } = this.props;
 

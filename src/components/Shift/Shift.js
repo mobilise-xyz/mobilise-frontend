@@ -7,6 +7,11 @@ import shiftsActions from '../../_actions/shifts.actions';
 import ShiftCardModal from '../ShiftCard/ShiftCardModal/ShiftCardModal';
 import shiftTypes from '../../__types/shifts.types';
 
+export const shiftStatus = {
+  NONE: 'NONE',
+  BOOKED: 'BOOKED'
+};
+
 class Shift extends React.Component {
   state = {
     showModal: false,
@@ -90,7 +95,7 @@ class Shift extends React.Component {
       }
     }
 
-    if (type !== 'booked') {
+    if (type !== shiftStatus.BOOKED) {
       const thisShift = shifts.all.find(s => s.id === shiftData.id);
 
       isDeleted = thisShift.deleteSuccess === true;
@@ -137,7 +142,7 @@ class Shift extends React.Component {
 Shift.propTypes = {
   shiftData: shiftTypes.shift.isRequired,
   recommendedRoleNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-  type: PropTypes.oneOf(['', 'booked']).isRequired,
+  type: PropTypes.oneOf([shiftStatus.NONE, shiftStatus.BOOKED]).isRequired,
   renderer: PropTypes.elementType.isRequired
 };
 

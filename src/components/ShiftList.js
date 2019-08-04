@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CardColumns, Col, Container, Row } from 'react-bootstrap';
 import shiftTypes from '../__types/shifts.types';
-import Shift from './Shift';
+import Shift, { shiftStatus } from './Shift';
 import ShiftCard from './ShiftCard';
 
 const partitionShiftsByDate = shifts => {
@@ -31,7 +31,7 @@ const partitionShiftsByDate = shifts => {
   return shiftMap;
 };
 
-const ShiftList = ({ shifts, isAdmin = false, type = '' }) => {
+const ShiftList = ({ shifts, isAdmin = false, type = shiftStatus.NONE }) => {
   const shiftMap = partitionShiftsByDate(shifts);
   const shiftLists = [];
 
@@ -79,13 +79,13 @@ const ShiftList = ({ shifts, isAdmin = false, type = '' }) => {
 
 ShiftList.defaultProps = {
   isAdmin: false,
-  type: ''
+  type: shiftStatus.NONE
 };
 
 ShiftList.propTypes = {
   shifts: PropTypes.arrayOf(shiftTypes.shift).isRequired,
   isAdmin: PropTypes.bool,
-  type: PropTypes.oneOf(['', 'booked'])
+  type: PropTypes.oneOf([shiftStatus.NONE, shiftStatus.BOOKED])
 };
 
 const DateHeading = ({ weekday, date }) => (
