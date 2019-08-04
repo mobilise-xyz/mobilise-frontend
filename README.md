@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/sonjoonho/mobilise-frontend.svg?style=shield&circle-token=097ab8189c6835ed15a8fdeda074db0ef2f8cf5f)](https://circleci.com/gh/sonjoonho/mobilise-frontend)
+[![CircleCI](https://circleci.com/gh/mobilise-xyz/mobilise-frontend.svg?style=shield)](https://circleci.com/gh/mobilise-xyz/mobilise-frontend)
 # Mobilise
 
 This repository contains the frontend for Mobilise.
