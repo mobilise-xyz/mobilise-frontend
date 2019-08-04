@@ -1,5 +1,6 @@
 import filesConstants from '../_constants/files.constants';
 import filesService from '../_services/files.service';
+import alertActions from './alert.actions';
 
 const get = () => {
   const getSuccess = files => ({
@@ -24,20 +25,64 @@ const download = filename => {
 };
 
 const upload = file => {
-  const uploadSuccess = res => ({
-    type: filesConstants.UPLOAD,
-    res
+  const request = () => ({ type: filesConstants.UPLOAD_REQUEST });
+  const success = res => ({
+    type: filesConstants.UPLOAD_SUCCESS,
+    res,
+    file
+  });
+  const failure = error => ({
+    type: filesConstants.UPLOAD_FAILURE,
+    error
   });
 
   return dispatch => {
-    filesService.upload(file).then(res => dispatch(uploadSuccess(res)));
+    dispatch(request());
+
+    filesService.upload(file).then(
+      res => dispatch(success(res)),
+      error => {
+        dispatch(failure(error));
+        dispatch(
+          alertActions.error('Something went wrong when uploading file!')
+        );
+      }
+    );
+  };
+};
+
+const deleteFile = filename => {
+  const request = () => ({ type: filesConstants.DELETE_REQUEST });
+  const success = res => ({
+    type: filesConstants.DELETE_SUCCESS,
+    res,
+    filename
+  });
+  const failure = error => ({
+    type: filesConstants.DELETE_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    filesService.deleteFile(filename).then(
+      res => dispatch(success(res)),
+      error => {
+        dispatch(failure(error));
+        dispatch(
+          alertActions.error('Something went wrong when deleting file!')
+        );
+      }
+    );
   };
 };
 
 const filesActions = {
   get,
   download,
-  upload
+  upload,
+  deleteFile
 };
 
 export default filesActions;

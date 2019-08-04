@@ -7,7 +7,8 @@ import {
   faFilePdf,
   faFile,
   faDownload,
-  faPlus
+  faPlus,
+  faTrash
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import filesActions from '../../../../_actions/files.actions';
@@ -47,6 +48,12 @@ class MyFiles extends React.Component {
     const { dispatch } = this.props;
 
     dispatch(filesActions.download(fileName));
+  };
+
+  deleteFile = fileName => {
+    const { dispatch } = this.props;
+
+    dispatch(filesActions.deleteFile(fileName));
   };
 
   uploadFile = file => {
@@ -91,6 +98,18 @@ class MyFiles extends React.Component {
                               'MMMM Do YYYY, h:mm:ss a'
                             )}
                           </Card.Text>
+                        </Col>
+                        <Col
+                          md={1}
+                          style={{ marginTop: 'auto', marginBottom: 'auto' }}
+                        >
+                          <Button onClick={() => this.deleteFile(file.name)}>
+                            <FontAwesomeIcon
+                              className="text-danger"
+                              icon={faTrash}
+                              size="2x"
+                            />
+                          </Button>
                         </Col>
                         <Col
                           md={1}

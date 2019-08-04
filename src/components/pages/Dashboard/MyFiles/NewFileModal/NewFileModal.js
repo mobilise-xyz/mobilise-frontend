@@ -8,6 +8,7 @@ class NewFileModal extends React.Component {
 
   handleChange = event => {
     const file = event.target.files[0];
+    console.log(file);
     this.setState({ selectedFile: file });
   };
 

@@ -31,16 +31,24 @@ const upload = file => {
   const config = {
     headers: header
   };
-  console.log(file);
   const formData = new FormData();
   formData.append('file', file);
   return axios.post(`/files`, formData, config).then(utils.handleResponse);
 };
 
+const deleteFile = filename => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios.delete(`/files/${filename}`, config).then(utils.handleResponse);
+};
+
 const filesService = {
   get,
   download,
-  upload
+  upload,
+  deleteFile
 };
 
 export default filesService;
