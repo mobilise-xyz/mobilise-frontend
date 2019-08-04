@@ -1,36 +1,52 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Col, Form } from 'react-bootstrap';
 
 const SignUpForm = () => {
   return (
     <Form>
-      <Form.Group>
-        <Form.Label>First name</Form.Label>
-        <Form.Control required />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Last name</Form.Label>
-        <Form.Control required />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Email</Form.Label>
-        <Form.Control required />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Contact Number</Form.Label>
-        <Form.Control required />
-      </Form.Group>
+      <Form.Row className="mb-4">
+        <Col>
+          <Form.Label>First name</Form.Label>
+          <Form.Control required />
+        </Col>
+        <Col>
+          <Form.Label>Last name</Form.Label>
+          <Form.Control required />
+        </Col>
+      </Form.Row>
+      <Form.Row className="mb-4">
+        <Col>
+          <Form.Label>Email</Form.Label>
+          <Form.Control required />
+        </Col>
+        <Col>
+          <Form.Label>Contact Number</Form.Label>
+          <Form.Control required />
+        </Col>
+      </Form.Row>
       {/* TODO: Validate these password bois */}
-      <Form.Group>
-        <Form.Label>Password</Form.Label>
-        <Form.Control required id="password" name="password" type="password" />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control required id="password" name="password" type="password" />
-      </Form.Group>
+      <Form.Row className="mb-4">
+        <Col>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            required
+            id="password"
+            name="password"
+            type="password"
+          />
+        </Col>
+        <Col>
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            required
+            id="password"
+            name="password"
+            type="password"
+          />
+        </Col>
+      </Form.Row>
       <div className="text-center" style={{ margin: 'auto' }}>
-        <Button variant="primary" type="submit" className="btn-more-info">
+        <Button variant="primary" type="submit" className="btn-more-info" block>
           Sign me up!
         </Button>
       </div>
