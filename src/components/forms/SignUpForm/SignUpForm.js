@@ -8,25 +8,29 @@ const SignUpForm = () => {
         <Form.Label>First name</Form.Label>
         <Form.Control required />
       </Form.Group>
-      ,
       <Form.Group>
         <Form.Label>Last name</Form.Label>
         <Form.Control required />
       </Form.Group>
-      ,
       <Form.Group>
         <Form.Label>Email</Form.Label>
         <Form.Control required />
-        <Form.Text className="text-muted">
-          We&apos;ll never share you information with anyone.
-        </Form.Text>
       </Form.Group>
       <Form.Group>
-        <Form.Check type="checkbox" label="Send me news" />
+        <Form.Label>Contact Number</Form.Label>
+        <Form.Control required />
       </Form.Group>
-      {/* TODO: @Will or 'Joon to inject formbuilder qs form using redux */}
+      {/* TODO: Validate these password bois */}
+      <Form.Group>
+        <Form.Label>Password</Form.Label>
+        <Form.Control required id="password" name="password" type="password" />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Confirm Password</Form.Label>
+        <Form.Control required id="password" name="password" type="password" />
+      </Form.Group>
       <div className="text-center" style={{ margin: 'auto' }}>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="btn-more-info">
           Sign me up!
         </Button>
       </div>
