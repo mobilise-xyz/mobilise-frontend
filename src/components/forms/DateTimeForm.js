@@ -16,6 +16,7 @@ const DateTimeForm = ({ handleChange, date, startTime, endTime, noLabel }) => {
           type="date"
           value={date}
           min={moment().format('YYYY-MM-DD')}
+          placeholder="yyyy-mm-dd" // TODO(sonjoonho) test on Safari
           required
         />
       </Form.Group>
@@ -30,6 +31,7 @@ const DateTimeForm = ({ handleChange, date, startTime, endTime, noLabel }) => {
               type="time"
               onChange={handleChange}
               value={startTime}
+              placeholder="hh:mm" // TODO(sonjoonho) test on Safari
               required
             />
           </Col>
@@ -41,6 +43,7 @@ const DateTimeForm = ({ handleChange, date, startTime, endTime, noLabel }) => {
               type="time"
               onChange={handleChange}
               value={endTime}
+              placeholder="hh:mm" // TODO(sonjoonho) test on Safari
               required
             />
           </Col>
