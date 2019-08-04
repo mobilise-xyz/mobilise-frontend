@@ -48,7 +48,7 @@ class LoginPage extends React.Component {
               name="email"
               value={email}
               type="email"
-              placeholder="e.g. willburr98@example.com"
+              placeholder="e.g. someone@example.com"
               onChange={this.handleChange}
             />
           </Form.Group>
