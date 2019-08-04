@@ -14,6 +14,7 @@ import './ShiftCard.css';
 import utils from '../../_helpers/utils';
 import CardRoleBadge from './RoleBadges/CardRoleBadge';
 import shiftTypes from '../../__types/shifts.types';
+import { shiftStatus } from '../Shift';
 
 const generateRequirements = (shiftData, selected, isAdmin, type) =>
   shiftData.requirements.map(r => {
@@ -31,7 +32,9 @@ const generateRequirements = (shiftData, selected, isAdmin, type) =>
         name={role.name}
         selected={selected}
         colour={role.colour}
-        number={type === 'booked' ? '' : numberRequired - numberRemaining}
+        number={
+          type === shiftStatus.BOOKED ? '' : numberRequired - numberRemaining
+        }
         numberRequired={numberRequired}
         key={`role-badge-${shiftData.id}-${role.name}`}
       />

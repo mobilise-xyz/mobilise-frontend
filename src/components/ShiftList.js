@@ -74,6 +74,7 @@ const ShiftList = ({ shifts, isAdmin = false, type = shiftStatus.NONE }) => {
       </Container>
     );
   });
+
   return shiftLists;
 };
 
