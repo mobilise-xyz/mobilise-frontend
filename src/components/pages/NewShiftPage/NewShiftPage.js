@@ -15,7 +15,7 @@ import alertActions from '../../../_actions/alert.actions';
 import './NewShiftPage.css';
 import shiftsActions from '../../../_actions/shifts.actions';
 
-class NewShiftPage extends React.Component {
+export class UnconnectedNewShiftPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -352,4 +352,4 @@ class NewShiftPage extends React.Component {
   }
 }
 
-export default connect()(NewShiftPage);
+export default connect()(UnconnectedNewShiftPage);
