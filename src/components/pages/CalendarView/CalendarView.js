@@ -7,6 +7,8 @@ import { Card } from 'react-bootstrap';
 import MyToolbar from './MyToolbar';
 import ShiftEvent from './ShiftEvent';
 import shiftTypes from '../../../__types/shifts.types';
+import { shiftStatus } from '../../Shift';
+import './CalendarView.css';
 
 moment.locale('uk', {
   week: {
@@ -20,52 +22,51 @@ const localizer = BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 const customComponents = { event: ShiftEvent, toolbar: MyToolbar };
 
 const eventStyleGetter = () => ({
-  className: 'card'
+  className: 'bg-primary',
+  style: { padding: 0, border: 0 }
 });
 
-class CalendarView extends React.Component {
-  render() {
-    const { shifts, isAdmin, type, onRangeChange } = this.props;
+const CalendarView = props => {
+  const { shifts, isAdmin, type = shiftStatus.NONE, onRangeChange } = props;
 
-    const recommendedRoleNames = [];
+  const recommendedRoleNames = [];
 
-    const events = shifts.map(s => {
-      s.requirements.forEach(req => {
-        if (req.recommended) {
-          recommendedRoleNames.push(req.role.roleName);
-        }
-      });
-
-      return {
-        start: moment(`${s.date} ${s.start}`).toDate(),
-        end: moment(`${s.date} ${s.stop}`).toDate(),
-        title: s.title,
-        shiftData: s,
-        isAdmin,
-        recommendedRoleNames,
-        type
-      };
+  const events = shifts.map(s => {
+    s.requirements.forEach(req => {
+      if (req.recommended) {
+        recommendedRoleNames.push(req.role.roleName);
+      }
     });
 
-    return (
-      <Card className="p-3">
-        <div style={{ height: '60rem' }}>
-          <BigCalendar
-            localizer={localizer}
-            events={events}
-            defaultView="week"
-            components={customComponents}
-            onRangeChange={onRangeChange || (() => {})}
-            onDrillDown={() => {}}
-            timeslots={1}
-            scrollToTime={moment('07:00:00', 'HH:mm:ss').toDate()}
-            eventPropGetter={eventStyleGetter}
-          />
-        </div>
-      </Card>
-    );
-  }
-}
+    return {
+      title: s.title,
+      start: moment(`${s.date} ${s.start}`).toDate(),
+      end: moment(`${s.date} ${s.stop}`).toDate(),
+      shiftData: s,
+      isAdmin,
+      recommendedRoleNames,
+      type
+    };
+  });
+
+  return (
+    <Card className="p-3">
+      <div style={{ height: '60rem' }}>
+        <BigCalendar
+          localizer={localizer}
+          events={events}
+          defaultView="week"
+          components={customComponents}
+          onRangeChange={onRangeChange || (() => {})}
+          onDrillDown={() => {}}
+          timeslots={1}
+          scrollToTime={moment('07:00:00', 'HH:mm:ss').toDate()}
+          eventPropGetter={eventStyleGetter}
+        />
+      </div>
+    </Card>
+  );
+};
 
 CalendarView.defaultProps = {
   isAdmin: false

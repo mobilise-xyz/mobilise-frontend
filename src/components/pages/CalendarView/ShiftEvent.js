@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import * as PropTypes from 'prop-types';
 import shiftTypes from '../../../__types/shifts.types';
 import Shift, { shiftStatus } from '../../Shift';
@@ -16,7 +16,14 @@ const EventRendering = ({
   isAdmin,
   type
 }) => (
-  <Container>
+  <Container
+    // Fill parent container
+    style={{
+      padding: '1em',
+      height: '100%',
+      width: '100%'
+    }}
+  >
     <Row>
       <Col>
         <p>{shiftData.address}</p>
@@ -25,16 +32,14 @@ const EventRendering = ({
     <Row noGutters>
       {generateRequirements(shiftData, isSelected, isAdmin, type)}
     </Row>
-    <Button
+    <button
       type="button"
-      variant="outline-primary"
       onClick={toggleModal}
       disabled={isDeleted || isBooked}
-      className={`btn-more-info ${isRecommended ? 'btn-recommended' : ''}`}
-    >
-      Info
-      <span className="sr-only">Card information button</span>
-    </Button>
+      className={`btn-more-info ${
+        isRecommended ? 'btn-recommended' : ''
+      } stretched-link`}
+    />
   </Container>
 );
 
@@ -43,6 +48,7 @@ const ShiftEvent = ({ event }) => {
 
   return (
     <Shift
+      style={{ backgroundColor: 'green' }}
       isAdmin={isAdmin}
       shiftData={shiftData}
       recommendedRoleNames={recommendedRoleNames}
