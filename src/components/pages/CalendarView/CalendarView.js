@@ -51,7 +51,7 @@ const CalendarView = props => {
 
   return (
     <Card className="p-3">
-      <div style={{ height: '60rem' }}>
+      <div style={{ height: '75vh' }}>
         <BigCalendar
           localizer={localizer}
           events={events}
@@ -60,7 +60,7 @@ const CalendarView = props => {
           onRangeChange={onRangeChange || (() => {})}
           onDrillDown={() => {}}
           timeslots={1}
-          scrollToTime={moment('07:00:00', 'HH:mm:ss').toDate()}
+          scrollToTime={moment('09:00:00', 'HH:mm:ss').toDate()}
           eventPropGetter={eventStyleGetter}
         />
       </div>
