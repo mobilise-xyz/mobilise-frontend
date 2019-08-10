@@ -19,7 +19,7 @@ const approve = uid => {
   };
 
   return axios
-    .post(`/volunteers/${uid}/approve`, config)
+    .post(`/volunteers/${uid}/approve`, {}, config)
     .then(utils.handleResponse);
 };
 

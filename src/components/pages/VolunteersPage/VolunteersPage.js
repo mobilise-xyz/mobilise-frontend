@@ -14,6 +14,12 @@ class VolunteersPage extends React.Component {
     }
   }
 
+  approve(uid) {
+    const { dispatch } = this.props;
+
+    dispatch(volunteerActions.approve(uid));
+  }
+
   render() {
     let { volunteers } = this.props;
 
@@ -26,6 +32,7 @@ class VolunteersPage extends React.Component {
         <hr />
         <Container className="pt-5 relaxed">
           <h3>Approval Requests</h3>
+          This is where you can approve or decline new volunteers
           {volunteers.map(volunteer => {
             return (
               <Row key={volunteer.user.email} style={{ margin: '20px' }}>
@@ -55,12 +62,10 @@ class VolunteersPage extends React.Component {
                               {volunteer.user.lastName}
                             </Card.Title>
                             <Card.Text>
-                              Requested access on:
-                              <Card.Text style={{ fontWeight: 'bold' }}>
-                                {moment(volunteer.createdAt).format(
-                                  'MMMM Do YYYY, h:mm:ss a'
-                                )}
-                              </Card.Text>
+                              Requested access on:{' '}
+                              {moment(volunteer.createdAt).format(
+                                'MMMM Do YYYY, h:mm:ss a'
+                              )}
                             </Card.Text>
                           </Tab.Pane>
                           <Tab.Pane eventKey="second">
@@ -75,8 +80,13 @@ class VolunteersPage extends React.Component {
                         </Tab.Content>
                       </Card.Body>
                       <Card.Footer>
-                        <Button variant="primary">Approve</Button>
-                        <Button variant="danger">Deny</Button>
+                        <Button
+                          onClick={() => this.approve(volunteer.userId)}
+                          variant="primary"
+                        >
+                          Approve
+                        </Button>
+                        <Button variant="danger">Decline</Button>
                       </Card.Footer>
                     </Tab.Container>
                   </Card>

@@ -67,7 +67,12 @@ const deleteFile = filename => {
     dispatch(request());
 
     filesService.deleteFile(filename).then(
-      res => dispatch(success(res)),
+      res => {
+        dispatch(success(res));
+        dispatch(
+          alertActions.success(`File ${filename} deleted successfully!`)
+        );
+      },
       error => {
         dispatch(failure(error));
         dispatch(

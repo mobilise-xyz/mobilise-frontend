@@ -1,5 +1,6 @@
 import volunteerConstants from '../_constants/volunteer.constants';
 import volunteerService from '../_services/volunteer.service';
+import alertActions from './alert.actions';
 
 const getAll = (approved = true) => {
   const request = () => ({ type: volunteerConstants.GETALL_REQUEST });
@@ -40,9 +41,15 @@ const approve = uid => {
     dispatch(request());
 
     volunteerService.approve(uid).then(
-      ({ result }) => dispatch(success(result)),
+      ({ result }) => {
+        dispatch(success(result));
+        dispatch(alertActions.success(`Volunteer successfully approved!`));
+      },
       error => {
         dispatch(failure(error));
+        dispatch(
+          alertActions.success(`Something went wrong approving volunteer!`)
+        );
       }
     );
   };
