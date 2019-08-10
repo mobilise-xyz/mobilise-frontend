@@ -1,6 +1,29 @@
 import volunteerConstants from '../_constants/volunteer.constants';
 import volunteerService from '../_services/volunteer.service';
 
+const getAll = (approved = true) => {
+  const request = () => ({ type: volunteerConstants.GETALL_REQUEST });
+  const success = volunteers => ({
+    type: volunteerConstants.GETALL_SUCCESS,
+    volunteers
+  });
+  const failure = error => ({
+    type: volunteerConstants.GETALL_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    volunteerService.getAll(approved).then(
+      ({ volunteers }) => dispatch(success(volunteers)),
+      error => {
+        dispatch(failure(error));
+      }
+    );
+  };
+};
+
 const getContributions = uid => {
   const request = () => ({ type: volunteerConstants.CONTRIBUTIONS_REQUEST });
   const success = contributions => ({
@@ -71,6 +94,7 @@ const getActivity = uid => {
 };
 
 const volunteerActions = {
+  getAll,
   getContributions,
   getHallOfFame,
   getActivity

@@ -2,6 +2,17 @@ import axios from 'axios';
 import utils from '../_helpers/utils';
 import authHeader from '../_helpers/auth-header';
 
+const getAll = approved => {
+  const config = {
+    headers: authHeader(),
+    params: {
+      approved
+    }
+  };
+
+  return axios.get(`/volunteers`, config).then(utils.handleResponse);
+};
+
 const getContributions = uid => {
   const config = {
     headers: authHeader()
@@ -34,6 +45,7 @@ const getActivity = uid => {
 };
 
 const volunteerService = {
+  getAll,
   getContributions,
   getHallOfFame,
   getActivity

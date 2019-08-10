@@ -54,6 +54,11 @@ const volunteers = (state = {}, action) => {
         activityError: action.error,
         activityLoading: false
       };
+    case volunteerConstants.GETALL_SUCCESS:
+      return {
+        ...state,
+        volunteers: action.volunteers
+      };
     default:
       return state;
   }
