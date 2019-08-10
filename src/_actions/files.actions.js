@@ -2,14 +2,14 @@ import filesConstants from '../_constants/files.constants';
 import filesService from '../_services/files.service';
 import alertActions from './alert.actions';
 
-const get = () => {
+const getAll = () => {
   const getSuccess = files => ({
     type: filesConstants.GET,
     files
   });
 
   return dispatch => {
-    filesService.get().then(files => dispatch(getSuccess(files)));
+    filesService.getAll().then(files => dispatch(getSuccess(files)));
   };
 };
 
@@ -67,7 +67,12 @@ const deleteFile = filename => {
     dispatch(request());
 
     filesService.deleteFile(filename).then(
-      res => dispatch(success(res)),
+      res => {
+        dispatch(success(res));
+        dispatch(
+          alertActions.success(`File ${filename} deleted successfully!`)
+        );
+      },
       error => {
         dispatch(failure(error));
         dispatch(
@@ -79,7 +84,7 @@ const deleteFile = filename => {
 };
 
 const filesActions = {
-  get,
+  getAll,
   download,
   upload,
   deleteFile

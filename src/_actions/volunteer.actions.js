@@ -1,5 +1,59 @@
 import volunteerConstants from '../_constants/volunteer.constants';
 import volunteerService from '../_services/volunteer.service';
+import alertActions from './alert.actions';
+
+const getAll = (approved = true, sortBy) => {
+  const request = () => ({ type: volunteerConstants.GETALL_REQUEST });
+  const success = volunteers => ({
+    type: volunteerConstants.GETALL_SUCCESS,
+    volunteers
+  });
+  const failure = error => ({
+    type: volunteerConstants.GETALL_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    volunteerService.getAll(approved, sortBy).then(
+      ({ volunteers }) => dispatch(success(volunteers)),
+      error => {
+        dispatch(failure(error));
+      }
+    );
+  };
+};
+
+const approve = uid => {
+  const request = () => ({ type: volunteerConstants.APPROVE_REQUEST });
+  const success = result => ({
+    type: volunteerConstants.APPROVE_SUCCESS,
+    result,
+    uid
+  });
+  const failure = error => ({
+    type: volunteerConstants.APPROVE_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    volunteerService.approve(uid).then(
+      ({ result }) => {
+        dispatch(success(result));
+        dispatch(alertActions.success(`Volunteer successfully approved!`));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(
+          alertActions.success(`Something went wrong approving volunteer!`)
+        );
+      }
+    );
+  };
+};
 
 const getContributions = uid => {
   const request = () => ({ type: volunteerConstants.CONTRIBUTIONS_REQUEST });
@@ -71,6 +125,8 @@ const getActivity = uid => {
 };
 
 const volunteerActions = {
+  approve,
+  getAll,
   getContributions,
   getHallOfFame,
   getActivity

@@ -3,7 +3,7 @@ import FileSaver from 'file-saver';
 import authHeader from '../_helpers/auth-header';
 import utils from '../_helpers/utils';
 
-const get = () => {
+const getAll = () => {
   const config = {
     headers: authHeader()
   };
@@ -45,7 +45,7 @@ const deleteFile = filename => {
 };
 
 const filesService = {
-  get,
+  getAll,
   download,
   upload,
   deleteFile

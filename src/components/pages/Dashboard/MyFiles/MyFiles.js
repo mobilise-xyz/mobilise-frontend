@@ -36,7 +36,7 @@ class MyFiles extends React.Component {
     const { files, dispatch } = this.props;
 
     if (!files) {
-      dispatch(filesActions.get());
+      dispatch(filesActions.getAll());
     }
   }
 
