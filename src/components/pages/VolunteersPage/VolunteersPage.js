@@ -10,7 +10,7 @@ class VolunteersPage extends React.Component {
     const { volunteers, dispatch } = this.props;
 
     if (!volunteers) {
-      dispatch(volunteerActions.getAll(false));
+      dispatch(volunteerActions.getAll(false, 'asc(createdAt)'));
     }
   }
 
@@ -62,10 +62,10 @@ class VolunteersPage extends React.Component {
                               {volunteer.user.lastName}
                             </Card.Title>
                             <Card.Text>
-                              Requested access on:{' '}
-                              {moment(volunteer.createdAt).format(
-                                'MMMM Do YYYY, h:mm:ss a'
-                              )}
+                              Requested access{' '}
+                              <strong>
+                                {moment(volunteer.createdAt).fromNow()}
+                              </strong>
                             </Card.Text>
                           </Tab.Pane>
                           <Tab.Pane eventKey="second">

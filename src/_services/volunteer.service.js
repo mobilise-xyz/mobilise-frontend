@@ -2,11 +2,12 @@ import axios from 'axios';
 import utils from '../_helpers/utils';
 import authHeader from '../_helpers/auth-header';
 
-const getAll = approved => {
+const getAll = (approved, sortBy) => {
   const config = {
     headers: authHeader(),
     params: {
-      approved
+      approved,
+      sortBy
     }
   };
 
