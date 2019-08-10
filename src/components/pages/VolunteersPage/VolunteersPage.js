@@ -55,7 +55,7 @@ class VolunteersPage extends React.Component {
                               {volunteer.user.lastName}
                             </Card.Title>
                             <Card.Text>
-                              Requested access on{' '}
+                              Requested access on:
                               <Card.Text style={{ fontWeight: 'bold' }}>
                                 {moment(volunteer.createdAt).format(
                                   'MMMM Do YYYY, h:mm:ss a'

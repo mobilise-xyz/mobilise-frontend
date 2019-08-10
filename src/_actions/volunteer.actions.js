@@ -24,6 +24,30 @@ const getAll = (approved = true) => {
   };
 };
 
+const approve = uid => {
+  const request = () => ({ type: volunteerConstants.APPROVE_REQUEST });
+  const success = result => ({
+    type: volunteerConstants.APPROVE_SUCCESS,
+    result,
+    uid
+  });
+  const failure = error => ({
+    type: volunteerConstants.APPROVE_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    volunteerService.approve(uid).then(
+      ({ result }) => dispatch(success(result)),
+      error => {
+        dispatch(failure(error));
+      }
+    );
+  };
+};
+
 const getContributions = uid => {
   const request = () => ({ type: volunteerConstants.CONTRIBUTIONS_REQUEST });
   const success = contributions => ({
@@ -94,6 +118,7 @@ const getActivity = uid => {
 };
 
 const volunteerActions = {
+  approve,
   getAll,
   getContributions,
   getHallOfFame,
