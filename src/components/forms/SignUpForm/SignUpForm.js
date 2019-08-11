@@ -4,12 +4,6 @@ import { connect } from 'react-redux';
 import usersActions from '../../../_actions/users.actions';
 
 class SignUpForm extends React.Component {
-  constructor(props) {
-    super(props);
-    // create a ref to store the confirmed password DOM element
-    this.confirmedPasswordRef = React.createRef();
-  }
-
   state = {
     data: {
       firstName: '',
@@ -30,15 +24,39 @@ class SignUpForm extends React.Component {
     }));
   };
 
+  isSecure = password => {
+    return new RegExp(
+      '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))' +
+        '(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$'
+    ).test(password);
+  };
+
+  handlePasswordChange = e => {
+    const { value } = e.target;
+    if (value.length < 8) {
+      e.target.setCustomValidity(
+        'Password is too short. Requires at least 8 characters.'
+      );
+    } else if (!this.isSecure(value)) {
+      e.target.setCustomValidity(
+        'Password must be 8 characters, contain at ' +
+          'least one upper case letter, one lower case letter and one ' +
+          'number/special character.'
+      );
+    } else {
+      e.target.setCustomValidity('');
+    }
+    this.handleDataChange(e);
+  };
+
   handleConfirmPasswordChange = e => {
     const { data } = this.state;
     const { password } = data;
     const { value } = e.target;
-    const confirmPassword = this.confirmedPasswordRef.current;
     if (password !== value) {
-      confirmPassword.setCustomValidity('Passwords do not Match');
+      e.target.setCustomValidity('Passwords do not Match');
     } else {
-      confirmPassword.setCustomValidity('');
+      e.target.setCustomValidity('');
     }
   };
 
@@ -103,7 +121,7 @@ class SignUpForm extends React.Component {
                 id="telephone"
                 required
                 type="tel"
-                pattern="[0-9]{9,11}"
+                pattern="[0-9]{7,}"
                 title="Must be a valid mobile phone number"
                 onChange={this.handleDataChange}
               />
@@ -119,7 +137,8 @@ class SignUpForm extends React.Component {
                 id="password"
                 name="password"
                 type="password"
-                onChange={this.handleDataChange}
+                autoComplete="new-password"
+                onChange={this.handlePasswordChange}
               />
             </Form.Group>
           </Col>
@@ -129,7 +148,6 @@ class SignUpForm extends React.Component {
               <Form.Control
                 required
                 id="confirmedPassword"
-                ref={this.confirmedPasswordRef}
                 name="password"
                 type="password"
                 onChange={this.handleConfirmPasswordChange}
@@ -146,8 +164,5 @@ class SignUpForm extends React.Component {
     );
   }
 }
-function mapStateToProps() {
-  return {};
-}
 
-export default connect(mapStateToProps)(SignUpForm);
+export default connect()(SignUpForm);
