@@ -3,18 +3,32 @@ import { Col, Container, Row } from 'react-bootstrap';
 import * as PropTypes from 'prop-types';
 import shiftTypes from '../../../__types/shifts.types';
 import Shift, { shiftStatus } from '../../Shift';
+import './ShiftEvent.css';
 
-const generateRequirements = () => {};
+const RoleDot = ({ colour = 'info' }) => {
+  return <span className="role-dot" style={{ backgroundColor: colour }} />;
+};
+
+const generateRequirements = shiftData =>
+  shiftData.requirements.map(r => {
+    // Only show roles that are available to book
+    // i.e. numberRequired > 0
+
+    const { numberRequired, role } = r;
+    return numberRequired > 0 ? (
+      <RoleDot
+        colour={role.colour}
+        key={`role-badge-${shiftData.id}-${role.name}`}
+      />
+    ) : null;
+  });
 
 const EventRendering = ({
   toggleModal,
   isDeleted,
   isBooked,
   isRecommended,
-  shiftData,
-  isSelected,
-  isAdmin,
-  type
+  shiftData
 }) => (
   <Container
     // Fill parent container
@@ -26,18 +40,17 @@ const EventRendering = ({
   >
     <Row>
       <Col>
+        <p>{shiftData.title}</p>
         <p>{shiftData.address}</p>
       </Col>
     </Row>
-    <Row noGutters>
-      {generateRequirements(shiftData, isSelected, isAdmin, type)}
-    </Row>
+    <Row noGutters>{generateRequirements(shiftData)}</Row>
     <button
       type="button"
       onClick={toggleModal}
       disabled={isDeleted || isBooked}
-      className={`btn-more-info ${
-        isRecommended ? 'btn-recommended' : ''
+      className={`calendar-btn-more-info ${
+        isRecommended ? 'calendar-btn-recommended' : ''
       } stretched-link`}
     />
   </Container>

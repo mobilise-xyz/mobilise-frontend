@@ -1,0 +1,12 @@
+.calendar-btn-more-info {
+  border: none !important;
+  background: transparent;
+}
+
+.role-dot {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.1rem;
+}
