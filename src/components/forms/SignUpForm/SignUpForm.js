@@ -1,120 +1,144 @@
-/* eslint-disable react/no-unused-state */ // Disabled because state is used and modified in handleChange
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
-import { validateAll } from 'indicative/validator';
+import { connect } from 'react-redux';
+import usersActions from '../../../_actions/users.actions';
 
-class SignUpForm extends Component {
+class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      firstName: '',
-      secondName: '',
-      email: '',
-      contactNumber: '',
-      password: '',
-      password_confirmation: ''
-    };
+    // create a ref to store the confirmed password DOM element
+    this.confirmedPasswordRef = React.createRef();
   }
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+  state = {
+    data: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      telephone: ''
+    }
+  };
+
+  handleDataChange = e => {
+    const { id, value } = e.target;
+    this.setState(prevState => ({
+      data: {
+        ...prevState.data,
+        [id]: value
+      }
+    }));
+  };
+
+  handleConfirmPasswordChange = e => {
+    const { data } = this.state;
+    const { password } = data;
+    const { value } = e.target;
+    const confirmPassword = this.confirmedPasswordRef.current;
+    if (password !== value) {
+      confirmPassword.setCustomValidity('Passwords do not Match');
+    } else {
+      confirmPassword.setCustomValidity('');
+    }
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    // TODO: decide what to do here: between validating all using indicatives ValidateAll (done below) or validate in real-time as the form is being filled in, in the handleChange function (preferred)
-    const data = this.state;
-    const schema = {
-      firstName: 'required|alpha',
-      secondName: 'required|alpha',
-      email: 'required|email',
-      contactNumber: 'required|number',
-      password: 'required|min:4|max:40|confirmed'
-    };
-    const messages = {
-      required: 'We need this data to sign you up as a volunteer!',
-      'email.email': 'Please enter a valid email address',
-      'password.confirmed': 'The passwords do not match'
-    };
 
-    // TODO: something correct inside here
-    validateAll(data, schema, messages)
-      .then(() => {
-        console.log('Info entered is valid');
-      })
-      .catch(errors => {
-        // TODO: Weird isObject is not a function error coming from here to fix
-        console.log(errors.message);
-      });
+    const { data } = this.state;
+    const { dispatch } = this.props;
+
+    dispatch(
+      usersActions.register(
+        data.firstName,
+        data.lastName,
+        data.email,
+        data.telephone,
+        data.password
+      )
+    );
   };
 
   render() {
     return (
-      <Form>
+      <Form onSubmit={this.handleSubmit}>
         <Form.Row className="mb-4">
           <Col>
-            <Form.Label>First name</Form.Label>
-            <Form.Control
-              required
-              name="firstName"
-              onChange={this.handleChange}
-            />
+            <Form.Group>
+              <Form.Label>First name</Form.Label>
+              <Form.Control
+                id="firstName"
+                required
+                onChange={this.handleDataChange}
+              />
+            </Form.Group>
           </Col>
           <Col>
-            <Form.Label>Last name</Form.Label>
-            <Form.Control
-              required
-              name="secondName"
-              onChange={this.handleChange}
-            />
+            <Form.Group>
+              <Form.Label>Last name</Form.Label>
+              <Form.Control
+                id="lastName"
+                required
+                onChange={this.handleDataChange}
+              />
+            </Form.Group>
           </Col>
         </Form.Row>
         <Form.Row className="mb-4">
           <Col>
-            <Form.Label>Email</Form.Label>
-            <Form.Control required name="email" onChange={this.handleChange} />
+            <Form.Group>
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                id="email"
+                required
+                type="email"
+                onChange={this.handleDataChange}
+              />
+            </Form.Group>
           </Col>
           <Col>
-            <Form.Label>Contact Number</Form.Label>
-            <Form.Control
-              required
-              name="contactNumber"
-              onChange={this.handleChange}
-            />
+            <Form.Group>
+              <Form.Label>Contact Number</Form.Label>
+              <Form.Control
+                id="telephone"
+                required
+                type="tel"
+                pattern="[0-9]{9,11}"
+                title="Must be a valid mobile phone number"
+                onChange={this.handleDataChange}
+              />
+            </Form.Group>
           </Col>
         </Form.Row>
         <Form.Row className="mb-4">
           <Col>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              required
-              id="password"
-              name="password"
-              type="password"
-              onChange={this.handleChange}
-            />
+            <Form.Group>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                required
+                id="password"
+                name="password"
+                type="password"
+                onChange={this.handleDataChange}
+              />
+            </Form.Group>
           </Col>
           <Col>
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              required
-              id="confirm-password"
-              name="password_confirmation"
-              type="password"
-              onChange={this.handleChange}
-            />
+            <Form.Group>
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                required
+                id="confirmedPassword"
+                ref={this.confirmedPasswordRef}
+                name="password"
+                type="password"
+                onChange={this.handleConfirmPasswordChange}
+              />
+            </Form.Group>
           </Col>
         </Form.Row>
         <div className="text-center" style={{ margin: 'auto' }}>
-          <Button
-            type="submit"
-            className="btn-more-info"
-            onClick={this.handleSubmit}
-            block
-          >
+          <Button variant="primary" type="submit" className="btn-confirm" block>
             Sign me up!
           </Button>
         </div>
@@ -122,5 +146,8 @@ class SignUpForm extends Component {
     );
   }
 }
+function mapStateToProps() {
+  return {};
+}
 
-export default SignUpForm;
+export default connect(mapStateToProps)(SignUpForm);

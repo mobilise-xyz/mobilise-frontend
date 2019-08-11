@@ -56,6 +56,38 @@ const updateContactPreferences = (uid, email, text) => {
   };
 };
 
+const register = (firstName, lastName, email, telephone, password) => {
+  const request = () => {
+    return { type: usersConstants.REGISTER_REQUEST };
+  };
+  const success = user => {
+    return { type: usersConstants.REGISTER_SUCCESS, user };
+  };
+  const failure = error => {
+    return { type: usersConstants.REGISTER_FAILURE, error };
+  };
+
+  return dispatch => {
+    dispatch(request());
+
+    usersService.register(firstName, lastName, email, telephone, password).then(
+      () => {
+        dispatch(success());
+        history.push('/');
+        dispatch(
+          alertActions.success(
+            'Successfully created an account! Please await approval!'
+          )
+        );
+      },
+      () => {
+        dispatch(failure());
+        dispatch(alertActions.error('Failed to create an account!'));
+      }
+    );
+  };
+};
+
 const login = (username, password) => {
   const request = user => {
     return { type: usersConstants.LOGIN_REQUEST, user };
@@ -99,6 +131,7 @@ const usersActions = {
   updateContactPreferences,
   updatePreferenceState: updateContactState,
   login,
+  register,
   logout
 };
 
