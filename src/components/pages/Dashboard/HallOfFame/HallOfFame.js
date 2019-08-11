@@ -10,7 +10,7 @@ import volunteerActions from '../../../../_actions/volunteer.actions';
 const HallOfFameCard = ({ id, volunteerName, category, bottomText, icon }) => (
   <Card id={id} className="hallOfFameCard">
     <Card.Header>{category}</Card.Header>
-    <span style={{ margin: 'auto' }}>{icon}</span>
+    <span>{icon}</span>
 
     <Card.Body>
       <Card.Title>{volunteerName}</Card.Title>

@@ -40,6 +40,18 @@ const submitFeedback = (uid, feedback) => {
     .then(utils.handleResponse);
 };
 
+const register = (firstName, lastName, email, telephone, password) => {
+  return axios
+    .post('/auth/register', {
+      firstName,
+      lastName,
+      email,
+      telephone,
+      password
+    })
+    .then(utils.handleResponse);
+};
+
 const logout = () => {
   // remove user from local storage to log user out
   localStorage.removeItem('user');
@@ -81,6 +93,7 @@ const usersService = {
   updateContactPreferences,
   submitFeedback,
   login,
+  register,
   logout
 };
 

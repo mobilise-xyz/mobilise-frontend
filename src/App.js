@@ -39,7 +39,10 @@ export class App extends React.Component {
     const { location } = this.props;
     return (
       <div>
-        {noHeaderPathnames.includes(location.pathname) ? null : <Header />}
+        <Header
+          loggedIn={!noHeaderPathnames.includes(location.pathname)}
+          location={location}
+        />
         <main>
           <Switch>
             <PrivateRoute path="/" exact component={ShiftsPage} />
@@ -60,7 +63,6 @@ export class App extends React.Component {
               exact
               component={FeedbackPage}
             />
-
             <Route path="/login" exact component={LoginPage} />
             <Route path="/signup" exact component={SignUpPage} />
             <Route path="/404" exact component={NotFound} />
