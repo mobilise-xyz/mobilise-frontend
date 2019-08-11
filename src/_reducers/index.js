@@ -6,7 +6,8 @@ import alert from './alert.reducer';
 import availability from './availability.reducer';
 import volunteers from './volunteers.reducer';
 import user from './users.reducer';
-import metric from './metric.reducers';
+import metric from './metric.reducer';
+import files from './files.reducer';
 
 const rootReducer = combineReducers({
   authentication,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   availability,
   volunteers,
   user,
-  metric
+  metric,
+  files
 });
 
 export default rootReducer;

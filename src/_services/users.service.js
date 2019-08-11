@@ -1,6 +1,5 @@
 import axios from 'axios';
 import utils from '../_helpers/utils';
-import history from '../_helpers/history';
 import authHeader from '../_helpers/auth-header';
 
 const get = uid => {
@@ -26,6 +25,19 @@ const updateContactPreferences = (uid, email, text) => {
   };
 
   return axios.put(`/users/${uid}/contact-preferences`, data, config);
+};
+
+const submitFeedback = (uid, feedback) => {
+  const data = {
+    feedback
+  };
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .post(`/users/${uid}/feedback`, data, config)
+    .then(utils.handleResponse);
 };
 
 const register = (firstName, lastName, email, telephone, password) => {
@@ -54,6 +66,7 @@ const login = (email, password) => {
     .then(utils.handleResponse)
     .then(data => {
       const { user } = data;
+
       const { uid, isAdmin, lastLogin, token } = user;
       // Store user details and JWT token in localStorage to keep user logged in between page refreshes.
       localStorage.setItem(
@@ -72,17 +85,13 @@ const login = (email, password) => {
         lastLogin,
         token
       };
-    })
-    .catch(err => {
-      console.log(err);
-      logout();
-      history.location.reload(true);
     });
 };
 
 const usersService = {
   get,
   updateContactPreferences,
+  submitFeedback,
   login,
   register,
   logout
