@@ -55,6 +55,11 @@ class AdminShiftsPage extends React.Component {
     const { dispatch, shifts } = this.props;
     const lastDate = moment(dates[dates.length - 1]);
     const lastShift = shifts.all[shifts.all.length - 1];
+
+    if (!lastShift) {
+      return;
+    }
+
     const lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
     if (lastDate.isAfter(lastShiftDate)) {
       dispatch(shiftsActions.getAll(lastShiftDate.format(), lastDate.format()));
