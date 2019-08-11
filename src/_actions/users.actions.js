@@ -110,8 +110,9 @@ const login = (username, password) => {
         }
       },
       error => {
+        usersService.logout();
         dispatch(failure(error));
-        dispatch(alertActions.error('Login failed!'));
+        dispatch(alertActions.error(error.response.data.message));
       }
     );
   };

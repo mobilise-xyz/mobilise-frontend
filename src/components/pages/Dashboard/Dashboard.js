@@ -12,6 +12,7 @@ const Dashboard = () => {
       {!isAdmin ? <MyContributions /> : null}
       <hr />
       <MyFiles isAdmin={isAdmin} />
+      <hr />
       <HallOfFame />
       <hr />
       <MyActivity />

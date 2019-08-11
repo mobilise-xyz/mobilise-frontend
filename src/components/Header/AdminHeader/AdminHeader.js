@@ -10,6 +10,9 @@ const AdminHeader = () => (
     <LinkContainer exact to="/dashboard">
       <Nav.Link>Dashboard</Nav.Link>
     </LinkContainer>
+    <LinkContainer exact to="/volunteers">
+      <Nav.Link>Volunteers</Nav.Link>
+    </LinkContainer>
   </Nav>
 );
 
