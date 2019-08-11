@@ -37,14 +37,14 @@ class ContactPreferencesCheckboxes extends React.Component {
         <Form.Group>
           <Form.Label>I would prefer to be contacted by...</Form.Label>
           <Form.Check
-            name="email"
+            name="email-checkbox"
             type="checkbox"
             label="Email"
             checked={email}
             onChange={this.handleChange}
           />
           <Form.Check
-            name="text"
+            name="text-checkbox"
             type="checkbox"
             label="SMS"
             checked={text}

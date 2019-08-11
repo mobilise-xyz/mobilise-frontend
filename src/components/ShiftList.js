@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CardColumns, Col, Container, Row } from 'react-bootstrap';
 import shiftTypes from '../__types/shifts.types';
+import Shift, { shiftStatus } from './Shift';
 import ShiftCard from './ShiftCard';
+import ErrorBoundary from './ErrorBoundary';
 
 const partitionShiftsByDate = shifts => {
   const shiftMap = [];
@@ -30,59 +32,64 @@ const partitionShiftsByDate = shifts => {
   return shiftMap;
 };
 
-const ShiftList = ({ shifts, isAdmin = false, type = '' }) => {
+const ShiftList = ({ shifts, isAdmin = false, type = shiftStatus.NONE }) => {
   const shiftMap = partitionShiftsByDate(shifts);
   const shiftLists = [];
 
   shiftMap.forEach(entry => {
     shiftLists.push(
-      <Container key={entry[0]} fluid>
-        <Row>
-          {/* Date to the side */}
-          <Col md={2}>
-            <DateHeading
-              weekday={entry[0].format('dddd')}
-              date={entry[0].format('Do MMMM')}
-            />
-          </Col>
-          <Col>
-            <CardColumns>
-              {entry[1].map(c => {
-                const recommendedRoleNames = [];
-                c.requirements.forEach(req => {
-                  if (req.recommended) {
-                    recommendedRoleNames.push(req.role.roleName);
-                  }
-                });
-                return (
-                  <ShiftCard
-                    isAdmin={isAdmin}
-                    shiftData={c}
-                    recommendedRoleNames={recommendedRoleNames}
-                    key={`shiftcard-${c.id}`}
-                    type={type}
-                  />
-                );
-              })}
-            </CardColumns>
-          </Col>
-        </Row>
-        <hr />
-      </Container>
+      <ErrorBoundary key={`${entry[0]}-error-boundary`}>
+        <Container key={entry[0]} fluid>
+          <Row>
+            {/* Date to the side */}
+            <Col md={2}>
+              <DateHeading
+                weekday={entry[0].format('dddd')}
+                date={entry[0].format('Do MMMM')}
+              />
+            </Col>
+            <Col>
+              <CardColumns>
+                {entry[1].map(c => {
+                  const recommendedRoleNames = [];
+                  c.requirements.forEach(req => {
+                    if (req.recommended) {
+                      recommendedRoleNames.push(req.role.roleName);
+                    }
+                  });
+                  return (
+                    <Shift
+                      isAdmin={isAdmin}
+                      shiftData={c}
+                      recommendedRoleNames={recommendedRoleNames}
+                      key={`shiftcard-${c.id}`}
+                      type={type}
+                      renderer={ShiftCard}
+                    />
+                  );
+                })}
+              </CardColumns>
+            </Col>
+            <Col md={2} />
+          </Row>
+          <hr />
+        </Container>
+      </ErrorBoundary>
     );
   });
+
   return shiftLists;
 };
 
 ShiftList.defaultProps = {
   isAdmin: false,
-  type: ''
+  type: shiftStatus.NONE
 };
 
 ShiftList.propTypes = {
   shifts: PropTypes.arrayOf(shiftTypes.shift).isRequired,
   isAdmin: PropTypes.bool,
-  type: PropTypes.oneOf(['', 'booked'])
+  type: PropTypes.oneOf([shiftStatus.NONE, shiftStatus.BOOKED])
 };
 
 const DateHeading = ({ weekday, date }) => (

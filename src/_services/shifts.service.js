@@ -2,6 +2,7 @@ import axios from 'axios';
 import authHeader from '../_helpers/auth-header';
 import utils from '../_helpers/utils';
 import alertActions from '../_actions/alert.actions';
+import history from '../_helpers/history';
 
 const placeholderShift = {
   id: -1,
@@ -23,12 +24,24 @@ const placeholderShift = {
   ]
 };
 
-const getAll = after => {
+const create = shiftData => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios.post('/shifts', shiftData, config).then(() => {
+    history.push('/');
+  });
+};
+
+const getAll = (after, before, page) => {
   // Get all shifts
   const config = {
     headers: authHeader(),
     params: {
-      after
+      after,
+      before,
+      page
     }
   };
   return axios
@@ -41,11 +54,12 @@ const getAll = after => {
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
 
-const getAvailableForUser = (uid, after) => {
+const getAvailableForUser = (uid, after, page) => {
   const config = {
     headers: authHeader(),
     params: {
-      after
+      after,
+      page
     }
   };
 
@@ -64,11 +78,13 @@ const getAvailableForUser = (uid, after) => {
     );
 };
 
-const getBookedForUser = (uid, after) => {
+const getBookedForUser = (uid, after, before, page) => {
   const config = {
     headers: authHeader(),
     params: {
-      after
+      after,
+      before,
+      page
     }
   };
 
@@ -161,9 +177,38 @@ const ping = shiftId => {
     .then(utils.handleResponse);
 };
 
+const getCalendarForUser = uid => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .get(`/volunteers/${uid}/shifts/calendar`, config)
+    .then(utils.handleResponse)
+    .then(({ link }) => {
+      return window.open(link, '_self');
+    });
+};
+
+const getCalendarForAll = () => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .get(`/shifts/calendar`, config)
+    .then(utils.handleResponse)
+    .then(({ link }) => {
+      return window.open(link, '_self');
+    });
+};
+
 const shiftsService = {
+  create,
   getAll,
   getAvailableForUser,
+  getCalendarForUser,
+  getCalendarForAll,
   getBookedForUser,
   deleteWithId,
   book,

@@ -1,24 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
 import './VolunteerShiftsPage.css';
 import shiftsActions from '../../../../_actions/shifts.actions';
 
+const ITEMS_PER_PAGE = 5;
+
 class VolunteerShiftsPage extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    const { uid } = JSON.parse(localStorage.getItem('user'));
-    const now = moment().format();
-    // Do not make the request again if shifts are already in the store.
-    dispatch(shiftsActions.getAvailableForUser(uid, now));
+    this.fetchInitialShifts();
   }
 
-  render() {
-    const { shifts, error, loading } = this.props;
+  fetchInitialShifts = () => {
+    const { dispatch } = this.props;
+    const now = moment().format();
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(shiftsActions.getAvailableForUser(uid, now, 1, true));
+  };
 
-    if (loading === true || !shifts) {
+  fetchMoreShifts = () => {
+    const { dispatch, shifts, startTime } = this.props;
+    const { length } = shifts.all;
+    const page = length / ITEMS_PER_PAGE;
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+    dispatch(shiftsActions.getAvailableForUser(uid, startTime, page + 1));
+  };
+
+  render() {
+    const { shifts, error, hasMore } = this.props;
+
+    if (!shifts) {
       return null;
     }
 
@@ -28,17 +42,31 @@ class VolunteerShiftsPage extends React.Component {
 
     return (
       <Layout heading="Book a shift">
-        <ShiftList shifts={shifts.all} recommendedCardClass="bg-primary" />
+        <InfiniteScroll
+          dataLength={shifts.all.length}
+          next={this.fetchMoreShifts}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>No more shifts coming up!</b>
+            </p>
+          }
+        >
+          <ShiftList shifts={shifts.all} recommendedCardClass="bg-primary" />
+        </InfiniteScroll>
       </Layout>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const { shifts, error, loading } = state.shifts;
+  const { shifts, error, hasMore, loading, startTime } = state.shifts;
   return {
     shifts,
     error,
+    startTime,
+    hasMore,
     loading
   };
 };

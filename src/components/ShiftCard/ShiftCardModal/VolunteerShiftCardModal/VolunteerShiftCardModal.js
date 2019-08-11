@@ -5,6 +5,7 @@ import '../../ShiftCard.css';
 import utils from '../../../../_helpers/utils';
 import BookingPane from './BookingPane';
 import CancelPane from './CancelPane';
+import { shiftStatus } from '../../../Shift';
 
 class VolunteerShiftCardModal extends React.Component {
   state = {
@@ -29,7 +30,7 @@ class VolunteerShiftCardModal extends React.Component {
     } = this.props;
     const { repeatedType, until } = this.state;
 
-    const booked = type === 'booked';
+    const booked = type === shiftStatus.BOOKED;
 
     return (
       <Modal show={show} onHide={() => onHide(false)} centered>
@@ -63,9 +64,7 @@ class VolunteerShiftCardModal extends React.Component {
                   <i className="material-icons">perm_contact_calendar</i>
                 </Col>
                 <Col>
-                  {`${shiftData.creator.user.firstName} ${
-                    shiftData.creator.user.lastName
-                  } `}
+                  {`${shiftData.creator.user.firstName} ${shiftData.creator.user.lastName} `}
                   (
                   <a href={`mailto:${shiftData.creator.user.email}`}>
                     {shiftData.creator.user.email})

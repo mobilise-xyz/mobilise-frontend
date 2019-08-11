@@ -1,3 +1,4 @@
+import moment from 'moment';
 import shiftsConstants from '../_constants/shifts.constants';
 
 // Utility function that applies a function to all and recommended shifts and
@@ -20,21 +21,51 @@ const shifts = (state = {}, action) => {
     );
 
   switch (action.type) {
-    // GET
     case shiftsConstants.GETALL_REQUEST:
     case shiftsConstants.GETFORUSER_REQUEST:
       return {
         ...state,
         shifts: state.shifts,
-        loading: true
+        loading: true,
+        hasMore: true
       };
-    case shiftsConstants.GETALL_SUCCESS:
-    case shiftsConstants.GETFORUSER_SUCCESS:
+    case shiftsConstants.GETFIRST_SUCCESS: {
       return {
         ...state,
         shifts: action.shifts,
+        startTime: moment().format(),
+        hasMore: action.shifts.all.length > 0,
         loading: false
       };
+    }
+    case shiftsConstants.GETBOOKEDFIRST_SUCCESS: {
+      return {
+        ...state,
+        myShifts: action.myShifts,
+        startTime: moment().format(),
+        hasMore: action.myShifts.all.length > 0,
+        loading: false
+      };
+    }
+    case shiftsConstants.GETALL_SUCCESS:
+    case shiftsConstants.GETFORUSER_SUCCESS: {
+      action.shifts.all.forEach(shift => {
+        let shiftExists = false;
+        state.shifts.all.forEach(stateShift => {
+          if (shift.id === stateShift.id) {
+            shiftExists = true;
+          }
+        });
+        if (!shiftExists) {
+          state.shifts.all.push(shift);
+        }
+      });
+      return {
+        ...state,
+        hasMore: action.shifts.all.length > 0,
+        loading: false
+      };
+    }
     case shiftsConstants.GETALL_FAILURE:
     case shiftsConstants.GETFORUSER_FAILURE:
       return {
@@ -49,9 +80,20 @@ const shifts = (state = {}, action) => {
         loading: true
       };
     case shiftsConstants.GETBOOKEDFORUSER_SUCCESS:
+      action.myShifts.all.forEach(shift => {
+        let shiftExists = false;
+        state.myShifts.all.forEach(stateShift => {
+          if (shift.id === stateShift.id) {
+            shiftExists = true;
+          }
+        });
+        if (!shiftExists) {
+          state.myShifts.all.push(shift);
+        }
+      });
       return {
         ...state,
-        myShifts: action.myShifts,
+        hasMore: action.myShifts.all.length > 0,
         loading: false
       };
     case shiftsConstants.GETBOOKEDFORUSER_FAILURE:

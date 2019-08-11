@@ -2,15 +2,40 @@ import shiftsConstants from '../_constants/shifts.constants';
 import shiftsService from '../_services/shifts.service';
 import alertActions from './alert.actions';
 
-const getAll = after => {
+const create = shiftData => {
+  const request = () => ({ type: shiftsConstants.CREATE_REQUEST });
+  const success = () => ({ type: shiftsConstants.CREATE_SUCCESS });
+  const failure = error => ({ type: shiftsConstants.CREATE_FAILURE, error });
+
+  return dispatch => {
+    dispatch(request());
+    shiftsService.create(shiftData).then(
+      () => {
+        dispatch(success());
+        dispatch(alertActions.success('Shift successfully created!'));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error('Could not create shift.'));
+      }
+    );
+  };
+};
+
+const getAll = (after, before, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETALL_REQUEST });
-  const success = shifts => ({ type: shiftsConstants.GETALL_SUCCESS, shifts });
+  const success = shifts => ({
+    type: firstTime
+      ? shiftsConstants.GETFIRST_SUCCESS
+      : shiftsConstants.GETALL_SUCCESS,
+    shifts
+  });
   const failure = error => ({ type: shiftsConstants.GETALL_FAILURE, error });
 
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getAll(after).then(
+    shiftsService.getAll(after, before, page).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(failure(error));
@@ -19,11 +44,65 @@ const getAll = after => {
   };
 };
 
+const getCalendarForAll = () => {
+  const request = () => ({ type: shiftsConstants.GETALLCALENDAR_REQUEST });
+  const success = calendar => ({
+    type: shiftsConstants.GETALLCALENDAR_SUCCESS,
+    calendar
+  });
+  const failure = error => ({
+    type: shiftsConstants.GETALLCALENDAR_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    shiftsService.getCalendarForAll().then(
+      calendar => dispatch(success(calendar)),
+      error => {
+        dispatch(failure(error));
+        dispatch(
+          alertActions.error('Something went wrong when getting calendar!')
+        );
+      }
+    );
+  };
+};
+
+const getCalendarForUser = uid => {
+  const request = () => ({ type: shiftsConstants.GETUSERCALENDAR_REQUEST });
+  const success = calendar => ({
+    type: shiftsConstants.GETUSERCALENDAR_SUCCESS,
+    calendar
+  });
+  const failure = error => ({
+    type: shiftsConstants.GETUSERCALENDAR_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    shiftsService.getCalendarForUser(uid).then(
+      calendar => dispatch(success(calendar)),
+      error => {
+        dispatch(failure(error));
+        dispatch(
+          alertActions.error('Something went wrong when getting calendar!')
+        );
+      }
+    );
+  };
+};
+
 // Gets available + recommended shifts for the specified user.
-const getAvailableForUser = (uid, after) => {
+const getAvailableForUser = (uid, after, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
   const success = shifts => ({
-    type: shiftsConstants.GETFORUSER_SUCCESS,
+    type: firstTime
+      ? shiftsConstants.GETFIRST_SUCCESS
+      : shiftsConstants.GETFORUSER_SUCCESS,
     shifts
   });
   const failure = error => ({
@@ -34,7 +113,7 @@ const getAvailableForUser = (uid, after) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getAvailableForUser(uid, after).then(
+    shiftsService.getAvailableForUser(uid, after, page).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(alertActions.error('Error getting available shifts.'));
@@ -45,10 +124,12 @@ const getAvailableForUser = (uid, after) => {
 };
 
 // Gets booked shifts for the specified user.
-const getBookedForUser = (uid, after) => {
+const getBookedForUser = (uid, after, before, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETBOOKEDFORUSER_REQUEST });
   const success = myShifts => ({
-    type: shiftsConstants.GETBOOKEDFORUSER_SUCCESS,
+    type: firstTime
+      ? shiftsConstants.GETBOOKEDFIRST_SUCCESS
+      : shiftsConstants.GETBOOKEDFORUSER_SUCCESS,
     myShifts
   });
   const failure = error => ({
@@ -59,7 +140,7 @@ const getBookedForUser = (uid, after) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getBookedForUser(uid, after).then(
+    shiftsService.getBookedForUser(uid, after, before, page).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(alertActions.error('Error getting booked shifts.'));
@@ -227,8 +308,11 @@ const ping = shiftId => {
 };
 
 const shiftsActions = {
+  create,
   getAll,
   getAvailableForUser,
+  getCalendarForUser,
+  getCalendarForAll,
   getBookedForUser,
   deleteWithId,
   book,
