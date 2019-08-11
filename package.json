@@ -12,6 +12,7 @@
     "bootstrap-material-design": "^4.1.2",
     "core-js": "^3.1.2",
     "history": "^4.9.0",
+    "indicative": "^7.2.0",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-big-calendar": "^0.21.0",
