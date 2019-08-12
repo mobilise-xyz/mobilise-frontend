@@ -155,6 +155,69 @@ class SignUpForm extends React.Component {
             </Form.Group>
           </Col>
         </Form.Row>
+        <Row className="mb-2 col-md-12">
+          <Col>
+            <Button
+              onClick={this.toggleOpen}
+              aria-controls="privacy-policy-button"
+              aria-expanded={open}
+            >
+              Read Privacy Policy
+            </Button>
+          </Col>
+          <Col>
+            <Card>
+              <Card.Text>
+                Please read and agree to the terms of the privacy policy before
+                signing up.
+              </Card.Text>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Collapse in={open} className="mt-2">
+            <Card>
+              <Card.Header>Privacy Policy</Card.Header>
+              <Card.Text>
+                We take your privacy seriously. To better protect your privacy
+                we provide this privacy policy notice explaining the way your
+                personal information is collected and used.
+              </Card.Text>
+              <Card.Subtitle>Collection of routine information</Card.Subtitle>
+              <Card.Text>
+                To Cover: What information do we collect? How do we use the
+                information? What information do we share?
+              </Card.Text>
+              <Card.Subtitle>Links to third party websites</Card.Subtitle>
+              <Card.Text>
+                We have included links on this website for your use and
+                reference. We are not responsible for the privacy policies on
+                these websites. You should be aware that the privacy policies of
+                these websites may differ from our own.
+              </Card.Text>
+              <Card.Subtitle>Security</Card.Subtitle>
+              <Card.Text>
+                The security of your personal information is important to us,
+                but remember that no method of transmission over the Internet,
+                or method of electronic storage, is 100% secure. While we strive
+                to use commercially acceptable means to protect your personal
+                information, we cannot guarantee its absolute security.
+              </Card.Text>
+              <Card.Subtitle>Changes to this privacy policy</Card.Subtitle>
+              <Card.Text className="mb-2">
+                This Privacy Policy is effective as of June 30th 2019 and will
+                remain in effect except with respect to any changes in its
+                provisions in the future, which will be in effect immediately
+                after being posted on this page. We reserve the right to update
+                or change our Privacy Policy at any time and you should check
+                this Privacy Policy periodically. If we make any material
+                changes to this Privacy Policy, we will notify you either
+                through the email address you have provided us, or by placing a
+                prominent notice on our website.
+              </Card.Text>
+            </Card>
+          </Collapse>
+        </Row>
         <div className="text-center" style={{ margin: 'auto' }}>
           <Button variant="primary" type="submit" className="btn-confirm" block>
             Sign me up!
