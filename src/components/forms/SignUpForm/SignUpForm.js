@@ -181,12 +181,26 @@ class SignUpForm extends React.Component {
               <Card.Text>
                 We take your privacy seriously. To better protect your privacy
                 we provide this privacy policy notice explaining the way your
-                personal information is collected and used.
+                personal information is collected and used. Please agree to your
+                acknowledgement of the policy before signing up.
               </Card.Text>
               <Card.Subtitle>Collection of routine information</Card.Subtitle>
               <Card.Text>
-                To Cover: What information do we collect? How do we use the
-                information? What information do we share?
+                For the purpose of operating the platform, we collect the
+                routine information in the sign up form above (name, email and
+                contact number). We do not share this information with any
+                external third party organisations, however, in signing up it
+                will be shared with the City Harvest Volunteer coordinator, as
+                it is required for them to approve you as a new Volunteer. We
+                also use this data to allow the Volunteer coordinator to contact
+                you in case of any emergencies or potential shifts and you will
+                be able to select your contact preferences after being accepted
+                by the coordinator. Please note: The Charity may also ask
+                additional questions as part of the sign up process which the
+                coordinator will also be able to see your answers to. However,
+                these questions are covered under the Charities Privacy Policy
+                and Mobilise are merely a data Processor (see Data processing
+                Agreement for details.)
               </Card.Text>
               <Card.Subtitle>Links to third party websites</Card.Subtitle>
               <Card.Text>
