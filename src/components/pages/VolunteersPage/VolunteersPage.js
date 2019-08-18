@@ -6,10 +6,9 @@ import {
   Card,
   Nav,
   Tab,
-  Col,
-  Row,
   FormControl,
-  InputGroup
+  InputGroup,
+  CardColumns
 } from 'react-bootstrap';
 import volunteerActions from '../../../_actions/volunteer.actions';
 import Layout from '../../Layout/Layout';
@@ -31,6 +30,28 @@ class VolunteersPage extends React.Component {
     this.setState({ search: value });
   };
 
+  partitionVolunteersByLetter = volunteers => {
+    const volunteerMap = [];
+    let i = 0;
+    while (i < volunteers.length) {
+      const volunteer = volunteers[i];
+      const entry = { letter: volunteer.user.firstName[0] };
+      const vols = [volunteer];
+      i += 1;
+      while (i < volunteers.length) {
+        const nextVolunteer = volunteers[i];
+        if (nextVolunteer.user.firstName[0] !== entry.letter) {
+          break;
+        }
+        vols.push(nextVolunteer);
+        i += 1;
+      }
+      entry.volunteers = vols;
+      volunteerMap.push(entry);
+    }
+    return volunteerMap;
+  };
+
   render() {
     const { search } = this.state;
     let { volunteers } = this.props;
@@ -38,7 +59,23 @@ class VolunteersPage extends React.Component {
     if (!volunteers) {
       volunteers = [];
     }
-    let currentLetter = '';
+    const volunteerMap = this.partitionVolunteersByLetter(
+      volunteers
+        .filter(volunteer => {
+          const { firstName, lastName } = volunteer.user;
+          return (
+            firstName.startsWith(search) ||
+            lastName.startsWith(search) ||
+            `${firstName} ${lastName}`.startsWith(search)
+          );
+        })
+        .sort((a, b) => {
+          if (a.user.firstName === b.user.firstName) {
+            return a.user.lastName > b.user.lastName ? 1 : -1;
+          }
+          return a.user.firstName > b.user.firstName ? 1 : -1;
+        })
+    );
     return (
       <Layout
         heading="Volunteers"
@@ -54,39 +91,15 @@ class VolunteersPage extends React.Component {
         }
       >
         <hr />
-        <Container className="pt-5 relaxed">
-          {volunteers
-            .filter(volunteer => {
-              const { firstName, lastName } = volunteer.user;
-              return (
-                firstName.startsWith(search) ||
-                lastName.startsWith(search) ||
-                `${firstName} ${lastName}`.startsWith(search)
-              );
-            })
-            .sort((a, b) => {
-              if (a.user.firstName === b.user.firstName) {
-                return a.user.lastName > b.user.lastName ? 1 : -1;
-              }
-              return a.user.firstName > b.user.firstName ? 1 : -1;
-            })
-            .map(volunteer => {
-              let header = null;
-              if (volunteer.user.firstName[0] !== currentLetter) {
-                // eslint-disable-next-line prefer-destructuring
-                currentLetter = volunteer.user.firstName[0];
-                header = (
-                  <>
-                    <h4>{volunteer.user.firstName[0]}</h4>
-                    <hr />
-                  </>
-                );
-              }
-              return (
-                <>
-                  {header}
-                  <Row key={volunteer.user.email} style={{ margin: '20px' }}>
-                    <Col>
+        <Container className="pt-5 relaxed" style={{ paddingTop: '0' }}>
+          {volunteerMap.map(volunteerGroup => {
+            return (
+              <>
+                <h2>{volunteerGroup.letter}</h2>
+                <hr />
+                <CardColumns style={{ paddingBottom: '1em' }}>
+                  {volunteerGroup.volunteers.map(volunteer => {
+                    return (
                       <Card>
                         <Tab.Container defaultActiveKey="first">
                           <Card.Header
@@ -127,11 +140,12 @@ class VolunteersPage extends React.Component {
                           </Card.Body>
                         </Tab.Container>
                       </Card>
-                    </Col>
-                  </Row>
-                </>
-              );
-            })}
+                    );
+                  })}
+                </CardColumns>
+              </>
+            );
+          })}
         </Container>
       </Layout>
     );
