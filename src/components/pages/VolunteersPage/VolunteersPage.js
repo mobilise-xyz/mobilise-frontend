@@ -1,26 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Container, Card, Nav, Tab, Button, Col, Row } from 'react-bootstrap';
+import {
+  Container,
+  Card,
+  Nav,
+  Tab,
+  Col,
+  Row,
+  FormControl,
+  InputGroup
+} from 'react-bootstrap';
 import volunteerActions from '../../../_actions/volunteer.actions';
 import Layout from '../../Layout/Layout';
 
 class VolunteersPage extends React.Component {
+  state = {
+    search: ''
+  };
+
   componentDidMount() {
     const { volunteers, dispatch } = this.props;
-
     if (!volunteers) {
-      dispatch(volunteerActions.getAll(false, 'asc(createdAt)'));
+      dispatch(volunteerActions.getAll(true, 'desc(createdAt)'));
     }
   }
 
-  approve(uid) {
-    const { dispatch } = this.props;
-
-    dispatch(volunteerActions.approve(uid));
-  }
+  handleDataChange = e => {
+    const { value } = e.target;
+    this.setState({ search: value });
+  };
 
   render() {
+    const { search } = this.state;
     let { volunteers } = this.props;
 
     if (!volunteers) {
@@ -28,72 +40,75 @@ class VolunteersPage extends React.Component {
     }
 
     return (
-      <Layout heading="Volunteers">
+      <Layout
+        heading="Volunteers"
+        cornerComponent={
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Search"
+              type="text"
+              onChange={this.handleDataChange}
+              aria-describedby="basic-addon1"
+            />
+          </InputGroup>
+        }
+      >
         <hr />
         <Container className="pt-5 relaxed">
-          <h3>Approval Requests</h3>
-          This is where you can approve or decline new volunteers
-          {volunteers.map(volunteer => {
-            return (
-              <Row key={volunteer.user.email} style={{ margin: '20px' }}>
-                <Col>
-                  <Card>
-                    <Tab.Container defaultActiveKey="first">
-                      <Card.Header
-                        style={{ paddingTop: '0', paddingBottom: '0' }}
-                      >
-                        <Nav variant="pills">
-                          <Nav.Item>
-                            <Nav.Link eventKey="first">About</Nav.Link>
-                          </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link eventKey="second">Contact</Nav.Link>
-                          </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link eventKey="third">Answers</Nav.Link>
-                          </Nav.Item>
-                        </Nav>
-                      </Card.Header>
-                      <Card.Body>
-                        <Tab.Content>
-                          <Tab.Pane eventKey="first">
-                            <Card.Title>
-                              {volunteer.user.firstName}{' '}
-                              {volunteer.user.lastName}
-                            </Card.Title>
-                            <Card.Text>
-                              Requested access{' '}
-                              <strong>
-                                {moment(volunteer.createdAt).fromNow()}
-                              </strong>
-                            </Card.Text>
-                          </Tab.Pane>
-                          <Tab.Pane eventKey="second">
-                            <Card.Text>Email: {volunteer.user.email}</Card.Text>
-                            <Card.Text>
-                              Telephone: {volunteer.user.telephone}
-                            </Card.Text>
-                          </Tab.Pane>
-                          <Tab.Pane eventKey="third">
-                            <Card.Text>Nothing to see here ... yet</Card.Text>
-                          </Tab.Pane>
-                        </Tab.Content>
-                      </Card.Body>
-                      <Card.Footer>
-                        <Button
-                          onClick={() => this.approve(volunteer.userId)}
-                          variant="primary"
+          {volunteers
+            .filter(volunteer =>
+              `${volunteer.user.firstName} ${volunteer.user.lastName}`.startsWith(
+                search
+              )
+            )
+            .map(volunteer => {
+              return (
+                <Row key={volunteer.user.email} style={{ margin: '20px' }}>
+                  <Col>
+                    <Card>
+                      <Tab.Container defaultActiveKey="first">
+                        <Card.Header
+                          style={{ paddingTop: '0', paddingBottom: '0' }}
                         >
-                          Approve
-                        </Button>
-                        <Button variant="danger">Decline</Button>
-                      </Card.Footer>
-                    </Tab.Container>
-                  </Card>
-                </Col>
-              </Row>
-            );
-          })}
+                          <Nav variant="pills">
+                            <Nav.Item>
+                              <Nav.Link eventKey="first">About</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link eventKey="second">Contact</Nav.Link>
+                            </Nav.Item>
+                          </Nav>
+                        </Card.Header>
+                        <Card.Body>
+                          <Tab.Content>
+                            <Tab.Pane eventKey="first">
+                              <Card.Title>
+                                {volunteer.user.firstName}{' '}
+                                {volunteer.user.lastName}
+                              </Card.Title>
+                              <Card.Text>
+                                Joined{' '}
+                                <strong>
+                                  {moment(volunteer.createdAt).fromNow()}
+                                </strong>
+                              </Card.Text>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="second">
+                              <Card.Text>
+                                Email: {volunteer.user.email}
+                              </Card.Text>
+                              <Card.Text>
+                                Telephone: {volunteer.user.telephone}
+                              </Card.Text>
+                            </Tab.Pane>
+                          </Tab.Content>
+                        </Card.Body>
+                      </Tab.Container>
+                    </Card>
+                  </Col>
+                </Row>
+              );
+            })}
         </Container>
       </Layout>
     );
@@ -101,8 +116,8 @@ class VolunteersPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { volunteers } = state.volunteers;
-  return { volunteers };
+  const { approved } = state.volunteers;
+  return { volunteers: approved };
 };
 
 export default connect(mapStateToProps)(VolunteersPage);
