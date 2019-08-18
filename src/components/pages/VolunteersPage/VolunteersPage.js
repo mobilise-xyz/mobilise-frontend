@@ -56,11 +56,20 @@ class VolunteersPage extends React.Component {
         <hr />
         <Container className="pt-5 relaxed">
           {volunteers
-            .filter(volunteer =>
-              `${volunteer.user.firstName} ${volunteer.user.lastName}`.startsWith(
-                search
-              )
-            )
+            .filter(volunteer => {
+              const { firstName, lastName } = volunteer.user;
+              return (
+                firstName.startsWith(search) ||
+                lastName.startsWith(search) ||
+                `${firstName} ${lastName}`.startsWith(search)
+              );
+            })
+            .sort((a, b) => {
+              if (a.user.firstName === b.user.firstName) {
+                return a.user.lastName > b.user.lastName ? 1 : -1;
+              }
+              return a.user.firstName > b.user.firstName ? 1 : -1;
+            })
             .map(volunteer => {
               return (
                 <Row key={volunteer.user.email} style={{ margin: '20px' }}>
