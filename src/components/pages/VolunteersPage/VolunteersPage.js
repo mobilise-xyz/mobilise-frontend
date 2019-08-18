@@ -38,7 +38,7 @@ class VolunteersPage extends React.Component {
     if (!volunteers) {
       volunteers = [];
     }
-
+    let currentLetter = '';
     return (
       <Layout
         heading="Volunteers"
@@ -71,51 +71,65 @@ class VolunteersPage extends React.Component {
               return a.user.firstName > b.user.firstName ? 1 : -1;
             })
             .map(volunteer => {
+              let header = null;
+              if (volunteer.user.firstName[0] !== currentLetter) {
+                // eslint-disable-next-line prefer-destructuring
+                currentLetter = volunteer.user.firstName[0];
+                header = (
+                  <>
+                    <h4>{volunteer.user.firstName[0]}</h4>
+                    <hr />
+                  </>
+                );
+              }
               return (
-                <Row key={volunteer.user.email} style={{ margin: '20px' }}>
-                  <Col>
-                    <Card>
-                      <Tab.Container defaultActiveKey="first">
-                        <Card.Header
-                          style={{ paddingTop: '0', paddingBottom: '0' }}
-                        >
-                          <Nav variant="pills">
-                            <Nav.Item>
-                              <Nav.Link eventKey="first">About</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                              <Nav.Link eventKey="second">Contact</Nav.Link>
-                            </Nav.Item>
-                          </Nav>
-                        </Card.Header>
-                        <Card.Body>
-                          <Tab.Content>
-                            <Tab.Pane eventKey="first">
-                              <Card.Title>
-                                {volunteer.user.firstName}{' '}
-                                {volunteer.user.lastName}
-                              </Card.Title>
-                              <Card.Text>
-                                Joined{' '}
-                                <strong>
-                                  {moment(volunteer.createdAt).fromNow()}
-                                </strong>
-                              </Card.Text>
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="second">
-                              <Card.Text>
-                                Email: {volunteer.user.email}
-                              </Card.Text>
-                              <Card.Text>
-                                Telephone: {volunteer.user.telephone}
-                              </Card.Text>
-                            </Tab.Pane>
-                          </Tab.Content>
-                        </Card.Body>
-                      </Tab.Container>
-                    </Card>
-                  </Col>
-                </Row>
+                <>
+                  {header}
+                  <Row key={volunteer.user.email} style={{ margin: '20px' }}>
+                    <Col>
+                      <Card>
+                        <Tab.Container defaultActiveKey="first">
+                          <Card.Header
+                            style={{ paddingTop: '0', paddingBottom: '0' }}
+                          >
+                            <Nav variant="pills">
+                              <Nav.Item>
+                                <Nav.Link eventKey="first">About</Nav.Link>
+                              </Nav.Item>
+                              <Nav.Item>
+                                <Nav.Link eventKey="second">Contact</Nav.Link>
+                              </Nav.Item>
+                            </Nav>
+                          </Card.Header>
+                          <Card.Body>
+                            <Tab.Content>
+                              <Tab.Pane eventKey="first">
+                                <Card.Title>
+                                  {volunteer.user.firstName}{' '}
+                                  {volunteer.user.lastName}
+                                </Card.Title>
+                                <Card.Text>
+                                  Joined{' '}
+                                  <strong>
+                                    {moment(volunteer.createdAt).fromNow()}
+                                  </strong>
+                                </Card.Text>
+                              </Tab.Pane>
+                              <Tab.Pane eventKey="second">
+                                <Card.Text>
+                                  Email: {volunteer.user.email}
+                                </Card.Text>
+                                <Card.Text>
+                                  Telephone: {volunteer.user.telephone}
+                                </Card.Text>
+                              </Tab.Pane>
+                            </Tab.Content>
+                          </Card.Body>
+                        </Tab.Container>
+                      </Card>
+                    </Col>
+                  </Row>
+                </>
               );
             })}
         </Container>
