@@ -1,97 +1,106 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
-import { Container, Card, Nav, Tab, Button, Col, Row } from 'react-bootstrap';
+import {
+  Container,
+  FormControl,
+  InputGroup,
+  CardColumns
+} from 'react-bootstrap';
+import VolunteerCard from '../../VolunteerCard';
 import volunteerActions from '../../../_actions/volunteer.actions';
 import Layout from '../../Layout/Layout';
 
 class VolunteersPage extends React.Component {
+  state = {
+    search: ''
+  };
+
   componentDidMount() {
     const { volunteers, dispatch } = this.props;
-
     if (!volunteers) {
-      dispatch(volunteerActions.getAll(false, 'asc(createdAt)'));
+      dispatch(volunteerActions.getAll(true, 'desc(createdAt)'));
     }
   }
 
-  approve(uid) {
-    const { dispatch } = this.props;
+  handleDataChange = e => {
+    const { value } = e.target;
+    this.setState({ search: value });
+  };
 
-    dispatch(volunteerActions.approve(uid));
-  }
+  partitionVolunteersByLetter = volunteers => {
+    const volunteerMap = [];
+    let i = 0;
+    while (i < volunteers.length) {
+      const volunteer = volunteers[i];
+      const entry = { letter: volunteer.user.firstName[0] };
+      const vols = [volunteer];
+      i += 1;
+      while (i < volunteers.length) {
+        const nextVolunteer = volunteers[i];
+        if (nextVolunteer.user.firstName[0] !== entry.letter) {
+          break;
+        }
+        vols.push(nextVolunteer);
+        i += 1;
+      }
+      entry.volunteers = vols;
+      volunteerMap.push(entry);
+    }
+    return volunteerMap;
+  };
 
   render() {
+    const { search } = this.state;
     let { volunteers } = this.props;
 
     if (!volunteers) {
       volunteers = [];
     }
-
+    const volunteerMap = this.partitionVolunteersByLetter(
+      volunteers
+        .filter(volunteer => {
+          const { firstName, lastName } = volunteer.user;
+          return (
+            firstName.startsWith(search) ||
+            lastName.startsWith(search) ||
+            `${firstName} ${lastName}`.startsWith(search)
+          );
+        })
+        .sort((a, b) => {
+          if (a.user.firstName === b.user.firstName) {
+            return a.user.lastName > b.user.lastName ? 1 : -1;
+          }
+          return a.user.firstName > b.user.firstName ? 1 : -1;
+        })
+    );
     return (
-      <Layout heading="Volunteers">
+      <Layout
+        heading="Volunteers"
+        cornerComponent={
+          <InputGroup className="mb-3">
+            <FormControl
+              placeholder="Search"
+              type="text"
+              onChange={this.handleDataChange}
+              aria-describedby="basic-addon1"
+            />
+          </InputGroup>
+        }
+      >
         <hr />
-        <Container className="pt-5 relaxed">
-          <h3>Approval Requests</h3>
-          This is where you can approve or decline new volunteers
-          {volunteers.map(volunteer => {
+        <p>This is where you can see all your approved volunteers.</p>
+        <Container className="pt-5 relaxed" style={{ paddingTop: '0' }}>
+          {volunteerMap.map(volunteerGroup => {
             return (
-              <Row key={volunteer.user.email} style={{ margin: '20px' }}>
-                <Col>
-                  <Card>
-                    <Tab.Container defaultActiveKey="first">
-                      <Card.Header
-                        style={{ paddingTop: '0', paddingBottom: '0' }}
-                      >
-                        <Nav variant="pills">
-                          <Nav.Item>
-                            <Nav.Link eventKey="first">About</Nav.Link>
-                          </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link eventKey="second">Contact</Nav.Link>
-                          </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link eventKey="third">Answers</Nav.Link>
-                          </Nav.Item>
-                        </Nav>
-                      </Card.Header>
-                      <Card.Body>
-                        <Tab.Content>
-                          <Tab.Pane eventKey="first">
-                            <Card.Title>
-                              {volunteer.user.firstName}{' '}
-                              {volunteer.user.lastName}
-                            </Card.Title>
-                            <Card.Text>
-                              Requested access{' '}
-                              <strong>
-                                {moment(volunteer.createdAt).fromNow()}
-                              </strong>
-                            </Card.Text>
-                          </Tab.Pane>
-                          <Tab.Pane eventKey="second">
-                            <Card.Text>Email: {volunteer.user.email}</Card.Text>
-                            <Card.Text>
-                              Telephone: {volunteer.user.telephone}
-                            </Card.Text>
-                          </Tab.Pane>
-                          <Tab.Pane eventKey="third">
-                            <Card.Text>Nothing to see here ... yet</Card.Text>
-                          </Tab.Pane>
-                        </Tab.Content>
-                      </Card.Body>
-                      <Card.Footer>
-                        <Button
-                          onClick={() => this.approve(volunteer.userId)}
-                          variant="primary"
-                        >
-                          Approve
-                        </Button>
-                        <Button variant="danger">Decline</Button>
-                      </Card.Footer>
-                    </Tab.Container>
-                  </Card>
-                </Col>
-              </Row>
+              <>
+                <h2>{volunteerGroup.letter}</h2>
+                <hr />
+                <CardColumns style={{ paddingBottom: '1em' }}>
+                  {volunteerGroup.volunteers.map(volunteer => {
+                    return <VolunteerCard volunteer={volunteer} />;
+                  })}
+                </CardColumns>
+              </>
             );
           })}
         </Container>
@@ -101,8 +110,8 @@ class VolunteersPage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { volunteers } = state.volunteers;
-  return { volunteers };
+  const { approved } = state.volunteers;
+  return { volunteers: approved };
 };
 
 export default connect(mapStateToProps)(VolunteersPage);

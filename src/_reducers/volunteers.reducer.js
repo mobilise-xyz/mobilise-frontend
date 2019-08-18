@@ -55,17 +55,25 @@ const volunteers = (state = {}, action) => {
         activityLoading: false
       };
     case volunteerConstants.GETALL_SUCCESS:
+      return action.approved
+        ? {
+            ...state,
+            approved: action.volunteers
+          }
+        : {
+            ...state,
+            tentative: action.volunteers
+          };
+    case volunteerConstants.APPROVE_SUCCESS: {
+      const volunteer = state.tentative.filter(
+        vol => vol.userId === action.uid
+      )[0];
       return {
         ...state,
-        volunteers: action.volunteers
+        tentative: state.tentative.filter(vol => vol.userId !== action.uid),
+        approved: [volunteer, ...state.approved]
       };
-    case volunteerConstants.APPROVE_SUCCESS:
-      return {
-        ...state,
-        volunteers: state.volunteers.filter(
-          volunteer => volunteer.userId !== action.uid
-        )
-      };
+    }
     default:
       return state;
   }
