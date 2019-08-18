@@ -30,8 +30,8 @@ class ApprovalsPage extends React.Component {
     return (
       <Layout heading={`Approval Requests (${volunteers.length})`}>
         <hr />
+        <p>This is where you can approve or decline new volunteers</p>
         <Container className="pt-5 relaxed">
-          This is where you can approve or decline new volunteers
           {volunteers.map(volunteer => {
             return (
               <Row key={volunteer.user.email} style={{ margin: '20px' }}>
@@ -68,7 +68,12 @@ class ApprovalsPage extends React.Component {
                             </Card.Text>
                           </Tab.Pane>
                           <Tab.Pane eventKey="second">
-                            <Card.Text>Email: {volunteer.user.email}</Card.Text>
+                            <Card.Text>
+                              Email:{' '}
+                              <a href={`mailto:${volunteer.user.email}`}>
+                                {volunteer.user.email}
+                              </a>
+                            </Card.Text>
                             <Card.Text>
                               Telephone: {volunteer.user.telephone}
                             </Card.Text>

@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import {
   Container,
-  Card,
-  Nav,
-  Tab,
   FormControl,
   InputGroup,
   CardColumns
 } from 'react-bootstrap';
+import VolunteerCard from '../../VolunteerCard';
 import volunteerActions from '../../../_actions/volunteer.actions';
 import Layout from '../../Layout/Layout';
 
@@ -91,6 +88,7 @@ class VolunteersPage extends React.Component {
         }
       >
         <hr />
+        <p>This is where you can see all your approved volunteers.</p>
         <Container className="pt-5 relaxed" style={{ paddingTop: '0' }}>
           {volunteerMap.map(volunteerGroup => {
             return (
@@ -99,48 +97,7 @@ class VolunteersPage extends React.Component {
                 <hr />
                 <CardColumns style={{ paddingBottom: '1em' }}>
                   {volunteerGroup.volunteers.map(volunteer => {
-                    return (
-                      <Card>
-                        <Tab.Container defaultActiveKey="first">
-                          <Card.Header
-                            style={{ paddingTop: '0', paddingBottom: '0' }}
-                          >
-                            <Nav variant="pills">
-                              <Nav.Item>
-                                <Nav.Link eventKey="first">About</Nav.Link>
-                              </Nav.Item>
-                              <Nav.Item>
-                                <Nav.Link eventKey="second">Contact</Nav.Link>
-                              </Nav.Item>
-                            </Nav>
-                          </Card.Header>
-                          <Card.Body>
-                            <Tab.Content>
-                              <Tab.Pane eventKey="first">
-                                <Card.Title>
-                                  {volunteer.user.firstName}{' '}
-                                  {volunteer.user.lastName}
-                                </Card.Title>
-                                <Card.Text>
-                                  Joined{' '}
-                                  <strong>
-                                    {moment(volunteer.createdAt).fromNow()}
-                                  </strong>
-                                </Card.Text>
-                              </Tab.Pane>
-                              <Tab.Pane eventKey="second">
-                                <Card.Text>
-                                  Email: {volunteer.user.email}
-                                </Card.Text>
-                                <Card.Text>
-                                  Telephone: {volunteer.user.telephone}
-                                </Card.Text>
-                              </Tab.Pane>
-                            </Tab.Content>
-                          </Card.Body>
-                        </Tab.Container>
-                      </Card>
-                    );
+                    return <VolunteerCard volunteer={volunteer} />;
                   })}
                 </CardColumns>
               </>
