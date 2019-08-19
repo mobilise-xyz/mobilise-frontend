@@ -14,6 +14,7 @@ import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedSh
 import FeedbackPage from './components/pages/HelpPages/FeedbackPage';
 import Dashboard from './components/pages/Dashboard';
 import VolunteersPage from './components/pages/VolunteersPage';
+import ApprovalsPage from './components/pages/ApprovalsPage';
 import SettingsPage from './components/pages/SettingsPage';
 import WelcomePage from './components/pages/WelcomePage/WelcomePage';
 import AdminRoute from './components/routes/AdminRoute';
@@ -39,7 +40,10 @@ export class App extends React.Component {
     const { location } = this.props;
     return (
       <div>
-        {noHeaderPathnames.includes(location.pathname) ? null : <Header />}
+        <Header
+          loggedIn={!noHeaderPathnames.includes(location.pathname)}
+          location={location}
+        />
         <main>
           <Switch>
             <PrivateRoute path="/" exact component={ShiftsPage} />
@@ -47,6 +51,7 @@ export class App extends React.Component {
             <AdminRoute path="/new-shift" exact component={NewShiftPage} />
             <PrivateRoute path="/settings" exact component={SettingsPage} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
+            <AdminRoute path="/approvals" exact component={ApprovalsPage} />
             <AdminRoute path="/volunteers" exact component={VolunteersPage} />
             <PrivateRoute path="/welcome" exact component={WelcomePage} />
 
@@ -60,7 +65,6 @@ export class App extends React.Component {
               exact
               component={FeedbackPage}
             />
-
             <Route path="/login" exact component={LoginPage} />
             <Route path="/signup" exact component={SignUpPage} />
             <Route path="/404" exact component={NotFound} />

@@ -63,7 +63,7 @@ class LoginPage extends React.Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Button type="submit" className="btn-more-info">
+          <Button type="submit" className="btn-more-info" block>
             Log in
           </Button>
         </Form>

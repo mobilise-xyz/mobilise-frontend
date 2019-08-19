@@ -6,7 +6,8 @@ const getAll = (approved = true, sortBy) => {
   const request = () => ({ type: volunteerConstants.GETALL_REQUEST });
   const success = volunteers => ({
     type: volunteerConstants.GETALL_SUCCESS,
-    volunteers
+    volunteers,
+    approved
   });
   const failure = error => ({
     type: volunteerConstants.GETALL_FAILURE,

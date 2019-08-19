@@ -6,6 +6,7 @@ import './Header.css';
 import logo from '../../assets/images/logo-white.png';
 import VolunteerHeader from './VolunteerHeaderNav';
 import AdminHeader from './AdminHeader';
+import WelcomeHeader from './WelcomeHeader';
 import usersActions from '../../_actions/users.actions';
 
 class Header extends React.Component {
@@ -19,19 +20,18 @@ class Header extends React.Component {
 
     const { uid } = user;
     const { dispatch } = this.props;
-
     dispatch(usersActions.get(uid));
   }
 
   render() {
     const user = JSON.parse(localStorage.getItem('user'));
 
-    if (!user) {
-      return null;
-    }
+    const { loggedIn, location, firstName, lastName } = this.props;
 
+    if (!user || !loggedIn) {
+      return <WelcomeHeader location={location} />;
+    }
     const { isAdmin } = user;
-    const { firstName, lastName } = this.props;
     const adminMessage = isAdmin ? '(Admin)' : '(Volunteer)';
 
     let nameMessage = '';
