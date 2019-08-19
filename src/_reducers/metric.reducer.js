@@ -1,10 +1,9 @@
 import metricConstants from '../_constants/metric.constants';
 
-const metric = (state = { loading: true }, action) => {
+const metric = (state = {}, action) => {
   switch (action.type) {
     case metricConstants.GET: {
       return {
-        loading: false,
         metric: action.metric
       };
     }

@@ -1,6 +1,6 @@
 import usersConstants from '../_constants/users.constants';
 
-const users = (state = { loading: true }, action) => {
+const users = (state = {}, action) => {
   switch (action.type) {
     case usersConstants.GET:
       return {

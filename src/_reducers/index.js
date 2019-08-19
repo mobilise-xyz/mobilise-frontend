@@ -8,8 +8,9 @@ import volunteers from './volunteers.reducer';
 import user from './users.reducer';
 import metric from './metric.reducer';
 import files from './files.reducer';
+import usersConstants from '../_constants/users.constants';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   authentication,
   shifts,
   alert,
@@ -19,5 +20,13 @@ const rootReducer = combineReducers({
   metric,
   files
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === usersConstants.LOGOUT) {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
 
 export default rootReducer;
