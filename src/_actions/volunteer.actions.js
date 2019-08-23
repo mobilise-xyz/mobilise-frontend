@@ -47,7 +47,7 @@ const invite = email => {
       },
       error => {
         dispatch(failure(error));
-        dispatch(alertActions.error('Problem inviting volunteer!'));
+        dispatch(alertActions.error(error.response.data.message));
       }
     );
   };
