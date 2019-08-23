@@ -21,9 +21,6 @@ const WelcomeHeader = location => {
 
   const loginSignUpBtns = entryPoints.includes(location.location.pathname) ? (
     <Nav>
-      <LinkContainer to="signup">
-        <Button>Sign Up</Button>
-      </LinkContainer>
       <LinkContainer to="login">
         <Button>Log in</Button>
       </LinkContainer>
