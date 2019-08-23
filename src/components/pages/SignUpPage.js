@@ -10,9 +10,11 @@ export default class SignUpPage extends React.Component {
 
   // TODO: TIGER Privacy and Data security form.
   render() {
+    const { location } = this.props;
+    const token = new URLSearchParams(location.search).get('token');
     return (
       <CardLayout title="Sign up">
-        <SignUpForm />
+        <SignUpForm token={token} />
       </CardLayout>
     );
   }
