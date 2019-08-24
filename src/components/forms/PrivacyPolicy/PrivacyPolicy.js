@@ -65,7 +65,9 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                 </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Card.Subtitle>Collection of routine information</Card.Subtitle>
+                <Card.Subtitle className="mb-1">
+                  Collection of routine information
+                </Card.Subtitle>
                 <Card.Text>
                   We collect the routine information in the sign up form above
                   which includes but is not limited to (name, email and contact
@@ -92,7 +94,7 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                 </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Card.Subtitle>
+                <Card.Subtitle className="mb-1">
                   Legal Basis for Processing Personal Data under General Data
                   Protection Regulation (GDPR)
                 </Card.Subtitle>
@@ -130,7 +132,7 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                 </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Card.Subtitle>Data Protection</Card.Subtitle>
+                <Card.Subtitle className="mb-1">Data Protection</Card.Subtitle>
                 <Card.Text>
                   Under certain circumstances, we may be required to disclose
                   your Personal Data to enforce our site policies, protect your
@@ -152,33 +154,52 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                 <Card.Text>
                   In certain circumstances, you have the following data
                   protection rights:
-                  {/*  TODO: Unordered List here */}
-                  The right to access, update or to delete the information we
-                  have on you. Whenever made possible, you can access, update or
-                  request deletion of your Personal Data directly within your
-                  account settings section. If you are unable to perform these
-                  actions yourself, please contact us to assist you. The right
-                  of rectification. You have the right to have your information
-                  rectified if that information is inaccurate or incomplete. We
-                  will do this within 30 days of your request. The right to
-                  object. You have the right to object to our processing of your
-                  Personal Data. The right of restriction. You have the right to
-                  request that we restrict the processing of your personal
-                  information. The right to data portability. You have the right
-                  to be provided with a copy of the information we have on you
-                  in a structured, machine-readable and commonly used format.
-                  The right to withdraw consent. You also have the right to
-                  withdraw your consent at any time where Mobilise relied on
-                  your consent to process your personal information. Please note
-                  that we may ask you to verify your identity before responding
-                  to such requests. You have the right to complain to a Data
-                  Protection Authority about our collection and use of your
-                  Personal Data. For more information, please contact your local
-                  data protection authority in the European Economic Area (EEA).
+                  <ListGroup as="ul">
+                    <ListGroup.Item as="li">
+                      The right to access, update or to delete the information
+                      we have on you. Whenever made possible, you can access,
+                      update or request deletion of your Personal Data directly
+                      within your account settings section. If you are unable to
+                      perform these actions yourself, please contact us to
+                      assist you. The right of rectification.
+                    </ListGroup.Item>
+                    <ListGroup.Item as="li">
+                      You have the right to have your information rectified if
+                      that information is inaccurate or incomplete. We will do
+                      this within 30 days of your request.
+                    </ListGroup.Item>
+                    <ListGroup.Item as="li">
+                      You have the right to object to our processing of your
+                      Personal Data.
+                    </ListGroup.Item>
+                    <ListGroup.Item as="li">
+                      You have the right to request that we restrict the
+                      processing of your personal information.
+                    </ListGroup.Item>
+                    <ListGroup.Item as="li">
+                      You have the right to be provided with a copy of the
+                      information we have on you in a structured,
+                      machine-readable and commonly used format.
+                    </ListGroup.Item>
+                    <ListGroup.Item as="li">
+                      You also have the right to withdraw your consent at any
+                      time where Mobilise relied on your consent to process your
+                      personal information. Please note that we may ask you to
+                      verify your identity before responding to such requests.
+                    </ListGroup.Item>
+                    <ListGroup.Item as="li">
+                      You have the right to complain to a Data Protection
+                      Authority about our collection and use of your Personal
+                      Data. For more information, please contact your local data
+                      protection authority in the European Economic Area (EEA).
+                    </ListGroup.Item>
+                  </ListGroup>
                 </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Card.Subtitle>Bearer Tokens and Authentication</Card.Subtitle>
+                <Card.Subtitle className="mb-1">
+                  Bearer Tokens and Authentication
+                </Card.Subtitle>
                 <Card.Text>
                   A bearer token or bearer authentication is a form of security
                   authentication. When you log in to the App with a valid email
@@ -197,7 +218,9 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                 </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Card.Subtitle>Links to third party websites</Card.Subtitle>
+                <Card.Subtitle className="mb-1">
+                  Links to third party websites
+                </Card.Subtitle>
                 <Card.Text>
                   We have included links on this website for your use and
                   reference. We are not responsible for the privacy policies on
@@ -206,7 +229,7 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                 </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Card.Subtitle>Security</Card.Subtitle>
+                <Card.Subtitle className="mb-1">Security</Card.Subtitle>
                 <Card.Text>
                   The security of your personal information is important to us,
                   but remember that no method of transmission over the Internet,
@@ -217,7 +240,9 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                 </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Card.Subtitle>Changes to this privacy policy</Card.Subtitle>
+                <Card.Subtitle className="mb-1">
+                  Changes to this privacy policy
+                </Card.Subtitle>
                 <Card.Text>
                   This Privacy Policy is effective as of August 17th 2019 and
                   will remain in effect except with respect to any changes in
