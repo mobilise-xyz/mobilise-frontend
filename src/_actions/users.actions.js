@@ -116,6 +116,33 @@ const register = (firstName, lastName, email, telephone, password) => {
   };
 };
 
+const changePassword = (oldPassword, newPassword) => {
+  const request = result => {
+    return { type: usersConstants.CHANGEPASSWORD_REQUEST, result };
+  };
+  const success = result => {
+    return { type: usersConstants.CHANGEPASSWORD_SUCCESS, result };
+  };
+  const failure = result => {
+    return { type: usersConstants.CHANGEPASSWORD_FAILURE, result };
+  };
+
+  return dispatch => {
+    dispatch(request());
+
+    usersService.changePassword(oldPassword, newPassword).then(
+      result => {
+        dispatch(success(result));
+        dispatch(alertActions.success('Successfully changed password!'));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.response.data.message));
+      }
+    );
+  };
+};
+
 const login = (username, password) => {
   const request = user => {
     return { type: usersConstants.LOGIN_REQUEST, user };
@@ -157,6 +184,7 @@ const logout = () => {
 
 const usersActions = {
   get,
+  changePassword,
   updateContactPreferences,
   updatePreferenceState: updateContactState,
   submitFeedback,
