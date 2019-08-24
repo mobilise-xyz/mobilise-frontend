@@ -76,6 +76,9 @@ class Header extends React.Component {
             <LinkContainer to="settings">
               <NavDropdown.Item>Settings</NavDropdown.Item>
             </LinkContainer>
+            <LinkContainer to="privacy">
+              <NavDropdown.Item>Privacy</NavDropdown.Item>
+            </LinkContainer>
             <LinkContainer to="/help/feedback">
               <NavDropdown.Item>Give Feedback</NavDropdown.Item>
             </LinkContainer>
