@@ -7,7 +7,7 @@ const PrivacyPage = () => {
   return (
     <Layout>
       <Container>
-        <PrivacyPolicy defaultActiveKey="0" />
+        <PrivacyPolicy defaultActiveKey="0" onSignupPage={false} />
       </Container>
     </Layout>
   );

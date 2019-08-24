@@ -17,14 +17,27 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
         <Form.Group>
           <Form.Label>
             I have read and understand the information outlined in this privacy
-            policy
+            policy.
           </Form.Label>
           <Form.Check name="pp-checkbox" type="checkbox" onChange={() => {}} />
           <Form.Text className="text-muted">
-            Please tick this box before signing up
+            Please tick this box before signing up.
           </Form.Text>
         </Form.Group>
       </Form>
+    ) : null;
+  };
+
+  const SignupNotice = () => {
+    return onSignupPage ? (
+      <Card>
+        <Card.Body>
+          <Card.Text className="text-center">
+            Please read and agree to the terms of the privacy policy before
+            signing up.
+          </Card.Text>
+        </Card.Body>
+      </Card>
     ) : null;
   };
 
@@ -43,19 +56,15 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                     flex: 'auto'
                   }}
                 >
-                  <Button aria-controls="privacy-policy-button">
-                    Read Privacy Policy
+                  <Button
+                    aria-controls="privacy-policy-button"
+                    disabled={!onSignupPage}
+                  >
+                    Privacy Policy
                   </Button>
                 </Col>
                 <Col>
-                  <Card>
-                    <Card.Body>
-                      <Card.Text className="text-center">
-                        Please read and agree to the terms of the privacy policy
-                        before signing up.
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
+                  <SignupNotice />
                 </Col>
               </Row>
             </Container>
@@ -79,13 +88,11 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                 <Card.Subtitle>Collection of routine information</Card.Subtitle>
                 <Card.Text>
                   <p>
-                    {' '}
                     We collect the routine information in the sign up form above
                     which includes but is not limited to (name, email and
                     contact number).
                   </p>
                   <p>
-                    {' '}
                     We use this information to operate, maintain, and provide to
                     you the features and functionality of the Service. We do not
                     sell, trade or otherwise transfer this information with any
@@ -98,13 +105,11 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                     preferences after being accepted by the coordinator.
                   </p>
                   <p>
-                    {' '}
                     Please note: The Charity may also ask additional questions
                     as part of the sign up process which the coordinator will
                     also be able to see your answers to. However, these
                     questions are covered under the Charity Privacy Policy and
-                    Mobilise are a data Processor in this (see Data processing
-                    Agreement for details.
+                    Mobilise are a data processor in this process.
                   </p>
                 </Card.Text>
               </ListGroup.Item>
