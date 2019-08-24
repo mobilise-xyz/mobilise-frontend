@@ -2,19 +2,15 @@ import React from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 
 class InviteVolunteerModal extends React.Component {
-  state = {
-    email: ''
-  };
-
-  handleChange = event => {
-    this.setState({ email: event.target.value });
-  };
+  constructor(props) {
+    super(props);
+    this.emailInput = React.createRef();
+  }
 
   handleSubmit = e => {
     e.preventDefault();
-
     const { handleSubmit } = this.props;
-    const { email } = this.state;
+    const email = this.emailInput.current.value;
     handleSubmit(email);
   };
 
@@ -41,6 +37,7 @@ class InviteVolunteerModal extends React.Component {
               <Form.Control
                 id="email"
                 required
+                ref={this.emailInput}
                 type="email"
                 onChange={this.handleChange}
               />

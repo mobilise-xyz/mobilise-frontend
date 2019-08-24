@@ -106,13 +106,13 @@ const register = (firstName, lastName, email, telephone, password, token) => {
           history.push('/');
           dispatch(
             alertActions.success(
-              'Successfully created an account! Please await approval!'
+              'Successfully created an account! Please log in!'
             )
           );
         },
-        () => {
-          dispatch(failure());
-          dispatch(alertActions.error('Failed to create an account!'));
+        error => {
+          dispatch(failure(error));
+          dispatch(alertActions.error(error.response.data.message));
         }
       );
   };
