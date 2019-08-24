@@ -13,7 +13,7 @@ import {
 import VolunteerCard from '../../VolunteerCard';
 import volunteerActions from '../../../_actions/volunteer.actions';
 import Layout from '../../Layout/Layout';
-import InviteVolunteerModal from './InviteVolunteerModal/InviteVolunteerModal';
+import InviteVolunteerModal from './InviteVolunteerModal';
 
 class VolunteersPage extends React.Component {
   state = {
