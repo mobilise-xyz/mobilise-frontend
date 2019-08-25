@@ -16,6 +16,7 @@ import Dashboard from './components/pages/Dashboard';
 import VolunteersPage from './components/pages/VolunteersPage';
 import ApprovalsPage from './components/pages/ApprovalsPage';
 import SettingsPage from './components/pages/SettingsPage';
+import PrivacyPage from './components/pages/PrivacyPage';
 import WelcomePage from './components/pages/WelcomePage/WelcomePage';
 import AdminRoute from './components/routes/AdminRoute';
 import Header from './components/Header';
@@ -50,6 +51,7 @@ export class App extends React.Component {
             <PrivateRoute path="/shifts" exact component={MyShiftsPage} />
             <AdminRoute path="/new-shift" exact component={NewShiftPage} />
             <PrivateRoute path="/settings" exact component={SettingsPage} />
+            <PrivateRoute path="/privacy" exact component={PrivacyPage} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <AdminRoute path="/approvals" exact component={ApprovalsPage} />
             <AdminRoute path="/volunteers" exact component={VolunteersPage} />

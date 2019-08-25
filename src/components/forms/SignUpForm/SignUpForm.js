@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, Col, Form } from 'react-bootstrap';
+import { Button, Row, Col, Form, InputGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import usersActions from '../../../_actions/users.actions';
+
+import PrivacyPolicy from '../../PrivacyPolicy';
 
 class SignUpForm extends React.Component {
   state = {
@@ -11,7 +13,14 @@ class SignUpForm extends React.Component {
       email: '',
       password: '',
       telephone: ''
-    }
+    },
+    ppread: false
+  };
+
+  handlePPRead = () => {
+    this.setState(prevState => ({
+      ppread: !prevState.ppread
+    }));
   };
 
   handleDataChange = e => {
@@ -78,6 +87,8 @@ class SignUpForm extends React.Component {
   };
 
   render() {
+    const { ppread } = this.state;
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Row className="mb-4">
@@ -155,8 +166,33 @@ class SignUpForm extends React.Component {
             </Form.Group>
           </Col>
         </Form.Row>
+        <Row style={{ display: 'inline' }}>
+          <PrivacyPolicy handlePPRead={this.handlePPRead} />
+        </Row>
+        <Row>
+          <InputGroup className="mb-3 ml-3">
+            <InputGroup.Prepend className="mr-2">
+              <InputGroup.Checkbox
+                aria-label="Privacy Policy Checkbox"
+                name="pp-checkbox"
+                type="checkbox"
+                onChange={this.handlePPRead}
+              />
+            </InputGroup.Prepend>
+            <InputGroup.Text>
+              I have read and understand the information outlined in this
+              privacy policy.
+            </InputGroup.Text>
+          </InputGroup>
+        </Row>
         <div className="text-center" style={{ margin: 'auto' }}>
-          <Button variant="primary" type="submit" className="btn-confirm" block>
+          <Button
+            variant="primary"
+            type="submit"
+            className="btn-confirm"
+            disabled={!ppread}
+            block
+          >
             Sign me up!
           </Button>
         </div>
