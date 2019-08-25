@@ -78,11 +78,12 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                   you the features and functionality of the Service. We do not
                   sell, trade or otherwise transfer this information with any
                   external third party organisations, however, in signing up it
-                  will be shared with the City Harvest Volunteer coordinator, as
-                  we use this data to allow the coordinator to contact you in
-                  case of any emergencies or potential shifts. You will be able
-                  to select your contact preferences once the sign up has
-                  completed and you log in for the first time.
+                  will be shared with the City Harvest coordinator, as we use
+                  this data for City Harvest business/legitimate interests that
+                  include but are not limited to allowing the coordinator to
+                  contact you in case of any emergencies or potential shifts.
+                  You will be able to select your contact preferences once the
+                  sign up has completed and you log in for the first time.
                 </Card.Text>
                 <Card.Text>
                   Please note: The Charity may also ask additional questions as
