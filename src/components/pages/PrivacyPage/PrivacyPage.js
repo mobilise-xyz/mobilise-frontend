@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import Layout from '../../Layout';
-import PrivacyPolicy from '../../forms/PrivacyPolicy';
+import PrivacyPolicy from '../../PrivacyPolicy';
 
 const PrivacyPage = () => {
   return (

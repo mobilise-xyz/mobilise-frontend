@@ -79,18 +79,17 @@ const PrivacyPolicy = ({ defaultActiveKey = '', onSignupPage = true }) => {
                   sell, trade or otherwise transfer this information with any
                   external third party organisations, however, in signing up it
                   will be shared with the City Harvest Volunteer coordinator, as
-                  it is required for them to approve you as a new Volunteer. We
-                  also use this data to allow the Volunteer coordinator to
-                  contact you in case of any emergencies or potential shifts and
-                  you will be able to select your contact preferences after
-                  being accepted by the coordinator.
+                  we use this data to allow the coordinator to contact you in
+                  case of any emergencies or potential shifts. You will be able
+                  to select your contact preferences once the sign up has
+                  completed and you log in for the first time.
                 </Card.Text>
                 <Card.Text>
                   Please note: The Charity may also ask additional questions as
                   part of the sign up process which the coordinator will also be
-                  able to see your answers to. However, these questions are
-                  covered under the Charity Privacy Policy and Mobilise are a
-                  data processor in this process.
+                  able to see your answers to. However, the answers to these
+                  questions are covered under the Charity Privacy Policy and
+                  Mobilise do not currently take part in this process
                 </Card.Text>
               </ListGroup.Item>
               <ListGroup.Item>

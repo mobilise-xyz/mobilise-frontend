@@ -3,7 +3,7 @@ import { Button, Row, Col, Form, InputGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import usersActions from '../../../_actions/users.actions';
 
-import PrivacyPolicy from '../PrivacyPolicy';
+import PrivacyPolicy from '../../PrivacyPolicy';
 
 class SignUpForm extends React.Component {
   state = {
