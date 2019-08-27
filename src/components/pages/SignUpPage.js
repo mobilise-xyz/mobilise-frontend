@@ -6,9 +6,11 @@ export default class SignUpPage extends React.Component {
   state = {};
 
   render() {
+    const { location } = this.props;
+    const token = new URLSearchParams(location.search).get('token');
     return (
       <CardLayout title="Sign up">
-        <SignUpForm />
+        <SignUpForm token={token} />
       </CardLayout>
     );
   }

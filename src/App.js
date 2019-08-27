@@ -14,7 +14,6 @@ import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedSh
 import FeedbackPage from './components/pages/HelpPages/FeedbackPage';
 import Dashboard from './components/pages/Dashboard';
 import VolunteersPage from './components/pages/VolunteersPage';
-import ApprovalsPage from './components/pages/ApprovalsPage';
 import SettingsPage from './components/pages/SettingsPage';
 import PrivacyPage from './components/pages/PrivacyPage';
 import WelcomePage from './components/pages/WelcomePage/WelcomePage';
@@ -53,7 +52,6 @@ export class App extends React.Component {
             <PrivateRoute path="/settings" exact component={SettingsPage} />
             <PrivateRoute path="/privacy" exact component={PrivacyPage} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
-            <AdminRoute path="/approvals" exact component={ApprovalsPage} />
             <AdminRoute path="/volunteers" exact component={VolunteersPage} />
             <PrivateRoute path="/welcome" exact component={WelcomePage} />
 

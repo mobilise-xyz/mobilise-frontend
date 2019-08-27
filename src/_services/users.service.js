@@ -40,14 +40,15 @@ const submitFeedback = (uid, feedback) => {
     .then(utils.handleResponse);
 };
 
-const register = (firstName, lastName, email, telephone, password) => {
+const register = (firstName, lastName, email, telephone, password, token) => {
   return axios
     .post('/auth/register', {
       firstName,
       lastName,
       email,
       telephone,
-      password
+      password,
+      token
     })
     .then(utils.handleResponse);
 };

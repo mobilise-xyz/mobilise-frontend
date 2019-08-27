@@ -73,7 +73,7 @@ class SignUpForm extends React.Component {
     e.preventDefault();
 
     const { data } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, token } = this.props;
 
     dispatch(
       usersActions.register(
@@ -81,7 +81,8 @@ class SignUpForm extends React.Component {
         data.lastName,
         data.email,
         data.telephone,
-        data.password
+        data.password,
+        token
       )
     );
   };

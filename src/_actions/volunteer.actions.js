@@ -26,31 +26,28 @@ const getAll = (approved = true, sortBy) => {
   };
 };
 
-const approve = uid => {
-  const request = () => ({ type: volunteerConstants.APPROVE_REQUEST });
+const invite = email => {
+  const request = () => ({ type: volunteerConstants.INVITE_REQUEST });
   const success = result => ({
-    type: volunteerConstants.APPROVE_SUCCESS,
-    result,
-    uid
+    type: volunteerConstants.INVITE_SUCCESS,
+    result
   });
   const failure = error => ({
-    type: volunteerConstants.APPROVE_FAILURE,
+    type: volunteerConstants.INVITE_FAILURE,
     error
   });
 
   return dispatch => {
     dispatch(request());
 
-    volunteerService.approve(uid).then(
-      ({ result }) => {
-        dispatch(success(result));
-        dispatch(alertActions.success(`Volunteer successfully approved!`));
+    volunteerService.invite(email).then(
+      ({ contributions }) => {
+        dispatch(success(contributions));
+        dispatch(alertActions.success('Successfully invited volunteer!'));
       },
       error => {
         dispatch(failure(error));
-        dispatch(
-          alertActions.success(`Something went wrong approving volunteer!`)
-        );
+        dispatch(alertActions.error(error.response.data.message));
       }
     );
   };
@@ -126,7 +123,7 @@ const getActivity = uid => {
 };
 
 const volunteerActions = {
-  approve,
+  invite,
   getAll,
   getContributions,
   getHallOfFame,

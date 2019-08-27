@@ -14,13 +14,17 @@ const getAll = (approved, sortBy) => {
   return axios.get(`/volunteers`, config).then(utils.handleResponse);
 };
 
-const approve = uid => {
+const invite = email => {
   const config = {
     headers: authHeader()
   };
 
+  const data = {
+    email
+  };
+
   return axios
-    .post(`/volunteers/${uid}/approve`, {}, config)
+    .post(`/volunteers/invite`, data, config)
     .then(utils.handleResponse);
 };
 
@@ -56,7 +60,7 @@ const getActivity = uid => {
 };
 
 const volunteerService = {
-  approve,
+  invite,
   getAll,
   getContributions,
   getHallOfFame,

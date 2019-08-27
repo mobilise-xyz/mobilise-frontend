@@ -4,15 +4,21 @@ import {
   Container,
   FormControl,
   InputGroup,
-  CardColumns
+  Row,
+  Col,
+  CardColumns,
+  Tooltip,
+  OverlayTrigger
 } from 'react-bootstrap';
 import VolunteerCard from '../../VolunteerCard';
 import volunteerActions from '../../../_actions/volunteer.actions';
 import Layout from '../../Layout/Layout';
+import InviteVolunteerModal from './InviteVolunteerModal';
 
 class VolunteersPage extends React.Component {
   state = {
-    search: ''
+    search: '',
+    showModal: false
   };
 
   componentDidMount() {
@@ -21,6 +27,16 @@ class VolunteersPage extends React.Component {
       dispatch(volunteerActions.getAll(true, 'desc(createdAt)'));
     }
   }
+
+  toggleModal = () => {
+    this.setState(state => ({ showModal: !state.showModal }));
+  };
+
+  handleInvite = email => {
+    const { dispatch } = this.props;
+    dispatch(volunteerActions.invite(email));
+    this.toggleModal();
+  };
 
   handleDataChange = e => {
     const { value } = e.target;
@@ -50,7 +66,7 @@ class VolunteersPage extends React.Component {
   };
 
   render() {
-    const { search } = this.state;
+    const { search, showModal } = this.state;
     let { volunteers } = this.props;
 
     if (!volunteers) {
@@ -88,7 +104,19 @@ class VolunteersPage extends React.Component {
         }
       >
         <hr />
-        <p>This is where you can see all your approved volunteers.</p>
+        <Row>
+          <Col style={{ textAlign: 'right', marginRight: '2em' }}>
+            <OverlayTrigger overlay={<Tooltip>Invite new volunteer</Tooltip>}>
+              <button
+                type="button"
+                className="btn btn-primary bmd-btn-fab add-shift-fab"
+                onClick={this.toggleModal}
+              >
+                <i className="material-icons md-light">add</i>
+              </button>
+            </OverlayTrigger>
+          </Col>
+        </Row>
         <Container className="pt-5 relaxed" style={{ paddingTop: '0' }}>
           {volunteerMap.map(volunteerGroup => {
             return (
@@ -104,6 +132,11 @@ class VolunteersPage extends React.Component {
             );
           })}
         </Container>
+        <InviteVolunteerModal
+          show={showModal}
+          onHide={this.toggleModal}
+          handleSubmit={this.handleInvite}
+        />
       </Layout>
     );
   }
