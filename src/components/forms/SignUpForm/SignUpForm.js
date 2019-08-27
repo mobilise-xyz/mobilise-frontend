@@ -63,7 +63,7 @@ class SignUpForm extends React.Component {
     const { password } = data;
     const { value } = e.target;
     if (password !== value) {
-      e.target.setCustomValidity('Passwords do not Match');
+      e.target.setCustomValidity('Passwords do not match');
     } else {
       e.target.setCustomValidity('');
     }
