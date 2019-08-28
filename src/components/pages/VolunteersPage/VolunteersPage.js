@@ -33,9 +33,9 @@ class VolunteersPage extends React.Component {
     this.setState(state => ({ showModal: !state.showModal }));
   };
 
-  handleInvite = email => {
+  handleInvite = (email, isAdmin) => {
     const { dispatch } = this.props;
-    dispatch(usersActions.invite(email, false));
+    dispatch(usersActions.invite(email, isAdmin));
     this.toggleModal();
   };
 

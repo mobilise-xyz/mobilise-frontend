@@ -5,13 +5,15 @@ class InviteVolunteerModal extends React.Component {
   constructor(props) {
     super(props);
     this.emailInput = React.createRef();
+    this.adminCheck = React.createRef();
   }
 
   handleSubmit = e => {
     e.preventDefault();
     const { handleSubmit } = this.props;
     const email = this.emailInput.current.value;
-    handleSubmit(email);
+    const isAdmin = this.adminCheck.current.value;
+    handleSubmit(email, isAdmin);
   };
 
   render() {
@@ -39,7 +41,13 @@ class InviteVolunteerModal extends React.Component {
                 required
                 ref={this.emailInput}
                 type="email"
-                onChange={this.handleChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Check
+                type="checkbox"
+                ref={this.adminCheck}
+                label="Make an admin"
               />
             </Form.Group>
             <div className="text-center" style={{ margin: 'auto' }}>
