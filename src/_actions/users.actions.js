@@ -145,7 +145,7 @@ const changePassword = (oldPassword, newPassword) => {
   };
 };
 
-const invite = email => {
+const invite = (email, isAdmin) => {
   const request = () => ({ type: usersConstants.INVITE_REQUEST });
   const success = result => ({
     type: usersConstants.INVITE_SUCCESS,
@@ -159,7 +159,7 @@ const invite = email => {
   return dispatch => {
     dispatch(request());
 
-    usersService.invite(email).then(
+    usersService.invite(email, isAdmin).then(
       ({ contributions }) => {
         dispatch(success(contributions));
         dispatch(alertActions.success('Successfully invited volunteer!'));

@@ -35,7 +35,7 @@ class VolunteersPage extends React.Component {
 
   handleInvite = email => {
     const { dispatch } = this.props;
-    dispatch(usersActions.invite(email));
+    dispatch(usersActions.invite(email, false));
     this.toggleModal();
   };
 

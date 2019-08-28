@@ -65,13 +65,14 @@ const changePassword = (oldPassword, newPassword) => {
   return axios.put(`/users/password`, data, config).then(utils.handleResponse);
 };
 
-const invite = email => {
+const invite = (email, isAdmin) => {
   const config = {
     headers: authHeader()
   };
 
   const data = {
-    email
+    email,
+    isAdmin
   };
 
   return axios.post(`/users/invite`, data, config).then(utils.handleResponse);
