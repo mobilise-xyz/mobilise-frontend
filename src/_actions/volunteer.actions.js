@@ -1,6 +1,5 @@
 import volunteerConstants from '../_constants/volunteer.constants';
 import volunteerService from '../_services/volunteer.service';
-import alertActions from './alert.actions';
 
 const getAll = (approved = true, sortBy) => {
   const request = () => ({ type: volunteerConstants.GETALL_REQUEST });
@@ -21,33 +20,6 @@ const getAll = (approved = true, sortBy) => {
       ({ volunteers }) => dispatch(success(volunteers)),
       error => {
         dispatch(failure(error));
-      }
-    );
-  };
-};
-
-const invite = email => {
-  const request = () => ({ type: volunteerConstants.INVITE_REQUEST });
-  const success = result => ({
-    type: volunteerConstants.INVITE_SUCCESS,
-    result
-  });
-  const failure = error => ({
-    type: volunteerConstants.INVITE_FAILURE,
-    error
-  });
-
-  return dispatch => {
-    dispatch(request());
-
-    volunteerService.invite(email).then(
-      ({ contributions }) => {
-        dispatch(success(contributions));
-        dispatch(alertActions.success('Successfully invited volunteer!'));
-      },
-      error => {
-        dispatch(failure(error));
-        dispatch(alertActions.error(error.response.data.message));
       }
     );
   };
@@ -123,7 +95,6 @@ const getActivity = uid => {
 };
 
 const volunteerActions = {
-  invite,
   getAll,
   getContributions,
   getHallOfFame,

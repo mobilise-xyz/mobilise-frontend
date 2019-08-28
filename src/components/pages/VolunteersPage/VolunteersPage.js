@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 import VolunteerCard from '../../VolunteerCard';
 import volunteerActions from '../../../_actions/volunteer.actions';
+import usersActions from '../../../_actions/users.actions';
 import Layout from '../../Layout/Layout';
 import InviteVolunteerModal from './InviteVolunteerModal';
 
@@ -34,7 +35,7 @@ class VolunteersPage extends React.Component {
 
   handleInvite = email => {
     const { dispatch } = this.props;
-    dispatch(volunteerActions.invite(email));
+    dispatch(usersActions.invite(email));
     this.toggleModal();
   };
 

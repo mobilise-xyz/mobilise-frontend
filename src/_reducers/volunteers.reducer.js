@@ -64,16 +64,6 @@ const volunteers = (state = {}, action) => {
             ...state,
             tentative: action.volunteers
           };
-    case volunteerConstants.APPROVE_SUCCESS: {
-      const volunteer = state.tentative.filter(
-        vol => vol.userId === action.uid
-      )[0];
-      return {
-        ...state,
-        tentative: state.tentative.filter(vol => vol.userId !== action.uid),
-        approved: [volunteer, ...state.approved]
-      };
-    }
     default:
       return state;
   }

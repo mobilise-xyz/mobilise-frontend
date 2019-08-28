@@ -14,20 +14,6 @@ const getAll = (approved, sortBy) => {
   return axios.get(`/volunteers`, config).then(utils.handleResponse);
 };
 
-const invite = email => {
-  const config = {
-    headers: authHeader()
-  };
-
-  const data = {
-    email
-  };
-
-  return axios
-    .post(`/volunteers/invite`, data, config)
-    .then(utils.handleResponse);
-};
-
 const getContributions = uid => {
   const config = {
     headers: authHeader()
@@ -60,7 +46,6 @@ const getActivity = uid => {
 };
 
 const volunteerService = {
-  invite,
   getAll,
   getContributions,
   getHallOfFame,

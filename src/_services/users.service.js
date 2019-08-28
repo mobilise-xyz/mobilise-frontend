@@ -65,6 +65,18 @@ const changePassword = (oldPassword, newPassword) => {
   return axios.put(`/users/password`, data, config).then(utils.handleResponse);
 };
 
+const invite = email => {
+  const config = {
+    headers: authHeader()
+  };
+
+  const data = {
+    email
+  };
+
+  return axios.post(`/users/invite`, data, config).then(utils.handleResponse);
+};
+
 const logout = () => {
   // remove user from local storage to log user out
   localStorage.removeItem('user');
@@ -103,6 +115,7 @@ const login = (email, password) => {
 
 const usersService = {
   get,
+  invite,
   changePassword,
   updateContactPreferences,
   submitFeedback,

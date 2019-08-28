@@ -145,6 +145,33 @@ const changePassword = (oldPassword, newPassword) => {
   };
 };
 
+const invite = email => {
+  const request = () => ({ type: usersConstants.INVITE_REQUEST });
+  const success = result => ({
+    type: usersConstants.INVITE_SUCCESS,
+    result
+  });
+  const failure = error => ({
+    type: usersConstants.INVITE_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    usersService.invite(email).then(
+      ({ contributions }) => {
+        dispatch(success(contributions));
+        dispatch(alertActions.success('Successfully invited volunteer!'));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.response.data.message));
+      }
+    );
+  };
+};
+
 const login = (username, password) => {
   const request = user => {
     return { type: usersConstants.LOGIN_REQUEST, user };
@@ -186,6 +213,7 @@ const logout = () => {
 
 const usersActions = {
   get,
+  invite,
   changePassword,
   updateContactPreferences,
   updatePreferenceState: updateContactState,
