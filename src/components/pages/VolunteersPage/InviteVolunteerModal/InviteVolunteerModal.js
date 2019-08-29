@@ -54,6 +54,7 @@ class InviteVolunteerModal extends React.Component {
               <Form.Check
                 type="checkbox"
                 checked={isAdmin}
+                onChange={this.handleChange}
                 label="Make an admin"
               />
             </Form.Group>
