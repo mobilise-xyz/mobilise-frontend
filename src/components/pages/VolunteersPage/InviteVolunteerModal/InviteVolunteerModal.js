@@ -2,23 +2,30 @@ import React from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 
 class InviteVolunteerModal extends React.Component {
+  state = {
+    isAdmin: false
+  };
+
   constructor(props) {
     super(props);
     this.emailInput = React.createRef();
-    this.adminCheck = React.createRef();
   }
+
+  handleChange = ({ target }) => {
+    this.setState({ isAdmin: target.checked });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
     const { handleSubmit } = this.props;
+    const { isAdmin } = this.state;
     const email = this.emailInput.current.value;
-    const isAdmin = this.adminCheck.current.value;
     handleSubmit(email, isAdmin);
   };
 
   render() {
     const { show, onHide } = this.props;
-
+    const { isAdmin } = this.state;
     return (
       <Modal
         show={show}
@@ -46,7 +53,7 @@ class InviteVolunteerModal extends React.Component {
             <Form.Group>
               <Form.Check
                 type="checkbox"
-                ref={this.adminCheck}
+                checked={isAdmin}
                 label="Make an admin"
               />
             </Form.Group>
