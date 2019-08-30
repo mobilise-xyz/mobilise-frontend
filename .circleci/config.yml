@@ -65,7 +65,7 @@ jobs:
 
       - run:
           name: Deploy to S3
-          command: aws s3 sync build/ s3://city-harvest.mobilise.xyz --delete
+          command: aws s3 sync build/ s3://dev.mobilise.xyz --delete
 
       - run:
           name: Invalidate S3 cache
