@@ -61,7 +61,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install python3-pip python3-dev -y
-            sudo pip3 install awscli 
+            sudo pip3 install awscli
 
       - run:
           name: Deploy to S3
@@ -117,12 +117,9 @@ workflows:
           filters:
             branches:
               only: dev
-  build-deploy-master:
-    jobs:
-      - build
       - deploy-master:
           requires:
             - build
           filters:
             branches:
-              only: dev
+              only: master
