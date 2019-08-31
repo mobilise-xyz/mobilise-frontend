@@ -36,7 +36,7 @@ jobs:
       # run tests!
       - run: yarn test -u
 
-  deploy:
+  deploy-dev:
     docker:
       - image: circleci/node:8.16
 
@@ -71,11 +71,58 @@ jobs:
           name: Invalidate S3 cache
           command: aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"
 
+  deploy-master:
+    docker:
+      - image: circleci/node:8.16
+
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+
+      - run:
+          name: Build for deployment
+          command: yarn build
+
+      - run:
+          name: Install awscli
+          command: |
+            sudo apt-get update
+            sudo apt-get install python3-pip python3-dev -y
+            sudo pip3 install awscli
+
+      - run:
+          name: Deploy to S3
+          command: aws s3 sync build/ s3://city-harvest.mobilise.xyz --delete
+
+      - run:
+          name: Invalidate S3 cache
+          command: aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"
+
 workflows:
   version: 2
-  build-deploy:
+  build-deploy-dev:
     jobs:
       - build
-      - deploy:
+      - deploy-dev:
           requires:
             - build
+          filters:
+            branches:
+              only: dev
+  build-deploy-master:
+    jobs:
+      - build
+      - deploy-master:
+          requires:
+            - build
+          filters:
+            branches:
+              only: dev
