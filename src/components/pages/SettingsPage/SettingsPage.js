@@ -39,9 +39,11 @@ const SettingsPage = () => {
         <ErrorBoundary>
           <ChangePasswordForm />
         </ErrorBoundary>
-        <ErrorBoundary>
-          <MyEmergencyContacts />
-        </ErrorBoundary>
+        {!isAdmin ? (
+          <ErrorBoundary>
+            <MyEmergencyContacts />
+          </ErrorBoundary>
+        ) : null}
       </Container>
     </Layout>
   );
