@@ -3,7 +3,6 @@ import { Container } from 'react-bootstrap';
 import Layout from '../../Layout';
 import AvailabilityForm from '../../forms/AvailabilityForm/AvailabilityForm';
 import MetricForm from '../../forms/MetricForm';
-import ChangePasswordForm from '../../forms/ChangePasswordForm';
 import ContactPreferencesForm from '../../forms/ContactPreferencesForm';
 import ErrorBoundary from '../../ErrorBoundary';
 
