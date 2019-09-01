@@ -25,7 +25,7 @@ class VolunteersPage extends React.Component {
   componentDidMount() {
     const { volunteers, dispatch } = this.props;
     if (!volunteers) {
-      dispatch(volunteerActions.getAll(true, 'desc(createdAt)'));
+      dispatch(volunteerActions.getAll('desc(createdAt)'));
     }
   }
 

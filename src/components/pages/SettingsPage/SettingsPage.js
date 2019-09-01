@@ -6,6 +6,7 @@ import MetricForm from '../../forms/MetricForm';
 import ChangePasswordForm from '../../forms/ChangePasswordForm';
 import ContactPreferencesForm from '../../forms/ContactPreferencesForm';
 import ErrorBoundary from '../../ErrorBoundary';
+import MyEmergencyContacts from './MyEmergencyContacts';
 
 const SettingsPage = () => {
   const { isAdmin } = JSON.parse(localStorage.getItem('user'));
@@ -37,6 +38,9 @@ const SettingsPage = () => {
         <h3 className="pt-5">Change Password</h3>
         <ErrorBoundary>
           <ChangePasswordForm />
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <MyEmergencyContacts />
         </ErrorBoundary>
       </Container>
     </Layout>
