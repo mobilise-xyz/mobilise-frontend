@@ -12,7 +12,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGrinBeam, faMeh } from '@fortawesome/free-regular-svg-icons';
 import metricActions from '../../../_actions/metric.actions';
-import PlainTextForm from '../PlainTextForm';
 import authHeader from '../../../_helpers/auth-header';
 import utils from '../../../_helpers/utils';
 import store from '../../../_helpers/store';
@@ -68,27 +67,36 @@ class MetricForm extends React.Component {
                   This will be used to provide a volunteer contribution item
                   relating to the work you do. This is previewed on the right.
                 </Form.Text>
-                <PlainTextForm
-                  id="name"
-                  label="Name:"
-                  name="name"
-                  content={name}
-                  handleChange={this.handleDataChange}
-                />
-                <PlainTextForm
-                  id="verb"
-                  label="Verb:"
-                  name="verb"
-                  content={verb}
-                  handleChange={this.handleDataChange}
-                />
-                <PlainTextForm
-                  id="value"
-                  label="Value per week"
-                  name="value"
-                  content={value.toString(10)}
-                  handleChange={this.handleDataChange}
-                />
+                <Form.Group>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    required
+                    id="name"
+                    name="name"
+                    type="text"
+                    onChange={this.handleDataChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Verb</Form.Label>
+                  <Form.Control
+                    required
+                    id="verb"
+                    name="verb"
+                    type="text"
+                    onChange={this.handleDataChange}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Value</Form.Label>
+                  <Form.Control
+                    required
+                    id="value"
+                    name="value"
+                    type="number"
+                    onChange={this.handleDataChange}
+                  />
+                </Form.Group>
                 <Container className="pt-5 text-center">
                   <Button
                     variant="outline-primary"

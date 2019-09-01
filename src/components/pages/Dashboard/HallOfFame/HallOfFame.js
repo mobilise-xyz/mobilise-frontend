@@ -79,58 +79,66 @@ class HallOfFame extends React.Component {
         <Row className="justify-content-md-center" style={{ margin: '40px' }}>
           <h4>MOST HOURS</h4>
         </Row>
-        <Row>
-          {hoursOrdered.map(val => {
-            return (
-              <Col key={val.rank} style={{ marginTop: '5px' }} xs={8} md={4}>
-                <HallOfFameCard
-                  md={1}
-                  key={val.rank}
-                  id={val.rank}
-                  category={getRankNameForRank(val.rank)}
-                  volunteerName={
-                    val.uid === uid ? `${val.name} (You)` : val.name
-                  }
-                  bottomText={`${val.number} hours given last week`}
-                  icon={
-                    <FontAwesomeIcon
-                      className={`pt-3 ${getIconClassForRank(val.rank)}`}
-                      icon={faStopwatch}
-                      size={`${val.rank === 1 ? 10 : 6}x`}
-                    />
-                  }
-                />
-              </Col>
-            );
-          })}
-        </Row>
+        {hoursOrdered.length > 0 ? (
+          <Row>
+            {hoursOrdered.map(val => {
+              return (
+                <Col key={val.rank} style={{ marginTop: '5px' }} xs={8} md={4}>
+                  <HallOfFameCard
+                    md={1}
+                    key={val.rank}
+                    id={val.rank}
+                    category={getRankNameForRank(val.rank)}
+                    volunteerName={
+                      val.uid === uid ? `${val.name} (You)` : val.name
+                    }
+                    bottomText={`${val.number} hours given last week`}
+                    icon={
+                      <FontAwesomeIcon
+                        className={`pt-3 ${getIconClassForRank(val.rank)}`}
+                        icon={faStopwatch}
+                        size={`${val.rank === 1 ? 10 : 6}x`}
+                      />
+                    }
+                  />
+                </Col>
+              );
+            })}
+          </Row>
+        ) : (
+          <p>Add some volunteers!</p>
+        )}
         <Row className="justify-content-md-center" style={{ margin: '40px' }}>
           <h4>ON THE RISE</h4>
         </Row>
-        <Row>
-          {increaseOrdered.map(val => {
-            return (
-              <Col key={val.rank} style={{ marginTop: '5px' }} xs={8} md={4}>
-                <HallOfFameCard
-                  key={val.rank}
-                  id={val.rank}
-                  category={getRankNameForRank(val.rank)}
-                  volunteerName={
-                    val.uid === uid ? `${val.name} (You)` : val.name
-                  }
-                  bottomText={`${val.number}x increase in activity last week`}
-                  icon={
-                    <FontAwesomeIcon
-                      className={`pt-3 ${getIconClassForRank(val.rank)}`}
-                      icon={faChartLine}
-                      size={`${val.rank === 1 ? 10 : 6}x`}
-                    />
-                  }
-                />
-              </Col>
-            );
-          })}
-        </Row>
+        {increaseOrdered.length > 0 ? (
+          <Row>
+            {increaseOrdered.map(val => {
+              return (
+                <Col key={val.rank} style={{ marginTop: '5px' }} xs={8} md={4}>
+                  <HallOfFameCard
+                    key={val.rank}
+                    id={val.rank}
+                    category={getRankNameForRank(val.rank)}
+                    volunteerName={
+                      val.uid === uid ? `${val.name} (You)` : val.name
+                    }
+                    bottomText={`${val.number}x increase in activity last week`}
+                    icon={
+                      <FontAwesomeIcon
+                        className={`pt-3 ${getIconClassForRank(val.rank)}`}
+                        icon={faChartLine}
+                        size={`${val.rank === 1 ? 10 : 6}x`}
+                      />
+                    }
+                  />
+                </Col>
+              );
+            })}
+          </Row>
+        ) : (
+          <p>Add some volunteers!</p>
+        )}
       </Container>
     );
   }
