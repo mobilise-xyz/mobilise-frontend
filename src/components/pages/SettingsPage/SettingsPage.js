@@ -34,10 +34,6 @@ const SettingsPage = () => {
         <ErrorBoundary>
           <ContactPreferencesForm />
         </ErrorBoundary>
-        <h3 className="pt-5">Change Password</h3>
-        <ErrorBoundary>
-          <ChangePasswordForm />
-        </ErrorBoundary>
       </Container>
     </Layout>
   );
