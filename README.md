@@ -8,6 +8,19 @@ This repository contains the frontend for Mobilise.
 
 **Mobilise** is smart volunteer management.
 
+## Getting Started
+
+### Basics
+
+Add `.env` file in the project directory.
+You will need to add the following to this file:
+
+```
+NODE_ENV=development
+PUBLIC_URL=http://localhost:3000 (not sure to be honest)
+REACT_APP_API_URL=http://localhost:8080
+```
+
 ## Contributing
 
 This application is written in JavaScript and [React](https://reactjs.org/).
