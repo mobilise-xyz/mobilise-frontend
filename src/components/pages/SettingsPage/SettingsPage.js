@@ -5,7 +5,7 @@ import AvailabilityForm from '../../forms/AvailabilityForm/AvailabilityForm';
 import MetricForm from '../../forms/MetricForm';
 import ContactPreferencesForm from '../../forms/ContactPreferencesForm';
 import ErrorBoundary from '../../ErrorBoundary';
-import MyEmergencyContacts from './MyEmergencyContacts';
+import MyEmergencyContactsForm from '../../forms/MyEmergencyContactsForm';
 
 const SettingsPage = () => {
   const { isAdmin } = JSON.parse(localStorage.getItem('user'));
@@ -34,10 +34,14 @@ const SettingsPage = () => {
         <ErrorBoundary>
           <ContactPreferencesForm />
         </ErrorBoundary>
+        <hr />
         {!isAdmin ? (
-          <ErrorBoundary>
-            <MyEmergencyContacts />
-          </ErrorBoundary>
+          <>
+            <h3 className="pt-5">My Emergency Contacts</h3>
+            <ErrorBoundary>
+              <MyEmergencyContactsForm />
+            </ErrorBoundary>
+          </>
         ) : null}
       </Container>
     </Layout>

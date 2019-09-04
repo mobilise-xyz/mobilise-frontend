@@ -1,10 +1,10 @@
 import React from 'react';
-import { Container, Card, Col, Row, Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import volunteerActions from '../../../../_actions/volunteer.actions';
+import { connect } from 'react-redux';
+import { faPlus, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import NewEmergencyContactModal from './NewEmergencyContactModal';
+import volunteerActions from '../../../_actions/volunteer.actions';
 
 class MyEmergencyContacts extends React.Component {
   state = {
@@ -18,10 +18,6 @@ class MyEmergencyContacts extends React.Component {
       dispatch(volunteerActions.getContacts(uid));
     }
   }
-
-  toggleModal = () => {
-    this.setState(state => ({ showModal: !state.showModal }));
-  };
 
   addContact = (firstName, lastName, email, telephone, relation) => {
     this.toggleModal();
@@ -39,6 +35,10 @@ class MyEmergencyContacts extends React.Component {
     );
   };
 
+  toggleModal = () => {
+    this.setState(state => ({ showModal: !state.showModal }));
+  };
+
   removeContact = id => {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
@@ -52,10 +52,12 @@ class MyEmergencyContacts extends React.Component {
     if (!contacts) {
       contacts = [];
     }
-
     return (
-      <Container className="pt-5 relaxed">
-        <h3>My Emergency Contacts</h3>
+      <>
+        <p>
+          Please add at least 1 emergency contact. This will only be visible to
+          the volunteer coordinators at City Harvest London.
+        </p>
         {contacts.length > 0 ? (
           contacts.map(contact => {
             return (
@@ -66,10 +68,12 @@ class MyEmergencyContacts extends React.Component {
                       <Row>
                         <Col>
                           <Card.Title>
-                            {contact.firstName} {contact.lastName}
+                            {contact.firstName} {contact.lastName} (
+                            {contact.relation})
                           </Card.Title>
-                          <div style={{ height: '7%' }} />
-                          <Card.Text>Telephone: {contact.telephone}</Card.Text>
+                          <Card.Text className="mb-2 text-muted">
+                            Telephone: {contact.telephone}
+                          </Card.Text>
                           {contact.email ? (
                             <Card.Text className="mb-2 text-muted">
                               Email:{' '}
@@ -87,8 +91,8 @@ class MyEmergencyContacts extends React.Component {
                             onClick={() => this.removeContact(contact.id)}
                           >
                             <FontAwesomeIcon
-                              className="text-danger"
-                              icon={faTrash}
+                              className="text-silver"
+                              icon={faEdit}
                               size="2x"
                             />
                           </Button>
@@ -96,7 +100,17 @@ class MyEmergencyContacts extends React.Component {
                         <Col
                           md={1}
                           style={{ marginTop: 'auto', marginBottom: 'auto' }}
-                        ></Col>
+                        >
+                          <Button
+                            onClick={() => this.removeContact(contact.id)}
+                          >
+                            <FontAwesomeIcon
+                              className="text-danger"
+                              icon={faTrash}
+                              size="2x"
+                            />
+                          </Button>
+                        </Col>
                       </Row>
                     </Card.Body>
                   </Card>
@@ -105,7 +119,7 @@ class MyEmergencyContacts extends React.Component {
             );
           })
         ) : (
-          <h5>Please add an emergency contact</h5>
+          <p>No current contacts.</p>
         )}
         <Row>
           <Button
@@ -124,7 +138,7 @@ class MyEmergencyContacts extends React.Component {
           onHide={this.toggleModal}
           handleSubmit={this.addContact}
         />
-      </Container>
+      </>
     );
   }
 }
