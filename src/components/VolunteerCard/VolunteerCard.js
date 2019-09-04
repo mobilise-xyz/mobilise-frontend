@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import { Card, Nav, Tab } from 'react-bootstrap';
 
 const VolunteerCard = ({ volunteer }) => {
@@ -14,18 +13,13 @@ const VolunteerCard = ({ volunteer }) => {
         <Card.Body>
           <Tab.Content>
             <Tab.Pane eventKey="first">
-              <Card.Text>
-                Joined <strong>{moment(volunteer.createdAt).fromNow()}</strong>
-              </Card.Text>
-            </Tab.Pane>
-            <Tab.Pane eventKey="second">
               Email:{' '}
               <a href={`mailto:${volunteer.user.email}`}>
                 {volunteer.user.email}
               </a>
               <Card.Text>Telephone: {volunteer.user.telephone}</Card.Text>
             </Tab.Pane>
-            <Tab.Pane eventKey="third">
+            <Tab.Pane eventKey="second">
               {volunteer.contacts.length > 0 ? (
                 volunteer.contacts.map(contact => {
                   return (
@@ -54,10 +48,7 @@ const VolunteerCard = ({ volunteer }) => {
               <Nav.Link eventKey="first">About</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="second">Contact</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="third">Emergency</Nav.Link>
+              <Nav.Link eventKey="second">Emergency</Nav.Link>
             </Nav.Item>
           </Nav>
         </Card.Footer>
