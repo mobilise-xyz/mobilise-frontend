@@ -124,7 +124,10 @@ class VolunteersPage extends React.Component {
               <>
                 <h2>{volunteerGroup.letter}</h2>
                 <hr />
-                <CardColumns style={{ paddingBottom: '1em' }}>
+                <CardColumns
+                  key={volunteerGroup.letter}
+                  style={{ paddingBottom: '1em' }}
+                >
                   {volunteerGroup.volunteers.map(volunteer => {
                     return <VolunteerCard volunteer={volunteer} />;
                   })}
