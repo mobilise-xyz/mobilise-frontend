@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Col } from 'react-bootstrap';
-import { shiftStatus } from '../../Shift';
 import CalendarView from '../CalendarView';
 import Layout from '../../Layout/Layout';
 
 class CalendarPage extends React.Component {
   render() {
-    const { shifts, error } = this.props;
+    const { shifts, myShifts, error } = this.props;
 
-    if (!shifts) {
+    if (!shifts && !myShifts) {
       return null;
     }
 
@@ -24,7 +23,7 @@ class CalendarPage extends React.Component {
             Export
           </Button>
         </Col>
-        <CalendarView shifts={shifts.all} type={shiftStatus.NONE} />
+        <CalendarView shifts={shifts.all} myShifts={myShifts.all} />
       </Layout>
     );
   }

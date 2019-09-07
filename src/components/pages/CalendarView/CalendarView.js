@@ -27,11 +27,11 @@ const eventStyleGetter = () => ({
 });
 
 const CalendarView = props => {
-  const { shifts, isAdmin, type = shiftStatus.NONE, onRangeChange } = props;
+  const { shifts, myShifts, isAdmin, onRangeChange } = props;
 
   const recommendedRoleNames = [];
 
-  const events = shifts.map(s => {
+  const shiftEvents = shifts.map(s => {
     s.requirements.forEach(req => {
       if (req.recommended) {
         recommendedRoleNames.push(req.role.roleName);
@@ -45,7 +45,25 @@ const CalendarView = props => {
       shiftData: s,
       isAdmin,
       recommendedRoleNames,
-      type
+      type: shiftStatus.NONE
+    };
+  });
+
+  const bookedEvents = myShifts.map(s => {
+    s.requirements.forEach(req => {
+      if (req.recommended) {
+        recommendedRoleNames.push(req.role.roleName);
+      }
+    });
+
+    return {
+      title: s.title,
+      start: moment(`${s.date} ${s.start}`).toDate(),
+      end: moment(`${s.date} ${s.stop}`).toDate(),
+      shiftData: s,
+      isAdmin,
+      recommendedRoleNames,
+      type: shiftStatus.BOOKED
     };
   });
 
@@ -54,7 +72,7 @@ const CalendarView = props => {
       <div style={{ height: '75vh' }}>
         <BigCalendar
           localizer={localizer}
-          events={events}
+          events={[...shiftEvents, ...bookedEvents]}
           defaultView="week"
           components={customComponents}
           onRangeChange={onRangeChange || (() => {})}
