@@ -2,42 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Button, Col, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import './MyShiftsPage.css';
 import Layout from '../../Layout';
 import ShiftList from '../../ShiftList';
 import shiftsActions from '../../../_actions/shifts.actions';
-import CalendarView from '../CalendarView/CalendarView';
 import { shiftStatus } from '../../Shift';
 
 const ITEMS_PER_PAGE = 5;
 
-const ViewSwitch = ({ handleListView, handleCalendarView }) => (
-  <Col>
-    <ToggleButtonGroup type="radio" name="viewOptions" defaultValue={1}>
-      <ToggleButton value={1} variant="primary" onClick={handleListView}>
-        List
-      </ToggleButton>
-      <ToggleButton value={2} variant="primary" onClick={handleCalendarView}>
-        Calendar
-      </ToggleButton>
-    </ToggleButtonGroup>
-  </Col>
-);
-
 class MyShiftsPage extends React.Component {
-  state = {
-    viewType: 'list'
-  };
-
-  handleListView = () => {
-    this.setState({ viewType: 'list' });
-  };
-
-  handleCalendarView = () => {
-    this.setState({ viewType: 'calendar' });
-  };
-
   componentDidMount = () => {
     this.fetchInitialShifts();
   };
@@ -57,23 +30,6 @@ class MyShiftsPage extends React.Component {
     dispatch(shiftsActions.getBookedForUser(uid, startTime, null, page + 1));
   };
 
-  handleCalendarRangeChange = dates => {
-    const { dispatch, myShifts } = this.props;
-    const lastDate = moment(dates[dates.length - 1]);
-    const lastShift = myShifts.all[myShifts.all.length - 1];
-    const lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
-    const { uid } = JSON.parse(localStorage.getItem('user'));
-    if (lastDate.isAfter(lastShiftDate)) {
-      dispatch(
-        shiftsActions.getBookedForUser(
-          uid,
-          lastShiftDate.format(),
-          lastDate.format()
-        )
-      );
-    }
-  };
-
   exportCalendar = () => {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
@@ -83,7 +39,6 @@ class MyShiftsPage extends React.Component {
 
   render() {
     const { myShifts, error, hasMore } = this.props;
-    const { viewType } = this.state;
 
     if (!myShifts) {
       return null;
@@ -93,56 +48,24 @@ class MyShiftsPage extends React.Component {
       return <p>error</p>;
     }
 
-    let view = 'list';
-    switch (viewType) {
-      case 'list':
-        view = (
-          <InfiniteScroll
-            dataLength={myShifts.all.length}
-            next={this.fetchMoreShifts}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={
-              <p style={{ textAlign: 'center' }}>
-                <b>No more shifts coming up!</b>
-              </p>
-            }
-          >
-            <ShiftList type={shiftStatus.BOOKED} shifts={myShifts.all} />
-          </InfiniteScroll>
-        );
-        break;
-      case 'calendar':
-        view = (
-          <CalendarView
-            shifts={myShifts.all}
-            type={shiftStatus.BOOKED}
-            onRangeChange={this.handleCalendarRangeChange}
-          />
-        );
-        break;
-      default:
-    }
     return (
-      <Layout
-        heading="My Upcoming Shifts"
-        cornerComponent={
-          <ViewSwitch
-            handleListView={this.handleListView}
-            handleCalendarView={this.handleCalendarView}
-          />
-        }
-      >
-        <Col style={{ textAlign: 'right', zIndex: '0' }}>
-          <Button variant="outline-primary" onClick={this.exportCalendar}>
-            Export Calendar
-          </Button>
-        </Col>
-
+      <Layout heading="My Upcoming Shifts" cornerComponent={null}>
         {myShifts.all.length === 0 ? (
           <h5>You have no upcoming shifts. Why not book one?</h5>
         ) : null}
-        {view}
+        <InfiniteScroll
+          dataLength={myShifts.all.length}
+          next={this.fetchMoreShifts}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>No more shifts coming up!</b>
+            </p>
+          }
+        >
+          <ShiftList type={shiftStatus.BOOKED} shifts={myShifts.all} />
+        </InfiniteScroll>
       </Layout>
     );
   }

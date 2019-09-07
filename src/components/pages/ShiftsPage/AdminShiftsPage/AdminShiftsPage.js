@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Col,
-  OverlayTrigger,
-  ToggleButton,
-  ToggleButtonGroup,
-  Tooltip
-} from 'react-bootstrap';
+import { Button, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from 'react-redux';
@@ -19,52 +12,11 @@ import CalendarView from '../../CalendarView';
 
 const ITEMS_PER_PAGE = 5;
 
-// TODO: remove duplication between here and MyShiftsPage
-const ViewSwitch = ({ handleListView, handleCalendarView }) => (
-  <Col>
-    <ToggleButtonGroup type="radio" name="viewOptions" defaultValue={1}>
-      <ToggleButton value={1} onClick={handleListView}>
-        List
-      </ToggleButton>
-      <ToggleButton value={2} onClick={handleCalendarView}>
-        Calendar
-      </ToggleButton>
-    </ToggleButtonGroup>
-  </Col>
-);
-
 class AdminShiftsPage extends React.Component {
-  state = {
-    viewType: 'list'
-  };
-
   // TODO Handle exception properly.
   componentDidMount() {
     this.fetchInitialShifts();
   }
-
-  handleListView = () => {
-    this.setState({ viewType: 'list' });
-  };
-
-  handleCalendarView = () => {
-    this.setState({ viewType: 'calendar' });
-  };
-
-  handleCalendarRangeChange = dates => {
-    const { dispatch, shifts } = this.props;
-    const lastDate = moment(dates[dates.length - 1]);
-    const lastShift = shifts.all[shifts.all.length - 1];
-
-    if (!lastShift) {
-      return;
-    }
-
-    const lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
-    if (lastDate.isAfter(lastShiftDate)) {
-      dispatch(shiftsActions.getAll(lastShiftDate.format(), lastDate.format()));
-    }
-  };
 
   exportCalendar = () => {
     const { dispatch } = this.props;
@@ -126,15 +78,7 @@ class AdminShiftsPage extends React.Component {
     }
 
     return (
-      <Layout
-        heading="Upcoming Shifts"
-        cornerComponent={
-          <ViewSwitch
-            handleListView={this.handleListView}
-            handleCalendarView={this.handleCalendarView}
-          />
-        }
-      >
+      <Layout heading="Upcoming Shifts" cornerComponent={null}>
         <Col style={{ textAlign: 'right', zIndex: '0' }}>
           <Button variant="outline-primary" onClick={this.exportCalendar}>
             Export Calendar
