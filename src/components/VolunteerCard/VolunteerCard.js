@@ -23,7 +23,7 @@ const VolunteerCard = ({ volunteer }) => {
               {volunteer.contacts.length > 0 ? (
                 volunteer.contacts.map(contact => {
                   return (
-                    <Card>
+                    <Card key={contact.id}>
                       <Card.Header>
                         {contact.firstName} {contact.lastName} (
                         {contact.relation})

@@ -121,7 +121,7 @@ class VolunteersPage extends React.Component {
         <Container className="pt-5 relaxed" style={{ paddingTop: '0' }}>
           {volunteerMap.map(volunteerGroup => {
             return (
-              <>
+              <div key={volunteerGroup.letter}>
                 <h2>{volunteerGroup.letter}</h2>
                 <hr />
                 <CardColumns
@@ -129,10 +129,15 @@ class VolunteersPage extends React.Component {
                   style={{ paddingBottom: '1em' }}
                 >
                   {volunteerGroup.volunteers.map(volunteer => {
-                    return <VolunteerCard volunteer={volunteer} />;
+                    return (
+                      <VolunteerCard
+                        key={volunteer.userId}
+                        volunteer={volunteer}
+                      />
+                    );
                   })}
                 </CardColumns>
-              </>
+              </div>
             );
           })}
         </Container>
