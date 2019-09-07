@@ -9,6 +9,7 @@ import ContactPreferencesCheckboxes from '../../forms/ContactPreferencesForm/Con
 import usersActions from '../../../_actions/users.actions';
 import './WelcomePage.css';
 import Layout from '../../Layout';
+import MyEmergencyContacts from '../../forms/MyEmergencyContactsForm/MyEmergencyContacts';
 
 class WelcomePage extends Component {
   componentDidMount() {
@@ -52,6 +53,13 @@ class WelcomePage extends Component {
             <Card.Body>
               <Card.Text>
                 <ContactPreferencesCheckboxes />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+          <Card className="mt-3">
+            <Card.Body>
+              <Card.Text>
+                <MyEmergencyContacts />
               </Card.Text>
             </Card.Body>
           </Card>

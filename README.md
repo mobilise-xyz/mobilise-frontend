@@ -22,7 +22,6 @@ REACT_APP_API_URL=http://localhost:8080
 REACT_APP_GOOGLE_API_KEY=yourgoogleapikey
 ```
 
-
 ## Contributing
 
 This application is written in JavaScript and [React](https://reactjs.org/).

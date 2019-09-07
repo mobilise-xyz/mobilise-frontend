@@ -45,8 +45,51 @@ const getActivity = uid => {
     .then(({ myActivity }) => ({ activity: myActivity }));
 };
 
+const addContact = (uid, firstName, lastName, email, telephone, relation) => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .post(
+      `/volunteers/${uid}/contacts`,
+      {
+        firstName,
+        lastName,
+        email,
+        telephone,
+        relation
+      },
+      config
+    )
+    .then(utils.handleResponse);
+};
+
+const getContacts = uid => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .get(`/volunteers/${uid}/contacts`, config)
+    .then(utils.handleResponse);
+};
+
+const removeContact = (uid, id) => {
+  const config = {
+    headers: authHeader()
+  };
+
+  return axios
+    .delete(`/volunteers/${uid}/contacts/${id}`, config)
+    .then(utils.handleResponse);
+};
+
 const volunteerService = {
   getAll,
+  removeContact,
+  addContact,
+  getContacts,
   getContributions,
   getHallOfFame,
   getActivity
