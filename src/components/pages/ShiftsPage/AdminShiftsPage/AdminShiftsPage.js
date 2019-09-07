@@ -31,7 +31,7 @@ class AdminShiftsPage extends React.Component {
 
   fetchMoreShifts = () => {
     const { dispatch, startTime, shifts } = this.props;
-    const { length } = shifts.all;
+    const { length } = shifts;
     const page = length / ITEMS_PER_PAGE;
     dispatch(shiftsActions.getAll(startTime, null, page + 1));
   };
@@ -51,7 +51,7 @@ class AdminShiftsPage extends React.Component {
       case 'list':
         view = (
           <InfiniteScroll
-            dataLength={shifts.all.length}
+            dataLength={shifts.length}
             next={this.fetchMoreShifts}
             hasMore={hasMore}
             loader={<h4>Loading...</h4>}
@@ -61,7 +61,7 @@ class AdminShiftsPage extends React.Component {
               </p>
             }
           >
-            <ShiftList isAdmin shifts={shifts.all} />
+            <ShiftList isAdmin shifts={shifts} />
           </InfiniteScroll>
         );
         break;
@@ -69,7 +69,7 @@ class AdminShiftsPage extends React.Component {
         view = (
           <CalendarView
             isAdmin
-            shifts={shifts.all}
+            shifts={shifts}
             onRangeChange={this.handleCalendarRangeChange}
           />
         );

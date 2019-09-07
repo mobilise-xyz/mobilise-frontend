@@ -24,7 +24,7 @@ class MyShiftsPage extends React.Component {
 
   fetchMoreShifts = () => {
     const { dispatch, startTime, myShifts } = this.props;
-    const { length } = myShifts.all;
+    const { length } = myShifts;
     const page = length / ITEMS_PER_PAGE;
     const { uid } = JSON.parse(localStorage.getItem('user'));
     dispatch(shiftsActions.getBookedForUser(uid, startTime, null, page + 1));
@@ -43,11 +43,11 @@ class MyShiftsPage extends React.Component {
 
     return (
       <Layout heading="My Upcoming Shifts" cornerComponent={null}>
-        {myShifts.all.length === 0 ? (
+        {myShifts.length === 0 ? (
           <h5>You have no upcoming shifts. Why not book one?</h5>
         ) : null}
         <InfiniteScroll
-          dataLength={myShifts.all.length}
+          dataLength={myShifts.length}
           next={this.fetchMoreShifts}
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
@@ -57,7 +57,7 @@ class MyShiftsPage extends React.Component {
             </p>
           }
         >
-          <ShiftList type={shiftStatus.BOOKED} shifts={myShifts.all} />
+          <ShiftList type={shiftStatus.BOOKED} shifts={myShifts} />
         </InfiniteScroll>
       </Layout>
     );

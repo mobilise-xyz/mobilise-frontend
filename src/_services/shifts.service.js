@@ -4,26 +4,6 @@ import utils from '../_helpers/utils';
 import alertActions from '../_actions/alert.actions';
 import history from '../_helpers/history';
 
-const placeholderShift = {
-  id: -1,
-  title: 'Loading...',
-  description: null,
-  creator: {
-    user: {
-      firstName: '',
-      lastName: ''
-    }
-  },
-  requirements: [
-    {
-      numberRequired: 0,
-      role: {
-        name: 'Loading...'
-      }
-    }
-  ]
-};
-
 const create = shiftData => {
   const config = {
     headers: authHeader()
@@ -49,7 +29,7 @@ const getAll = (after, before, page) => {
     .then(utils.handleResponse)
     .then(data => {
       const { shifts } = data;
-      return { all: shifts };
+      return shifts;
     })
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };
@@ -69,10 +49,7 @@ const getAvailableForUser = (uid, after, before, page) => {
     .then(utils.handleResponse)
     .then(data => {
       const { shifts } = data;
-      return {
-        all: shifts,
-        recommended: [placeholderShift]
-      };
+      return shifts;
     })
     .catch(
       alertActions.error('There was a problem retrieving available shifts.')
@@ -94,10 +71,7 @@ const getBookedForUser = (uid, after, before, page) => {
     .then(utils.handleResponse)
     .then(data => {
       const { shifts } = data;
-      return {
-        all: shifts,
-        recommended: [placeholderShift]
-      };
+      return shifts;
     })
     .catch(alertActions.error('There was a problem retrieving your shifts.'));
 };

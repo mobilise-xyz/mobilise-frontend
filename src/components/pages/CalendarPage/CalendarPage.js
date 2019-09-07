@@ -75,8 +75,8 @@ class CalendarPage extends React.Component {
           </Button>
         </Col>
         <CalendarView
-          shifts={shifts.all}
-          myShifts={myShifts.all}
+          shifts={shifts}
+          myShifts={myShifts}
           onRangeChange={this.handleCalendarRangeChange}
         />
       </Layout>

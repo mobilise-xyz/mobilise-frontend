@@ -1,12 +1,11 @@
 import moment from 'moment';
 import shiftsConstants from '../_constants/shifts.constants';
 
+const ITEMS_PER_PAGE = 5;
+
 // Utility function that applies a function to all and recommended shifts and
 // returns the appropriate state.
-const applyToShifts = (shifts, action, f) => ({
-  all: shifts.all.map(f),
-  recommended: shifts.recommended ? shifts.recommended.map(f) : undefined
-});
+const applyToShifts = (shifts, action, f) => shifts.map(f);
 
 const combineShifts = (oldShifts, newShifts) => {
   return [
@@ -41,7 +40,7 @@ const shifts = (state = {}, action) => {
         ...state,
         shifts: action.shifts,
         startTime: moment().format(),
-        hasMore: action.shifts.all.length > 0,
+        hasMore: action.shifts.length === ITEMS_PER_PAGE,
         loading: false
       };
     }
@@ -50,17 +49,17 @@ const shifts = (state = {}, action) => {
         ...state,
         myShifts: action.myShifts,
         startTime: moment().format(),
-        hasMore: action.myShifts.all.length > 0,
+        hasMore: action.myShifts.length === ITEMS_PER_PAGE,
         loading: false
       };
     }
     case shiftsConstants.GETALL_SUCCESS:
     case shiftsConstants.GETFORUSER_SUCCESS: {
-      const newShifts = combineShifts(state.shifts.all, action.shifts.all);
+      const newShifts = combineShifts(state.shifts, action.shifts);
       return {
         ...state,
-        shifts: { all: newShifts },
-        hasMore: action.shifts.all.length > 0,
+        shifts: newShifts,
+        hasMore: action.shifts.length === ITEMS_PER_PAGE,
         loading: false
       };
     }
@@ -78,14 +77,11 @@ const shifts = (state = {}, action) => {
         loading: true
       };
     case shiftsConstants.GETBOOKEDFORUSER_SUCCESS: {
-      const myNewShifts = combineShifts(
-        state.myShifts.all,
-        action.myShifts.all
-      );
+      const myNewShifts = combineShifts(state.myShifts, action.myShifts);
       return {
         ...state,
-        myShifts: { all: myNewShifts },
-        hasMore: action.myShifts.all.length > 0,
+        myShifts: myNewShifts,
+        hasMore: action.myShifts.length === ITEMS_PER_PAGE,
         loading: false
       };
     }
