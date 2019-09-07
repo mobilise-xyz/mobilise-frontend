@@ -115,6 +115,7 @@ class Shift extends React.Component {
       isDeleted,
       isBooked,
       isCancelled,
+      type,
       shiftData
     };
 

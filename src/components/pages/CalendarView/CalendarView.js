@@ -21,10 +21,13 @@ const localizer = BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 
 const customComponents = { event: ShiftEvent, toolbar: MyToolbar };
 
-const eventStyleGetter = () => ({
-  className: 'bg-primary',
-  style: { padding: 0, border: 0 }
-});
+const eventStyleGetter = event => {
+  const { type } = event;
+  return {
+    className: type === shiftStatus.BOOKED ? 'bg-primary' : 'bg-light-grey',
+    style: { padding: 0, border: 0 }
+  };
+};
 
 const CalendarView = props => {
   const { shifts, myShifts, isAdmin, onRangeChange } = props;
