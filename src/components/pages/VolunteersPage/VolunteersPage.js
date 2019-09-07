@@ -25,7 +25,7 @@ class VolunteersPage extends React.Component {
   componentDidMount() {
     const { volunteers, dispatch } = this.props;
     if (!volunteers) {
-      dispatch(volunteerActions.getAll(true, 'desc(createdAt)'));
+      dispatch(volunteerActions.getAll('desc(createdAt)'));
     }
   }
 
@@ -121,15 +121,20 @@ class VolunteersPage extends React.Component {
         <Container className="pt-5 relaxed" style={{ paddingTop: '0' }}>
           {volunteerMap.map(volunteerGroup => {
             return (
-              <>
+              <div key={volunteerGroup.letter}>
                 <h2>{volunteerGroup.letter}</h2>
                 <hr />
                 <CardColumns style={{ paddingBottom: '1em' }}>
                   {volunteerGroup.volunteers.map(volunteer => {
-                    return <VolunteerCard volunteer={volunteer} />;
+                    return (
+                      <VolunteerCard
+                        key={volunteer.userId}
+                        volunteer={volunteer}
+                      />
+                    );
                   })}
                 </CardColumns>
-              </>
+              </div>
             );
           })}
         </Container>
