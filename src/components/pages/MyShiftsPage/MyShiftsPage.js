@@ -30,13 +30,6 @@ class MyShiftsPage extends React.Component {
     dispatch(shiftsActions.getBookedForUser(uid, startTime, null, page + 1));
   };
 
-  exportCalendar = () => {
-    const { dispatch } = this.props;
-    const { uid } = JSON.parse(localStorage.getItem('user'));
-
-    dispatch(shiftsActions.getCalendarForUser(uid));
-  };
-
   render() {
     const { myShifts, error, hasMore } = this.props;
 

@@ -18,7 +18,7 @@ class VolunteerShiftsPage extends React.Component {
     const { dispatch } = this.props;
     const now = moment().format();
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(shiftsActions.getAvailableForUser(uid, now, 1, true));
+    dispatch(shiftsActions.getAvailableForUser(uid, now, null, 1, true));
   };
 
   fetchMoreShifts = () => {
@@ -26,7 +26,7 @@ class VolunteerShiftsPage extends React.Component {
     const { length } = shifts.all;
     const page = length / ITEMS_PER_PAGE;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(shiftsActions.getAvailableForUser(uid, startTime, page + 1));
+    dispatch(shiftsActions.getAvailableForUser(uid, startTime, null, page + 1));
   };
 
   render() {

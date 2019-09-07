@@ -8,6 +8,22 @@ const applyToShifts = (shifts, action, f) => ({
   recommended: shifts.recommended ? shifts.recommended.map(f) : undefined
 });
 
+const combineShifts = (oldShifts, newShifts) => {
+  const combinedShifts = [...oldShifts];
+  newShifts.forEach(shift => {
+    let shiftExists = false;
+    oldShifts.forEach(stateShift => {
+      if (shift.id === stateShift.id) {
+        shiftExists = true;
+      }
+    });
+    if (!shiftExists) {
+      combinedShifts.push(shift);
+    }
+  });
+  return combinedShifts;
+};
+
 const shifts = (state = {}, action) => {
   // Helper method to set the state of a shift.
   const setShiftState = (newState, shiftsToMap = state.shifts) =>
@@ -49,19 +65,10 @@ const shifts = (state = {}, action) => {
     }
     case shiftsConstants.GETALL_SUCCESS:
     case shiftsConstants.GETFORUSER_SUCCESS: {
-      action.shifts.all.forEach(shift => {
-        let shiftExists = false;
-        state.shifts.all.forEach(stateShift => {
-          if (shift.id === stateShift.id) {
-            shiftExists = true;
-          }
-        });
-        if (!shiftExists) {
-          state.shifts.all.push(shift);
-        }
-      });
+      const newShifts = combineShifts(state.shifts.all, action.shifts.all);
       return {
         ...state,
+        shifts: { all: newShifts },
         hasMore: action.shifts.all.length > 0,
         loading: false
       };
@@ -79,23 +86,18 @@ const shifts = (state = {}, action) => {
         myShifts: state.myShifts,
         loading: true
       };
-    case shiftsConstants.GETBOOKEDFORUSER_SUCCESS:
-      action.myShifts.all.forEach(shift => {
-        let shiftExists = false;
-        state.myShifts.all.forEach(stateShift => {
-          if (shift.id === stateShift.id) {
-            shiftExists = true;
-          }
-        });
-        if (!shiftExists) {
-          state.myShifts.all.push(shift);
-        }
-      });
+    case shiftsConstants.GETBOOKEDFORUSER_SUCCESS: {
+      const myNewShifts = combineShifts(
+        state.myShifts.all,
+        action.myShifts.all
+      );
       return {
         ...state,
+        myShifts: { all: myNewShifts },
         hasMore: action.myShifts.all.length > 0,
         loading: false
       };
+    }
     case shiftsConstants.GETBOOKEDFORUSER_FAILURE:
       return {
         ...state,
