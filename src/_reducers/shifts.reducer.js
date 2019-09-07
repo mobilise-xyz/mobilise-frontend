@@ -9,19 +9,10 @@ const applyToShifts = (shifts, action, f) => ({
 });
 
 const combineShifts = (oldShifts, newShifts) => {
-  const combinedShifts = [...oldShifts];
-  newShifts.forEach(shift => {
-    let shiftExists = false;
-    oldShifts.forEach(stateShift => {
-      if (shift.id === stateShift.id) {
-        shiftExists = true;
-      }
-    });
-    if (!shiftExists) {
-      combinedShifts.push(shift);
-    }
-  });
-  return combinedShifts;
+  return [
+    ...oldShifts,
+    ...newShifts.filter(shift => oldShifts.every(s => shift.id !== s.id))
+  ];
 };
 
 const shifts = (state = {}, action) => {
