@@ -40,7 +40,7 @@ const EventRendering = ({
   >
     <Row>
       <Col>
-        <p>{shiftData.title}</p>
+        <h5>{shiftData.title}</h5>
         <p>{shiftData.address}</p>
       </Col>
     </Row>

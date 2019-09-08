@@ -8,28 +8,10 @@ import shiftsActions from '../../../_actions/shifts.actions';
 
 class CalendarPage extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
     const startDate = moment().startOf('week');
     const lastDate = moment().endOf('week');
-    const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(
-      shiftsActions.getAvailableForUser(
-        uid,
-        startDate.format(),
-        lastDate.format(),
-        null,
-        true
-      )
-    );
-    dispatch(
-      shiftsActions.getBookedForUser(
-        uid,
-        startDate.format(),
-        lastDate.format(),
-        null,
-        true
-      )
-    );
+    this.retrieveBookedShiftsInRange(startDate, lastDate);
+    this.retrieveShiftsInRange(startDate, lastDate);
   }
 
   exportCalendar = () => {
@@ -48,29 +30,42 @@ class CalendarPage extends React.Component {
   };
 
   retrieveBookedShiftsInRange = (startDate, lastDate) => {
-    const { dispatch, myShifts } = this.props;
+    const { dispatch } = this.props;
+    let { myShifts } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-
-    const lastShift = myShifts[myShifts.length - 1];
+    let firstTime = false;
+    if (!myShifts) {
+      firstTime = true;
+      myShifts = [];
+    }
     let lastShiftDate = moment();
+    const lastShift = myShifts[myShifts.length - 1];
     if (lastShift) {
       lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
     }
+
     if (lastDate.isAfter(lastShiftDate)) {
       dispatch(
         shiftsActions.getBookedForUser(
           uid,
           startDate.format(),
-          lastDate.format()
+          lastDate.format(),
+          null,
+          firstTime
         )
       );
     }
   };
 
   retrieveShiftsInRange = (startDate, lastDate) => {
-    const { dispatch, shifts } = this.props;
+    const { dispatch } = this.props;
+    let { shifts } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-
+    let firstTime = false;
+    if (!shifts) {
+      firstTime = true;
+      shifts = [];
+    }
     const lastShift = shifts[shifts.length - 1];
     let lastShiftDate = moment();
     if (lastShift) {
@@ -81,7 +76,9 @@ class CalendarPage extends React.Component {
         shiftsActions.getAvailableForUser(
           uid,
           startDate.format(),
-          lastDate.format()
+          lastDate.format(),
+          null,
+          firstTime
         )
       );
     }
