@@ -8,7 +8,6 @@ import Layout from '../../../Layout/Layout';
 import ShiftList from '../../../ShiftList';
 import shiftsActions from '../../../../_actions/shifts.actions';
 import './AdminShiftsPage.css';
-import CalendarView from '../../CalendarView';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -38,43 +37,11 @@ class AdminShiftsPage extends React.Component {
 
   render() {
     const { shifts, hasMore, error } = this.props;
-    const { viewType } = this.state;
     if (!shifts) {
       return null;
     }
     if (error) {
       return <p>error</p>;
-    }
-
-    let view = 'list';
-    switch (viewType) {
-      case 'list':
-        view = (
-          <InfiniteScroll
-            dataLength={shifts.length}
-            next={this.fetchMoreShifts}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={
-              <p style={{ textAlign: 'center' }}>
-                <b>No more shifts coming up!</b>
-              </p>
-            }
-          >
-            <ShiftList isAdmin shifts={shifts} />
-          </InfiniteScroll>
-        );
-        break;
-      case 'calendar':
-        view = (
-          <CalendarView
-            isAdmin
-            shifts={shifts}
-            onRangeChange={this.handleCalendarRangeChange}
-          />
-        );
-        break;
-      default:
     }
 
     return (
@@ -94,7 +61,19 @@ class AdminShiftsPage extends React.Component {
             </button>
           </OverlayTrigger>
         </Link>
-        {view}
+        <InfiniteScroll
+          dataLength={shifts.length}
+          next={this.fetchMoreShifts}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>No more shifts coming up!</b>
+            </p>
+          }
+        >
+          <ShiftList isAdmin shifts={shifts} />
+        </InfiniteScroll>
       </Layout>
     );
   }

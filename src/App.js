@@ -9,7 +9,7 @@ import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
 import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
 import SignUpPage from './components/pages/SignUpPage';
-import CalendarPage from './components/pages/CalendarPage/CalendarPage';
+import CalendarPage from './components/pages/CalendarPage';
 import alertActions from './_actions/alert.actions';
 import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedShiftsHelpPage';
 import FeedbackPage from './components/pages/HelpPages/FeedbackPage';
