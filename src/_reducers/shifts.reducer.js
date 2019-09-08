@@ -120,18 +120,27 @@ const shifts = (state = {}, action) => {
       };
     }
     case shiftsConstants.BOOK_SUCCESS: {
-      // Search for the shift that requested to be booked.
-      const newBooking = state.shifts.find(s => s.id === action.id);
-      for (let i = 0; i < newBooking.requirements.length; i += 1) {
-        const req = newBooking.requirements[i];
-        req.booked = req.role.name === action.roleName;
-        newBooking.requirements[i] = req;
-      }
+      const newBookings = [];
+      action.ids.forEach(id => {
+        // Search for the shift that requested to be booked.
+        const newBooking = state.shifts.find(s => s.id === id);
+        // It might not be loaded yet
+        if (!newBooking) {
+          return;
+        }
+        // If loaded, then set whether the particular role was booked
+        for (let i = 0; i < newBooking.requirements.length; i += 1) {
+          const req = newBooking.requirements[i];
+          req.booked = req.role.name === action.roleName;
+          newBooking.requirements[i] = req;
+        }
+        newBookings.push(newBooking);
+      });
       const currentBookings = state.myShifts ? state.myShifts : [];
       return {
         ...state,
-        shifts: state.shifts.filter(s => s.id !== action.id),
-        myShifts: [...currentBookings, newBooking]
+        shifts: state.shifts.filter(s => action.ids.indexOf(s.id) < 0),
+        myShifts: [...currentBookings, ...newBookings]
       };
     }
     case shiftsConstants.BOOK_FAILURE: {
