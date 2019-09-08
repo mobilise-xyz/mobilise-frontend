@@ -3,10 +3,6 @@ import shiftsConstants from '../_constants/shifts.constants';
 
 const ITEMS_PER_PAGE = 5;
 
-// Utility function that applies a function to all and recommended shifts and
-// returns the appropriate state.
-const applyToShifts = (shifts, action, f) => shifts.map(f);
-
 const combineShifts = (oldShifts, newShifts) => {
   return [
     ...oldShifts,
@@ -17,7 +13,7 @@ const combineShifts = (oldShifts, newShifts) => {
 const shifts = (state = {}, action) => {
   // Helper method to set the state of a shift.
   const setShiftState = (newState, shiftsToMap = state.shifts) =>
-    applyToShifts(shiftsToMap, action, shift =>
+    shiftsToMap.map(shift =>
       shift.id === action.id
         ? {
             ...shift,
@@ -125,12 +121,14 @@ const shifts = (state = {}, action) => {
     }
     case shiftsConstants.BOOK_SUCCESS: {
       // Search for the shift that requested to be booked.
+      const newBooking = state.shifts.find(s => s.id === action.id);
+      newBooking.requirements = newBooking.requirements.filter(
+        req => req.role.name === action.roleName
+      );
       return {
         ...state,
-        shifts: setShiftState({
-          bookSuccess: true,
-          loading: false
-        })
+        shifts: state.shifts.filter(s => s.id !== action.id),
+        myShifts: [...state.myShifts, newBooking]
       };
     }
     case shiftsConstants.BOOK_FAILURE: {
@@ -228,7 +226,7 @@ const shifts = (state = {}, action) => {
       };
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setUpdateSuccess)
+        shifts: state.shifts.map(setUpdateSuccess)
       };
     }
     case shiftsConstants.UPDATE_FAILURE: {

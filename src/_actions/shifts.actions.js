@@ -182,7 +182,7 @@ const book = (shiftId, roleName, repeatedType, until) => {
     return { type: shiftsConstants.BOOK_REQUEST, id };
   };
   const success = id => {
-    return { type: shiftsConstants.BOOK_SUCCESS, id };
+    return { type: shiftsConstants.BOOK_SUCCESS, id, roleName };
   };
   const failure = (id, error) => {
     return { type: shiftsConstants.BOOK_FAILURE, id, error };
