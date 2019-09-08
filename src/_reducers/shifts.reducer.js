@@ -156,15 +156,12 @@ const shifts = (state = {}, action) => {
     }
     case shiftsConstants.CANCEL_SUCCESS: {
       // Search for the shift that requested to be booked.
+      // Search for the shift that requested to be booked.
+      const cancelledShift = state.myShifts.find(s => s.id === action.id);
       return {
         ...state,
-        myShifts: setShiftState(
-          {
-            cancelSuccess: true,
-            loading: false
-          },
-          state.myShifts
-        )
+        shifts: [...state.shifts, cancelledShift],
+        myShifts: state.myShifts.filter(s => s.id !== action.id)
       };
     }
     case shiftsConstants.CANCEL_FAILURE: {
