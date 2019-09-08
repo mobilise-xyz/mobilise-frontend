@@ -97,7 +97,7 @@ const shifts = (state = {}, action) => {
     case shiftsConstants.DELETE_SUCCESS: {
       return {
         ...state,
-        shifts: setShiftState({ deleteSuccess: true, loading: false })
+        shifts: state.shifts.filter(s => action.id !== s.id)
       };
     }
     case shiftsConstants.DELETE_FAILURE: {
