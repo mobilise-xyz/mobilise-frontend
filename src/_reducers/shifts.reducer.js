@@ -122,13 +122,16 @@ const shifts = (state = {}, action) => {
     case shiftsConstants.BOOK_SUCCESS: {
       // Search for the shift that requested to be booked.
       const newBooking = state.shifts.find(s => s.id === action.id);
-      newBooking.requirements = newBooking.requirements.filter(
-        req => req.role.name === action.roleName
-      );
+      for (let i = 0; i < newBooking.requirements.length; i += 1) {
+        const req = newBooking.requirements[i];
+        req.booked = req.role.name === action.roleName;
+        newBooking.requirements[i] = req;
+      }
+      const currentBookings = state.myShifts ? state.myShifts : [];
       return {
         ...state,
         shifts: state.shifts.filter(s => s.id !== action.id),
-        myShifts: [...state.myShifts, newBooking]
+        myShifts: [...currentBookings, newBooking]
       };
     }
     case shiftsConstants.BOOK_FAILURE: {
@@ -157,9 +160,10 @@ const shifts = (state = {}, action) => {
     case shiftsConstants.CANCEL_SUCCESS: {
       // Search for the shift that requested to be booked.
       const cancelledShift = state.myShifts.find(s => s.id === action.id);
+      const currentShifts = state.shifts ? state.shifts : [];
       return {
         ...state,
-        shifts: [...state.shifts, cancelledShift],
+        shifts: [...currentShifts, cancelledShift],
         myShifts: state.myShifts.filter(s => s.id !== action.id)
       };
     }
@@ -189,9 +193,7 @@ const shifts = (state = {}, action) => {
         // Find the shift to update.
         if (shift.id === action.id) {
           const { title, description, address, start, stop } = action.data;
-
           const newRoles = action.data.rolesRequired;
-
           const requirementsCopy = [...shift.requirements];
 
           // Update the number required for each role
