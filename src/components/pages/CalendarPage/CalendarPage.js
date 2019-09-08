@@ -40,26 +40,63 @@ class CalendarPage extends React.Component {
   };
 
   handleCalendarRangeChange = dates => {
-    const { dispatch } = this.props;
     const startDate = moment(dates[0]).startOf('week');
     const lastDate = moment(dates[0]).endOf('week');
+
+    this.retrieveBookedShiftsInRange(startDate, lastDate);
+    this.retrieveShiftsInRange(startDate, lastDate);
+  };
+
+  retrieveBookedShiftsInRange = (startDate, lastDate) => {
+    const { dispatch, myShifts } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(
-      shiftsActions.getAvailableForUser(
-        uid,
-        startDate.format(),
-        lastDate.format()
-      )
-    );
-    dispatch(
-      shiftsActions.getBookedForUser(uid, startDate.format(), lastDate.format())
-    );
+
+    const lastShift = myShifts[myShifts.length - 1];
+    let lastShiftDate = moment();
+    if (lastShift) {
+      lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
+    }
+    if (lastDate.isAfter(lastShiftDate)) {
+      console.log(
+        `${lastDate.calendar()} is after ${lastShiftDate.calendar()}`
+      );
+      dispatch(
+        shiftsActions.getBookedForUser(
+          uid,
+          startDate.format(),
+          lastDate.format()
+        )
+      );
+    }
+  };
+
+  retrieveShiftsInRange = (startDate, lastDate) => {
+    const { dispatch, shifts } = this.props;
+    const { uid } = JSON.parse(localStorage.getItem('user'));
+
+    const lastShift = shifts[shifts.length - 1];
+    let lastShiftDate = moment();
+    if (lastShift) {
+      lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
+    }
+    if (lastDate.isAfter(lastShiftDate)) {
+      console.log(
+        `${lastDate.calendar()} is after ${lastShiftDate.calendar()}`
+      );
+      dispatch(
+        shiftsActions.getAvailableForUser(
+          uid,
+          startDate.format(),
+          lastDate.format()
+        )
+      );
+    }
   };
 
   render() {
     const { shifts, myShifts, error } = this.props;
 
-    if (!shifts && !myShifts) {
+    if (!shifts || !myShifts) {
       return null;
     }
 
