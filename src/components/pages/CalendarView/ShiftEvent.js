@@ -57,6 +57,13 @@ const EventRendering = ({
         isRecommended ? 'calendar-btn-recommended' : ''
       } stretched-link`}
     />
+    {type === shiftStatus.BOOKED ? (
+      <Row>
+        <Col>
+          <p>BOOKED</p>
+        </Col>
+      </Row>
+    ) : null}
   </Container>
 );
 
