@@ -57,9 +57,6 @@ class CalendarPage extends React.Component {
       lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
     }
     if (lastDate.isAfter(lastShiftDate)) {
-      console.log(
-        `${lastDate.calendar()} is after ${lastShiftDate.calendar()}`
-      );
       dispatch(
         shiftsActions.getBookedForUser(
           uid,
@@ -80,9 +77,6 @@ class CalendarPage extends React.Component {
       lastShiftDate = moment(`${lastShift.date} ${lastShift.start}`);
     }
     if (lastDate.isAfter(lastShiftDate)) {
-      console.log(
-        `${lastDate.calendar()} is after ${lastShiftDate.calendar()}`
-      );
       dispatch(
         shiftsActions.getAvailableForUser(
           uid,
