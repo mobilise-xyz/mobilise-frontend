@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import { faPlus, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import NewEmergencyContactModal from './NewEmergencyContactModal';
 import volunteerActions from '../../../_actions/volunteer.actions';
 
@@ -82,20 +82,6 @@ class MyEmergencyContacts extends React.Component {
                               </a>
                             </Card.Text>
                           ) : null}
-                        </Col>
-                        <Col
-                          md={1}
-                          style={{ marginTop: 'auto', marginBottom: 'auto' }}
-                        >
-                          <Button
-                            onClick={() => this.removeContact(contact.id)}
-                          >
-                            <FontAwesomeIcon
-                              className="text-silver"
-                              icon={faEdit}
-                              size="2x"
-                            />
-                          </Button>
                         </Col>
                         <Col
                           md={1}
