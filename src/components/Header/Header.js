@@ -8,6 +8,7 @@ import VolunteerHeader from './VolunteerHeaderNav';
 import AdminHeader from './AdminHeader';
 import WelcomeHeader from './WelcomeHeader';
 import usersActions from '../../_actions/users.actions';
+import CHLogo from './CHLogo';
 
 class Header extends React.Component {
   componentDidMount() {
@@ -57,6 +58,9 @@ class Header extends React.Component {
             />
           </Navbar.Brand>
         </LinkContainer>
+        <Nav className="mr-auto">
+          <CHLogo colour="white" />
+        </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
