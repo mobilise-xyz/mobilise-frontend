@@ -142,13 +142,17 @@ const updateRoles = (shiftId, rolesRequired) => {
     .then(utils.handleResponse);
 };
 
-const ping = shiftId => {
+const ping = (shiftId, type) => {
   const config = {
     headers: authHeader()
   };
 
+  const data = {
+    type
+  };
+
   return axios
-    .post(`/shifts/${shiftId}/ping`, {}, config)
+    .post(`/shifts/${shiftId}/ping`, data, config)
     .then(utils.handleResponse);
 };
 

@@ -281,7 +281,7 @@ const update = (shiftId, shiftData) => {
   };
 };
 
-const ping = shiftId => {
+const ping = (shiftId, type) => {
   const request = id => {
     return { type: shiftsConstants.PINGALL_REQUEST, id };
   };
@@ -295,7 +295,7 @@ const ping = shiftId => {
   return dispatch => {
     dispatch(request(shiftId));
 
-    shiftsService.ping(shiftId).then(
+    shiftsService.ping(shiftId, type).then(
       () => {
         dispatch(success(shiftId));
         dispatch(alertActions.success('Volunteers pinged successfully'));
