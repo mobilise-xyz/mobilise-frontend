@@ -1,12 +1,9 @@
 import React from 'react';
 import { Image, Button, Nav, Navbar } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import logo from '../../../assets/images/logo.png';
 import chlogo from '../../../assets/images/CH-Logo-g.png';
 
-const entryPoints = ['/login', '/signup'];
-
-const WelcomeHeader = location => {
+const WelcomeHeader = () => {
   const cityHarvestBtn = (
     <Button onClick={() => window.open('http://www.cityharvest.org.uk/')}>
       <Image
@@ -18,14 +15,6 @@ const WelcomeHeader = location => {
       />
     </Button>
   );
-
-  const loginSignUpBtns = entryPoints.includes(location.location.pathname) ? (
-    <Nav>
-      <LinkContainer to="login">
-        <Button>Log in</Button>
-      </LinkContainer>
-    </Nav>
-  ) : null;
 
   return (
     <Navbar
@@ -44,7 +33,6 @@ const WelcomeHeader = location => {
         />
       </Navbar.Brand>
       <Nav className="mr-auto">{cityHarvestBtn}</Nav>
-      {loginSignUpBtns}
     </Navbar>
   );
 };
