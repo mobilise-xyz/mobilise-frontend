@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from 'react-redux';
@@ -16,11 +16,6 @@ class AdminShiftsPage extends React.Component {
   componentDidMount() {
     this.fetchInitialShifts();
   }
-
-  exportCalendar = () => {
-    const { dispatch } = this.props;
-    dispatch(shiftsActions.getCalendarForAll());
-  };
 
   fetchInitialShifts = () => {
     const { dispatch } = this.props;
@@ -46,11 +41,6 @@ class AdminShiftsPage extends React.Component {
 
     return (
       <Layout heading="Upcoming Shifts" cornerComponent={null}>
-        <Col style={{ textAlign: 'right', zIndex: '0' }}>
-          <Button variant="outline-primary" onClick={this.exportCalendar}>
-            Export Calendar
-          </Button>
-        </Col>
         <Link to="new-shift">
           <OverlayTrigger overlay={<Tooltip>Add new shift</Tooltip>}>
             <button
