@@ -9,6 +9,7 @@ import NewShiftPage from './components/pages/NewShiftPage/NewShiftPage';
 import LoginPage from './components/pages/LoginPage';
 import NotFound from './components/pages/NotFound';
 import SignUpPage from './components/pages/SignUpPage';
+import CalendarPage from './components/pages/CalendarPage';
 import alertActions from './_actions/alert.actions';
 import RecommendedShiftHelpPage from './components/pages/HelpPages/RecommendedShiftsHelpPage';
 import FeedbackPage from './components/pages/HelpPages/FeedbackPage';
@@ -54,6 +55,7 @@ export class App extends React.Component {
             <PrivateRoute path="/security" exact component={SecurityPage} />
             <PrivateRoute path="/privacy" exact component={PrivacyPage} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
+            <PrivateRoute path="/calendar" exact component={CalendarPage} />
             <AdminRoute path="/volunteers" exact component={VolunteersPage} />
             <PrivateRoute path="/welcome" exact component={WelcomePage} />
 

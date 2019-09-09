@@ -96,13 +96,13 @@ class Shift extends React.Component {
     }
 
     if (type !== shiftStatus.BOOKED) {
-      const thisShift = shifts.all.find(s => s.id === shiftData.id);
+      const thisShift = shifts.find(s => s.id === shiftData.id);
 
       isDeleted = thisShift.deleteSuccess === true;
       isBooked = thisShift.bookSuccess === true;
       isRecommended = recommendedRoleNames.length > 0;
     } else {
-      const thisShift = myShifts.all.find(s => s.id === shiftData.id);
+      const thisShift = myShifts.find(s => s.id === shiftData.id);
 
       isCancelled = thisShift.cancelSuccess === true;
     }
@@ -115,6 +115,7 @@ class Shift extends React.Component {
       isDeleted,
       isBooked,
       isCancelled,
+      type,
       shiftData
     };
 

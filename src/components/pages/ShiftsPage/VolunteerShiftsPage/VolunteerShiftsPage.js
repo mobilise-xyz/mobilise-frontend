@@ -18,15 +18,15 @@ class VolunteerShiftsPage extends React.Component {
     const { dispatch } = this.props;
     const now = moment().format();
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(shiftsActions.getAvailableForUser(uid, now, 1, true));
+    dispatch(shiftsActions.getAvailableForUser(uid, now, null, 1, true));
   };
 
   fetchMoreShifts = () => {
     const { dispatch, shifts, startTime } = this.props;
-    const { length } = shifts.all;
+    const { length } = shifts;
     const page = length / ITEMS_PER_PAGE;
     const { uid } = JSON.parse(localStorage.getItem('user'));
-    dispatch(shiftsActions.getAvailableForUser(uid, startTime, page + 1));
+    dispatch(shiftsActions.getAvailableForUser(uid, startTime, null, page + 1));
   };
 
   render() {
@@ -43,7 +43,7 @@ class VolunteerShiftsPage extends React.Component {
     return (
       <Layout heading="Book a shift">
         <InfiniteScroll
-          dataLength={shifts.all.length}
+          dataLength={shifts.length}
           next={this.fetchMoreShifts}
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
@@ -53,7 +53,7 @@ class VolunteerShiftsPage extends React.Component {
             </p>
           }
         >
-          <ShiftList shifts={shifts.all} recommendedCardClass="bg-primary" />
+          <ShiftList shifts={shifts} recommendedCardClass="bg-primary" />
         </InfiniteScroll>
       </Layout>
     );

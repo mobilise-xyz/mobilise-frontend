@@ -10,6 +10,9 @@ const VolunteerHeader = () => (
     <LinkContainer exact to="/shifts">
       <Nav.Link>My Shifts</Nav.Link>
     </LinkContainer>
+    <LinkContainer exact to="/calendar">
+      <Nav.Link>Calendar</Nav.Link>
+    </LinkContainer>
     <LinkContainer exact to="/dashboard">
       <Nav.Link>Dashboard</Nav.Link>
     </LinkContainer>

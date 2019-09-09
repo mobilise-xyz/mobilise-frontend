@@ -9,12 +9,15 @@ const RoleDot = ({ colour = 'info' }) => {
   return <span className="role-dot" style={{ backgroundColor: colour }} />;
 };
 
-const generateRequirements = shiftData =>
+const generateRequirements = (shiftData, type) =>
   shiftData.requirements.map(r => {
     // Only show roles that are available to book
     // i.e. numberRequired > 0
 
     const { numberRequired, role } = r;
+    if (type === shiftStatus.BOOKED && !r.booked) {
+      return null;
+    }
     return numberRequired > 0 ? (
       <RoleDot
         colour={role.colour}
@@ -28,6 +31,7 @@ const EventRendering = ({
   isDeleted,
   isBooked,
   isRecommended,
+  type,
   shiftData
 }) => (
   <Container
@@ -40,11 +44,11 @@ const EventRendering = ({
   >
     <Row>
       <Col>
-        <p>{shiftData.title}</p>
+        <h5>{shiftData.title}</h5>
         <p>{shiftData.address}</p>
       </Col>
     </Row>
-    <Row noGutters>{generateRequirements(shiftData)}</Row>
+    <Row noGutters>{generateRequirements(shiftData, type)}</Row>
     <button
       type="button"
       onClick={toggleModal}
@@ -53,6 +57,13 @@ const EventRendering = ({
         isRecommended ? 'calendar-btn-recommended' : ''
       } stretched-link`}
     />
+    {type === shiftStatus.BOOKED ? (
+      <Row>
+        <Col>
+          <p>BOOKED</p>
+        </Col>
+      </Row>
+    ) : null}
   </Container>
 );
 

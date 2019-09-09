@@ -97,7 +97,7 @@ const getCalendarForUser = uid => {
 };
 
 // Gets available + recommended shifts for the specified user.
-const getAvailableForUser = (uid, after, page, firstTime = false) => {
+const getAvailableForUser = (uid, after, before, page, firstTime = false) => {
   const request = () => ({ type: shiftsConstants.GETFORUSER_REQUEST });
   const success = shifts => ({
     type: firstTime
@@ -113,7 +113,7 @@ const getAvailableForUser = (uid, after, page, firstTime = false) => {
   return dispatch => {
     dispatch(request());
 
-    shiftsService.getAvailableForUser(uid, after, page).then(
+    shiftsService.getAvailableForUser(uid, after, before, page).then(
       shifts => dispatch(success(shifts)),
       error => {
         dispatch(alertActions.error('Error getting available shifts.'));
@@ -181,8 +181,8 @@ const book = (shiftId, roleName, repeatedType, until) => {
   const request = id => {
     return { type: shiftsConstants.BOOK_REQUEST, id };
   };
-  const success = id => {
-    return { type: shiftsConstants.BOOK_SUCCESS, id };
+  const success = ids => {
+    return { type: shiftsConstants.BOOK_SUCCESS, ids, roleName };
   };
   const failure = (id, error) => {
     return { type: shiftsConstants.BOOK_FAILURE, id, error };
@@ -192,8 +192,9 @@ const book = (shiftId, roleName, repeatedType, until) => {
     dispatch(request(shiftId));
 
     shiftsService.book(shiftId, roleName, repeatedType, until).then(
-      () => {
-        dispatch(success(shiftId));
+      result => {
+        const { shiftIds } = result;
+        dispatch(success(shiftIds));
         dispatch(alertActions.success('Booked successfully!'));
       },
       error => {
