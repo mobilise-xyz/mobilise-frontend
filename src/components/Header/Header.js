@@ -42,6 +42,7 @@ class Header extends React.Component {
 
     return (
       <Navbar
+        collapseOnSelect
         variant="dark"
         bg="primary"
         expand="lg"
