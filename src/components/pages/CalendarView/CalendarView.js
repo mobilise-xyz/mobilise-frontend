@@ -72,7 +72,7 @@ const CalendarView = props => {
 
   return (
     <Card className="p-3">
-      <div style={{ height: '75vh' }}>
+      <div style={{ height: '90vh' }}>
         <BigCalendar
           localizer={localizer}
           events={[...shiftEvents, ...bookedEvents]}

@@ -40,7 +40,7 @@ class AdminShiftsPage extends React.Component {
     }
 
     return (
-      <Layout heading="Upcoming Shifts" cornerComponent={null}>
+      <Layout heading="Upcoming Shifts">
         <Link to="new-shift">
           <OverlayTrigger overlay={<Tooltip>Add new shift</Tooltip>}>
             <button
