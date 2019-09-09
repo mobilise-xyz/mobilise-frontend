@@ -15,7 +15,7 @@ class ContactPreferencesCheckboxes extends React.Component {
     const { name, checked } = target;
     const { contactPreferences, dispatch } = this.props;
 
-    const contactType = name === 'email-checkbox' ? 'email' : ' SMS';
+    const contactType = name === 'email-checkbox' ? 'email' : 'text';
 
     dispatch(
       usersActions.updatePreferenceState({

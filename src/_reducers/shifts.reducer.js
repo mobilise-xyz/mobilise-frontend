@@ -1,17 +1,19 @@
 import moment from 'moment';
 import shiftsConstants from '../_constants/shifts.constants';
 
-// Utility function that applies a function to all and recommended shifts and
-// returns the appropriate state.
-const applyToShifts = (shifts, action, f) => ({
-  all: shifts.all.map(f),
-  recommended: shifts.recommended ? shifts.recommended.map(f) : undefined
-});
+const ITEMS_PER_PAGE = 5;
+
+const combineShifts = (oldShifts, newShifts) => {
+  return [
+    ...oldShifts,
+    ...newShifts.filter(shift => oldShifts.every(s => shift.id !== s.id))
+  ];
+};
 
 const shifts = (state = {}, action) => {
   // Helper method to set the state of a shift.
   const setShiftState = (newState, shiftsToMap = state.shifts) =>
-    applyToShifts(shiftsToMap, action, shift =>
+    shiftsToMap.map(shift =>
       shift.id === action.id
         ? {
             ...shift,
@@ -34,7 +36,7 @@ const shifts = (state = {}, action) => {
         ...state,
         shifts: action.shifts,
         startTime: moment().format(),
-        hasMore: action.shifts.all.length > 0,
+        hasMore: action.shifts.length === ITEMS_PER_PAGE,
         loading: false
       };
     }
@@ -43,26 +45,17 @@ const shifts = (state = {}, action) => {
         ...state,
         myShifts: action.myShifts,
         startTime: moment().format(),
-        hasMore: action.myShifts.all.length > 0,
+        hasMore: action.myShifts.length === ITEMS_PER_PAGE,
         loading: false
       };
     }
     case shiftsConstants.GETALL_SUCCESS:
     case shiftsConstants.GETFORUSER_SUCCESS: {
-      action.shifts.all.forEach(shift => {
-        let shiftExists = false;
-        state.shifts.all.forEach(stateShift => {
-          if (shift.id === stateShift.id) {
-            shiftExists = true;
-          }
-        });
-        if (!shiftExists) {
-          state.shifts.all.push(shift);
-        }
-      });
+      const newShifts = combineShifts(state.shifts, action.shifts);
       return {
         ...state,
-        hasMore: action.shifts.all.length > 0,
+        shifts: newShifts,
+        hasMore: action.shifts.length === ITEMS_PER_PAGE,
         loading: false
       };
     }
@@ -79,23 +72,15 @@ const shifts = (state = {}, action) => {
         myShifts: state.myShifts,
         loading: true
       };
-    case shiftsConstants.GETBOOKEDFORUSER_SUCCESS:
-      action.myShifts.all.forEach(shift => {
-        let shiftExists = false;
-        state.myShifts.all.forEach(stateShift => {
-          if (shift.id === stateShift.id) {
-            shiftExists = true;
-          }
-        });
-        if (!shiftExists) {
-          state.myShifts.all.push(shift);
-        }
-      });
+    case shiftsConstants.GETBOOKEDFORUSER_SUCCESS: {
+      const myNewShifts = combineShifts(state.myShifts, action.myShifts);
       return {
         ...state,
-        hasMore: action.myShifts.all.length > 0,
+        myShifts: myNewShifts,
+        hasMore: action.myShifts.length === ITEMS_PER_PAGE,
         loading: false
       };
+    }
     case shiftsConstants.GETBOOKEDFORUSER_FAILURE:
       return {
         ...state,
@@ -112,7 +97,7 @@ const shifts = (state = {}, action) => {
     case shiftsConstants.DELETE_SUCCESS: {
       return {
         ...state,
-        shifts: setShiftState({ deleteSuccess: true, loading: false })
+        shifts: state.shifts.filter(s => action.id !== s.id)
       };
     }
     case shiftsConstants.DELETE_FAILURE: {
@@ -135,13 +120,27 @@ const shifts = (state = {}, action) => {
       };
     }
     case shiftsConstants.BOOK_SUCCESS: {
-      // Search for the shift that requested to be booked.
+      const newBookings = [];
+      action.ids.forEach(id => {
+        // Search for the shift that requested to be booked.
+        const newBooking = state.shifts.find(s => s.id === id);
+        // It might not be loaded yet
+        if (!newBooking) {
+          return;
+        }
+        // If loaded, then set whether the particular role was booked
+        for (let i = 0; i < newBooking.requirements.length; i += 1) {
+          const req = newBooking.requirements[i];
+          req.booked = req.role.name === action.roleName;
+          newBooking.requirements[i] = req;
+        }
+        newBookings.push(newBooking);
+      });
+      const currentBookings = state.myShifts ? state.myShifts : [];
       return {
         ...state,
-        shifts: setShiftState({
-          bookSuccess: true,
-          loading: false
-        })
+        shifts: state.shifts.filter(s => action.ids.indexOf(s.id) < 0),
+        myShifts: [...currentBookings, ...newBookings]
       };
     }
     case shiftsConstants.BOOK_FAILURE: {
@@ -169,15 +168,12 @@ const shifts = (state = {}, action) => {
     }
     case shiftsConstants.CANCEL_SUCCESS: {
       // Search for the shift that requested to be booked.
+      const cancelledShift = state.myShifts.find(s => s.id === action.id);
+      const currentShifts = state.shifts ? state.shifts : [];
       return {
         ...state,
-        myShifts: setShiftState(
-          {
-            cancelSuccess: true,
-            loading: false
-          },
-          state.myShifts
-        )
+        shifts: [...currentShifts, cancelledShift],
+        myShifts: state.myShifts.filter(s => s.id !== action.id)
       };
     }
     case shiftsConstants.CANCEL_FAILURE: {
@@ -206,9 +202,7 @@ const shifts = (state = {}, action) => {
         // Find the shift to update.
         if (shift.id === action.id) {
           const { title, description, address, start, stop } = action.data;
-
           const newRoles = action.data.rolesRequired;
-
           const requirementsCopy = [...shift.requirements];
 
           // Update the number required for each role
@@ -239,7 +233,7 @@ const shifts = (state = {}, action) => {
       };
       return {
         ...state,
-        shifts: applyToShifts(state.shifts, action, setUpdateSuccess)
+        shifts: state.shifts.map(setUpdateSuccess)
       };
     }
     case shiftsConstants.UPDATE_FAILURE: {

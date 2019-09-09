@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button, ButtonGroup, Col, Row } from 'react-bootstrap';
+import shiftsActions from '../../../_actions/shifts.actions';
 
 const navigate = {
   PREVIOUS: 'PREV',
@@ -12,6 +14,16 @@ class MyToolbar extends React.Component {
   navigate = action => {
     const { onNavigate } = this.props;
     onNavigate(action);
+  };
+
+  exportCalendar = () => {
+    const { dispatch } = this.props;
+    const { uid, isAdmin } = JSON.parse(localStorage.getItem('user'));
+    if (isAdmin) {
+      dispatch(shiftsActions.getCalendarForAll());
+    } else {
+      dispatch(shiftsActions.getCalendarForUser(uid));
+    }
   };
 
   render() {
@@ -37,12 +49,15 @@ class MyToolbar extends React.Component {
             </Button>
           </ButtonGroup>
         </Col>
-
         <Col className="rbc-toolbar-label">{label}</Col>
-        <Col />
+        <Col style={{ textAlign: 'right' }}>
+          <Button type="button" onClick={this.exportCalendar}>
+            Export
+          </Button>
+        </Col>
       </Row>
     );
   }
 }
 
-export default MyToolbar;
+export default connect()(MyToolbar);

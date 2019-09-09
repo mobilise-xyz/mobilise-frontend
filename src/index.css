@@ -28,6 +28,10 @@ code {
   background-color: #27a659 !important;
 }
 
+.bg-light-grey {
+  background-color: #bbbbbb !important;
+}
+
 .btn.btn-outline-primary {
   border: 1px solid #27a659;
 }

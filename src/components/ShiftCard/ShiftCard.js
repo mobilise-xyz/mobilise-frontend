@@ -25,7 +25,9 @@ const generateRequirements = (shiftData, selected, isAdmin, type) =>
     const numberOfBookings = bookings ? bookings.length : 0;
     const numberRemaining = numberRequired - numberOfBookings;
     const adminSees = isAdmin ? true : numberRemaining > 0;
-
+    if (type === shiftStatus.BOOKED && !r.booked) {
+      return null;
+    }
     return numberRequired > 0 && adminSees > 0 ? (
       <CardRoleBadge
         isAdmin={isAdmin}
@@ -114,7 +116,7 @@ const ShiftCard = ({
                 isRecommended ? 'btn-recommended' : ''
               }`}
             >
-              Info
+              {isAdmin ? 'Info' : 'Book'}
               <span className="sr-only">Card information button</span>
             </Button>
           </Col>

@@ -1,32 +1,9 @@
 import React from 'react';
-import { Image, Button, Nav, Navbar } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import logo from '../../../assets/images/logo.png';
-import chlogo from '../../../assets/images/CH-Logo-g.png';
+import CHLogo from '../CHLogo';
 
-const entryPoints = ['/login', '/signup'];
-
-const WelcomeHeader = location => {
-  const cityHarvestBtn = (
-    <Button onClick={() => window.open('http://www.cityharvest.org.uk/')}>
-      <Image
-        src={chlogo}
-        height="50"
-        alt="City Harvest London"
-        className="d-inline-block align-top"
-        rounded
-      />
-    </Button>
-  );
-
-  const loginSignUpBtns = entryPoints.includes(location.location.pathname) ? (
-    <Nav>
-      <LinkContainer to="login">
-        <Button>Log in</Button>
-      </LinkContainer>
-    </Nav>
-  ) : null;
-
+const WelcomeHeader = () => {
   return (
     <Navbar
       variant="light"
@@ -43,8 +20,9 @@ const WelcomeHeader = location => {
           className="d-inline-block align-top"
         />
       </Navbar.Brand>
-      <Nav className="mr-auto">{cityHarvestBtn}</Nav>
-      {loginSignUpBtns}
+      <Nav className="mr-auto">
+        <CHLogo colour="green" />
+      </Nav>
     </Navbar>
   );
 };

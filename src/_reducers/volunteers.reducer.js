@@ -54,16 +54,26 @@ const volunteers = (state = {}, action) => {
         activityError: action.error,
         activityLoading: false
       };
+    case volunteerConstants.GETCONTACTS_SUCCESS:
+      return {
+        ...state,
+        contacts: action.contacts
+      };
+    case volunteerConstants.ADDCONTACT_SUCCESS:
+      return {
+        ...state,
+        contacts: [...state.contacts, action.contact]
+      };
+    case volunteerConstants.REMOVECONTACT_SUCCESS:
+      return {
+        ...state,
+        contacts: state.contacts.filter(contact => contact.id !== action.id)
+      };
     case volunteerConstants.GETALL_SUCCESS:
-      return action.approved
-        ? {
-            ...state,
-            approved: action.volunteers
-          }
-        : {
-            ...state,
-            tentative: action.volunteers
-          };
+      return {
+        ...state,
+        approved: action.volunteers
+      };
     default:
       return state;
   }

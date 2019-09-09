@@ -8,6 +8,7 @@ import VolunteerHeader from './VolunteerHeaderNav';
 import AdminHeader from './AdminHeader';
 import WelcomeHeader from './WelcomeHeader';
 import usersActions from '../../_actions/users.actions';
+import CHLogo from './CHLogo';
 
 class Header extends React.Component {
   componentDidMount() {
@@ -41,6 +42,7 @@ class Header extends React.Component {
 
     return (
       <Navbar
+        collapseOnSelect
         variant="dark"
         bg="primary"
         expand="lg"
@@ -57,6 +59,9 @@ class Header extends React.Component {
             />
           </Navbar.Brand>
         </LinkContainer>
+        <Nav className="mr-auto">
+          <CHLogo colour="white" />
+        </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -77,7 +82,7 @@ class Header extends React.Component {
               <NavDropdown.Item>Settings</NavDropdown.Item>
             </LinkContainer>
             <LinkContainer to="security">
-              <NavDropdown.Item>Security</NavDropdown.Item>
+              <NavDropdown.Item>Change Password</NavDropdown.Item>
             </LinkContainer>
             <LinkContainer to="privacy">
               <NavDropdown.Item>Privacy</NavDropdown.Item>
