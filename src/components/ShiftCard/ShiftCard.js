@@ -116,7 +116,7 @@ const ShiftCard = ({
                 isRecommended ? 'btn-recommended' : ''
               }`}
             >
-              Info
+              {isAdmin ? 'Info' : 'Book'}
               <span className="sr-only">Card information button</span>
             </Button>
           </Col>
