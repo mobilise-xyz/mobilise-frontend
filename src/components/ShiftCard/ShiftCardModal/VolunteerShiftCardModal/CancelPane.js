@@ -42,27 +42,29 @@ class CancelPane extends React.Component {
         </Row>
         <Row className="pb-2">
           <Col>
-            {requirements.map(r => {
-              return r.booked ? (
+            {requirements.map(r =>
+              r.booked ? (
                 <CardRoleBadge
                   key={id + r.role.name}
                   name={r.role.name}
                   colour={r.role.colour}
                 />
-              ) : null;
-            })}
+              ) : null
+            )}
           </Col>
         </Row>
         <Row>
           <Col>
             <h6>This role involves:</h6>
-            {requirements.map(r => (
-              <Row key={`row-${r.role.name}`}>
-                <Col>
-                  <p>{r.role.involves}</p>
-                </Col>
-              </Row>
-            ))}
+            {requirements.map(r =>
+              r.booked ? (
+                <Row key={`row-${r.role.name}`}>
+                  <Col>
+                    <p>{r.role.involves}</p>
+                  </Col>
+                </Row>
+              ) : null
+            )}
           </Col>
         </Row>
         <Row>
