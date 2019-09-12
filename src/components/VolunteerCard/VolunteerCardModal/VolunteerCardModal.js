@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Tab, Nav, Container } from 'react-bootstrap';
+import { Modal, Tab, Nav, Container, Card, Accordion } from 'react-bootstrap';
 import moment from 'moment';
 import AvailabilityGrid from '../../forms/AvailabilityForm/AvailabilityGrid';
 import './VolunteerCardModal.css';
@@ -44,6 +44,44 @@ function VolunteerCardModal(props) {
               <br />
               Telephone: {volunteer.user.telephone}
             </Tab.Pane>
+            <Tab.Pane eventKey="emergency">
+              {volunteer.contacts.length > 0 ? (
+                <div>
+                  <p>
+                    The emergency contacts for this volunteer are listed below:
+                  </p>
+                  {volunteer.contacts.map(contact => {
+                    return (
+                      <Accordion key={contact.id}>
+                        <Card>
+                          <Accordion.Toggle
+                            as={Card.Header}
+                            eventKey={contact.id}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            {contact.firstName} {contact.lastName} (
+                            {contact.relation})
+                          </Accordion.Toggle>
+                          <Accordion.Collapse eventKey={contact.id}>
+                            <Card.Body>
+                              Email:{' '}
+                              <a href={`mailto:${contact.email}`}>
+                                {contact.email}
+                              </a>
+                              <Card.Text>
+                                Telephone: {contact.telephone}
+                              </Card.Text>
+                            </Card.Body>
+                          </Accordion.Collapse>
+                        </Card>
+                      </Accordion>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p>No emergency contact added.</p>
+              )}
+            </Tab.Pane>
             <Tab.Pane eventKey="availability">
               <Container className="table-responsive">
                 <AvailabilityGrid
@@ -54,7 +92,6 @@ function VolunteerCardModal(props) {
                 />
               </Container>
             </Tab.Pane>
-            <Tab.Pane eventKey="statistics">Nothing to see here.</Tab.Pane>
           </Tab.Content>
         </Modal.Body>
         <div style={{ height: '1px', backgroundColor: 'lightGray' }} />
@@ -64,10 +101,10 @@ function VolunteerCardModal(props) {
               <Nav.Link eventKey="about">About</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="availability">Availability</Nav.Link>
+              <Nav.Link eventKey="emergency">Emergency</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="statistics">statistics</Nav.Link>
+              <Nav.Link eventKey="availability">Availability</Nav.Link>
             </Nav.Item>
           </Nav>
         </Modal.Footer>
