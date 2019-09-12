@@ -1,15 +1,26 @@
 import React from 'react';
-import { Modal, Tab, Nav } from 'react-bootstrap';
+import { Modal, Tab, Nav, Container } from 'react-bootstrap';
 import moment from 'moment';
+import AvailabilityGrid from '../../forms/AvailabilityForm/AvailabilityGrid';
 import './VolunteerCardModal.css';
+
+const transposeArray = array =>
+  array[0].map((col, i) => array.map(row => row[i]));
+
+const integerToAvailability = {
+  '2': 'AVAILABILITY_AVAILABLE',
+  '1': 'AVAILABILITY_MAYBE',
+  '0': 'AVAILABILITY_UNAVAILABLE'
+};
 
 function VolunteerCardModal(props) {
   const { show, onHide, volunteer } = props;
+
   return (
     <Modal
       show={show}
       onHide={onHide}
-      size="md"
+      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -33,7 +44,16 @@ function VolunteerCardModal(props) {
               <br />
               Telephone: {volunteer.user.telephone}
             </Tab.Pane>
-            <Tab.Pane eventKey="availability">Nothing to see here.</Tab.Pane>
+            <Tab.Pane eventKey="availability">
+              <Container className="table-responsive">
+                <AvailabilityGrid
+                  availability={transposeArray(volunteer.availability).map(i =>
+                    i.map(j => integerToAvailability[j])
+                  )}
+                  handleClick={() => {}}
+                />
+              </Container>
+            </Tab.Pane>
             <Tab.Pane eventKey="statistics">Nothing to see here.</Tab.Pane>
           </Tab.Content>
         </Modal.Body>

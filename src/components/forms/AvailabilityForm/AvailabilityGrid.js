@@ -4,15 +4,7 @@ import { Card, Row, Table } from 'react-bootstrap';
 const times = ['Morning', 'Afternoon', 'Evening'];
 const timesInfo = ['6AM - 12PM', '12PM - 5PM', '5PM-11PM'];
 
-const days = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday'
-];
+const days = ['MON', 'TUES', 'WED', 'THUR', 'FRI', 'SAT', 'SUN'];
 
 const availabilityColours = {
   AVAILABILITY_AVAILABLE: '#27a659',
@@ -68,7 +60,9 @@ function AvailabilityGrid(props) {
         <tr key={`grid-${times[timeIndex].toLowerCase()}`} className="pt-4">
           <td>
             <Row>{times[timeIndex]}</Row>
-            <Row style={{ color: 'gray' }}>{timesInfo[timeIndex]}</Row>
+            <Row style={{ color: 'gray', fontSize: 'x-small' }}>
+              {timesInfo[timeIndex]}
+            </Row>
           </td>
           {time.map((day, dayIndex) => (
             <td key={`grid-${days[dayIndex].toLowerCase()}`}>
