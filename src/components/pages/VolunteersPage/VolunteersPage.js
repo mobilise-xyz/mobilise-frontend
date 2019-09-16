@@ -1,20 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
+  CardColumns,
+  Col,
   Container,
   FormControl,
   InputGroup,
+  OverlayTrigger,
   Row,
-  Col,
-  CardColumns,
-  Tooltip,
-  OverlayTrigger
+  Tooltip
 } from 'react-bootstrap';
 import VolunteerCard from '../../VolunteerCard';
 import volunteerActions from '../../../_actions/volunteer.actions';
 import usersActions from '../../../_actions/users.actions';
 import Layout from '../../Layout/Layout';
 import InviteVolunteerModal from './InviteVolunteerModal';
+
+function nameIsValidForSearch(firstName, lastName, search) {
+  const first = firstName.toLowerCase();
+  const last = lastName.toLowerCase();
+  return (
+    first.startsWith(search) ||
+    last.startsWith(search) ||
+    `${first} ${last}`.startsWith(search)
+  );
+}
+
+function compareUsers(user1, user2) {
+  if (user1.firstName === user2.firstName) {
+    return user1.lastName > user2.lastName ? 1 : -1;
+  }
+  return user1.firstName > user2.firstName ? 1 : -1;
+}
 
 class VolunteersPage extends React.Component {
   state = {
@@ -69,25 +86,18 @@ class VolunteersPage extends React.Component {
   render() {
     const { search, showModal } = this.state;
     let { volunteers } = this.props;
-
+    const searchFilter = search.toLowerCase();
     if (!volunteers) {
       volunteers = [];
     }
     const volunteerMap = this.partitionVolunteersByLetter(
       volunteers
         .filter(volunteer => {
-          const { firstName, lastName } = volunteer.user;
-          return (
-            firstName.startsWith(search) ||
-            lastName.startsWith(search) ||
-            `${firstName} ${lastName}`.startsWith(search)
-          );
+          const { lastName, firstName } = volunteer.user;
+          return nameIsValidForSearch(firstName, lastName, searchFilter);
         })
-        .sort((a, b) => {
-          if (a.user.firstName === b.user.firstName) {
-            return a.user.lastName > b.user.lastName ? 1 : -1;
-          }
-          return a.user.firstName > b.user.firstName ? 1 : -1;
+        .sort((volunteer1, volunteer2) => {
+          return compareUsers(volunteer1.user, volunteer2.user);
         })
     );
     return (
