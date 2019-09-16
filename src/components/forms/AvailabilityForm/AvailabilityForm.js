@@ -13,8 +13,6 @@ class AvailabilityForm extends React.Component {
   };
 
   render() {
-    const { availability } = this.props;
-    console.log(availability);
     return (
       <Card className="p-3">
         <AvailabilitySelector />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import Layout from '../../Layout';
-import AvailabilityForm from '../../forms/AvailabilityForm/AvailabilityForm';
+import AvailabilityForm from '../../forms/AvailabilityForm';
 import MetricForm from '../../forms/MetricForm';
 import ContactPreferencesForm from '../../forms/ContactPreferencesForm';
 import ErrorBoundary from '../../ErrorBoundary';
