@@ -6,7 +6,7 @@ import shiftsActions from '../../../../_actions/shifts.actions';
 
 class VolunteerCalendarPage extends React.Component {
   componentDidMount() {
-    const startDate = moment().startOf('week');
+    const startDate = moment();
     const lastDate = moment().endOf('week');
     this.retrieveBookedShiftsInRange(startDate, lastDate);
     this.retrieveShiftsInRange(startDate, lastDate);
