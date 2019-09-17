@@ -48,7 +48,7 @@ Any changes made should appear automatically.
 
 - Joon-Ho Son
 - Arjun Singh
-- William George Burr
+- Will Burr
 - Tigeriam Cross
 
 Students of Imperial College London.
