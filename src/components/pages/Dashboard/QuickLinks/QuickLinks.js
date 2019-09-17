@@ -46,7 +46,7 @@ class QuickLinks extends React.Component {
 
     return (
       <Container className="pt-5 relaxed">
-        <h3>Video Links</h3>
+        <h3>My Videos</h3>
         {links.length > 0 ? (
           <CardColumns style={{ margin: '20px' }}>
             {links.map(link => (
