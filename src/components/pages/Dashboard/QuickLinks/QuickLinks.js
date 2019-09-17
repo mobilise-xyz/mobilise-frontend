@@ -47,28 +47,32 @@ class QuickLinks extends React.Component {
     return (
       <Container className="pt-5 relaxed">
         <h3>Video Links</h3>
-        <CardColumns style={{ margin: '20px' }}>
-          {links.map(link => (
-            <Card key={link.id}>
-              <Card.Header>
-                <Card.Title>{link.name}</Card.Title>
-              </Card.Header>
-              <Card.Body style={{ padding: 10 }}>
-                <ReactPlayer url={link.url} height="20vh" width="auto" />
-              </Card.Body>
-              {isAdmin ? (
-                <Card.Footer style={{ textAlign: 'right' }}>
-                  <Button
-                    variant="danger"
-                    onClick={() => this.removeLink(link.id)}
-                  >
-                    REMOVE
-                  </Button>
-                </Card.Footer>
-              ) : null}
-            </Card>
-          ))}
-        </CardColumns>
+        {links.length > 0 ? (
+          <CardColumns style={{ margin: '20px' }}>
+            {links.map(link => (
+              <Card key={link.id}>
+                <Card.Header>
+                  <Card.Title>{link.name}</Card.Title>
+                </Card.Header>
+                <Card.Body style={{ padding: 10 }}>
+                  <ReactPlayer url={link.url} height="20vh" width="auto" />
+                </Card.Body>
+                {isAdmin ? (
+                  <Card.Footer style={{ textAlign: 'right' }}>
+                    <Button
+                      variant="danger"
+                      onClick={() => this.removeLink(link.id)}
+                    >
+                      REMOVE
+                    </Button>
+                  </Card.Footer>
+                ) : null}
+              </Card>
+            ))}
+          </CardColumns>
+        ) : (
+          <h5>Video links uploaded by admins will be shown here!</h5>
+        )}
         {isAdmin ? (
           <Row>
             <Button

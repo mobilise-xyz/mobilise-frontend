@@ -17,6 +17,7 @@ const Dashboard = () => {
         </>
       ) : null}
       <MyFiles isAdmin={isAdmin} />
+      <hr />
       <QuickLinks isAdmin={isAdmin} />
       <hr />
       {isAdmin ? (
