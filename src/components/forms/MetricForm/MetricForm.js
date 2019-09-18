@@ -20,7 +20,7 @@ class MetricForm extends React.Component {
   state = {
     name: '',
     verb: '',
-    value: 0
+    value: ''
   };
 
   componentDidMount() {
@@ -33,14 +33,18 @@ class MetricForm extends React.Component {
       .then(utils.handleResponse)
       .then(({ metric }) => {
         if (metric) {
-          this.setState(metric);
+          this.setState({
+            name: metric.name,
+            verb: metric.verb,
+            value: metric.value.toString(10)
+          });
         }
       });
   }
 
   handleSubmit = () => {
     const { name, verb, value } = this.state;
-    store.dispatch(metricActions.update(name, verb, value));
+    store.dispatch(metricActions.update(name, verb, Number(value)));
   };
 
   handleDataChange = e => {
@@ -52,7 +56,6 @@ class MetricForm extends React.Component {
 
   render() {
     const { name, verb, value } = this.state;
-
     return (
       <Row>
         <Col>
@@ -73,6 +76,7 @@ class MetricForm extends React.Component {
                     required
                     id="name"
                     name="name"
+                    defaultValue={name}
                     type="text"
                     onChange={this.handleDataChange}
                   />
@@ -83,6 +87,7 @@ class MetricForm extends React.Component {
                     required
                     id="verb"
                     name="verb"
+                    defaultValue={verb}
                     type="text"
                     onChange={this.handleDataChange}
                   />
@@ -93,6 +98,7 @@ class MetricForm extends React.Component {
                     required
                     id="value"
                     name="value"
+                    defaultValue={value}
                     type="number"
                     onChange={this.handleDataChange}
                   />

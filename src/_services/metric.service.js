@@ -20,7 +20,7 @@ const update = (name, verb, value) => {
     headers: authHeader()
   };
 
-  return axios.post(`/metric`, data, config);
+  return axios.post(`/metric`, data, config).then(utils.handleResponse);
 };
 
 const metricService = {
