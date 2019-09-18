@@ -14,15 +14,33 @@ const get = () => {
 };
 
 const update = (name, verb, value) => {
-  const updateSuccess = () => ({
-    type: metricConstants.UPDATE
+  const request = () => ({ type: metricConstants.UPDATE_REQUEST });
+
+  const success = res => ({
+    type: metricConstants.UPDATE_SUCCESS,
+    res
+  });
+
+  const failure = error => ({
+    type: metricConstants.UPDATE_FAILURE,
+    error
   });
 
   return dispatch => {
-    metricService.update(name, verb, value).then(() => {
-      dispatch(alertActions.success('Metric successfully updated.'));
-      return dispatch(updateSuccess());
-    });
+    dispatch(request());
+
+    metricService.update(name, verb, value).then(
+      res => {
+        dispatch(success(res));
+        dispatch(alertActions.success('Metric successfully updated!'));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(
+          alertActions.error('Something went wrong when updating metric!')
+        );
+      }
+    );
   };
 };
 
