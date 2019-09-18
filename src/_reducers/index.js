@@ -8,6 +8,7 @@ import volunteers from './volunteers.reducer';
 import user from './users.reducer';
 import metric from './metric.reducer';
 import files from './files.reducer';
+import links from './links.reducer';
 import usersConstants from '../_constants/users.constants';
 
 const appReducer = combineReducers({
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   availability,
   volunteers,
   user,
+  links,
   metric,
   files
 });
