@@ -3,7 +3,7 @@ import { Button, Card, CardColumns, Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import ReactPlayer from 'react-player';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import linksActions from '../../../../_actions/links.actions';
 import NewLinkModal from './NewLinkModal';
 
@@ -52,21 +52,29 @@ class QuickLinks extends React.Component {
             {links.map(link => (
               <Card key={link.id}>
                 <Card.Header>
-                  <Card.Title>{link.name}</Card.Title>
+                  {isAdmin ? (
+                    <div style={{ textAlign: 'right' }}>
+                      <Button
+                        className="close"
+                        onClick={() => this.removeLink(link.id)}
+                      >
+                        <FontAwesomeIcon
+                          className="text-danger"
+                          icon={faTimes}
+                        />
+                      </Button>
+                    </div>
+                  ) : null}
+                  <h6>{link.name}</h6>
                 </Card.Header>
                 <Card.Body style={{ padding: 10 }}>
-                  <ReactPlayer url={link.url} height="20vh" width="auto" />
+                  <ReactPlayer
+                    light
+                    url={link.url}
+                    height="20vh"
+                    width="auto"
+                  />
                 </Card.Body>
-                {isAdmin ? (
-                  <Card.Footer style={{ textAlign: 'right' }}>
-                    <Button
-                      variant="danger"
-                      onClick={() => this.removeLink(link.id)}
-                    >
-                      REMOVE
-                    </Button>
-                  </Card.Footer>
-                ) : null}
               </Card>
             ))}
           </CardColumns>
