@@ -6,7 +6,10 @@ import chlogow from '../../../assets/images/CH-Logo-w.png';
 const CHLogo = props => {
   const { colour } = props;
   return (
-    <Button onClick={() => window.open('http://www.cityharvest.org.uk/')}>
+    <Button
+      onClick={() => window.open('http://www.cityharvest.org.uk/')}
+      style={{ paddingTop: 0, paddingBottom: 0 }}
+    >
       <Image
         src={colour === 'green' ? chlogog : chlogow}
         height="50"
