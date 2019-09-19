@@ -6,7 +6,7 @@ import shiftsActions from '../../../../_actions/shifts.actions';
 
 class AdminCalendarPage extends React.Component {
   componentDidMount() {
-    const startDate = moment();
+    const startDate = moment().startOf('week');
     const lastDate = moment().endOf('week');
     this.retrieveShiftsInRange(startDate, lastDate);
   }

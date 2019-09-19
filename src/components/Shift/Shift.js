@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import '../ShiftCard/ShiftCard.css';
 import ErrorBoundary from '../ErrorBoundary';
 import shiftsActions from '../../_actions/shifts.actions';
@@ -121,20 +122,24 @@ class Shift extends React.Component {
 
     const RenderedComponent = renderer(rendererProps);
 
+    const shiftStart = moment(`${shiftData.date} ${shiftData.start}`);
+    const shiftStarted = moment().isAfter(shiftStart);
     return (
       <ErrorBoundary>
         {RenderedComponent}
-        <ShiftCardModal
-          isAdmin={isAdmin}
-          shiftData={shiftData}
-          show={showModal}
-          onHide={this.toggleModal}
-          handleSelect={this.handleSelect}
-          selected={selected}
-          handleDelete={this.handleDelete}
-          handleBook={this.handleBook}
-          type={type}
-        />
+        {!shiftStarted ? (
+          <ShiftCardModal
+            isAdmin={isAdmin}
+            shiftData={shiftData}
+            show={showModal}
+            onHide={this.toggleModal}
+            handleSelect={this.handleSelect}
+            selected={selected}
+            handleDelete={this.handleDelete}
+            handleBook={this.handleBook}
+            type={type}
+          />
+        ) : null}
       </ErrorBoundary>
     );
   }
