@@ -4,6 +4,7 @@ import MyContributions from './MyContributions';
 import HallOfFame from './HallOfFame';
 import MyActivity from './MyActivity';
 import MyFiles from './MyFiles';
+import QuickLinks from './QuickLinks/QuickLinks';
 
 const Dashboard = () => {
   const { isAdmin } = JSON.parse(localStorage.getItem('user'));
@@ -16,6 +17,8 @@ const Dashboard = () => {
         </>
       ) : null}
       <MyFiles isAdmin={isAdmin} />
+      <hr />
+      <QuickLinks isAdmin={isAdmin} />
       <hr />
       {isAdmin ? (
         <>
