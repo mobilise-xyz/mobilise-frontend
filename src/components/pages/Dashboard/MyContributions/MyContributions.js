@@ -8,6 +8,7 @@ import {
   faGrinBeam,
   faMeh
 } from '@fortawesome/free-regular-svg-icons';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import volunteerActions from '../../../../_actions/volunteer.actions';
 
@@ -43,7 +44,7 @@ class MyContributions extends React.Component {
       return null;
     }
 
-    const { shiftsCompleted, hours, metric } = contributions;
+    const { shiftsCompleted, hours, metric, increase } = contributions;
 
     return (
       <Container className="pt-5">
@@ -67,6 +68,21 @@ class MyContributions extends React.Component {
                 icon={
                   <FontAwesomeIcon
                     icon={metric.value > 0 ? faGrinBeam : faMeh}
+                    size="6x"
+                  />
+                }
+              />
+            ) : null}
+            {increase ? (
+              <ContributionCard
+                description={`${
+                  increase >= 1 ? 'increase' : 'decrease'
+                } in activity last week`}
+                number={`${increase}x`}
+                icon={
+                  <FontAwesomeIcon
+                    icon={increase >= 1 ? faChevronUp : faChevronDown}
+                    className={increase >= 1 ? 'text-primary' : 'text-danger'}
                     size="6x"
                   />
                 }
