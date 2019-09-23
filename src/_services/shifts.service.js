@@ -90,10 +90,16 @@ const book = (shiftId, roleName, repeatedType, untilDate) => {
   };
 
   const data = {
-    roleName,
-    repeatedType,
-    untilDate
+    roleName
   };
+
+  if (repeatedType) {
+    data.repeatedType = repeatedType;
+  }
+
+  if (untilDate) {
+    data.untilDate = untilDate;
+  }
 
   return axios
     .post(`shifts/${shiftId}/book`, data, config)
