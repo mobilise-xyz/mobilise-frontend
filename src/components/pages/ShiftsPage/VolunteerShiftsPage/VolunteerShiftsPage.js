@@ -24,7 +24,7 @@ class VolunteerShiftsPage extends React.Component {
   fetchMoreShifts = () => {
     const { dispatch, shifts, startTime } = this.props;
     const { length } = shifts;
-    const page = length / ITEMS_PER_PAGE;
+    const page = Math.round(length / ITEMS_PER_PAGE);
     const { uid } = JSON.parse(localStorage.getItem('user'));
     dispatch(shiftsActions.getAvailableForUser(uid, startTime, null, page + 1));
   };
