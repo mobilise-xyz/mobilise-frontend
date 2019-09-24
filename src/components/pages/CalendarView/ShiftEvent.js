@@ -37,6 +37,7 @@ const EventRendering = ({
   <Container
     // Fill parent container
     style={{
+      border: 'solid',
       padding: '1em',
       height: '100%',
       width: '100%'
