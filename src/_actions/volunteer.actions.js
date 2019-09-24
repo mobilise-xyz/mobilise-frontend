@@ -2,7 +2,7 @@ import volunteerConstants from '../_constants/volunteer.constants';
 import volunteerService from '../_services/volunteer.service';
 import alertActions from './alert.actions';
 
-const getAll = sortBy => {
+const getAll = () => {
   const request = () => ({ type: volunteerConstants.GETALL_REQUEST });
   const success = volunteers => ({
     type: volunteerConstants.GETALL_SUCCESS,
@@ -16,7 +16,7 @@ const getAll = sortBy => {
   return dispatch => {
     dispatch(request());
 
-    volunteerService.getAll(sortBy).then(
+    volunteerService.getAll().then(
       ({ volunteers }) => dispatch(success(volunteers)),
       error => {
         dispatch(failure(error));
