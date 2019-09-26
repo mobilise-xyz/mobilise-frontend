@@ -235,7 +235,7 @@ class AdminShiftCardModal extends Component {
           </Row>
         </Modal.Body>
 
-        <Modal.Footer>
+        <Modal.Footer className="shift-card-modal">
           <Button
             className="mr-2"
             variant="outline-danger"

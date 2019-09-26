@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Tab, Nav, Container, Card, Accordion } from 'react-bootstrap';
+import { Accordion, Card, Container, Modal, Nav, Tab } from 'react-bootstrap';
 import moment from 'moment';
 import AvailabilityGrid from '../../forms/AvailabilityForm/AvailabilityGrid';
 import './VolunteerCardModal.css';
@@ -24,7 +24,7 @@ function VolunteerCardModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header className="volunteer-card-modal" closeButton>
         <Modal.Title>
           {volunteer.user.firstName} {volunteer.user.lastName}
         </Modal.Title>
@@ -95,7 +95,7 @@ function VolunteerCardModal(props) {
           </Tab.Content>
         </Modal.Body>
         <div style={{ height: '1px', backgroundColor: 'lightGray' }} />
-        <Modal.Footer className="modal-footer">
+        <Modal.Footer className="volunteer-card-modal modal-footer">
           <Nav variant="pills">
             <Nav.Item>
               <Nav.Link eventKey="about">About</Nav.Link>
