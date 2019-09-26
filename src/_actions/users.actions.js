@@ -119,8 +119,8 @@ const register = (firstName, lastName, email, telephone, password, token) => {
 };
 
 const changePassword = (oldPassword, newPassword) => {
-  const request = result => {
-    return { type: usersConstants.CHANGEPASSWORD_REQUEST, result };
+  const request = () => {
+    return { type: usersConstants.CHANGEPASSWORD_REQUEST };
   };
   const success = result => {
     return { type: usersConstants.CHANGEPASSWORD_SUCCESS, result };
@@ -146,8 +146,8 @@ const changePassword = (oldPassword, newPassword) => {
 };
 
 const resetPassword = (newPassword, token) => {
-  const request = result => {
-    return { type: usersConstants.RESETPASSWORD_REQUEST, result };
+  const request = () => {
+    return { type: usersConstants.RESETPASSWORD_REQUEST };
   };
   const success = result => {
     return { type: usersConstants.RESETPASSWORD_SUCCESS, result };
