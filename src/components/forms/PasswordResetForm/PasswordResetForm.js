@@ -5,19 +5,7 @@ import usersActions from '../../../_actions/users.actions';
 
 class PasswordResetForm extends React.Component {
   state = {
-    data: {
-      password: ''
-    }
-  };
-
-  handleDataChange = e => {
-    const { id, value } = e.target;
-    this.setState(prevState => ({
-      data: {
-        ...prevState.data,
-        [id]: value
-      }
-    }));
+    password: ''
   };
 
   isSecure = password => {
@@ -42,12 +30,13 @@ class PasswordResetForm extends React.Component {
     } else {
       e.target.setCustomValidity('');
     }
-    this.handleDataChange(e);
+    this.setState({
+      password: value
+    });
   };
 
   handleConfirmPasswordChange = e => {
-    const { data } = this.state;
-    const { password } = data;
+    const { password } = this.state;
     const { value } = e.target;
     if (password !== value) {
       e.target.setCustomValidity('Passwords do not match');
