@@ -15,7 +15,7 @@ class ForgotPasswordPage extends React.Component {
   render() {
     const { email } = this.state;
     return (
-      <CardLayout title="Password Reset" container>
+      <CardLayout title="Forgot Password" container>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>

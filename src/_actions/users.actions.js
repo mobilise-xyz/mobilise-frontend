@@ -145,6 +145,34 @@ const changePassword = (oldPassword, newPassword) => {
   };
 };
 
+const resetPassword = (newPassword, token) => {
+  const request = result => {
+    return { type: usersConstants.RESETPASSWORD_REQUEST, result };
+  };
+  const success = result => {
+    return { type: usersConstants.RESETPASSWORD_SUCCESS, result };
+  };
+  const failure = result => {
+    return { type: usersConstants.RESETPASSWORD_FAILURE, result };
+  };
+
+  return dispatch => {
+    dispatch(request());
+
+    usersService.resetPassword(newPassword, token).then(
+      result => {
+        dispatch(success(result));
+        history.push('/');
+        dispatch(alertActions.success('Successfully reset password!'));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.response.data.message));
+      }
+    );
+  };
+};
+
 const invite = (email, isAdmin) => {
   const request = () => ({ type: usersConstants.INVITE_REQUEST });
   const success = result => ({
@@ -215,6 +243,7 @@ const usersActions = {
   get,
   invite,
   changePassword,
+  resetPassword,
   updateContactPreferences,
   updatePreferenceState: updateContactState,
   submitFeedback,

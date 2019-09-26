@@ -65,6 +65,12 @@ const changePassword = (oldPassword, newPassword) => {
   return axios.put(`/users/password`, data, config).then(utils.handleResponse);
 };
 
+const resetPassword = (newPassword, token) => {
+  return axios
+    .put(`/auth/password-reset`, { newPassword, token })
+    .then(utils.handleResponse);
+};
+
 const invite = (email, isAdmin) => {
   const config = {
     headers: authHeader()
@@ -118,6 +124,7 @@ const usersService = {
   get,
   invite,
   changePassword,
+  resetPassword,
   updateContactPreferences,
   submitFeedback,
   login,

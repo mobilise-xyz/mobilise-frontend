@@ -22,6 +22,7 @@ import AdminRoute from './components/routes/AdminRoute';
 import Header from './components/Header';
 import SecurityPage from './components/pages/SecurityPage';
 import ForgotPasswordPage from './components/pages/ForgotPasswordPage';
+import PasswordResetPage from './components/pages/PasswordResetPage';
 
 // List of pathnames to compare against to decide whether or not to render the
 // header.
@@ -76,6 +77,7 @@ export class App extends React.Component {
               exact
               component={ForgotPasswordPage}
             />
+            <Route path="/password-reset" exact component={PasswordResetPage} />
             <Route path="/signup" exact component={SignUpPage} />
             <Route path="/404" exact component={NotFound} />
             <Redirect from="*" to="/404" />
