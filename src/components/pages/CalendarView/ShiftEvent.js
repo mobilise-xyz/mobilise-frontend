@@ -46,7 +46,6 @@ const EventRendering = ({
     <Row>
       <Col>
         <h5>{shiftData.title}</h5>
-        <p>{shiftData.address}</p>
       </Col>
     </Row>
     <Row noGutters>{generateRequirements(shiftData, type)}</Row>
