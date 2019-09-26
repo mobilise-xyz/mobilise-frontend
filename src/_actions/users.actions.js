@@ -173,6 +173,37 @@ const resetPassword = (newPassword, token) => {
   };
 };
 
+const forgotPassword = email => {
+  const request = () => ({ type: usersConstants.FORGOTPASSWORD_REQUEST });
+  const success = result => ({
+    type: usersConstants.FORGOTPASSWORD_SUCCESS,
+    result
+  });
+  const failure = error => ({
+    type: usersConstants.FORGOTPASSWORD_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    usersService.forgotPassword(email).then(
+      ({ result }) => {
+        dispatch(success(result));
+        dispatch(
+          alertActions.success(
+            'We have emailed instructions to reset your password if an account with that email exists.'
+          )
+        );
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.response.data.message));
+      }
+    );
+  };
+};
+
 const invite = (email, isAdmin) => {
   const request = () => ({ type: usersConstants.INVITE_REQUEST });
   const success = result => ({
@@ -244,6 +275,7 @@ const usersActions = {
   invite,
   changePassword,
   resetPassword,
+  forgotPassword,
   updateContactPreferences,
   updatePreferenceState: updateContactState,
   submitFeedback,

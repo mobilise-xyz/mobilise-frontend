@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import CardLayout from '../CardLayout';
+import usersActions from '../../_actions/users.actions';
 
 class ForgotPasswordPage extends React.Component {
   state = {
@@ -10,6 +12,15 @@ class ForgotPasswordPage extends React.Component {
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const { data } = this.state;
+    const { dispatch } = this.props;
+
+    dispatch(usersActions.forgotPassword(data.email));
   };
 
   render() {
@@ -42,4 +53,4 @@ class ForgotPasswordPage extends React.Component {
   }
 }
 
-export default ForgotPasswordPage;
+export default connect()(ForgotPasswordPage);
