@@ -17,10 +17,10 @@ class ForgotPasswordPage extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { data } = this.state;
+    const { email } = this.state;
     const { dispatch } = this.props;
 
-    dispatch(usersActions.forgotPassword(data.email));
+    dispatch(usersActions.forgotPassword(email));
   };
 
   render() {

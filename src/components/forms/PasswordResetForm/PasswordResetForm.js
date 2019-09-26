@@ -48,10 +48,10 @@ class PasswordResetForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { data } = this.state;
+    const { password } = this.state;
     const { dispatch, token } = this.props;
 
-    dispatch(usersActions.resetPassword(data.password, token));
+    dispatch(usersActions.resetPassword(password, token));
   };
 
   render() {
@@ -73,7 +73,7 @@ class PasswordResetForm extends React.Component {
           <Form.Control
             required
             id="confirmedPassword"
-            name="password"
+            name="confirm-password"
             type="password"
             onChange={this.handleConfirmPasswordChange}
           />
