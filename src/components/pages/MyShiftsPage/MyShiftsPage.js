@@ -25,7 +25,7 @@ class MyShiftsPage extends React.Component {
   fetchMoreShifts = () => {
     const { dispatch, startTime, myShifts } = this.props;
     const { length } = myShifts;
-    const page = length / ITEMS_PER_PAGE;
+    const page = Math.round(length / ITEMS_PER_PAGE);
     const { uid } = JSON.parse(localStorage.getItem('user'));
     dispatch(shiftsActions.getBookedForUser(uid, startTime, null, page + 1));
   };

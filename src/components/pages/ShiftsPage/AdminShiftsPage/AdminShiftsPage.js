@@ -26,7 +26,7 @@ class AdminShiftsPage extends React.Component {
   fetchMoreShifts = () => {
     const { dispatch, startTime, shifts } = this.props;
     const { length } = shifts;
-    const page = length / ITEMS_PER_PAGE;
+    const page = Math.round(length / ITEMS_PER_PAGE);
     dispatch(shiftsActions.getAll(startTime, null, page + 1));
   };
 

@@ -2,13 +2,9 @@ import axios from 'axios';
 import utils from '../_helpers/utils';
 import authHeader from '../_helpers/auth-header';
 
-const getAll = (approved, sortBy) => {
+const getAll = () => {
   const config = {
-    headers: authHeader(),
-    params: {
-      approved,
-      sortBy
-    }
+    headers: authHeader()
   };
 
   return axios.get(`/volunteers`, config).then(utils.handleResponse);

@@ -37,6 +37,7 @@ const EventRendering = ({
   <Container
     // Fill parent container
     style={{
+      border: 'solid',
       padding: '1em',
       height: '100%',
       width: '100%'
@@ -45,7 +46,6 @@ const EventRendering = ({
     <Row>
       <Col>
         <h5>{shiftData.title}</h5>
-        <p>{shiftData.address}</p>
       </Col>
     </Row>
     <Row noGutters>{generateRequirements(shiftData, type)}</Row>
