@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Collapse, Form, Modal } from 'react-bootstrap';
 
 class InviteVolunteerModal extends React.Component {
   state = {
@@ -55,9 +55,16 @@ class InviteVolunteerModal extends React.Component {
                 type="checkbox"
                 checked={isAdmin}
                 onChange={this.handleChange}
-                label="Make an admin"
+                label="Invite as volunteer co-ordinator"
               />
             </Form.Group>
+            <Collapse in={isAdmin} style={{ fontSize: 'small' }}>
+              <p>
+                This user will have the same privileges as you, including the
+                ability to create shifts, view and invite volunteers, alert
+                volunteers etc.
+              </p>
+            </Collapse>
             <div className="text-center" style={{ margin: 'auto' }}>
               <Button
                 variant="primary"

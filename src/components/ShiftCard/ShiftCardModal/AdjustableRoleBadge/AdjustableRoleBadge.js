@@ -64,7 +64,7 @@ class AdjustableRoleBadge extends React.Component {
                   number={number}
                 />
               ) : null}
-              {number ? (
+              {number >= 0 ? (
                 <Badge variant="light" className="number-badge">
                   {number}
                 </Badge>

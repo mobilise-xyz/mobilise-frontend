@@ -6,7 +6,6 @@ class NewEmergencyContactModal extends React.Component {
     data: {
       firstName: '',
       lastName: '',
-      email: null,
       telephone: '',
       relation: ''
     }
@@ -78,16 +77,6 @@ class NewEmergencyContactModal extends React.Component {
             <Form.Row className="mb-4">
               <Col>
                 <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    id="email"
-                    type="email"
-                    onChange={this.handleDataChange}
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group>
                   <Form.Label>Contact Number</Form.Label>
                   <Form.Control
                     id="telephone"
@@ -99,16 +88,18 @@ class NewEmergencyContactModal extends React.Component {
                   />
                 </Form.Group>
               </Col>
+              <Col>
+                <Form.Group>
+                  <Form.Label>Relationship</Form.Label>
+                  <Form.Control
+                    id="relation"
+                    required
+                    type="text"
+                    onChange={this.handleDataChange}
+                  />
+                </Form.Group>
+              </Col>
             </Form.Row>
-            <Form.Group>
-              <Form.Label>Relation</Form.Label>
-              <Form.Control
-                id="relation"
-                required
-                type="text"
-                onChange={this.handleDataChange}
-              />
-            </Form.Group>
             <div className="text-center" style={{ margin: 'auto' }}>
               <Button
                 variant="primary"

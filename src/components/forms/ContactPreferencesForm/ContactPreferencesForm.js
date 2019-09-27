@@ -14,9 +14,10 @@ class ContactPreferencesForm extends React.Component {
   };
 
   render() {
+    const { isAdmin } = this.props;
     return (
       <Card className="p-3">
-        <ContactPreferencesCheckboxes />
+        <ContactPreferencesCheckboxes isAdmin={isAdmin} />
         <Container className="pt-5 text-center">
           <Button
             variant="outline-primary"

@@ -94,7 +94,7 @@ const getActivity = uid => {
   };
 };
 
-const addContact = (uid, firstName, lastName, email, telephone, relation) => {
+const addContact = (uid, firstName, lastName, telephone, relation) => {
   const request = () => ({ type: volunteerConstants.ADDCONTACT_REQUEST });
   const success = contact => ({
     type: volunteerConstants.ADDCONTACT_SUCCESS,
@@ -108,7 +108,7 @@ const addContact = (uid, firstName, lastName, email, telephone, relation) => {
     dispatch(request());
 
     volunteerService
-      .addContact(uid, firstName, lastName, email, telephone, relation)
+      .addContact(uid, firstName, lastName, telephone, relation)
       .then(
         ({ contact }) => {
           dispatch(success(contact));

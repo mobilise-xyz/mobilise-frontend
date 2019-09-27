@@ -119,8 +119,8 @@ const register = (firstName, lastName, email, telephone, password, token) => {
 };
 
 const changePassword = (oldPassword, newPassword) => {
-  const request = result => {
-    return { type: usersConstants.CHANGEPASSWORD_REQUEST, result };
+  const request = () => {
+    return { type: usersConstants.CHANGEPASSWORD_REQUEST };
   };
   const success = result => {
     return { type: usersConstants.CHANGEPASSWORD_SUCCESS, result };
@@ -136,6 +136,65 @@ const changePassword = (oldPassword, newPassword) => {
       result => {
         dispatch(success(result));
         dispatch(alertActions.success('Successfully changed password!'));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.response.data.message));
+      }
+    );
+  };
+};
+
+const resetPassword = (newPassword, token) => {
+  const request = () => {
+    return { type: usersConstants.RESETPASSWORD_REQUEST };
+  };
+  const success = result => {
+    return { type: usersConstants.RESETPASSWORD_SUCCESS, result };
+  };
+  const failure = result => {
+    return { type: usersConstants.RESETPASSWORD_FAILURE, result };
+  };
+
+  return dispatch => {
+    dispatch(request());
+
+    usersService.resetPassword(newPassword, token).then(
+      result => {
+        dispatch(success(result));
+        history.push('/');
+        dispatch(alertActions.success('Successfully reset password!'));
+      },
+      error => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error.response.data.message));
+      }
+    );
+  };
+};
+
+const forgotPassword = email => {
+  const request = () => ({ type: usersConstants.FORGOTPASSWORD_REQUEST });
+  const success = result => ({
+    type: usersConstants.FORGOTPASSWORD_SUCCESS,
+    result
+  });
+  const failure = error => ({
+    type: usersConstants.FORGOTPASSWORD_FAILURE,
+    error
+  });
+
+  return dispatch => {
+    dispatch(request());
+
+    usersService.forgotPassword(email).then(
+      ({ result }) => {
+        dispatch(success(result));
+        dispatch(
+          alertActions.success(
+            'We have emailed instructions to reset your password if an account with that email exists.'
+          )
+        );
       },
       error => {
         dispatch(failure(error));
@@ -215,6 +274,8 @@ const usersActions = {
   get,
   invite,
   changePassword,
+  resetPassword,
+  forgotPassword,
   updateContactPreferences,
   updatePreferenceState: updateContactState,
   submitFeedback,

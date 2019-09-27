@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import usersActions from '../../_actions/users.actions';
@@ -67,6 +68,7 @@ class LoginPage extends React.Component {
             Log in
           </Button>
         </Form>
+        <Link to="forgot-password">Forgot password?</Link>
       </CardLayout>
     );
   }
