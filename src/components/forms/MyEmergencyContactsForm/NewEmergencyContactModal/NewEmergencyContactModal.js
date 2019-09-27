@@ -6,7 +6,6 @@ class NewEmergencyContactModal extends React.Component {
     data: {
       firstName: '',
       lastName: '',
-      email: null,
       telephone: '',
       relation: ''
     }
@@ -76,16 +75,6 @@ class NewEmergencyContactModal extends React.Component {
               </Col>
             </Form.Row>
             <Form.Row className="mb-4">
-              <Col>
-                <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    id="email"
-                    type="email"
-                    onChange={this.handleDataChange}
-                  />
-                </Form.Group>
-              </Col>
               <Col>
                 <Form.Group>
                   <Form.Label>Contact Number</Form.Label>

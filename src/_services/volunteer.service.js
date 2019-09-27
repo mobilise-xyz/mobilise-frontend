@@ -52,7 +52,6 @@ const addContact = (uid, firstName, lastName, email, telephone, relation) => {
       {
         firstName,
         lastName,
-        email,
         telephone,
         relation
       },

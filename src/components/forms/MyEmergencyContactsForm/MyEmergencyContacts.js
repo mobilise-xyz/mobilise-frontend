@@ -24,14 +24,7 @@ class MyEmergencyContacts extends React.Component {
     const { dispatch } = this.props;
     const { uid } = JSON.parse(localStorage.getItem('user'));
     dispatch(
-      volunteerActions.addContact(
-        uid,
-        firstName,
-        lastName,
-        email,
-        telephone,
-        relation
-      )
+      volunteerActions.addContact(uid, firstName, lastName, telephone, relation)
     );
   };
 
@@ -74,14 +67,6 @@ class MyEmergencyContacts extends React.Component {
                           <Card.Text className="mb-2 text-muted">
                             Telephone: {contact.telephone}
                           </Card.Text>
-                          {contact.email ? (
-                            <Card.Text className="mb-2 text-muted">
-                              Email:{' '}
-                              <a href={`mailto:${contact.email}`}>
-                                {contact.email}
-                              </a>
-                            </Card.Text>
-                          ) : null}
                         </Col>
                         <Col
                           md={1}
