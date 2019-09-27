@@ -118,7 +118,7 @@ const cancel = (shiftId, reason) => {
     .then(utils.handleResponse);
 };
 
-const updateInfo = (shiftId, { title, description, address }) => {
+const updateInfo = (shiftId, { title, description, address, start, stop }) => {
   const config = {
     headers: authHeader()
   };
@@ -126,7 +126,9 @@ const updateInfo = (shiftId, { title, description, address }) => {
   const data = {
     title,
     description,
-    address
+    address,
+    start,
+    stop
   };
 
   return axios
