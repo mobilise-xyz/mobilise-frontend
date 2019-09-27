@@ -64,10 +64,6 @@ function VolunteerCardModal(props) {
                           </Accordion.Toggle>
                           <Accordion.Collapse eventKey={contact.id}>
                             <Card.Body>
-                              Email:{' '}
-                              <a href={`mailto:${contact.email}`}>
-                                {contact.email}
-                              </a>
                               <Card.Text>
                                 Telephone: {contact.telephone}
                               </Card.Text>
