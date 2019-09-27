@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import '../../ShiftCard.css';
 import utils from '../../../../_helpers/utils';
@@ -10,12 +10,18 @@ import { shiftStatus } from '../../../Shift';
 class VolunteerShiftCardModal extends React.Component {
   state = {
     repeatedType: '',
-    until: ''
+    until: '',
+    showMore: false
   };
 
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+
+  toggleShowMore = () => {
+    const { showMore } = this.state;
+    this.setState({ showMore: !showMore });
   };
 
   render() {
@@ -28,7 +34,7 @@ class VolunteerShiftCardModal extends React.Component {
       selected,
       type
     } = this.props;
-    const { repeatedType, until } = this.state;
+    const { repeatedType, until, showMore } = this.state;
 
     const booked = type === shiftStatus.BOOKED;
 
@@ -75,7 +81,29 @@ class VolunteerShiftCardModal extends React.Component {
                 <Col xs={1} className="icon-col">
                   <i className="material-icons">info</i>
                 </Col>
-                <Col>{shiftData.description}</Col>
+                <Col>
+                  {shiftData.description.length > 50 ? (
+                    <>
+                      <p style={{ marginBottom: 0 }}>
+                        {showMore
+                          ? shiftData.description
+                          : `${shiftData.description.substring(0, 50)}...`}
+                      </p>
+                      <Button
+                        className="btn btn-link"
+                        style={{
+                          textTransform: 'none',
+                          padding: 0
+                        }}
+                        onClick={this.toggleShowMore}
+                      >
+                        {!showMore ? 'More' : 'Less'}
+                      </Button>
+                    </>
+                  ) : (
+                    <p>{shiftData.description}</p>
+                  )}
+                </Col>
               </Row>
             </Col>
           </Row>
