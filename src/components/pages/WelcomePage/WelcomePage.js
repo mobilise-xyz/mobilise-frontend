@@ -52,7 +52,7 @@ class WelcomePage extends Component {
           <Card className="mt-3">
             <Card.Body>
               <Card.Text>
-                <ContactPreferencesCheckboxes />
+                <ContactPreferencesCheckboxes isAdmin={false} />
               </Card.Text>
             </Card.Body>
           </Card>

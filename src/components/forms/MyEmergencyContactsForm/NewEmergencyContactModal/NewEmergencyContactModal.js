@@ -88,16 +88,18 @@ class NewEmergencyContactModal extends React.Component {
                   />
                 </Form.Group>
               </Col>
+              <Col>
+                <Form.Group>
+                  <Form.Label>Relationship</Form.Label>
+                  <Form.Control
+                    id="relation"
+                    required
+                    type="text"
+                    onChange={this.handleDataChange}
+                  />
+                </Form.Group>
+              </Col>
             </Form.Row>
-            <Form.Group>
-              <Form.Label>Relation</Form.Label>
-              <Form.Control
-                id="relation"
-                required
-                type="text"
-                onChange={this.handleDataChange}
-              />
-            </Form.Group>
             <div className="text-center" style={{ margin: 'auto' }}>
               <Button
                 variant="primary"

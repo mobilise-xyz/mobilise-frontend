@@ -32,7 +32,7 @@ const SettingsPage = () => {
         </ErrorBoundary>
         <h3 className="pt-5">Contact Preferences</h3>
         <ErrorBoundary>
-          <ContactPreferencesForm />
+          <ContactPreferencesForm isAdmin={isAdmin} />
         </ErrorBoundary>
         <hr />
         {!isAdmin ? (
