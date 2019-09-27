@@ -193,6 +193,7 @@ class AdminShiftCardModal extends Component {
                     noLabel
                     handleChange={this.handleDataChange}
                     content={`${manager.firstName} ${manager.lastName}`}
+                    disabled
                   />
                 </Col>
               </Row>
