@@ -15,6 +15,7 @@ import AdjustableRoleBadge from '../AdjustableRoleBadge';
 import PlainTextForm from '../../../forms/PlainTextForm';
 import shiftsActions from '../../../../_actions/shifts.actions';
 import DateTimeForm from '../../../forms/DateTimeForm';
+import utils from '../../../../_helpers/utils';
 
 class AdminShiftCardModal extends Component {
   constructor(props) {
@@ -25,8 +26,8 @@ class AdminShiftCardModal extends Component {
       title: shiftData.title,
       description: shiftData.description,
       address: shiftData.address,
-      start: shiftData.start,
-      stop: shiftData.stop,
+      start: utils.formatTime(shiftData.start),
+      stop: utils.formatTime(shiftData.stop),
       date: shiftData.date,
       manager: shiftData.creator.user,
       requirements: shiftData.requirements
@@ -34,14 +35,14 @@ class AdminShiftCardModal extends Component {
   }
 
   handleSubmit = () => {
-    // TODO handle date, time, manager, etc
     const {
       title,
       description,
       start,
       stop,
       address,
-      requirements
+      requirements,
+      date
     } = this.state;
     const { shiftData, onHide, dispatch } = this.props;
 
@@ -58,7 +59,8 @@ class AdminShiftCardModal extends Component {
       address,
       start,
       stop,
-      rolesRequired
+      rolesRequired,
+      date
     };
 
     // 3. Submit PUT to update information.
@@ -112,6 +114,7 @@ class AdminShiftCardModal extends Component {
 
   handleDataChange = e => {
     const { name, value } = e.target;
+
     this.setState(prevState => ({
       ...prevState,
       [name]: value
@@ -190,6 +193,7 @@ class AdminShiftCardModal extends Component {
                     noLabel
                     handleChange={this.handleDataChange}
                     content={`${manager.firstName} ${manager.lastName}`}
+                    disabled
                   />
                 </Col>
               </Row>
