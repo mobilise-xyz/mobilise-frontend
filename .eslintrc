@@ -6,14 +6,39 @@
     "plugin:jest/recommended"
   ],
   "plugins": ["prettier", "jest"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     ],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": [
+          "/"
+      ]
+    }],
     "react/prop-types": 0,
     "no-underscore-dangle": 0,
     "import/imports-first": ["error", "absolute-first"],
