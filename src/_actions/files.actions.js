@@ -70,13 +70,13 @@ const deleteFile = filename => {
       res => {
         dispatch(success(res));
         dispatch(
-          alertActions.success(`File ${filename} deleted successfully!`)
+          alertActions.success(`File "${filename}" deleted successfully!`)
         );
       },
       error => {
         dispatch(failure(error));
         dispatch(
-          alertActions.error('Something went wrong when deleting file!')
+          alertActions.error('Something went wrong when deleting this file!')
         );
       }
     );
