@@ -13,14 +13,7 @@ class SignUpForm extends React.Component {
       email: '',
       password: '',
       telephone: ''
-    },
-    ppread: false
-  };
-
-  handlePPRead = () => {
-    this.setState(prevState => ({
-      ppread: !prevState.ppread
-    }));
+    }
   };
 
   handleDataChange = e => {
@@ -88,8 +81,6 @@ class SignUpForm extends React.Component {
   };
 
   render() {
-    const { ppread } = this.state;
-
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Row className="mb-4">
@@ -168,7 +159,7 @@ class SignUpForm extends React.Component {
           </Col>
         </Form.Row>
         <Row style={{ display: 'inline' }}>
-          <PrivacyPolicy handlePPRead={this.handlePPRead} />
+          <PrivacyPolicy />
         </Row>
         <Row>
           <InputGroup className="mb-3 ml-3">
@@ -177,7 +168,7 @@ class SignUpForm extends React.Component {
                 aria-label="Privacy Policy Checkbox"
                 name="pp-checkbox"
                 type="checkbox"
-                onChange={this.handlePPRead}
+                required
               />
             </InputGroup.Prepend>
             <InputGroup.Text>
@@ -186,14 +177,23 @@ class SignUpForm extends React.Component {
             </InputGroup.Text>
           </InputGroup>
         </Row>
+        <Row>
+          <InputGroup className="mb-3 ml-3">
+            <InputGroup.Prepend className="mr-2">
+              <InputGroup.Checkbox
+                aria-label="Over 16 Checkbox"
+                name="age-checkbox"
+                type="checkbox"
+                required
+              />
+            </InputGroup.Prepend>
+            <InputGroup.Text>
+              I confirm that I am aged 16 or over.
+            </InputGroup.Text>
+          </InputGroup>
+        </Row>
         <div className="text-center" style={{ margin: 'auto' }}>
-          <Button
-            variant="primary"
-            type="submit"
-            className="btn-confirm"
-            disabled={!ppread}
-            block
-          >
+          <Button variant="primary" type="submit" className="btn-confirm" block>
             Sign me up!
           </Button>
         </div>
