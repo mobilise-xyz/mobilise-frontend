@@ -145,7 +145,7 @@ const changePassword = (oldPassword, newPassword) => {
   };
 };
 
-const resetPassword = (newPassword, token) => {
+const resetPassword = (email, newPassword, token) => {
   const request = () => {
     return { type: usersConstants.RESETPASSWORD_REQUEST };
   };
@@ -159,7 +159,7 @@ const resetPassword = (newPassword, token) => {
   return dispatch => {
     dispatch(request());
 
-    usersService.resetPassword(newPassword, token).then(
+    usersService.resetPassword(email, newPassword, token).then(
       result => {
         dispatch(success(result));
         history.push('/');
