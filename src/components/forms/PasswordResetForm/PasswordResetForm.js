@@ -5,6 +5,7 @@ import usersActions from '../../../_actions/users.actions';
 
 class PasswordResetForm extends React.Component {
   state = {
+    email: '',
     password: ''
   };
 
@@ -13,6 +14,11 @@ class PasswordResetForm extends React.Component {
       '(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))' +
         '(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$'
     ).test(password);
+  };
+
+  handleEmailChange = e => {
+    const { value } = e.target;
+    this.setState({ email: value });
   };
 
   handlePasswordChange = e => {
@@ -48,15 +54,26 @@ class PasswordResetForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { password } = this.state;
+    const { email, password } = this.state;
     const { dispatch, token } = this.props;
 
-    dispatch(usersActions.resetPassword(password, token));
+    dispatch(usersActions.resetPassword(email, password, token));
   };
 
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
+        <Form.Row className="mb-4">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            required
+            id="email"
+            name="email"
+            type="email"
+            placeholder="e.g. someone@example.com"
+            onChange={this.handleEmailChange}
+          />
+        </Form.Row>
         <Form.Row className="mb-4">
           <Form.Label>New Password</Form.Label>
           <Form.Control

@@ -65,9 +65,9 @@ const changePassword = (oldPassword, newPassword) => {
   return axios.put(`/users/password`, data, config).then(utils.handleResponse);
 };
 
-const resetPassword = (newPassword, token) => {
+const resetPassword = (email, newPassword, token) => {
   return axios
-    .put(`/auth/password-reset`, { newPassword, token })
+    .put(`/auth/password-reset`, { email, newPassword, token })
     .then(utils.handleResponse);
 };
 
